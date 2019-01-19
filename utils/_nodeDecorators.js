@@ -87,6 +87,10 @@ const _decorateMarkdownRemarkDocuments = (node, getNode, getNodesByType, createN
     }
 };
 
+const _nodeDecorators = [
+    _decorateMarkdownRemarkDocuments
+];
+
 module.exports = function (node, getNode, getNodesByType, createNode, createNodeField, createNodeId, createContentDigest) {
-    _decorateMarkdownRemarkDocuments(node, getNode, getNodesByType, createNode, createNodeField, createNodeId, createContentDigest)
+    _nodeDecorators.forEach( fn => fn(node, getNode, getNodesByType, createNode, createNodeField, createNodeId, createContentDigest));
 };

@@ -1,87 +1,68 @@
-const { graphql } = require('gatsby');
+const path = require("path");
+const Index = path.resolve('src/templates/Index.js');
+const Post = path.resolve('src/templates/Post.js');
 
-const _createPageForPosts = async (graphql, actions) => {
-    {
-        template, (dateFormat = 'MMM D, YYYY')
-    }
-
+const _createPageForHome = async (graphql, actions) => {
     const { createPage } = actions;
+
     const {
         data: {
             allMarkdownRemark: { edges: posts },
         },
-    } = await graphql(
-        `
-            query($dateFormat: String!) {
+    } = await graphql(`
+            {
                 allMarkdownRemark(
-                    filter: {
-                        fields: {
-                            path: {
-                                regex: "//([0-9]{4})/([0-9]{2})/([0-9]{2})//"
-                            }
-                        }
-                    }
-                    sort: { fields: [fields___date], order: DESC }
+                    sort: { fields: [fields___birthTime], order: DESC}
                 ) {
                     edges {
                         node {
                             fields {
-                                date(formatString: $dateFormat)
-                                path
-                            }
-                            frontmatter {
-                                siteOwner
                                 title
+                                slug
+                                tags
+                                category
                             }
                         }
                     }
                 }
             }
-        `,
-        { dateFormat }
-    );
+        `);
 
-    posts.forEach(({ node: { fields: { path } } }, index) => {
-        // Determine prev and next blog posts.
-        // If none exists, set to null.
-        let prev = index === posts.length - 1 ? null : posts[index + 1];
-        if (prev) {
-            const {
-                node: {
-                    fields: { path: prevPath, date },
-                    frontmatter: { title },
-                },
-            } = prev;
-            prev = { date, path: prevPath, title }
+    const postPerPage = 8;
+
+    const pageCount =
+        posts.length % postPerPage === 0
+            ? posts.length / postPerPage
+            : posts.length / postPerPage + 1;
+
+    for (let i = 0; i < pageCount; i++) {
+        const start = pageCount * postPerPage;
+        const end = Math.min(start + postPerPage, posts.length);
+
+        const pagePosts = posts.slice(start, end);
+
+        let path = ``;
+
+        if (i > 0) {
+            path = `${i}`
         }
-        let next = index === 0 ? null : posts[index - 1];
-        if (next) {
-            const {
-                node: {
-                    fields: { path: nextPath, date },
-                    frontmatter: { title },
-                },
-            } = next;
-            next = { date, path: nextPath, title }
-        }
-        // Template uses `path` to query page data.
+
         createPage({
-            path,
-            component: template,
+            path: path,
+            component: Index,
             context: {
-                prev,
-                next,
+                index: i,
+                pageCount: pageCount,
+                category: category.node.name,
+                posts: pagePosts,
             },
         })
-    })
+    }
 };
 
-const _createPageForCategories = async (graphql, actions) => {};
-
-const _createPageForTagIndex = async (graphql, actions) => {};
-
-const _createPageForTags = async (graphql, actions) => {
+const _createPageForPosts = async (graphql, actions) => {
     const { createPage } = actions;
+
     const {
         data: {
             allMarkdownRemark: { edges: posts },
@@ -89,24 +70,16 @@ const _createPageForTags = async (graphql, actions) => {
     } = await graphql(`
         {
             allMarkdownRemark(
-                filter: {
-                    fields: {
-                        path: { regex: "//([0-9]{4})/([0-9]{2})/([0-9]{2})//" }
-                    }
-                }
-                sort: { fields: [fields___date], order: DESC }
+                sort: { fields: [fields___birthTime], order: DESC }
             ) {
                 edges {
                     node {
                         fields {
-                            date(formatString: "D MMM YYYY")
-                            path
-                        }
-                        frontmatter {
-                            siteOwner
-                            title
-                            tags
+                            slug
                             category
+                            tags
+                            birthTime
+                            title
                         }
                     }
                 }
@@ -114,50 +87,314 @@ const _createPageForTags = async (graphql, actions) => {
         }
     `);
 
-    // For each tag create an array with posts that were tagged with this tag.
-    const postsByTags = {};
+    posts.forEach((post, index) => {
+        const previous =
+            index === posts.length - 1 ? null : posts[index + 1].node;
+        const next = index === 0 ? null : posts[index - 1].node;
 
-    posts.forEach(
-        ({
-            node: {
-                fields: { date, path },
-                frontmatter: { siteOwner, tags, title },
-            },
-        }) => {
-            if (tags) {
-                tags.forEach(tag => {
-                    if (!postsByTags[tag]) {
-                        postsByTags[tag] = []
-                    }
-                    postsByTags[tag].push({
-                        siteOwner,
-                        date,
-                        path,
-                        title,
-                    })
-                })
-            }
-        }
-    );
-
-    // Create tag pages.
-    const tags = Object.keys(postsByTags);
-    tags.forEach(tag => {
-        const postsByTag = postsByTags[tag];
         createPage({
-            path: `/tags/${tag}`,
-            component: template,
+            path: post.node.fields.slug,
+            component: Post,
             context: {
-                posts: postsByTag,
-                tag,
+                slug: post.node.fields.slug,
+                previous,
+                next,
             },
         })
     })
 };
 
-module.exports = [
+const _createPageForCategories = async (graphql, actions) => {
+    const { createPage } = actions;
+
+    const {
+        data: {
+            site: {
+                siteMetadata: {
+                    postCountPerPageInCategory: postPerPage
+                },
+            },
+        },
+    } = await graphql(`
+        {
+            site {
+                siteMetadata {
+                    postCountPerPageInCategory
+                }
+            }
+        }
+    `);
+
+    const {
+        data: {
+            allCategory: { edges: categories },
+        },
+    } = await graphql(`
+        {
+            allCategory {
+                edges {
+                    node {
+                        name
+                        slug
+                    }
+                }
+            }
+        }
+    `);
+
+    categories.forEach(async category => {
+        const {
+            data: {
+                allMarkdownRemark: { edges: posts },
+            },
+        } = await graphql(`
+            {
+                allMarkdownRemark(
+                    filter: { fields: { category: { eq: "${
+                        category.node.name
+                    }" } } }
+                    sort: { fields: [fields___birthTime], order: DESC}
+                ) {
+                    edges {
+                        node {
+                            fields {
+                                title
+                                slug
+                                tags
+                                category
+                            }
+                        }
+                    }
+                }
+            }
+        `);
+
+        const pageCount =
+            posts.length % postPerPage === 0
+                ? posts.length / postPerPage
+                : posts.length / postPerPage + 1;
+
+        for (let i = 0; i < pageCount; i++) {
+            const start = pageCount * postPerPage;
+            const end = Math.min(start + postPerPage, posts.length);
+
+            const pagePosts = posts.slice(start, end);
+
+            let path = category.node.slug;
+
+            if (i > 0) {
+                path = `${path}/${i}`
+            }
+
+            createPage({
+                path: path,
+                component: Index,
+                context: {
+                    index: i,
+                    pageCount: pageCount,
+                    category: category.node.name,
+                    posts: pagePosts,
+                },
+            })
+        }
+    })
+};
+
+const _createPageForTagIndex = async (graphql, actions) => {
+    const { createPage } = actions;
+
+    const {
+        data: {
+            site: {
+                siteMetadata: {
+                    tagCountPerPageInTagIndex: tagsPerPage
+                },
+            },
+        },
+    } = await graphql(`
+        {
+            site {
+                siteMetadata {
+                    tagCountPerPageInTagIndex
+                }
+            }
+        }
+    `);
+
+    const {
+        data: {
+            allTag: { edges: tags },
+        },
+    } = await graphql(`
+        {
+            allTag {
+                edges {
+                    node {
+                        name
+                        slug
+                    }
+                }
+            }
+        }
+    `);
+
+    const pageCount = (tags.length % tagsPerPage === 0) ? tags.length / tagsPerPage : tags.length / tagsPerPage + 1;
+
+    for (let i = 0; i < pageCount; i++) {
+        const start = pageCount * tagsPerPage;
+        const end = Math.min(start + tagsPerPage, tags.length);
+
+        const pageTags = tags.slice(start, end);
+
+        postsByTags = pageTags.map(async tag => {
+            const {
+                data: {
+                    allTag: { edges: posts },
+                },
+            } = await graphql(`
+                {
+                    allMarkdownRemark(
+                        filter: { fields: { tags: { in: ["${tag.node.name}"] } } }
+                        sort: { fields: [fields___birthTime], order: DESC}
+                        limit: 5
+                    ) {
+                        edges {
+                            node {
+                                id
+                                fields {
+                                    title
+                                    slug
+                                    tags
+                                    category
+                                }
+                            }
+                        }
+                    }
+                }
+            `);
+            return { tag: tag, posts: posts }
+        });
+
+        let path = 'tags';
+
+        if (i > 0) {
+            path = `tags/${i}`
+        }
+
+        createPage({
+            path: path,
+            component: Index,
+            context: {
+                index: i,
+                pageCount: pageCount,
+                tags: pageTags,
+                postsByTags: postsByTags,
+            },
+        });
+    }
+};
+
+const _createPageForTags = async (graphql, actions) => {
+    const { createPage } = actions;
+
+    const {
+        data: {
+            site: {
+                siteMetadata: {
+                    postCountPerPageInTag: postsPerPage
+                },
+            },
+        },
+    } = await graphql(`
+        {
+            site {
+                siteMetadata {
+                    postCountPerPageInTag
+                }
+            }
+        }
+    `);
+
+    const {
+        data: {
+            allTag: { edges: tags },
+        },
+    } = await graphql(`
+        {
+            allTag {
+                edges {
+                    node {
+                        name
+                        slug
+                    }
+                }
+            }
+        }
+    `);
+
+    tags.forEach(async tag => {
+        const {
+            data: {
+                allMarkdownRemark :{ edges: posts },
+            },
+        } = await graphql(`
+            {
+                allMarkdownRemark(
+                    filter: { fields: { tags: { in: ["${tag.node.name}"] } } }
+                    sort: { fields: [fields___birthTime], order: DESC}
+                ) {
+                    edges {
+                        node {
+                            id
+                            fields {
+                                title
+                                slug
+                                tags
+                                category
+                            }
+                        }
+                    }
+                }
+            }
+        `);
+
+        const pageCount = (posts.length % postsPerPage === 0) ? posts.length / postsPerPage : posts.length / postsPerPage + 1;
+
+        for (let i = 0; i < pageCount; i++) {
+            const start = pageCount * postsPerPage;
+            const end = Math.min(start + postsPerPage, posts.length);
+
+            const pagePosts = posts.slice(start, end);
+
+            let path = tag.node.slug;
+
+            if (i > 0) {
+                path = `${path}/${i}`
+            }
+
+            createPage({
+                path: path,
+                component: Index,
+                context: {
+                    index: i,
+                    pageCount: pageCount,
+                    tag: tag.node.name,
+                    posts: pagePosts,
+                },
+            });
+        }
+    })
+};
+
+const _pageCreators = [
     _createPageForPosts,
     _createPageForCategories,
     _createPageForTagIndex,
     _createPageForTags,
 ];
+
+module.exports = (graphql, actions) => {
+    return _pageCreators.forEach(fn => {
+        fn(graphql, actions);
+    });
+};

@@ -1,10 +1,8 @@
 import React from "react";
+import Main from '../components/Main'
 
 class Post extends React.Component {
     render() {
-        const { dataSource } = this.props;
-        const siteTitle = dataSource.siteTitle;
-
         return (
             <Main>
 

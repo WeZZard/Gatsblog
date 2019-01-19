@@ -16,7 +16,7 @@ const _standalonePagePathPattern = /(.+)\.md$/;
 
 const _taxonomyPattern = /^[\w\-_]+$/;
 
-const _populatePostMetadataForNodeWithMatch = (node, match) => {
+const _populatePostMetadataForNodeWithMatch = (node, match, category) => {
     const year = match[1];
     const month = match[2];
     const day = match[3];
@@ -63,7 +63,7 @@ const _populatePostMetadataForNodeWithMatch = (node, match) => {
 
     return {
         documentType: 'Post',
-        slug: `${slugYear}/${slugMonth}/${slugDay}/${postName}`,
+        slug: `${category}/${slugYear}/${slugMonth}/${slugDay}/${postName}`,
         birthTime: birthTime,
     }
 };
@@ -120,14 +120,14 @@ module.exports._parseMetadataForMarkdownNode = (node, getNode) => {
         const wrappedPostMatch = _wrappedPostPathPattern.exec(relativePath);
         const standalonePostMatch = _standalonePostPathPattern.exec(relativePath);
         if (wrappedPostMatch !== null) {
-            let metadata = _populatePostMetadataForNodeWithMatch(node, wrappedPostMatch);
+            let metadata = _populatePostMetadataForNodeWithMatch(node, wrappedPostMatch, category);
             metadata.category = category;
             metadata.tags = tags;
             metadata.title = title || metadata.slug;
             metadata.subtitle = subtitle;
             return metadata
         } else if (standalonePostMatch !== null) {
-            let metadata = _populatePostMetadataForNodeWithMatch(node, standalonePostMatch);
+            let metadata = _populatePostMetadataForNodeWithMatch(node, standalonePostMatch, category);
             metadata.category = category;
             metadata.tags = tags;
             metadata.title = title || metadata.slug;
@@ -152,7 +152,7 @@ module.exports._parseMetadataForMarkdownNode = (node, getNode) => {
 
         return {
             documentType: 'Page',
-            slug: `${pageName}`,
+            slug: `${category}/${pageName}`,
             birthTime: parentNode.birthTime,
             title: title || pageName,
             subtitle: subtitle,

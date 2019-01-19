@@ -29,6 +29,10 @@ module.exports = {
             `Composing Music`,
             `Designing UX`,
         ],
+        postCountPerPageInHome: 8,
+        postCountPerPageInCategory: 8,
+        tagCountPerPageInTagIndex: 8,
+        postCountPerPageInTag: 8,
     },
     plugins: [
         {
