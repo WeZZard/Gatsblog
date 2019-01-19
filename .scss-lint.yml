@@ -1,0 +1,8 @@
+files:
+  include: '**/*.sass'
+options:
+  formatter: stylish
+  merge-default-rules: false
+rules:
+  identation:
+    size: 4

@@ -1,69 +1,58 @@
 import React from 'react'
 import { Link, graphql } from 'gatsby'
 
-import Bio from '../components/Bio'
-import Layout from '../components/Layout'
-import SEO from '../components/seo'
-import { rhythm } from '../utils/typography'
+import SEO from '../components/SEO'
+import Main from '../components/Main'
+import ExcerptMetadata from '../components/ExcerptMetadata'
+import styles from './index.module.scss'
 
-class BlogIndex extends React.Component {
-  render() {
-    const { data } = this.props
-    const siteTitle = data.site.siteMetadata.title
-    const posts = data.allMarkdownRemark.edges
+export default ({data}) => {
+    const posts = data.allMarkdownRemark.edges;
 
-    return (
-      <Layout location={this.props.location} title={siteTitle}>
-        <SEO
-          title="All posts"
-          keywords={[`blog`, `gatsby`, `javascript`, `react`]}
-        />
-        <Bio />
-        {posts.map(({ node }) => {
-          const title = node.frontmatter.title || node.fields.slug
-          return (
-            <div key={node.fields.slug}>
-              <h3
-                style={{
-                  marginBottom: rhythm(1 / 4),
-                }}
-              >
-                <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
-                  {title}
-                </Link>
-              </h3>
-              <small>{node.frontmatter.date}</small>
-              <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-            </div>
-          )
+    return <Main>
+        <SEO title="All posts" keywords={[`blog`, `gatsby`, `javascript`, `react`]} />
+        {posts.map(({ node: post }) => {
+            return <section key={post.fields.slug}>
+                <header className={styles.excerptHeader}>
+                    <Link to={post.fields.slug}>
+                        <h1>{post.fields.title}</h1>
+                        { post.fields.subtitle !== "" ? <h2>{post.fields.subtitle}</h2> : null}
+                    </Link>
+                </header>
+                <section className={styles.excerptBody}>
+                    <Link to={post.fields.slug}>
+                        <p dangerouslySetInnerHTML={{ __html: post.excerpt }} />
+                    </Link>
+                </section>
+                <footer className={styles.excerptFooter}>
+                    <ExcerptMetadata post={post}/>
+                </footer>
+            </section>
         })}
-      </Layout>
-    )
-  }
-}
-
-export default BlogIndex
+    </Main>
+};
 
 export const pageQuery = graphql`
-  query {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
-      edges {
-        node {
-          excerpt
-          fields {
-            slug
-          }
-          frontmatter {
-            date(formatString: "MMMM DD, YYYY")
-            title
-          }
+    query {
+        site {
+            siteMetadata {
+                title
+            }
         }
-      }
+        allMarkdownRemark(sort: { fields: [fields___birthTime], order: DESC }) {
+            edges {
+                node {
+                    fields {
+                        title
+                        subtitle
+                        birthTime(formatString: "MMMM DD, YYYY")
+                        tags
+                        category
+                        slug
+                    }
+                    excerpt
+                }
+            }
+        }
     }
-  }
-`
+`;

@@ -1,11 +1,11 @@
-const { graphql } = require('gatsby')
+const { graphql } = require('gatsby');
 
 const _createPageForPosts = async (graphql, actions) => {
     {
         template, (dateFormat = 'MMM D, YYYY')
     }
 
-    const { createPage } = actions
+    const { createPage } = actions;
     const {
         data: {
             allMarkdownRemark: { edges: posts },
@@ -30,7 +30,7 @@ const _createPageForPosts = async (graphql, actions) => {
                                 path
                             }
                             frontmatter {
-                                author
+                                siteOwner
                                 title
                             }
                         }
@@ -39,29 +39,29 @@ const _createPageForPosts = async (graphql, actions) => {
             }
         `,
         { dateFormat }
-    )
+    );
 
     posts.forEach(({ node: { fields: { path } } }, index) => {
         // Determine prev and next blog posts.
         // If none exists, set to null.
-        let prev = index === posts.length - 1 ? null : posts[index + 1]
+        let prev = index === posts.length - 1 ? null : posts[index + 1];
         if (prev) {
             const {
                 node: {
                     fields: { path: prevPath, date },
                     frontmatter: { title },
                 },
-            } = prev
+            } = prev;
             prev = { date, path: prevPath, title }
         }
-        let next = index === 0 ? null : posts[index - 1]
+        let next = index === 0 ? null : posts[index - 1];
         if (next) {
             const {
                 node: {
                     fields: { path: nextPath, date },
                     frontmatter: { title },
                 },
-            } = next
+            } = next;
             next = { date, path: nextPath, title }
         }
         // Template uses `path` to query page data.
@@ -74,14 +74,14 @@ const _createPageForPosts = async (graphql, actions) => {
             },
         })
     })
-}
+};
 
-const _createPageForCategories = async (graphql, actions) => {}
+const _createPageForCategories = async (graphql, actions) => {};
 
-const _createPageForTagIndex = async (graphql, actions) => {}
+const _createPageForTagIndex = async (graphql, actions) => {};
 
 const _createPageForTags = async (graphql, actions) => {
-    const { createPage } = actions
+    const { createPage } = actions;
     const {
         data: {
             allMarkdownRemark: { edges: posts },
@@ -103,7 +103,7 @@ const _createPageForTags = async (graphql, actions) => {
                             path
                         }
                         frontmatter {
-                            author
+                            siteOwner
                             title
                             tags
                             category
@@ -112,16 +112,16 @@ const _createPageForTags = async (graphql, actions) => {
                 }
             }
         }
-    `)
+    `);
 
     // For each tag create an array with posts that were tagged with this tag.
-    const postsByTags = {}
+    const postsByTags = {};
 
     posts.forEach(
         ({
             node: {
                 fields: { date, path },
-                frontmatter: { author, tags, title },
+                frontmatter: { siteOwner, tags, title },
             },
         }) => {
             if (tags) {
@@ -130,7 +130,7 @@ const _createPageForTags = async (graphql, actions) => {
                         postsByTags[tag] = []
                     }
                     postsByTags[tag].push({
-                        author,
+                        siteOwner,
                         date,
                         path,
                         title,
@@ -138,12 +138,12 @@ const _createPageForTags = async (graphql, actions) => {
                 })
             }
         }
-    )
+    );
 
     // Create tag pages.
-    const tags = Object.keys(postsByTags)
+    const tags = Object.keys(postsByTags);
     tags.forEach(tag => {
-        const postsByTag = postsByTags[tag]
+        const postsByTag = postsByTags[tag];
         createPage({
             path: `/tags/${tag}`,
             component: template,
@@ -153,11 +153,11 @@ const _createPageForTags = async (graphql, actions) => {
             },
         })
     })
-}
+};
 
 module.exports = [
     _createPageForPosts,
     _createPageForCategories,
     _createPageForTagIndex,
     _createPageForTags,
-]
+];
