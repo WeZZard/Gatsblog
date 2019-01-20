@@ -7,9 +7,8 @@ class ContentFooterMessage extends React.Component {
         const { message } = this.props;
 
         return (
-            <div className={styles.footerMessageItem}>
+            <div className={styles.contentFooterItem}>
                 <span
-                    className={styles.footerMessage}
                     dangerouslySetInnerHTML= {{ __html: message}}
                 />
             </div>
@@ -32,7 +31,7 @@ class ContentFooter extends React.Component {
         );
 
         return (
-            <div className={styles.footerMessageWrapper}>
+            <div className={styles.contentFooter}>
                 {customFooterMessages}
                 <ContentFooterMessage
                     message={

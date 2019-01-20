@@ -10,22 +10,24 @@ class NavigationItem extends React.Component {
 
         const { name, slug } = navigationItem;
 
-        return <Link to={slug}>{name}</Link>
+        return <span className={styles.navigationItem}><Link to={slug}>{name}</Link></span>
     }
 }
 
-class AdditionalNavigationItems extends React.Component {
+class NavigationItems extends React.Component {
     render () {
         return <StaticQuery
             query={_navigationQuery}
 
             render={ data => {
+                const systemNavigationItems = [
+                    {name: `Home`, slug: `/`}
+                ];
+
                 const createsNavigationItemsForCategories = data.site.siteMetadata.createsNavigationItemsForCategories;
                 const categoryNavigationItems = data.site.siteMetadata.categoryNavigationItems;
                 const categories = data.allCategory.edges.map(category => category.node);
                 let userNavigationItems = data.site.siteMetadata.navigationItems;
-
-                console.log(`categoryNavigationItems:`, categoryNavigationItems);
 
                 let customizedCategoryNavigationItems = [];
 
@@ -33,10 +35,7 @@ class AdditionalNavigationItems extends React.Component {
                     let rawCategoryNavigationItems = categories.map(category => ({name: category.name, slug: category.slug, weight: 0}));
 
                     categoryNavigationItems.forEach(categoryNavigationItem => {
-                        console.log(`categoryNavigationItem:`, categoryNavigationItem);
                         const {name, weight, isVisible} = categoryNavigationItem;
-
-                        console.log(`name: ${name}, weight: ${weight}, isVisible: ${isVisible}`);
 
                         if (isVisible) {
                             const candidateNavigationItems = rawCategoryNavigationItems.filter(item => { return item.name === name });
@@ -54,10 +53,9 @@ class AdditionalNavigationItems extends React.Component {
                     });
                 }
 
-                const navigationItems = customizedCategoryNavigationItems.concat(userNavigationItems);
+                const navigationItems = systemNavigationItems.concat(customizedCategoryNavigationItems).concat(userNavigationItems);
 
                 const components = navigationItems.map((navigationItem) => {
-                    console.log(navigationItem);
                     return <li><NavigationItem navigationItem={navigationItem}/></li>
                 });
 
@@ -74,14 +72,13 @@ class NavigationBar extends React.Component {
         const { navigationStack } = this.props;
 
         return (
-            <nav>
-                <div>
+            <nav className={styles.navigationBar}>
+                <div className={styles.siteTitle}>
                     <SiteTitle/>
                 </div>
-                <div>
+                <div className={styles.navigationContent}>
                     <ol>
-                        <li><NavigationItem navigationItem={{name: `Home`, slug: `/`}}/></li>
-                        <AdditionalNavigationItems/>
+                        <NavigationItems/>
                     </ol>
                 </div>
             </nav>

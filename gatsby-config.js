@@ -3,6 +3,9 @@ module.exports = {
         title: `Pieces of My Soul`,
         siteOwner: `WeZZard`,
         description: ``,
+        keywords: [
+            `WeZZard`
+        ],
         siteUrl: `https://wezzard.netlify.com/`,
         social: {
             github: `WeZZard`,
@@ -104,10 +107,19 @@ module.exports = {
         `gatsby-plugin-offline`,
         `gatsby-plugin-react-helmet`,
         {
-            resolve: `gatsby-plugin-typography`,
+            resolve: 'gatsby-plugin-web-font-loader',
             options: {
-                pathToConfigModule: `src/utils/typography`,
-            },
+                google: {
+                    families: [
+                        `Source Sans Pro`,
+                        `Libre Baskerville`,
+                        `Roboto`,
+                        `Noto Sans TC`,
+                        `Noto Serif TC`,
+                        `Source Code Pro`,
+                    ]
+                }
+            }
         },
     ],
-}
+};

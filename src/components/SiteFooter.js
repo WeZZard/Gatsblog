@@ -31,7 +31,7 @@ class SiteFooter extends React.Component {
 
                     return <React.Fragment>
                         {sloganComponents}
-                        <div>
+                        <div className={styles.copyrightItem}>
                             <span>
                                 {`© ${new Date().getFullYear()} ${siteOwner} All Copyright Reserved.`}
                             </span>
@@ -42,7 +42,7 @@ class SiteFooter extends React.Component {
         );
 
         return (
-            <div className={styles.footerMessageWrapper}>
+            <div className={styles.siteFooter}>
                 {customFooterMessages}
             </div>
         )

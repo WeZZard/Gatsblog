@@ -1,71 +1,102 @@
 const path = require("path");
-const Index = path.resolve('src/templates/Index.js');
-const Post = path.resolve('src/templates/Post.js');
+
+const IndexTemplate = path.resolve('src/templates/Index.js');
+const PostTemplate = path.resolve('src/templates/Post.js');
+const PageTemplate = path.resolve('src/templates/Page.js');
 
 const _createPageForHome = async (graphql, actions) => {
     const { createPage } = actions;
 
     const {
         data: {
-            allMarkdownRemark: { edges: posts },
+            site: {
+                siteMetadata: {
+                    keywords: siteKeywords,
+                    description: siteDescription
+                },
+            },
+            allMarkdownRemark: { edges: documents },
         },
     } = await graphql(`
-            {
-                allMarkdownRemark(
-                    sort: { fields: [fields___birthTime], order: DESC}
-                ) {
-                    edges {
-                        node {
-                            fields {
-                                title
-                                slug
-                                tags
-                                category
-                            }
+        {
+            site {
+                siteMetadata {
+                    keywords
+                    description
+                }
+            }
+            allMarkdownRemark(
+                sort: { fields: [fields___birthTime], order: DESC}
+            ) {
+                edges {
+                    node {
+                        fields {
+                            title
+                            birthTime
+                            tags
+                            category
+                            slug
                         }
                     }
                 }
             }
-        `);
+        }
+    `);
 
     const postPerPage = 8;
 
     const pageCount =
-        posts.length % postPerPage === 0
-            ? posts.length / postPerPage
-            : posts.length / postPerPage + 1;
+        documents.length % postPerPage === 0
+            ? documents.length / postPerPage
+            : documents.length / postPerPage + 1;
 
-    for (let i = 0; i < pageCount; i++) {
-        const start = pageCount * postPerPage;
-        const end = Math.min(start + postPerPage, posts.length);
+    const getTitle = (index) => {
+        if (index === 0) {
+            return `All Posts`
+        }
+        return `All Posts (Page ${index})`
+    };
 
-        const pagePosts = posts.slice(start, end);
+    for (let pageIndex = 0; pageIndex < pageCount; pageIndex++) {
+        const start = pageIndex * postPerPage;
+        const end = Math.min(start + postPerPage, documents.length);
 
-        let path = ``;
+        const items = documents.slice(start, end);
 
-        if (i > 0) {
-            path = `${i}`
+        let path = `/`;
+
+        if (pageIndex > 0) {
+            path = `/${pageIndex}`
         }
 
         createPage({
             path: path,
-            component: Index,
+            component: IndexTemplate,
             context: {
-                index: i,
-                pageCount: pageCount,
-                category: category.node.name,
-                posts: pagePosts,
+                itemName: `PostExcerpt`,
+                layoutName: `PostListLayout`,
+                title: getTitle(pageIndex),
+                showsTitle: false,
+                keywords: siteKeywords,
+                description: siteDescription,
+                items: items,
+                paginationInfo: {
+                    index: pageIndex,
+                    pageCount: pageCount,
+                    previousPageTitle: "Earlier Posts",
+                    nextPageTitle: "Later Posts",
+                }
             },
         })
     }
 };
 
-const _createPageForPosts = async (graphql, actions) => {
+const _createPageForMarkdownDocuments = async (graphql, actions) => {
     const { createPage } = actions;
 
     const {
         data: {
-            allMarkdownRemark: { edges: posts },
+            allMarkdownRemark: { edges: documents },
         },
     } = await graphql(`
         {
@@ -80,23 +111,37 @@ const _createPageForPosts = async (graphql, actions) => {
                             tags
                             birthTime
                             title
+                            documentType
                         }
+                        tableOfContents
+                        html
                     }
                 }
             }
         }
     `);
 
-    posts.forEach((post, index) => {
+    const getTemplate = (documentType) => {
+        switch (documentType) {
+            case "Post":
+                return PostTemplate;
+            case "Page":
+                return PageTemplate;
+            default:
+                throw `Unexpected document type "${documentType}".`;
+        }
+    };
+
+    documents.forEach((document, index) => {
         const previous =
-            index === posts.length - 1 ? null : posts[index + 1].node;
-        const next = index === 0 ? null : posts[index - 1].node;
+            index === documents.length - 1 ? null : documents[index + 1].node;
+        const next = index === 0 ? null : documents[index - 1].node;
 
         createPage({
-            path: post.node.fields.slug,
-            component: Post,
+            path: document.node.fields.slug,
+            component: getTemplate(document.node.fields.documentType),
             context: {
-                slug: post.node.fields.slug,
+                document: document,
                 previous,
                 next,
             },
@@ -174,23 +219,23 @@ const _createPageForCategories = async (graphql, actions) => {
                 ? posts.length / postPerPage
                 : posts.length / postPerPage + 1;
 
-        for (let i = 0; i < pageCount; i++) {
-            const start = pageCount * postPerPage;
+        for (let pageIndex = 0; pageIndex < pageCount; pageIndex++) {
+            const start = pageIndex * postPerPage;
             const end = Math.min(start + postPerPage, posts.length);
 
             const pagePosts = posts.slice(start, end);
 
             let path = category.node.slug;
 
-            if (i > 0) {
-                path = `${path}/${i}`
+            if (pageIndex > 0) {
+                path = `${path}/${pageIndex}`
             }
 
             createPage({
                 path: path,
-                component: Index,
+                component: IndexTemplate,
                 context: {
-                    index: i,
+                    index: pageIndex,
                     pageCount: pageCount,
                     category: category.node.name,
                     posts: pagePosts,
@@ -210,6 +255,7 @@ const _createPageForTagIndex = async (graphql, actions) => {
                     tagCountPerPageInTagIndex: tagsPerPage
                 },
             },
+            allTag: { edges: tags },
         },
     } = await graphql(`
         {
@@ -218,15 +264,6 @@ const _createPageForTagIndex = async (graphql, actions) => {
                     tagCountPerPageInTagIndex
                 }
             }
-        }
-    `);
-
-    const {
-        data: {
-            allTag: { edges: tags },
-        },
-    } = await graphql(`
-        {
             allTag {
                 edges {
                     node {
@@ -240,8 +277,8 @@ const _createPageForTagIndex = async (graphql, actions) => {
 
     const pageCount = (tags.length % tagsPerPage === 0) ? tags.length / tagsPerPage : tags.length / tagsPerPage + 1;
 
-    for (let i = 0; i < pageCount; i++) {
-        const start = pageCount * tagsPerPage;
+    for (let pageIndex = 0; pageIndex < pageCount; pageIndex++) {
+        const start = pageIndex * tagsPerPage;
         const end = Math.min(start + tagsPerPage, tags.length);
 
         const pageTags = tags.slice(start, end);
@@ -249,7 +286,7 @@ const _createPageForTagIndex = async (graphql, actions) => {
         postsByTags = pageTags.map(async tag => {
             const {
                 data: {
-                    allTag: { edges: posts },
+                    allMarkdownRemark: { edges: posts },
                 },
             } = await graphql(`
                 {
@@ -277,15 +314,15 @@ const _createPageForTagIndex = async (graphql, actions) => {
 
         let path = 'tags';
 
-        if (i > 0) {
-            path = `tags/${i}`
+        if (pageIndex > 0) {
+            path = `tags/${pageIndex}`
         }
 
         createPage({
             path: path,
-            component: Index,
+            component: IndexTemplate,
             context: {
-                index: i,
+                index: pageIndex,
                 pageCount: pageCount,
                 tags: pageTags,
                 postsByTags: postsByTags,
@@ -360,23 +397,23 @@ const _createPageForTags = async (graphql, actions) => {
 
         const pageCount = (posts.length % postsPerPage === 0) ? posts.length / postsPerPage : posts.length / postsPerPage + 1;
 
-        for (let i = 0; i < pageCount; i++) {
-            const start = pageCount * postsPerPage;
+        for (let pageIndex = 0; pageIndex < pageCount; pageIndex++) {
+            const start = pageIndex * postsPerPage;
             const end = Math.min(start + postsPerPage, posts.length);
 
             const pagePosts = posts.slice(start, end);
 
             let path = tag.node.slug;
 
-            if (i > 0) {
-                path = `${path}/${i}`
+            if (pageIndex > 0) {
+                path = `${path}/${pageIndex}`
             }
 
             createPage({
                 path: path,
-                component: Index,
+                component: IndexTemplate,
                 context: {
-                    index: i,
+                    index: pageIndex,
                     pageCount: pageCount,
                     tag: tag.node.name,
                     posts: pagePosts,
@@ -387,7 +424,8 @@ const _createPageForTags = async (graphql, actions) => {
 };
 
 const _pageCreators = [
-    _createPageForPosts,
+    _createPageForHome,
+    _createPageForMarkdownDocuments,
     _createPageForCategories,
     _createPageForTagIndex,
     _createPageForTags,

@@ -4,15 +4,18 @@ const _ = require("lodash");
 
 import TaxonomyList from '../components/TaxonomyList'
 
-class ExcerptMetadata extends React.Component {
+class PostExcerptMetadata extends React.Component {
     render() {
         const { post } = this.props;
 
-        const birthTime = <time>{post.fields.birthTime}</time>;
+        const birthTime = new Date(post.node.fields.birthTime);
+        const isoBirthTime = birthTime.toISOString();
+        const localizedBirthTime = birthTime.toLocaleDateString("enUS", { year: 'numeric', month: 'short', day: 'numeric' });
+        const birthTimeComponent = <time datetime={isoBirthTime}>{localizedBirthTime}</time>;
 
-        const rawCategory = post.fields.category;
+        const rawCategory = post.node.fields.category;
         const categorySlug = _.kebabCase(rawCategory);
-        const rawTags = post.fields.tags;
+        const rawTags = post.node.fields.tags;
 
         const categoryObjects = rawCategory !== "" ? {name: `${rawCategory}`, slug: `${categorySlug}`} : null;
         const tagsObjects = rawTags.map(tag => { return {name: tag, slug: `tags/${_.kebabCase(tag)}`} });
@@ -21,7 +24,7 @@ class ExcerptMetadata extends React.Component {
 
         const tags = rawTags.length > 0 ? (<TaxonomyList name="Tags" taxonomies={tagsObjects}/>) : null;
 
-        const lines = [[birthTime, category], [tags]];
+        const lines = [[birthTimeComponent, category], [tags]];
 
         lines.filter((line) => {
             assert(Array.isArray(line));
@@ -37,4 +40,4 @@ class ExcerptMetadata extends React.Component {
     }
 }
 
-export default ExcerptMetadata
+export default PostExcerptMetadata
