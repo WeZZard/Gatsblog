@@ -1,8 +1,9 @@
 import React from 'react'
 import assert from 'assert'
+import styles from './PostExcerptMetadata.module.scss'
 const _ = require("lodash");
 
-import TaxonomyList from '../components/TaxonomyList'
+import Taxonomy from './Taxonomy'
 
 class PostExcerptMetadata extends React.Component {
     render() {
@@ -20,9 +21,9 @@ class PostExcerptMetadata extends React.Component {
         const categoryObjects = rawCategory !== "" ? {name: `${rawCategory}`, slug: `${categorySlug}`} : null;
         const tagsObjects = rawTags.map(tag => { return {name: tag, slug: `tags/${_.kebabCase(tag)}`} });
 
-        const category = rawCategory !== "" ? (<TaxonomyList name="Category" taxonomies={[categoryObjects]}/>) : null;
+        const category = rawCategory !== "" ? (<Taxonomy name="Category" taxonomies={[categoryObjects]}/>) : null;
 
-        const tags = rawTags.length > 0 ? (<TaxonomyList name="Tags" taxonomies={tagsObjects}/>) : null;
+        const tags = rawTags.length > 0 ? (<Taxonomy name="Tags" taxonomies={tagsObjects}/>) : null;
 
         const lines = [[birthTimeComponent, category], [tags]];
 
@@ -32,9 +33,11 @@ class PostExcerptMetadata extends React.Component {
             return filteredLine.length === 0
         });
 
-        return <div>
-            {lines.map((components) => <div>
-                {components.map((component) => <div>{component}</div>)}
+        return <div className={styles.postExcerptMetadata}>
+            {lines.map((components) => <div className={styles.postExcerptMetadataLine}>
+                {components.map((component) => <div className={styles.postExcerptMetadataItem}>
+                    {component}
+                </div>)}
             </div>)}
         </div>
     }

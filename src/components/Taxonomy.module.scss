@@ -1,0 +1,29 @@
+@import "../styles/colors";
+
+.taxonomy {
+    display: inline-block;
+}
+
+.taxonomyName {
+    color: $gray55;
+
+    &:after {
+        content: "|";
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+    }
+}
+
+.taxonomyItemList {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+.taxonomyItem {
+    color: $gray34;
+    margin: 0;
+    margin-right: 0.5em;
+    padding: 0;
+    display: inline-block;
+}

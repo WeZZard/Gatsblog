@@ -1,12 +1,13 @@
 import React from 'react'
+import styles from './PostListLayout.module.scss'
 
 class PostListLayout extends React.Component {
     render() {
         const { children } = this.props;
 
-        return (<div>
+        return <section className={styles.postListContainer}>
             {children}
-        </div>);
+        </section>;
     }
 }
 

@@ -22,6 +22,8 @@
 
 .contentWrapper {
     width: 70%;
+    display: flex;
+    flex-direction: column;
 }
 
 .controlWrapperOverlay {
@@ -42,6 +44,9 @@
 
 .navigationContainer {
     flex-grow: 1;
+    margin-top: 3.4em;
+    margin-left: 3.4em;
+    margin-right: 3.4em;
 }
 
 .siteFooterContainer {
@@ -49,10 +54,22 @@
     flex-direction: column;
     align-items: flex-end;
     justify-content: flex-start;
+    margin-left: 3.4em;
+    margin-right: 3.4em;
+    margin-bottom: 3.4em;
 }
 
 .mainContentContainer {
+    display: flex;
+    flex-direction: row;
+    max-width: 77%;
+    margin-left: 5.5em;
+    margin-right: 5.5em;
+    flex-grow: 1;
 }
 
 .footerContentContainer {
+    max-width: 77%;
+    margin-left: 5.5em;
+    margin-right: 5.5em;
 }

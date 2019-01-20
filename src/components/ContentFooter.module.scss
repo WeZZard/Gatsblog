@@ -1,7 +1,31 @@
-.contentFooter {
+@import "../styles/colors.scss";
 
+.contentFooter {
+    margin-bottom: 3.4em;
+    margin-top: 3.4em;
+    color: $gray55;
+}
+
+.contentFooter a {
+    &:hover {
+        color: $gray8;
+    }
+
+    &:visited {
+        color: $gray55;
+    }
 }
 
 .contentFooterItem {
+    margin-bottom: 1.3em;
 
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.contentFooterItem span {
+    font-size: 1.1em;
+    font-weight: 400;
+    line-height: 0.73em;
 }

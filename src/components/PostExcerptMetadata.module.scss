@@ -1,0 +1,46 @@
+@import "../styles/colors";
+
+.postExcerptMetadata {
+
+}
+
+.postExcerptMetadataLine {
+    margin-bottom: 2.1em;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.postExcerptMetadataItem {
+    display: inline-block;
+
+    &:after {
+        margin-left: 0.8em;
+        margin-right: 0.8em;
+        content: "•";
+        color: $gray89;
+    }
+
+    &:last-child {
+        &:after {
+            margin: 0;
+            content: none;
+        }
+    }
+}
+
+.postExcerptMetadata time {
+    font-size: 1.1em;
+    font-weight: 500;
+    line-height: 0.72;
+    text-transform: uppercase;
+    color: $gray55;
+}
+
+.postExcerptMetadata span {
+    font-size: 1.1em;
+    font-weight: 500;
+    line-height: 0.72;
+    text-transform: uppercase;
+}

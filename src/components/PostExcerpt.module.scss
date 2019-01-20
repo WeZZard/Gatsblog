@@ -1,0 +1,60 @@
+@import '../styles/fonts';
+@import '../styles/colors';
+
+.postExcerptItem {
+    margin-top: 0;
+    margin-bottom: 5.5em;
+
+    &:first-child {
+        margin-top: 5.5em;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.postExcerptHeader {
+
+}
+
+.postExcerptHeader a {
+    text-decoration: none;
+}
+
+.postExcerptHeader h1 {
+    display: inline-block;
+    font-size: 1.8em;
+    line-height: 0.72em;
+    color: $gray21;
+    margin: 0;
+}
+
+.postExcerptHeader h2 {
+    display: inline-block;
+    font-size: 1.3em;
+    line-height: 1em;
+    color: $gray55;
+    margin: 0;
+}
+
+.postExcerptBody {
+    margin-top: 2.1em;
+}
+
+.postExcerptBody a {
+    color: $gray55;
+    text-decoration: none;
+}
+
+.postExcerptBody p {
+    margin: 0;
+    margin-top: -0.28;
+    font-family: $font-body-serif;
+    font-size: 1.8em;
+    line-height: 1.6em;
+}
+
+.postExcerptFooter {
+    margin-top: 3.4em;
+}

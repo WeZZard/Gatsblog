@@ -37,6 +37,7 @@ const _createPageForHome = async (graphql, actions) => {
                             category
                             slug
                         }
+                        excerpt
                     }
                 }
             }

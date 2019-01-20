@@ -2,7 +2,7 @@ import React from 'react'
 import { StaticQuery, graphql } from 'gatsby'
 import styles from './ContentFooter.module.scss'
 
-class ContentFooterMessage extends React.Component {
+class ContentFooterItem extends React.Component {
     render() {
         const { message } = this.props;
 
@@ -24,7 +24,7 @@ class ContentFooter extends React.Component {
                 render={data => {
                     const footerMessages = data.site.siteMetadata.footerMessages;
                     return footerMessages.map((footerMessage) => (
-                        <ContentFooterMessage message={footerMessage} />
+                        <ContentFooterItem message={footerMessage} />
                     ))
                 }}
             />
@@ -33,9 +33,9 @@ class ContentFooter extends React.Component {
         return (
             <div className={styles.contentFooter}>
                 {customFooterMessages}
-                <ContentFooterMessage
+                <ContentFooterItem
                     message={
-                        'Built with <a href="https://www.gatsbyjs.org">Gatsby.js'
+                        'Built with <a href="https://www.gatsbyjs.org">Gatsby.js</a>.'
                     }
                 />
             </div>
