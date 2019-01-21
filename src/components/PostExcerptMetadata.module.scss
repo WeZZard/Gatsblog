@@ -1,11 +1,11 @@
-@import "../styles/colors";
+@import '../styles/colors';
 
 .postExcerptMetadata {
 
 }
 
 .postExcerptMetadataLine {
-    margin-bottom: 2.1em;
+    margin-bottom: 1.6em;
 
     &:last-child {
         margin-bottom: 0;
@@ -16,31 +16,16 @@
     display: inline-block;
 
     &:after {
-        margin-left: 0.8em;
-        margin-right: 0.8em;
-        content: "•";
         color: $gray89;
+        content: '•';
+        margin-left: .8em;
+        margin-right: .8em;
     }
 
     &:last-child {
         &:after {
-            margin: 0;
             content: none;
+            margin: 0;
         }
     }
-}
-
-.postExcerptMetadata time {
-    font-size: 1.1em;
-    font-weight: 500;
-    line-height: 0.72;
-    text-transform: uppercase;
-    color: $gray55;
-}
-
-.postExcerptMetadata span {
-    font-size: 1.1em;
-    font-weight: 500;
-    line-height: 0.72;
-    text-transform: uppercase;
 }

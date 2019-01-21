@@ -26,6 +26,7 @@ const _createPageForHome = async (graphql, actions) => {
                 }
             }
             allMarkdownRemark(
+                filter: { fields: { documentType: {eq: "Post" } } }
                 sort: { fields: [fields___birthTime], order: DESC}
             ) {
                 edges {
@@ -51,9 +52,9 @@ const _createPageForHome = async (graphql, actions) => {
             ? documents.length / postPerPage
             : documents.length / postPerPage + 1;
 
-    const getTitle = (index) => {
+    const getPageTitle = (index) => {
         if (index === 0) {
-            return `All Posts`
+            return null
         }
         return `All Posts (Page ${index})`
     };
@@ -76,8 +77,8 @@ const _createPageForHome = async (graphql, actions) => {
             context: {
                 itemName: `PostExcerpt`,
                 layoutName: `PostListLayout`,
-                title: getTitle(pageIndex),
-                showsTitle: false,
+                pageTitle: getPageTitle(pageIndex),
+                showsPageTitle: false,
                 keywords: siteKeywords,
                 description: siteDescription,
                 items: items,
@@ -160,6 +161,7 @@ const _createPageForCategories = async (graphql, actions) => {
                     postCountPerPageInCategory: postPerPage
                 },
             },
+            allCategory: { edges: categories },
         },
     } = await graphql(`
         {
@@ -168,15 +170,6 @@ const _createPageForCategories = async (graphql, actions) => {
                     postCountPerPageInCategory
                 }
             }
-        }
-    `);
-
-    const {
-        data: {
-            allCategory: { edges: categories },
-        },
-    } = await graphql(`
-        {
             allCategory {
                 edges {
                     node {
@@ -342,6 +335,7 @@ const _createPageForTags = async (graphql, actions) => {
                     postCountPerPageInTag: postsPerPage
                 },
             },
+            allTag: { edges: tags },
         },
     } = await graphql(`
         {
@@ -350,15 +344,6 @@ const _createPageForTags = async (graphql, actions) => {
                     postCountPerPageInTag
                 }
             }
-        }
-    `);
-
-    const {
-        data: {
-            allTag: { edges: tags },
-        },
-    } = await graphql(`
-        {
             allTag {
                 edges {
                     node {

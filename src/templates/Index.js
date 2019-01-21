@@ -33,16 +33,16 @@ class Index extends React.Component {
 
     render() {
         const { pageContext } = this.props;
-        const { itemName, layoutName, items, paginationInfo, title, subtitle, showsTitle, description, keywords} = pageContext;
+        const { itemName, layoutName, items, paginationInfo, pageTitle, subtitle, showsPageTitle, description, keywords} = pageContext;
 
         const Item = this._getItem(itemName);
         const Layout = this._getLayout(layoutName);
 
-        const itemComponents = items.map(item => React.createElement(Item, {item: item}));
+        const itemComponents = items.map((item, itemIndex) => React.createElement(Item, {item: item, key: `${itemIndex}`}));
         const layoutComponent = React.createElement(Layout, {children: itemComponents});
 
-        return <Main title={title} description={description} keywords={keywords}>
-            <ContentTitle title={title} subtitle={subtitle} showsTitle={showsTitle}/>
+        return <Main pageTitle={pageTitle} description={description} keywords={keywords}>
+            <ContentTitle title={pageTitle} subtitle={subtitle} showsPageTitle={showsPageTitle}/>
             {layoutComponent}
             <Paginator paginationInfo={paginationInfo}/>
         </Main>;

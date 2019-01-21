@@ -1,29 +1,44 @@
-@import "../styles/colors";
+@import '../styles/colors';
 
 .taxonomy {
     display: inline-block;
+
+    span {
+        font-size: 1.1em;
+        font-weight: 500;
+        line-height: 1.18em;
+        text-transform: uppercase;
+    }
 }
 
 .taxonomyName {
     color: $gray55;
+    display: inline-block;
 
-    &:after {
-        content: "|";
-        margin-left: 0.5em;
-        margin-right: 0.5em;
+    &::after {
+        content: '|';
+        margin-left: .5em;
+        margin-right: .5em;
     }
 }
 
 .taxonomyItemList {
+    display: inline-block;
     margin: 0;
     padding: 0;
-    display: inline-block;
 }
 
 .taxonomyItem {
-    color: $gray34;
-    margin: 0;
-    margin-right: 0.5em;
-    padding: 0;
     display: inline-block;
+    margin: 0;
+    margin-right: .5em;
+    padding: 0;
+
+    a {
+        text-decoration: none;
+
+        &:hover {
+            transition: color .3s;
+        }
+    }
 }

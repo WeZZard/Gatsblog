@@ -111,12 +111,9 @@ module.exports = {
             options: {
                 google: {
                     families: [
-                        `Source Sans Pro`,
-                        `Libre Baskerville`,
-                        `Roboto`,
-                        `Noto Sans TC`,
-                        `Noto Serif TC`,
-                        `Source Code Pro`,
+                        `Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i`,
+                        `Roboto Mono:100,100i,300,300i,400,400i,500,500i,700,700i`,
+                        `Gentium Book Basic:400,400i,700,700i`,
                     ]
                 }
             }

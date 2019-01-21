@@ -10,8 +10,6 @@ class PostExcerpt extends React.Component {
 
         const subtitleComponent =  item.node.fields.subtitle !== "" ? <h2>{item.node.fields.subtitle}</h2> : null;
 
-        console.log(item.node.excerpt);
-
         return <section className={styles.postExcerptItem}>
             <header className={styles.postExcerptHeader}>
                 <Link to={item.node.fields.slug}>

@@ -39,9 +39,16 @@
     "typography-theme-wordpress-2016": "^0.15.10"
   },
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "babel-preset-gatsby": "^0.1.6",
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.12.4",
-    "prettier": "^1.14.2"
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^23.6.0",
+    "prettier": "^1.14.2",
+    "react-test-renderer": "^16.7.0"
   },
   "homepage": "https://github.com/WeZZard/blog#readme",
   "keywords": [
@@ -56,7 +63,7 @@
   "scripts": {
     "dev": "gatsby develop",
     "lint": "eslint --ext .js,.jsx --ignore-pattern public .",
-    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
+    "test": "jest",
     "format": "prettier --trailing-comma es5 --no-semi --single-quote --write 'src/**/*.js' 'src/**/*.md'",
     "develop": "gatsby develop",
     "start": "npm run develop",

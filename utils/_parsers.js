@@ -16,7 +16,7 @@ const _standalonePagePathPattern = /(.+)\.md$/;
 
 const _taxonomyPattern = /^[\w\-_]+$/;
 
-const _populatePostMetadataForNodeWithMatch = (node, match, category) => {
+const _populatePostMetadataForNodeWithMatch = (node, match) => {
     const year = match[1];
     const month = match[2];
     const day = match[3];
@@ -63,7 +63,7 @@ const _populatePostMetadataForNodeWithMatch = (node, match, category) => {
 
     return {
         documentType: 'Post',
-        slug: `${category}/${slugYear}/${slugMonth}/${slugDay}/${postName}`,
+        slug: `${slugYear}/${slugMonth}/${slugDay}/${postName}`,
         birthTime: birthTime,
     }
 };
@@ -103,6 +103,13 @@ const _parseCategoryForMarkdownNode = (node) => {
     }
 };
 
+const _parseTitleForMarkdownNode = (node) =>  {
+    if (node.frontmatter.title) {
+        return node.frontmatter.title;
+    }
+    return undefined;
+};
+
 module.exports._parseMetadataForMarkdownNode = (node, getNode) => {
     assert(node.internal.type === 'MarkdownRemark');
 
@@ -113,21 +120,21 @@ module.exports._parseMetadataForMarkdownNode = (node, getNode) => {
     const tags = _parseTagsForMarkdownNode(node);
     const category = _parseCategoryForMarkdownNode(node);
 
-    const title = node.frontmatter.title;
+    const title = _parseTitleForMarkdownNode(node);
     const subtitle = node.frontmatter.subtitle || "";
 
     if (parentNode.sourceInstanceName === "posts") {
         const wrappedPostMatch = _wrappedPostPathPattern.exec(relativePath);
         const standalonePostMatch = _standalonePostPathPattern.exec(relativePath);
         if (wrappedPostMatch !== null) {
-            let metadata = _populatePostMetadataForNodeWithMatch(node, wrappedPostMatch, category);
+            let metadata = _populatePostMetadataForNodeWithMatch(node, wrappedPostMatch);
             metadata.category = category;
             metadata.tags = tags;
             metadata.title = title || metadata.slug;
             metadata.subtitle = subtitle;
             return metadata
         } else if (standalonePostMatch !== null) {
-            let metadata = _populatePostMetadataForNodeWithMatch(node, standalonePostMatch, category);
+            let metadata = _populatePostMetadataForNodeWithMatch(node, standalonePostMatch);
             metadata.category = category;
             metadata.tags = tags;
             metadata.title = title || metadata.slug;
@@ -152,7 +159,7 @@ module.exports._parseMetadataForMarkdownNode = (node, getNode) => {
 
         return {
             documentType: 'Page',
-            slug: `${category}/${pageName}`,
+            slug: `${pageName}`,
             birthTime: parentNode.birthTime,
             title: title || pageName,
             subtitle: subtitle,

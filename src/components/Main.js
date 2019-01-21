@@ -8,11 +8,11 @@ import SEO from './SEO'
 
 class Main extends React.Component {
     render() {
-        const { navigationStack, lang, title, description, keywords, children } = this.props;
+        const { navigationStack, lang, pageTitle, description, keywords, children } = this.props;
 
         return (
             <div className={styles.appContainer}>
-                <SEO lang={lang} title={title} description={description} keywords={keywords}/>
+                <SEO lang={lang} pageTitle={pageTitle} description={description} keywords={keywords}/>
                 <section className={styles.controlWrapper}>
                     <header className={styles.navigationContainer}>
                         <NavigationBar navigationStack={navigationStack}/>

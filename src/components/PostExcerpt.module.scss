@@ -2,11 +2,11 @@
 @import '../styles/colors';
 
 .postExcerptItem {
-    margin-top: 0;
     margin-bottom: 5.5em;
+    margin-top: 0;
 
     &:first-child {
-        margin-top: 5.5em;
+        margin-top: 5.1em;
     }
 
     &:last-child {
@@ -15,46 +15,42 @@
 }
 
 .postExcerptHeader {
+    a {
+        text-decoration: none;
+    }
 
-}
+    h1 {
+        color: $gray21;
+        display: inline-block;
+        font-size: 1.8em;
+        line-height: 1.17em;
+        margin: 0;
+    }
 
-.postExcerptHeader a {
-    text-decoration: none;
-}
-
-.postExcerptHeader h1 {
-    display: inline-block;
-    font-size: 1.8em;
-    line-height: 0.72em;
-    color: $gray21;
-    margin: 0;
-}
-
-.postExcerptHeader h2 {
-    display: inline-block;
-    font-size: 1.3em;
-    line-height: 1em;
-    color: $gray55;
-    margin: 0;
+    h2 {
+        display: inline-block;
+        font-size: 1.1em;
+        line-height: 1.18em;
+        margin: 0;
+    }
 }
 
 .postExcerptBody {
-    margin-top: 2.1em;
-}
+    margin-top: 1.1em;
 
-.postExcerptBody a {
-    color: $gray55;
-    text-decoration: none;
-}
+    a {
+        color: $gray55;
+        text-decoration: none;
+    }
 
-.postExcerptBody p {
-    margin: 0;
-    margin-top: -0.28;
-    font-family: $font-body-serif;
-    font-size: 1.8em;
-    line-height: 1.6em;
+    p {
+        font-family: $font-body-serif;
+        font-size: 1.8em;
+        line-height: 1.61em;
+        margin: 0;
+    }
 }
 
 .postExcerptFooter {
-    margin-top: 3.4em;
+    margin-top: 2.2em;
 }

@@ -26,12 +26,12 @@ class SiteFooter extends React.Component {
                     const slogans = data.site.siteMetadata.slogans;
                     const siteOwner = data.site.siteMetadata.siteOwner;
                     const sloganComponents = slogans.map((footerMessage) => (
-                        <Slogan message={footerMessage} />
+                        <Slogan key={footerMessage} message={footerMessage} />
                     ));
 
                     return <React.Fragment>
                         {sloganComponents}
-                        <div className={styles.copyrightItem}>
+                        <div key="copyright" className={styles.copyrightItem}>
                             <span>
                                 {`© ${new Date().getFullYear()} ${siteOwner} All Copyright Reserved.`}
                             </span>

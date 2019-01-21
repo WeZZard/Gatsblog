@@ -1,0 +1,10 @@
+@import '../styles/colors';
+
+.category a  {
+    color: $primary-color;
+
+    &:hover {
+        color: darken($primary-color, 0.3);
+        transition: color .3s;
+    }
+}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 
-const SEO = ({ description: pageDescription, lang, meta, keywords, title }) => {
+const SEO = ({ description: pageDescription, lang, meta, keywords, pageTitle}) => {
     return (
         <StaticQuery
             query={detailsQuery}
@@ -21,13 +21,15 @@ const SEO = ({ description: pageDescription, lang, meta, keywords, title }) => {
 
                 const description = pageDescription || siteDescription;
 
+                const title = (pageTitle !== null && pageTitle !== undefined) ? `${pageTitle} | ${siteTitle}` : siteTitle;
+
                 return (
                     <Helmet
                         htmlAttributes={{
                             lang,
                         }}
                         title={title}
-                        titleTemplate={`%s | ${siteTitle}`}
+                        titleTemplate={`%s`}
                         meta={[
                             {
                                 name: `description`,
@@ -35,7 +37,7 @@ const SEO = ({ description: pageDescription, lang, meta, keywords, title }) => {
                             },
                             {
                                 property: `og:title`,
-                                content: title,
+                                content: pageTitle,
                             },
                             {
                                 property: `og:description`,
@@ -55,7 +57,7 @@ const SEO = ({ description: pageDescription, lang, meta, keywords, title }) => {
                             },
                             {
                                 name: `twitter:title`,
-                                content: title,
+                                content: pageTitle,
                             },
                             {
                                 name: `twitter:description`,
@@ -89,7 +91,7 @@ SEO.propTypes = {
     lang: PropTypes.string,
     meta: PropTypes.array,
     keywords: PropTypes.arrayOf(PropTypes.string),
-    title: PropTypes.string.isRequired,
+    pageTitle: PropTypes.string,
 };
 
 export default SEO

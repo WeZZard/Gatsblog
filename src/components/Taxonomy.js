@@ -5,11 +5,16 @@ import TaxonomyItem from './TaxonomyItem'
 
 class Taxonomy extends React.Component {
     render() {
-        const { name, taxonomies } = this.props;
-        const taxonomyItems = taxonomies.map((taxonomy) => <li className={styles.taxonomyItem}><TaxonomyItem taxonomy={taxonomy}/></li>);
+        const { name, className, taxonomies } = this.props;
 
-        return <div className={styles.taxonomy}>
-            <span className={styles.taxonomyName}>{name}</span>
+        const taxonomyItems = taxonomies.map((taxonomy, taxonomyNumber) =>
+            <li key={`${taxonomyNumber}`} className={styles.taxonomyItem}><TaxonomyItem taxonomy={taxonomy}/></li>
+        );
+
+        return <div className={[styles.taxonomy, className].join(" ")}>
+            <div className={styles.taxonomyName}>
+                <span>{name}</span>
+            </div>
             <ul className={styles.taxonomyItemList}>
                 {taxonomyItems}
             </ul>

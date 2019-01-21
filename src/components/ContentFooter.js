@@ -23,8 +23,8 @@ class ContentFooter extends React.Component {
                 query={_contentFooterMessagesQuery}
                 render={data => {
                     const footerMessages = data.site.siteMetadata.footerMessages;
-                    return footerMessages.map((footerMessage) => (
-                        <ContentFooterItem message={footerMessage} />
+                    return footerMessages.map((footerMessage, index) => (
+                        <ContentFooterItem key={`${index}`} message={footerMessage} />
                     ))
                 }}
             />

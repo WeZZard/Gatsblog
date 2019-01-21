@@ -56,7 +56,7 @@ class NavigationItems extends React.Component {
                 const navigationItems = systemNavigationItems.concat(customizedCategoryNavigationItems).concat(userNavigationItems);
 
                 const components = navigationItems.map((navigationItem) => {
-                    return <li><NavigationItem navigationItem={navigationItem}/></li>
+                    return <li key={navigationItem.slug}><NavigationItem navigationItem={navigationItem}/></li>
                 });
 
                 return <React.Fragment>
