@@ -4,7 +4,8 @@ module.exports = {
         siteOwner: `WeZZard`,
         description: ``,
         keywords: [
-            `WeZZard`
+            `WeZZard`,
+            `Pieces of My Soul`
         ],
         siteUrl: `https://wezzard.netlify.com/`,
         social: {
@@ -25,13 +26,13 @@ module.exports = {
                 weight: 0,
             },
         ],
-        footerMessages: [`Freiheit ist Wille, Handeln ist Fähigkeit.`],
         slogans: [
             `I'm WeZZard`,
             `Making Software`,
             `Composing Music`,
             `Designing UX`,
         ],
+        footerMessages: [`Freiheit ist Wille, Handeln ist Fähigkeit.`],
         postCountPerPageInHome: 8,
         postCountPerPageInCategory: 8,
         tagCountPerPageInTagIndex: 8,
@@ -42,14 +43,14 @@ module.exports = {
             resolve: `gatsby-source-filesystem`,
             options: {
                 path: `${__dirname}/content/_posts`,
-                name: `posts`,
+                name: `Post`,
             },
         },
         {
             resolve: `gatsby-source-filesystem`,
             options: {
                 path: `${__dirname}/content`,
-                name: `content`,
+                name: `Page`,
                 ignore: [`${__dirname}/content/_posts/*`],
             },
         },
@@ -57,17 +58,39 @@ module.exports = {
             resolve: `gatsby-source-filesystem`,
             options: {
                 path: `${__dirname}/assets`,
-                name: `assets`,
+                name: `Asset`,
             },
         },
         {
-            resolve: `gatsby-transformer-remark`,
+            resolve: `gatsby-mdx`,
             options: {
-                plugins: [
+                extensions: ['.mdx', '.md'],
+                gatsbyRemarkPlugins: [
+                    {
+                        resolve: `gatsby-remark-copy-linked-files`,
+                        options: { },
+                    },
                     {
                         resolve: `gatsby-remark-images`,
                         options: {
                             maxWidth: 590,
+                            sizeByPixelDensity: true,
+                        },
+                    },
+                    {
+                        resolve: `gatsby-remark-smartypants`,
+                        options: { },
+                    },
+                    {
+                        resolve: `gatsby-remark-katex`,
+                        options: { },
+                    },
+                    {
+                        resolve: `gatsby-remark-prismjs`,
+                        options: {
+                            classPrefix: 'language-',
+                            inlineCodeMarker: null,
+                            aliases: {},
                         },
                     },
                     {
@@ -76,13 +99,13 @@ module.exports = {
                             wrapperStyle: `margin-bottom: 1.0725rem`,
                         },
                     },
-                    `gatsby-remark-prismjs`,
-                    `gatsby-remark-copy-linked-files`,
-                    `gatsby-remark-smartypants`,
+                    {
+                        resolve: `gatsby-remark-autolink-headers`,
+                        options: { },
+                    },
                 ],
             },
         },
-        `gatsby-plugin-sass`,
         `gatsby-transformer-sharp`,
         `gatsby-plugin-sharp`,
         {
@@ -95,17 +118,18 @@ module.exports = {
         {
             resolve: `gatsby-plugin-manifest`,
             options: {
-                name: `Gatsby Starter Blog`,
-                short_name: `GatsbyJS`,
+                name: `Pieces of My Soul`,
+                short_name: `WeZZard`,
                 start_url: `/`,
                 background_color: `#ffffff`,
-                theme_color: `#663399`,
+                theme_color: `#3d4260`,
                 display: `minimal-ui`,
                 icon: `assets/gatsby-icon.png`,
             },
         },
         `gatsby-plugin-offline`,
         `gatsby-plugin-react-helmet`,
+        `gatsby-plugin-sass`,
         {
             resolve: 'gatsby-plugin-web-font-loader',
             options: {

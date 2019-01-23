@@ -8,8 +8,13 @@
     "url": "https://github.com/WeZZard/blog/issues"
   },
   "dependencies": {
+    "@mdx-js/mdx": "^0.16.6",
+    "@mdx-js/tag": "^0.16.6",
+    "acorn": "^6.0.5",
+    "debug": "^4.1.1",
     "gatsby": "^2.0.91",
     "gatsby-image": "^2.0.26",
+    "gatsby-mdx": "^0.3.5",
     "gatsby-plugin-feed": "^2.0.8",
     "gatsby-plugin-google-analytics": "^2.0.9",
     "gatsby-plugin-manifest": "^2.0.13",
@@ -19,31 +24,29 @@
     "gatsby-plugin-sass": "^2.0.7",
     "gatsby-plugin-sharp": "^2.0.17",
     "gatsby-plugin-web-font-loader": "^1.0.4",
+    "gatsby-remark-autolink-headers": "^2.0.12",
     "gatsby-remark-copy-linked-files": "^2.0.5",
     "gatsby-remark-images": "^2.0.4",
+    "gatsby-remark-katex": "^3.0.1",
     "gatsby-remark-prismjs": "^3.2.0",
     "gatsby-remark-responsive-iframe": "^2.0.5",
     "gatsby-remark-smartypants": "^2.0.5",
     "gatsby-source-filesystem": "^2.0.16",
-    "gatsby-transformer-remark": "^2.2.0",
     "gatsby-transformer-sharp": "^2.1.10",
+    "katex": "^0.10.0",
     "node-sass": "^4.11.0",
     "prismjs": "^1.15.0",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
     "react-helmet": "^5.2.0",
-    "react-typography": "^0.16.13",
-    "typeface-merriweather": "0.0.43",
-    "typeface-montserrat": "0.0.43",
-    "typography": "^0.16.17",
-    "typography-theme-wordpress-2016": "^0.15.10"
+    "remark-parse": "^5.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "babel-preset-gatsby": "^0.1.6",
-    "eslint": "^4.19.1",
+    "eslint": "^5.12.1",
     "eslint-plugin-react": "^7.12.4",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^23.6.0",
@@ -52,7 +55,9 @@
   },
   "homepage": "https://github.com/WeZZard/blog#readme",
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "blog",
+    "WeZZard"
   ],
   "license": "MIT",
   "main": "n/a",
@@ -61,11 +66,10 @@
     "url": "git+https://github.com/WeZZard/blog.git"
   },
   "scripts": {
-    "dev": "gatsby develop",
     "lint": "eslint --ext .js,.jsx --ignore-pattern public .",
     "test": "jest",
-    "format": "prettier --trailing-comma es5 --no-semi --single-quote --write 'src/**/*.js' 'src/**/*.md'",
-    "develop": "gatsby develop",
+    "format": "prettier --trailing-comma es5 --no-semi --single-quote --write 'src/**/*.js' 'src/**/*.md' 'src/**/*.mdx'",
+    "develop": "gatsby develop -H 0.0.0",
     "start": "npm run develop",
     "build": "gatsby build",
     "fix-semi": "eslint --quiet --ignore-pattern node_modules --ignore-pattern public --parser babel-eslint --no-eslintrc --rule '{\"semi\": [2, \"never\"], \"no-extra-semi\": [2]}' --fix gatsby-node.js"

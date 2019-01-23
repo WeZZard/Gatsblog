@@ -7,7 +7,7 @@ module.exports = {
     "react",
   ],
   "globals": {
-    "graphql": false,
+    "graphql": true,
   },
   "parserOptions": {
     "sourceType": "module",
@@ -16,4 +16,4 @@ module.exports = {
       "jsx": true,
     },
   }
-}
+};

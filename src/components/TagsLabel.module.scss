@@ -1,7 +1,7 @@
 @import '../styles/colors';
 
 .tags a  {
-    color: $gray34;
+    color: $gray-34;
 
     &:hover {
         color: darken($primary-color, 0.2);

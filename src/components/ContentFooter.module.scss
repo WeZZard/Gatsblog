@@ -3,16 +3,16 @@
 .contentFooter {
     margin-bottom: 3.4em;
     margin-top: 3.4em;
-    color: $gray55;
+    color: $gray-55;
 }
 
 .contentFooter a {
     &:hover {
-        color: $gray8;
+        color: $gray-8;
     }
 
     &:visited {
-        color: $gray55;
+        color: $gray-55;
     }
 }
 
