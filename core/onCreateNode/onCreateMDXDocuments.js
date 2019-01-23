@@ -9,12 +9,13 @@ const onCreateMDXDocuments = (arg) => {
     const {
         node,
         actions,
+        getNode,
         getNodesByType,
         createNodeId,
-        createContentDigest
+        createContentDigest,
     } = arg;
 
-    const { createNode } = actions;
+    const { createNode, createParentChildLink } = actions;
 
     if (node.internal.type === 'Mdx') {
         const metadata = new MDXMetadata(arg);
@@ -53,9 +54,11 @@ const onCreateMDXDocuments = (arg) => {
                         category: category,
                         slug: metadata.slug,
                     },
+                    getNode: getNode,
                     createNode: createNode,
                     createNodeId: createNodeId,
                     createContentDigest: createContentDigest,
+                    createParentChildLink: createParentChildLink,
                 };
                 createNodeOfPost(postArgs);
                 break;
@@ -71,9 +74,11 @@ const onCreateMDXDocuments = (arg) => {
                         category: category,
                         slug: metadata.slug,
                     },
+                    getNode: getNode,
                     createNode: createNode,
                     createNodeId: createNodeId,
                     createContentDigest: createContentDigest,
+                    createParentChildLink: createParentChildLink,
                 };
                 createNodeOfPage(pageArgs);
                 break;

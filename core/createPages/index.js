@@ -1,19 +1,19 @@
-const createPageOfCategory = require('./createPageOfCategory');
 const createPageOfHome = require('./createPageOfHome');
-const createPageOfPages = require('./createPageOfPages');
 const createPageOfPost = require('./createPageOfPost');
+const createPageOfPages = require('./createPageOfPages');
+const createPageOfCategory = require('./createPageOfCategory');
 const createPageOfTag = require('./createPageOfTag');
 const createPageOfTagIndex = require('./createPageOfTagIndex');
 
 const _functions = [
-    createPageOfCategory,
     createPageOfHome,
-    createPageOfPages,
-    createPageOfPost,
-    createPageOfTag,
-    createPageOfTagIndex,
+    // createPageOfPost,
+    // createPageOfPages,
+    // createPageOfCategory,
+    // createPageOfTag,
+    // createPageOfTagIndex,
 ];
 
 module.exports = (arg) => {
-    // _functions.forEach(fn => fn(arg));
+    _functions.forEach(_ => _(arg));
 };

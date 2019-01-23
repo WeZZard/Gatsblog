@@ -4,9 +4,11 @@ module.exports = function (args) {
     const {
         parent,
         page,
+        getNode,
         createNode,
         createNodeId,
-        createContentDigest
+        createContentDigest,
+        createParentChildLink
     } = args;
 
     const nodeId = createNodeId(`page-${page.slug}`);
@@ -23,6 +25,8 @@ module.exports = function (args) {
 
     debug(`Create page node: ${page}`);
     createNode(nodeData);
+
+    createParentChildLink({parent: getNode(parent), child: getNode(nodeId)});
 
     return nodeId;
 };

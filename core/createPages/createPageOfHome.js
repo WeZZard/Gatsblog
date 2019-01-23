@@ -15,7 +15,7 @@ module.exports = async (arg) => {
                     description: siteDescription
                 },
             },
-            allMarkdownRemark: { edges: documents },
+            allPost: { edges: documents },
         },
     } = await graphql(`
         {
@@ -25,20 +25,16 @@ module.exports = async (arg) => {
                     description
                 }
             }
-            allMarkdownRemark(
-                filter: { fields: { documentType: {eq: "Post" } } }
+            allPost(
                 sort: { fields: [fields___birthTime], order: DESC}
             ) {
                 edges {
-                    node {
-                        fields {
-                            title
-                            birthTime
-                            tags
-                            category
-                            slug
-                        }
-                        excerpt
+                    node 
+                        title
+                        createdTime
+                        tags
+                        category
+                        slug
                     }
                 }
             }
