@@ -51,7 +51,7 @@ module.exports = async (arg) => {
                 {
                     allMarkdownRemark(
                         filter: { fields: { tags: { in: ["${tag.node.id}"] } } }
-                        sort: { fields: [fields___birthTime], order: DESC}
+                        sort: { fields: [fields___birthTime], order: DESC }
                         limit: 5
                     ) {
                         edges {

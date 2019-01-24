@@ -9,34 +9,34 @@ import PostExcerpt from '../components/PostExcerpt';
 import TagSummary from '../components/TagSummary';
 
 class Index extends React.Component {
-    static _getItem(itemName) {
-        switch (itemName) {
+    static _getItemComponentByName(itemComponentName) {
+        switch (itemComponentName) {
             case `PostExcerpt`:
                 return PostExcerpt;
             case `TagSummary`:
                 return TagSummary;
             default:
-                throw `Unknown item name: "${itemName}".`;
+                throw `Unknown item component name: "${itemComponentName}".`;
         }
     }
 
-    static _getLayout(layoutName) {
-        switch (layoutName) {
+    static _getLayoutComponentByName(layoutComponentName) {
+        switch (layoutComponentName) {
             case `PostListLayout`:
                 return PostListLayout;
             case `TagListLayout`:
                 return TagListLayout;
             default:
-                throw `Unknown layout name: "${layoutName}".`;
+                throw `Unknown layout component name: "${layoutComponentName}".`;
         }
     }
 
     render() {
         const { pageContext } = this.props;
-        const { itemName, layoutName, items, paginationInfo, pageTitle, subtitle, showsPageTitle, description, keywords} = pageContext;
+        const { itemComponentName, layoutComponentName, items, paginationInfo, pageTitle, subtitle, showsPageTitle, description, keywords} = pageContext;
 
-        const Item = Index._getItem(itemName);
-        const Layout = Index._getLayout(layoutName);
+        const Item = Index._getItemComponentByName(itemComponentName);
+        const Layout = Index._getLayoutComponentByName(layoutComponentName);
 
         const itemComponents = items.map((item, itemIndex) => React.createElement(Item, {item: item, key: `${itemIndex}`}));
         const layoutComponent = React.createElement(Layout, {children: itemComponents});
