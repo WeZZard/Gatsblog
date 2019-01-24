@@ -11,16 +11,14 @@ class PostExcerptMetadata extends React.Component {
     render() {
         const { post } = this.props;
 
-        const birthTime = new Date(post.node.fields.birthTime);
-        const birthTimeComponent = <TimeLabel dateTimeString={birthTime}/>;
+        const createdTimeComponent = <TimeLabel dateTime={post.createdTime}/>;
 
-        const category = post.node.fields.category;
-        const categoryComponent = category !== "" ? (<CategoryLabel category={category}/>) : null;
+        const categoryComponent = <CategoryLabel category={post.category}/>;
 
-        const tags = post.node.fields.tags;
+        const tags = post.tags;
         const tagsComponent = tags.length > 0 ? (<TagsLabel tags={tags}/>) : null;
 
-        const lines = [[birthTimeComponent, categoryComponent], [tagsComponent]];
+        const lines = [[createdTimeComponent, categoryComponent], [tagsComponent]];
 
         lines.filter((line) => {
             assert(Array.isArray(line));

@@ -73,7 +73,7 @@ test('MDXDocumentRelativePathMetadata creates metadata for standalone Post relat
       name: `post-name`,
       isIndex: false,
       createdTime: new Date(`1990-01-02`),
-      slug: `post-name`
+      slug: `1990-01-02-post-name`
     });
 });
 
@@ -83,7 +83,7 @@ test('MDXDocumentRelativePathMetadata creates metadata for wrapped Post relative
             name: `post-name`,
             isIndex: true,
             createdTime: new Date(`1990-01-02`),
-            slug: `post-name`
+            slug: `1990-01-02-post-name`
         });
 });
 
@@ -94,7 +94,7 @@ test('MDXDocumentRelativePathMetadata creates metadata for localized wrapped Pos
             localeIdentifier: `enUS`,
             isIndex: true,
             createdTime: new Date(`1990-01-02`),
-            slug: `post-name`
+            slug: `1990-01-02-post-name`
         });
 });
 
@@ -104,7 +104,7 @@ test('MDXDocumentRelativePathMetadata creates metadata for standalone Post relat
             name: `post-name`,
             isIndex: false,
             createdTime: new Date(`1990-01-02T04:03:02`),
-            slug: `post-name`
+            slug: `1990-01-02-post-name`
         });
 });
 
@@ -114,7 +114,7 @@ test('MDXDocumentRelativePathMetadata creates metadata for wrapped Post relative
             name: `post-name`,
             isIndex: true,
             createdTime: new Date(`1990-01-02T04:03:02`),
-            slug: `post-name`
+            slug: `1990-01-02-post-name`
         });
 });
 
@@ -124,7 +124,7 @@ test('MDXDocumentRelativePathMetadata creates metadata for wrapped Post relative
             name: `post-name`,
             isIndex: true,
             createdTime: new Date(`1990-01-02T04:03:02+08:00`),
-            slug: `post-name`
+            slug: `1990-01-02-post-name`
         });
 });
 
@@ -134,7 +134,7 @@ test('MDXDocumentRelativePathMetadata creates metadata for wrapped Post relative
             name: `post-name`,
             isIndex: true,
             createdTime: new Date(`1990-01-02T04:03:02+0800`),
-            slug: `post-name`
+            slug: `1990-01-02-post-name`
         });
 });
 

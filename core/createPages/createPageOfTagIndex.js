@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require('path');
 
 const IndexTemplate = path.resolve('src/templates/Index.js');
 

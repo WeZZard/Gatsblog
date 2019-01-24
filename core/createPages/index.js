@@ -1,5 +1,5 @@
-/*
 const createPageOfHome = require('./createPageOfHome');
+/*
 const createPageOfPost = require('./createPageOfPost');
 const createPageOfPages = require('./createPageOfPages');
 const createPageOfCategory = require('./createPageOfCategory');
@@ -8,7 +8,7 @@ const createPageOfTagIndex = require('./createPageOfTagIndex');
 */
 
 const _functions = [
-    // createPageOfHome,
+    createPageOfHome,
     // createPageOfPost,
     // createPageOfPages,
     // createPageOfCategory,

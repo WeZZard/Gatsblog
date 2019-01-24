@@ -7,8 +7,8 @@ class Taxonomy extends React.Component {
     render() {
         const { name, className, taxonomies } = this.props;
 
-        const taxonomyItems = taxonomies.map((taxonomy, taxonomyNumber) =>
-            <li key={`${taxonomyNumber}`} className={styles.taxonomyItem}><TaxonomyItem taxonomy={taxonomy}/></li>
+        const taxonomyItems = taxonomies.map((taxonomy) =>
+            <li key={`${taxonomy.slug}`} className={styles.taxonomyItem}><TaxonomyItem taxonomy={taxonomy}/></li>
         );
 
         return <div className={[styles.taxonomy, className].join(" ")}>

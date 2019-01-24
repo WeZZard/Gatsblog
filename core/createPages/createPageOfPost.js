@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require('path');
 
 const PostTemplate = path.resolve('src/templates/Post.js');
 const PageTemplate = path.resolve('src/templates/Page.js');

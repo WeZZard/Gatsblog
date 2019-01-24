@@ -9,7 +9,7 @@ import PostExcerpt from '../components/PostExcerpt';
 import TagSummary from '../components/TagSummary';
 
 class Index extends React.Component {
-    _getItem(itemName) {
+    static _getItem(itemName) {
         switch (itemName) {
             case `PostExcerpt`:
                 return PostExcerpt;
@@ -20,7 +20,7 @@ class Index extends React.Component {
         }
     }
 
-    _getLayout(layoutName) {
+    static _getLayout(layoutName) {
         switch (layoutName) {
             case `PostListLayout`:
                 return PostListLayout;
@@ -35,8 +35,8 @@ class Index extends React.Component {
         const { pageContext } = this.props;
         const { itemName, layoutName, items, paginationInfo, pageTitle, subtitle, showsPageTitle, description, keywords} = pageContext;
 
-        const Item = this._getItem(itemName);
-        const Layout = this._getLayout(layoutName);
+        const Item = Index._getItem(itemName);
+        const Layout = Index._getLayout(layoutName);
 
         const itemComponents = items.map((item, itemIndex) => React.createElement(Item, {item: item, key: `${itemIndex}`}));
         const layoutComponent = React.createElement(Layout, {children: itemComponents});

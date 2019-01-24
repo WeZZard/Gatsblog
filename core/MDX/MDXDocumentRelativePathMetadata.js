@@ -52,7 +52,9 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
         const timezoneHourOffset = match[15] || match[18];
         const timezoneMinuteOffset = match[16] || match[19];
 
-        let createdTime = `${year}-${month}-${day}`;
+        const createdDate = `${year}-${month}-${day}`;
+
+        let createdTime = createdDate;
 
         if (hour && minute && second) {
             createdTime += `T${hour}:${minute}:${second}`
@@ -65,7 +67,7 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
         }
 
         metadata.createdTime = new Date(createdTime);
-        metadata.slug = match[22] || match[26] || match[29];
+        metadata.slug = createdDate + "-" + (match[22] || match[26] || match[29]);
     }
 
     return metadata;

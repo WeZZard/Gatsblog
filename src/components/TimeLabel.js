@@ -4,22 +4,23 @@ import styles from './TimeLabel.module.scss'
 class TimeLabel extends React.Component {
     render() {
         const {
-            dateTime,
-            dateTimeString,
+            dateTime: primitiveDateTime,
             locale = `enUS`,
             localizedFormatOption = { year: 'numeric', month: 'short', day: 'numeric' }
         } = this.props;
 
-        let guardedDateTime;
+        let dateTime;
 
-        if (dateTime) {
-            guardedDateTime = dateTime;
+        if (typeof primitiveDateTime === 'string') {
+            dateTime = new Date(primitiveDateTime);
+        } else if (primitiveDateTime instanceof Date) {
+            dateTime = primitiveDateTime;
         } else {
-            guardedDateTime = new Date(dateTimeString);
+            throw `Invalid dateTime: ${primitiveDateTime}`;
         }
 
-        const isoDateTime = guardedDateTime.toISOString();
-        const localizedDateTime = guardedDateTime.toLocaleDateString(locale, localizedFormatOption);
+        const isoDateTime = dateTime.toISOString();
+        const localizedDateTime = dateTime.toLocaleDateString(locale, localizedFormatOption);
 
         return <time className={styles.time} dateTime={isoDateTime}>{localizedDateTime}</time>;
     }
