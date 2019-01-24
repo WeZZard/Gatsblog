@@ -1,9 +1,9 @@
 const createPageOfHome = require('./createPageOfHome');
 const createPageOfTags = require('./createPageOfTags');
-const createPagesForCategories = require('./createPagesForCategories');
-const createPagesForPosts = require('./createPagesForPosts');
-const createPagesForPages = require('./createPagesForPages');
-const createPagesForTags = require('./createPagesForTags');
+const createPagesForCategories = require('./createPagesForEachCategory');
+const createPagesForPosts = require('./createPagesForEachPost');
+const createPagesForPages = require('./createPagesForEachPage');
+const createPagesForTags = require('./createPagesForEachTag');
 
 const _functions = [
     createPageOfHome,

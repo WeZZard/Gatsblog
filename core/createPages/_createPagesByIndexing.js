@@ -41,9 +41,11 @@ module.exports = async (args) => {
 
     const itemsCount = primitiveItems.length;
 
-    const pagesCount = itemsCount % itemsPerPage === 0
-            ? itemsCount / itemsPerPage
-            : Math.floor(itemsCount / itemsPerPage) + 1;
+    const pagesOccupied = itemsCount % itemsPerPage === 0
+        ? itemsCount / itemsPerPage
+        : Math.floor(itemsCount / itemsPerPage) + 1;
+
+    const pagesCount = Math.max(1, pagesOccupied);
 
     for (let pageIndex = 0; pageIndex < pagesCount; pageIndex++) {
         const start = pageIndex * itemsPerPage;

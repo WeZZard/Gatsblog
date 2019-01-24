@@ -13,7 +13,7 @@ module.exports = {
                 ? `/${category.node.slug}/${pageIndex}`
                 : `/${category.node.slug}`;
         } else {
-            return `${locale.node.slug}`
+            return `/${locale.node.slug}`
                 + (pageIndex > 0
                     ? `/${category.node.slug}/${pageIndex}`
                     : `/${category.node.slug}`);

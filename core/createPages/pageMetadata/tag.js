@@ -15,8 +15,8 @@ module.exports = {
         } else {
             return `/${locale.node.slug}`
                 + (pageIndex > 0
-                    ? `${tag.node.slug}/${pageIndex}`
-                    : `${tag.node.slug}`);
+                    ? `/${tag.node.slug}/${pageIndex}`
+                    : `/${tag.node.slug}`);
         }
     },
     getPreviousPageTitle: (locale) => {
