@@ -1,7 +1,18 @@
 const debug = require('debug');
+const assert = require('assert')
+const locales = require('i18n-locales');
 
-// FIXME: Maybe we shall add a mechanism to allow user to add active locale identifiers?
-const _localeIdentifierPattern = `enUS|zhHans|zhHant|deDE|jaJP`;
+let _isLocaleIdentifierPatternInitialized = false;
+let _localeIdentifierPattern_;
+
+const _localeIdentifierPattern = () => {
+    if (!_isLocaleIdentifierPatternInitialized) {
+        _localeIdentifierPattern_ = locales.join('|');
+    }
+    assert(typeof _localeIdentifierPattern_  === 'string');
+    assert(_localeIdentifierPattern_  !== '');
+    return _localeIdentifierPattern_;
+};
 
 const _parseMetadataForRelativePathOfPost = relativePath => {
     /*
@@ -23,7 +34,7 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
 
     const standalonePostNamePattern = `(.+).mdx?`;
     const wrappedPostNamePattern = `(.+)/${indexDocumentPattern}`;
-    const localizedPostNamePattern = `(.+)/(${_localeIdentifierPattern})/${indexDocumentPattern}`;
+    const localizedPostNamePattern = `(.+)/(${_localeIdentifierPattern()})/${indexDocumentPattern}`;
     const pattern = new RegExp(
         `^`
         + `(${datePattern})` /* Year-Month-Day (required) */
@@ -91,7 +102,7 @@ const _parseMetadataForRelativePathOfPage = relativePath => {
     const rootPathPattern = documentNamePattern;
     const nonRootIndexPathPattern = `(((.+)\/)+)(index).mdx?`;
     const nonRootNonIndexPathPattern = `(((.+)\/)+(((!index).+))).mdx?`;
-    const localizedPathPattern = `(((.+)\/)+((${_localeIdentifierPattern})\/)(${documentNamePattern})`;
+    const localizedPathPattern = `(((.+)\/)+((${_localeIdentifierPattern()})\/)(${documentNamePattern})`;
     const namePattern = `^(${localizedPathPattern})|(${nonRootNonIndexPathPattern})|(${nonRootIndexPathPattern})|(${rootPathPattern}))$`;
 
     const pattern = new RegExp(`${namePattern}`);

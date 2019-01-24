@@ -8,8 +8,6 @@ class PostExcerpt extends React.Component {
     render() {
         const { item } = this.props;
 
-        console.log('PostExcerpt: ', item);
-
         const subtitleComponent =  item.subtitle !== "" ? <h2>{item.subtitle}</h2> : null;
 
         return <section className={styles.postExcerptItem}>

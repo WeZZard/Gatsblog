@@ -24,13 +24,13 @@ test('MDXDocumentRelativePathMetadata creates metadata for wrapped root Page rel
 
 test('MDXDocumentRelativePathMetadata creates metadata for localized root Page relative path', () => {
     expect(
-        MDXDocumentRelativePathMetadata(`Page`, `page-name/enUS/index.md`),
+        MDXDocumentRelativePathMetadata(`Page`, `page-name/zh/index.md`),
     ).toEqual({
         name: `page-name`,
         documentIdentifier: `page-name`,
-        localeIdentifier: `enUS`,
+        localeIdentifier: `zh`,
         isIndex: true,
-        slug: `enUS/page-name`,
+        slug: `zh/page-name`,
     });
 });
 
@@ -60,14 +60,14 @@ test('MDXDocumentRelativePathMetadata creates metadata for localized non-root Pa
     expect(
         MDXDocumentRelativePathMetadata(
             `Page`,
-            `folder/page-name/enUS/index.md`,
+            `folder/page-name/zh/index.md`,
         ),
     ).toEqual({
         name: `folder/page-name`,
         documentIdentifier: `folder/page-name`,
-        localeIdentifier: `enUS`,
+        localeIdentifier: `zh`,
         isIndex: true,
-        slug: `enUS/folder/page-name`,
+        slug: `zh/folder/page-name`,
     });
 });
 
@@ -104,15 +104,15 @@ test('MDXDocumentRelativePathMetadata creates metadata for localized wrapped Pos
     expect(
         MDXDocumentRelativePathMetadata(
             `Post`,
-            `1990-01-02-post-name/enUS/index.md`,
+            `1990-01-02-post-name/zh/index.md`,
         ),
     ).toEqual({
         name: `post-name`,
         documentIdentifier: `1990-01-02-post-name`,
-        localeIdentifier: `enUS`,
+        localeIdentifier: `zh`,
         isIndex: true,
         createdTime: new Date(`1990-01-02`),
-        slug: `enUS/1990-01-02-post-name`,
+        slug: `zh/1990-01-02-post-name`,
     });
 });
 
