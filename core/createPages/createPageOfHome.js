@@ -159,7 +159,7 @@ module.exports = async (args) => {
                         createdTime: post.node.createdTime,
                         tags: tags,
                         category: category,
-                        excerpt: mdxDocument.node.excerpt || "<i>The content is intentionally blank.</i>",
+                        excerpt: mdxDocument.node.excerpt || "<i>The content is intentionally left blank.</i>",
                         slug: post.node.slug,
                     }
                 } else {
