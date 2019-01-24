@@ -24,17 +24,16 @@ const _createPageForCategoriesForLocale = async (args) => {
         }
     `);
 
-    const itemsPerPage = getItemsPerPageInLocation(page.location, graphql);
+    const itemsPerPage = await getItemsPerPageInLocation(page.location, graphql);
 
     await Promise.all(categories.map(async (category) => {
-        const {
-            data: {
-                allPost: { edges: posts },
-            },
-        } = await graphql(`
+        const { data: { allPost } } = await graphql(`
             {
                 allPost(
-                    filter: { category: { eq: "${category.node.id}" } }
+                    filter: { 
+                        category: { eq: "${category.node.id}" }
+                        locale: { eq: "${locale.node.id}" } 
+                    }
                     sort: { fields: [createdTime], order: DESC }
                 ) {
                     edges {
@@ -53,21 +52,25 @@ const _createPageForCategoriesForLocale = async (args) => {
             }
         `);
 
-        await createPagesByIndexing({
-            graphql: graphql,
-            createPage : createPage,
-            locale: locale,
-            itemComponentName : page.itemComponentName,
-            layoutComponentName: page.layoutComponentName,
-            primitiveItems: posts,
-            itemsPerPage: itemsPerPage,
-            createItem: async (post) => await makePostExcerptPayloadWithPost(post, graphql),
-            createPageTitle: (pageIndex) => page.getPageTitle(category.node.name, pageIndex),
-            createPagePath: (pageIndex) => page.getPagePath(category.node.slug, pageIndex),
-            showsPageTitle: true,
-            previousPageTitle: page.getPreviousPageTitle,
-            nextPageTitle: page.getNextPageTitle,
-        });
+        if (allPost) {
+            const { edges: posts } = allPost;
+
+            await createPagesByIndexing({
+                graphql: graphql,
+                createPage : createPage,
+                locale: locale,
+                itemComponentName : page.itemComponentName,
+                layoutComponentName: page.layoutComponentName,
+                primitiveItems: posts,
+                itemsPerPage: itemsPerPage,
+                createItem: async (post) => await makePostExcerptPayloadWithPost(post, graphql),
+                createPageTitle: (locale, pageIndex) => page.getPageTitle(category, locale, pageIndex),
+                createPagePath: (locale, pageIndex) => page.getPagePath(category, locale, pageIndex),
+                showsPageTitle: true,
+                previousPageTitle: page.getPreviousPageTitle(locale),
+                nextPageTitle: page.getNextPageTitle(locale),
+            });
+        }
     }));
 };
 
@@ -84,6 +87,7 @@ module.exports = async (args) => {
             allLocale {
                 edges {
                     node {
+                        id
                         identifier
                         slug
                     }
@@ -92,14 +96,12 @@ module.exports = async (args) => {
         }
     `);
 
-    await Promise.all(
-        locales.map(async (locale) => {
-            const args = {
-                locale: locale,
-                graphql: graphql,
-                createPage: createPage,
-            };
-            await _createPageForCategoriesForLocale(args)
-        })
-    )
+    await Promise.all(locales.map(async (locale) => {
+        const args = {
+            locale: locale,
+            graphql: graphql,
+            createPage: createPage,
+        };
+        await _createPageForCategoriesForLocale(args)
+    }));
 };

@@ -57,11 +57,17 @@ module.exports = async (args) => {
 
         const pagePath = createPagePath(locale, pageIndex);
 
+        console.log(`Locale: ${locale.node.identifier}.`);
+        console.log(`Creating page at: ${pagePath}.`);
+
         createPage({
             path: pagePath,
             component: _IndexTemplate,
             context: {
-                locale: locale,
+                locale: {
+                    identifier: locale.node.identifier,
+                    slug: locale.node.slug,
+                },
                 itemComponentName: itemComponentName,
                 layoutComponentName: layoutComponentName,
                 pageTitle: pageTitle,

@@ -3,9 +3,8 @@ const { tag: page } = require('./pageMetadata');
 const { makePostExcerptPayloadWithPost } = require('../payload');
 const { getItemsPerPageInLocation } = require('../config');
 
-module.exports = async (args) => {
-    const { graphql, actions } = args;
-    const { createPage } = actions;
+const _createPageForTagsForLocale = async (args) => {
+    const { locale, graphql, createPage } = args;
 
     const {
         data: {
@@ -25,17 +24,18 @@ module.exports = async (args) => {
         }
     `);
 
-    const itemsPerPage = getItemsPerPageInLocation(page.location, graphql);
+    const itemsPerPage = await getItemsPerPageInLocation(page.location, graphql);
 
     await Promise.all(tags.map(async (tag) => {
         const {
-            data: {
-                allPost: { edges: posts },
-            },
+            data: { allPost },
         } = await graphql(`
             {
                 allPost(
-                    filter: { tags: { in: "${tag.node.id}" } }
+                    filter: {
+                        tags: { in: "${tag.node.id}" }
+                        locale: { eq: "${locale.node.id}" }
+                    }
                     sort: { fields: [createdTime], order: DESC }
                 ) {
                     edges {
@@ -54,19 +54,52 @@ module.exports = async (args) => {
             }
         `);
 
-        await createPagesByIndexing({
+        if (allPost) {
+            const { edges: posts } = allPost;
+
+            await createPagesByIndexing({
+                graphql: graphql,
+                createPage : createPage,
+                locale: locale,
+                itemComponentName : page.itemComponentName,
+                layoutComponentName: page.layoutComponentName,
+                primitiveItems: posts,
+                itemsPerPage: itemsPerPage,
+                createItem: async (post) => await makePostExcerptPayloadWithPost(post, graphql),
+                createPageTitle: (locale, pageIndex) => page.getPageTitle(tag, locale, pageIndex),
+                createPagePath: (locale, pageIndex) => page.getPagePath(tag, locale, pageIndex),
+                showsPageTitle: true,
+                previousPageTitle: page.getPreviousPageTitle(locale),
+                nextPageTitle: page.getNextPageTitle(locale),
+            });
+        }
+    }));
+};
+
+module.exports = async (args) => {
+    const { graphql, actions } = args;
+    const { createPage } = actions;
+
+    const { data: { allLocale: { edges: locales } } } = await graphql(`
+        {
+            allLocale {
+                edges {
+                    node {
+                        id
+                        identifier
+                        slug
+                    }
+                }
+            }
+        }
+    `);
+
+    await Promise.all(locales.map(async (locale) => {
+        const args = {
+            locale: locale,
             graphql: graphql,
-            createPage : createPage,
-            itemComponentName : page.itemComponentName,
-            layoutComponentName: page.layoutComponentName,
-            primitiveItems: posts,
-            itemsPerPage: itemsPerPage,
-            createItem: async (post) => await makePostExcerptPayloadWithPost(post, graphql),
-            createPageTitle: (pageIndex) => page.getPageTitle(tag.node.name, pageIndex),
-            createPagePath: (pageIndex) => page.getPagePath(tag.node.slug, pageIndex),
-            showsPageTitle: true,
-            previousPageTitle: page.getPreviousPageTitle,
-            nextPageTitle: page.getNextPageTitle,
-        });
+            createPage: createPage,
+        };
+        await _createPageForTagsForLocale(args)
     }));
 };

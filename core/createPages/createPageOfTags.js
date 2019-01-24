@@ -1,7 +1,7 @@
 const createPagesByIndexing = require('./_createPagesByIndexing');
 const { makeTagSummaryPayloadWithTag } = require('../payload');
 
-const _createPageForTagsForLocale = async (args) => {
+const _createPageOfTagForLocale = async (args) => {
     const { locale, graphql, createPage } = args;
 
 };
@@ -30,7 +30,7 @@ module.exports = async (args) => {
                 graphql: graphql,
                 createPage: createPage,
             };
-            await _createPageForTagsForLocale(args)
+            await _createPageOfTagForLocale(args)
         })
     )
 };

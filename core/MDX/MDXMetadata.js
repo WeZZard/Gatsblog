@@ -17,7 +17,7 @@ module.exports = function (arg) {
         lastModifiedTime: string(ISO 8601)
         tags: [string]
         category: string?
-        localIdentifier: string?
+        localeIdentifier: string?
         slug: string
     }
     */
@@ -37,7 +37,7 @@ module.exports = function (arg) {
 
         metadata.documentIdentifier = relativePathMetadata.documentIdentifier;
 
-        metadata.localIdentifier = relativePathMetadata.localeIdentifier;
+        metadata.localeIdentifier = relativePathMetadata.localeIdentifier;
 
         metadata.isIndex = relativePathMetadata.isIndex;
 
