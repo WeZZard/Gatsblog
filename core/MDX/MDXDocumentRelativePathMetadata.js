@@ -7,6 +7,7 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
     /*
   {
       name: string,
+      documentIdentifier,
       isIndex: bool,
       localeIdentifier: string?
       createdTime: Date?
@@ -67,7 +68,10 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
         }
 
         metadata.createdTime = new Date(createdTime);
-        metadata.slug = createdDate + "-" + (match[22] || match[26] || match[29]);
+        metadata.documentIdentifier = createdDate + "-" + (match[22] || match[26] || match[29]);
+        metadata.slug = metadata.localeIdentifier
+            ? `${metadata.localeIdentifier}/${metadata.documentIdentifier}`
+            : metadata.documentIdentifier
     }
 
     return metadata;
@@ -77,6 +81,7 @@ const _parseMetadataForRelativePathOfPage = relativePath => {
     /*
   {
       name: string,
+      documentIdentifier,
       isIndex: bool,
       localeIdentifier: string?
       slug: string
@@ -101,7 +106,10 @@ const _parseMetadataForRelativePathOfPage = relativePath => {
         if (match[6]) {
             metadata.localeIdentifier = match[6];
         }
-        metadata.slug = match[4] || match[19] || match[22];
+        metadata.documentIdentifier = match[4] || match[19] || match[22];
+        metadata.slug = metadata.localeIdentifier
+            ? `${metadata.localeIdentifier}/${metadata.documentIdentifier}`
+            : metadata.documentIdentifier
     }
     return metadata;
 };

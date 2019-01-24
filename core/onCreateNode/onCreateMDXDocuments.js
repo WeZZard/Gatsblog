@@ -1,8 +1,8 @@
 const MDXMetadata = require('../MDX/MDXMetadata');
-const createNodeOfPost = require('../createNode/createNodeOfPost');
-const createNodeOfPage = require('../createNode/createNodeOfPage');
-const createNodeOfTag = require('../createNode/createNodeOfTag');
-const createNodeOfCategory = require('../createNode/createNodeOfCategory');
+const createNodeForPost = require('../createNode/createNodeForPost');
+const createNodeForPage = require('../createNode/createNodeForPage');
+const createNodeForTag = require('../createNode/createNodeForTag');
+const createNodeForCategory = require('../createNode/createNodeForCategory');
 const debug = require('debug');
 
 const onCreateMDXDocuments = (arg) => {
@@ -28,7 +28,7 @@ const onCreateMDXDocuments = (arg) => {
                 createNodeId: createNodeId,
                 createContentDigest: createContentDigest,
             };
-            return createNodeOfTag(tagArgs);
+            return createNodeForTag(tagArgs);
         });
 
         const categoryArgs = {
@@ -39,7 +39,7 @@ const onCreateMDXDocuments = (arg) => {
             createContentDigest: createContentDigest,
         };
 
-        const category = createNodeOfCategory(categoryArgs);
+        const category = createNodeForCategory(categoryArgs);
 
         switch (metadata.documentType) {
             case 'Post':
@@ -60,7 +60,7 @@ const onCreateMDXDocuments = (arg) => {
                     createContentDigest: createContentDigest,
                     createParentChildLink: createParentChildLink,
                 };
-                createNodeOfPost(postArgs);
+                createNodeForPost(postArgs);
                 break;
             case 'Page':
                 const pageArgs = {
@@ -80,7 +80,7 @@ const onCreateMDXDocuments = (arg) => {
                     createContentDigest: createContentDigest,
                     createParentChildLink: createParentChildLink,
                 };
-                createNodeOfPage(pageArgs);
+                createNodeForPage(pageArgs);
                 break;
             default:
                 debug(`Unexpected document type: ${metadata.documentType}.`);

@@ -9,7 +9,8 @@ const MDXDocumentRelativePathMetadata = require('./MDXDocumentRelativePathMetada
 module.exports = function (arg) {
     /*
     {
-        documentType: string('Post', 'Page', 'LocalizedPost', 'LocalizedPage')
+        documentType: string('Post', 'Page')
+        documentIdentifier: string
         title: string
         isIndexPage: bool
         isDraft: bool
@@ -34,6 +35,8 @@ module.exports = function (arg) {
         metadata.documentType = getDocumentType(sourceInstanceName);
 
         const relativePathMetadata = new MDXDocumentRelativePathMetadata(sourceInstanceName, relativePath);
+
+        metadata.documentIdentifier = relativePathMetadata.documentIdentifier;
 
         metadata.localIdentifier = relativePathMetadata.localeIdentifier;
 
