@@ -47,6 +47,7 @@ const onCreateMDXDocuments = (arg) => {
                     parent: node.id,
                     post: {
                         title: metadata.title,
+                        documentIdentifier: metadata.documentIdentifier,
                         isDraft: metadata.isDraft,
                         createdTime: metadata.createdTime,
                         lastModifiedTime: metadata.lastModifiedTime,
@@ -67,6 +68,7 @@ const onCreateMDXDocuments = (arg) => {
                     parent: node.id,
                     page: {
                         title: metadata.title,
+                        documentIdentifier: metadata.documentIdentifier,
                         isDraft: metadata.isDraft,
                         createdTime: metadata.createdTime,
                         lastModifiedTime: metadata.lastModifiedTime,

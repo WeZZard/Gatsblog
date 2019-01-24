@@ -5,7 +5,6 @@ const {
 } = require('./MDXShims');
 const MDXDocumentRelativePathMetadata = require('./MDXDocumentRelativePathMetadata');
 
-
 module.exports = function (arg) {
     /*
     {
