@@ -68,8 +68,8 @@ module.exports = async (args) => {
         await createPagesByIndexing({
             graphql: graphql,
             createPage : createPage,
-            itemComponentName : 'TagSummary',
-            layoutComponentName: 'TagListLayout',
+            itemComponentName : 'PostExcerpt',
+            layoutComponentName: 'PostListLayout',
             primitiveItems: posts,
             itemsPerPage: postExcerptPerPage,
             createItem: async (post) => await makePostExcerpt(post, graphql),
