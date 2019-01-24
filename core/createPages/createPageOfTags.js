@@ -4,7 +4,7 @@ const {
     getTagPagePath,
 } = require("./utils");
 
-const { makeTagSummaryPayloadWithTag } = require('../makePayloads');
+const { makeTagSummaryPayloadWithTag } = require('../payload');
 
 const _createPageForTagsForLocale = async (args) => {
     const { locale, graphql, createPage } = args;

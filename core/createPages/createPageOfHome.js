@@ -4,8 +4,8 @@ const {
     getHomePagePath,
 } = require("./utils");
 
-const { makePostExcerptPayloadWithPost } = require('../makePayloads');
-const { getItemsPerPageInLocation } = require('../Config');
+const { makePostExcerptPayloadWithPost } = require('../payload');
+const { getItemsPerPageInLocation } = require('../config');
 
 const _createPageOfHomeForLocale = async (args) => {
     const { locale, graphql, createPage } = args;

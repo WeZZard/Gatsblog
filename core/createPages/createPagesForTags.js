@@ -4,8 +4,8 @@ const {
     getTagPagePath,
 } = require("./utils");
 
-const { makePostExcerptPayloadWithPost } = require('../makePayloads');
-const { getItemsPerPageInLocation } = require('../Config');
+const { makePostExcerptPayloadWithPost } = require('../payload');
+const { getItemsPerPageInLocation } = require('../config');
 
 module.exports = async (args) => {
     const { graphql, actions } = args;
@@ -32,7 +32,6 @@ module.exports = async (args) => {
     const itemsPerPage = getItemsPerPageInLocation('Tags', graphql);
 
     await Promise.all(tags.map(async (tag) => {
-
         const {
             data: {
                 allPost: { edges: posts },
