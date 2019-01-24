@@ -25,6 +25,7 @@ module.exports = async (arg) => {
             allTag {
                 edges {
                     node {
+                    id
                         name
                         slug
                     }
@@ -49,7 +50,7 @@ module.exports = async (arg) => {
             } = await graphql(`
                 {
                     allMarkdownRemark(
-                        filter: { fields: { tags: { in: ["${tag.node.name}"] } } }
+                        filter: { fields: { tags: { in: ["${tag.node.id}"] } } }
                         sort: { fields: [fields___birthTime], order: DESC}
                         limit: 5
                     ) {

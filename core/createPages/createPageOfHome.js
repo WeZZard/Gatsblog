@@ -1,11 +1,10 @@
 const path = require("path");
+const { getHomePageTitle } = require("./utils");
 
 const IndexTemplate = path.resolve('src/templates/Index.js');
 
-module.exports = async (arg) => {
+async function createPageOfHome(arg) {
     const { graphql, actions } = arg;
-
-    const { createPage } = actions;
 
     const {
         data: {
@@ -15,7 +14,7 @@ module.exports = async (arg) => {
                     description: siteDescription
                 },
             },
-            allPost: { edges: documents },
+            allPost: { edges: posts },
         },
     } = await graphql(`
         {
@@ -41,25 +40,57 @@ module.exports = async (arg) => {
         }
     `);
 
+    const { createPage } = actions;
+
     const postPerPage = 8;
 
     const pageCount =
-        documents.length % postPerPage === 0
-            ? documents.length / postPerPage
-            : documents.length / postPerPage + 1;
-
-    const getPageTitle = (index) => {
-        if (index === 0) {
-            return null
-        }
-        return `All Posts (Page ${index})`
-    };
+        posts.length % postPerPage === 0
+            ? posts.length / postPerPage
+            : posts.length / postPerPage + 1;
 
     for (let pageIndex = 0; pageIndex < pageCount; pageIndex++) {
         const start = pageIndex * postPerPage;
-        const end = Math.min(start + postPerPage, documents.length);
+        const end = Math.min(start + postPerPage, posts.length);
 
-        const items = documents.slice(start, end);
+        const postsInRange = posts.slice(start, end);
+
+        const items = postsInRange.map(post => {
+            const {
+                data: {
+                    allMdx: { edges: mdxDocuments },
+                },
+            } = await graphql(`
+                {
+                    allMdx(
+                        filter: { fields: { id: {eq: ${post.parent} } }
+                        sort: { fields: [fields___birthTime], order: DESC}
+                    ) {
+                        edges {
+                            node {
+                                excerpt
+                            }
+                        }
+                    }
+                }
+            `);
+
+            if (mdxDocuments.length === 0) {
+                throw `No relative MDX document found for post: "${post.slug}".`
+            } else if (mdxDocuments.length === 1) {
+                const mdxDocument = mdxDocuments[0];
+                return {
+                    title: post.node.title,
+                    // subtitle: post.node.subtitle,
+                    createdTime: post.node.createdTime,
+                    tags: post.node.tags,
+                    category: post.node.category,
+                    excerpt: mdxDocument.excerpt
+                }
+            } else {
+                throw `Multiple relative MDX document found for post: "${post.slug}".`
+            }
+        });
 
         let path = `/`;
 
@@ -73,7 +104,7 @@ module.exports = async (arg) => {
             context: {
                 itemName: `PostExcerpt`,
                 layoutName: `PostListLayout`,
-                pageTitle: getPageTitle(pageIndex),
+                pageTitle: getHomePageTitle(pageIndex),
                 showsPageTitle: false,
                 keywords: siteKeywords,
                 description: siteDescription,
@@ -88,3 +119,5 @@ module.exports = async (arg) => {
         })
     }
 };
+
+module.exports = createPageOfHome;

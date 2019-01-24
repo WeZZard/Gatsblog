@@ -6,5 +6,5 @@ exports.onCreateNode = (arg) => {
 };
 
 exports.createPages = (arg) => {
-    // createPages(arg);
+    createPages(arg);
 };
