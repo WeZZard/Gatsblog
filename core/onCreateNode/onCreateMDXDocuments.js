@@ -3,6 +3,7 @@ const createNodeForPost = require('../createNode/createNodeForPost');
 const createNodeForPage = require('../createNode/createNodeForPage');
 const createNodeForTag = require('../createNode/createNodeForTag');
 const createNodeForCategory = require('../createNode/createNodeForCategory');
+const createNodeForLocale = require('../createNode/createNodeForLocale');
 const debug = require('debug');
 
 const onCreateMDXDocuments = (arg) => {
@@ -41,6 +42,16 @@ const onCreateMDXDocuments = (arg) => {
 
         const category = createNodeForCategory(categoryArgs);
 
+        const localeArgs = {
+            localeIdentifier: metadata.localeIdentifier,
+            getNodesByType: getNodesByType,
+            createNode: createNode,
+            createNodeId: createNodeId,
+            createContentDigest: createContentDigest,
+        };
+
+        const locale = createNodeForLocale(localeArgs);
+
         switch (metadata.documentType) {
             case 'Post':
                 const postArgs = {
@@ -54,6 +65,7 @@ const onCreateMDXDocuments = (arg) => {
                         tags: tags,
                         category: category,
                         slug: metadata.slug,
+                        locale: locale,
                     },
                     getNode: getNode,
                     createNode: createNode,
@@ -75,6 +87,7 @@ const onCreateMDXDocuments = (arg) => {
                         tags: tags,
                         category: category,
                         slug: metadata.slug,
+                        locale: locale,
                     },
                     getNode: getNode,
                     createNode: createNode,
