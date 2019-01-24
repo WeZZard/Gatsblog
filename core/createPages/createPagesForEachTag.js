@@ -27,8 +27,6 @@ const _createPageForTagsForLocale = async (args) => {
     const itemsPerPage = await getItemsPerPageInLocation(page.location, graphql);
 
     await Promise.all(tags.map(async (tag) => {
-        console.log(`Creating tag page(${tag.node.name}) for locale: ${locale.node.identifier}`);
-
         const {
             data: { allPost },
         } = await graphql(`
@@ -73,7 +71,6 @@ const _createPageForTagsForLocale = async (args) => {
             previousPageTitle: page.getPreviousPageTitle(locale),
             nextPageTitle: page.getNextPageTitle(locale),
         });
-        console.log(`Created tag page(${tag.node.name}) for locale: ${locale.node.identifier}`);
     }));
 };
 

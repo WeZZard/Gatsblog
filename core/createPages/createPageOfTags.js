@@ -7,11 +7,11 @@ const _createPageOfTagForLocale = async (args) => {
 
     const {
         data: {
-            allCategory: { edges: categories },
+            allTag: { edges: tags },
         }
     } = await graphql(`
         {
-            allCategory {
+            allTag {
                 edges {
                     node {
                         id
@@ -25,14 +25,16 @@ const _createPageOfTagForLocale = async (args) => {
 
     const itemsPerPage = await getItemsPerPageInLocation(page.location, graphql);
 
-    await Promise.all(categories.map(async (category) => {
+    await Promise.all(tags.map(async (tag) => {
         const { data: { allPost } } = await graphql(`
             {
                 allPost(
                     filter: { 
+                        tags: { in: "${tag.node.id}" } 
                         locale: { eq: "${locale.node.id}" } 
                     }
                     sort: { fields: [createdTime], order: DESC }
+                    limit: 5
                 ) {
                     edges {
                         node {
@@ -60,9 +62,9 @@ const _createPageOfTagForLocale = async (args) => {
             layoutComponentName: page.layoutComponentName,
             primitiveItems: posts,
             itemsPerPage: itemsPerPage,
-            createItem: async (post) => await makePostExcerptPayloadWithPost(post, graphql),
-            createPageTitle: (locale, pageIndex) => page.getPageTitle(category, locale, pageIndex),
-            createPagePath: (locale, pageIndex) => page.getPagePath(category, locale, pageIndex),
+            createItem: async (tag) => await makeTagSummaryPayloadWithTag(tag, graphql),
+            createPageTitle: (locale, pageIndex) => page.getPageTitle(tag, locale, pageIndex),
+            createPagePath: (locale, pageIndex) => page.getPagePath(tag, locale, pageIndex),
             showsPageTitle: true,
             previousPageTitle: page.getPreviousPageTitle(locale),
             nextPageTitle: page.getNextPageTitle(locale),
