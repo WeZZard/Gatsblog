@@ -1,13 +1,9 @@
 const createPagesByIndexing = require('./_createPagesByIndexing');
-const {
-    getTagPageTitle,
-    getTagPagePath,
-} = require("./utils");
-
 const { makeTagSummaryPayloadWithTag } = require('../payload');
 
 const _createPageForTagsForLocale = async (args) => {
     const { locale, graphql, createPage } = args;
+
 };
 
 module.exports = async (args) => {

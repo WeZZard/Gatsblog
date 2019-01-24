@@ -1,9 +1,5 @@
 const createPagesByIndexing = require('./_createPagesByIndexing');
-const {
-    getTagPageTitle,
-    getTagPagePath,
-} = require("./utils");
-
+const { tag: page } = require('./pageMetadata');
 const { makePostExcerptPayloadWithPost } = require('../payload');
 const { getItemsPerPageInLocation } = require('../config');
 
@@ -29,7 +25,7 @@ module.exports = async (args) => {
         }
     `);
 
-    const itemsPerPage = getItemsPerPageInLocation('Tags', graphql);
+    const itemsPerPage = getItemsPerPageInLocation(page.location, graphql);
 
     await Promise.all(tags.map(async (tag) => {
         const {
@@ -61,16 +57,16 @@ module.exports = async (args) => {
         await createPagesByIndexing({
             graphql: graphql,
             createPage : createPage,
-            itemComponentName : 'PostExcerpt',
-            layoutComponentName: 'PostListLayout',
+            itemComponentName : page.itemComponentName,
+            layoutComponentName: page.layoutComponentName,
             primitiveItems: posts,
             itemsPerPage: itemsPerPage,
             createItem: async (post) => await makePostExcerptPayloadWithPost(post, graphql),
-            createPageTitle: (pageIndex) => getTagPageTitle(tag.node.name, pageIndex),
-            createPagePath: (pageIndex) => getTagPagePath(tag.node.slug, pageIndex),
+            createPageTitle: (pageIndex) => page.getPageTitle(tag.node.name, pageIndex),
+            createPagePath: (pageIndex) => page.getPagePath(tag.node.slug, pageIndex),
             showsPageTitle: true,
-            previousPageTitle: "Previous Page",
-            nextPageTitle: "Next Page",
+            previousPageTitle: page.getPreviousPageTitle,
+            nextPageTitle: page.getNextPageTitle,
         });
     }));
 };

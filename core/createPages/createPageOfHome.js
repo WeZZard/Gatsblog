@@ -1,9 +1,5 @@
 const createPagesByIndexing = require('./_createPagesByIndexing');
-const {
-    getHomePageTitle,
-    getHomePagePath,
-} = require("./utils");
-
+const { home: page } = require('./pageMetadata');
 const { makePostExcerptPayloadWithPost } = require('../payload');
 const { getItemsPerPageInLocation } = require('../config');
 
@@ -35,22 +31,22 @@ const _createPageOfHomeForLocale = async (args) => {
         }
     `);
 
-    const itemsPerPage = await getItemsPerPageInLocation('Home', graphql);
+    const itemsPerPage = await getItemsPerPageInLocation(page.location, graphql);
 
     await createPagesByIndexing({
         graphql: graphql,
         createPage : createPage,
         locale: locale,
-        itemComponentName : 'PostExcerpt',
-        layoutComponentName: 'PostListLayout',
+        itemComponentName : page.itemComponentName,
+        layoutComponentName: page.layoutComponentName,
         primitiveItems: posts,
         itemsPerPage: itemsPerPage,
         createItem: async (post) => await makePostExcerptPayloadWithPost(post, graphql),
-        createPageTitle: getHomePageTitle,
-        createPagePath: getHomePagePath,
+        createPageTitle: page.getPageTitle,
+        createPagePath: page.getPagePath,
         showsPageTitle: false,
-        previousPageTitle: "Earlier Posts",
-        nextPageTitle: "Later Posts",
+        previousPageTitle: page.getPreviousPageTitle,
+        nextPageTitle: page.getNextPageTitle,
     });
 };
 

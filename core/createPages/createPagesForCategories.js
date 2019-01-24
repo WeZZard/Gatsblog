@@ -1,9 +1,5 @@
 const createPagesByIndexing = require('./_createPagesByIndexing');
-const {
-    getCategoryPageTitle,
-    getCategoryPagePath,
-} = require("./utils");
-
+const { category: page } = require('./pageMetadata');
 const { makePostExcerptPayloadWithPost } = require('../payload');
 const { getItemsPerPageInLocation } = require('../config');
 
@@ -28,7 +24,7 @@ const _createPageForCategoriesForLocale = async (args) => {
         }
     `);
 
-    const itemsPerPage = getItemsPerPageInLocation('Category', graphql);
+    const itemsPerPage = getItemsPerPageInLocation(page.location, graphql);
 
     await Promise.all(categories.map(async (category) => {
         const {
@@ -61,16 +57,16 @@ const _createPageForCategoriesForLocale = async (args) => {
             graphql: graphql,
             createPage : createPage,
             locale: locale,
-            itemComponentName : 'PostExcerpt',
-            layoutComponentName: 'PostListLayout',
+            itemComponentName : page.itemComponentName,
+            layoutComponentName: page.layoutComponentName,
             primitiveItems: posts,
             itemsPerPage: itemsPerPage,
             createItem: async (post) => await makePostExcerptPayloadWithPost(post, graphql),
-            createPageTitle: (pageIndex) => getCategoryPageTitle(category.node.name, pageIndex),
-            createPagePath: (pageIndex) => getCategoryPagePath(category.node.slug, pageIndex),
+            createPageTitle: (pageIndex) => page.getPageTitle(category.node.name, pageIndex),
+            createPagePath: (pageIndex) => page.getPagePath(category.node.slug, pageIndex),
             showsPageTitle: true,
-            previousPageTitle: "Earlier Posts",
-            nextPageTitle: "Later Posts",
+            previousPageTitle: page.getPreviousPageTitle,
+            nextPageTitle: page.getNextPageTitle,
         });
     }));
 };
