@@ -6,6 +6,18 @@ const createNodeForCategory = require('../createNode/createNodeForCategory');
 const createNodeForLocale = require('../createNode/createNodeForLocale');
 const debug = require('debug');
 
+const getDocumentNodeCreator = (documentType) => {
+    switch (documentType) {
+        case 'Post':
+            return createNodeForPost;
+        case 'Page':
+            return createNodeForPage;
+        default:
+            debug(`Unexpected document type: ${metadata.documentType}.`);
+            return undefined;
+    }
+};
+
 const onCreateMDXDocuments = (arg) => {
     const {
         node,
@@ -52,54 +64,29 @@ const onCreateMDXDocuments = (arg) => {
 
         const locale = createNodeForLocale(localeArgs);
 
-        switch (metadata.documentType) {
-            case 'Post':
-                const postArgs = {
-                    parent: node.id,
-                    post: {
-                        title: metadata.title,
-                        documentIdentifier: metadata.documentIdentifier,
-                        isDraft: metadata.isDraft,
-                        createdTime: metadata.createdTime,
-                        lastModifiedTime: metadata.lastModifiedTime,
-                        tags: tags,
-                        category: category,
-                        slug: metadata.slug,
-                        locale: locale,
-                    },
-                    getNode: getNode,
-                    createNode: createNode,
-                    createNodeId: createNodeId,
-                    createContentDigest: createContentDigest,
-                    createParentChildLink: createParentChildLink,
-                };
-                createNodeForPost(postArgs);
-                break;
-            case 'Page':
-                const pageArgs = {
-                    parent: node.id,
-                    page: {
-                        title: metadata.title,
-                        documentIdentifier: metadata.documentIdentifier,
-                        isDraft: metadata.isDraft,
-                        createdTime: metadata.createdTime,
-                        lastModifiedTime: metadata.lastModifiedTime,
-                        tags: tags,
-                        category: category,
-                        slug: metadata.slug,
-                        locale: locale,
-                    },
-                    getNode: getNode,
-                    createNode: createNode,
-                    createNodeId: createNodeId,
-                    createContentDigest: createContentDigest,
-                    createParentChildLink: createParentChildLink,
-                };
-                createNodeForPage(pageArgs);
-                break;
-            default:
-                debug(`Unexpected document type: ${metadata.documentType}.`);
-        }
+        const documentNodeCreator = getDocumentNodeCreator(metadata.documentType);
+
+        const documentArgs = {
+            parent: node.id,
+            document: {
+                title: metadata.title,
+                documentIdentifier: metadata.documentIdentifier,
+                isDraft: metadata.isDraft,
+                createdTime: metadata.createdTime,
+                lastModifiedTime: metadata.lastModifiedTime,
+                tags: tags,
+                category: category,
+                slug: metadata.slug,
+                locale: locale,
+            },
+            getNode: getNode,
+            createNode: createNode,
+            createNodeId: createNodeId,
+            createContentDigest: createContentDigest,
+            createParentChildLink: createParentChildLink,
+        };
+
+        documentNodeCreator(documentArgs);
     }
 };
 

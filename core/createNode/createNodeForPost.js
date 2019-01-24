@@ -3,7 +3,7 @@ const debug = require('debug');
 module.exports = function (args) {
     const {
         parent,
-        post,
+        document,
         getNode,
         createNode,
         createNodeId,
@@ -11,19 +11,19 @@ module.exports = function (args) {
         createParentChildLink
     } = args;
 
-    const nodeId = createNodeId(`post-${post.slug}`);
-    const nodeData = Object.assign({}, post, {
+    const nodeId = createNodeId(`post-${document.slug}`);
+    const nodeData = Object.assign({}, document, {
         id: nodeId,
         parent: parent,
         children: [],
         internal: {
             type: `Post`,
-            content: post.slug,
-            contentDigest: createContentDigest(post.slug),
+            content: document.slug,
+            contentDigest: createContentDigest(document.slug),
         },
     });
 
-    debug(`Create post node: ${post}`);
+    debug(`Create post node: ${document}`);
     createNode(nodeData);
 
     createParentChildLink({parent: getNode(parent), child: getNode(nodeId)});
