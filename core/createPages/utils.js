@@ -1,28 +1,28 @@
 const assert = require('assert');
 
-const _getHomePageTitle = (pageIndex) => {
+const _getHomePageTitle = (locale, pageIndex) => {
     return pageIndex === 0 ? null : `All Posts (Page ${pageIndex})`;
 };
 
-const _getHomePagePath = (pageIndex) => {
+const _getHomePagePath = (locale, pageIndex) => {
     return pageIndex > 0 ? `/${pageIndex}` : `/`;
 };
 
-const _getCategoryPageTitle = (categoryName, pageIndex) => {
+const _getCategoryPageTitle = (categoryName, locale, pageIndex) => {
     return pageIndex === 0
         ? `${categoryName}`
         : `${categoryName} (Page ${pageIndex})`
 };
 
-const _getCategoryPagePath = (categorySlug, pageIndex) => {
+const _getCategoryPagePath = (categorySlug, locale, pageIndex) => {
     return pageIndex > 0 ? `${categorySlug}/${pageIndex}` : `${categorySlug}`;
 };
 
-const _getTagPageTitle = (tagName, pageIndex) => {
+const _getTagPageTitle = (tagName, locale, pageIndex) => {
     return `Tag: ` + (pageIndex === 0 ? `${tagName}` : `${tagName} (Page ${pageIndex})`)
 };
 
-const _getTagPagePath = (tagSlug, pageIndex) => {
+const _getTagPagePath = (tagSlug, locale, pageIndex) => {
     return pageIndex > 0 ? `${tagSlug}/${pageIndex}` : `${tagSlug}`;
 };
 
@@ -145,8 +145,8 @@ module.exports = {
     getCategoryPagePath: _getCategoryPagePath,
     getTagPageTitle: _getTagPageTitle,
     getTagPagePath: _getTagPagePath,
-    makeTagById: _makeTagById,
-    makeCategoryById: _makeCategoryById,
+    _makeTagById: _makeTagById,
+    _makeCategoryById: _makeCategoryById,
     makePostExcerpt: _makePostExcerpt,
     makeTagSummary: _makeTagSummary,
 };

@@ -6,6 +6,7 @@ module.exports = async (args) => {
     const {
         graphql,
         createPage,
+        locale,
         itemComponentName,
         layoutComponentName,
         primitiveItems,
@@ -52,14 +53,15 @@ module.exports = async (args) => {
 
         const items = await Promise.all(primitiveItemsInRange.map(createItem));
 
-        const pageTitle = createPageTitle(pageIndex);
+        const pageTitle = createPageTitle(locale, pageIndex);
 
-        const pagePath = createPagePath(pageIndex);
+        const pagePath = createPagePath(locale, pageIndex);
 
         createPage({
             path: pagePath,
             component: _IndexTemplate,
             context: {
+                locale: locale,
                 itemComponentName: itemComponentName,
                 layoutComponentName: layoutComponentName,
                 pageTitle: pageTitle,

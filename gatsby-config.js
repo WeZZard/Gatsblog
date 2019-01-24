@@ -62,6 +62,13 @@ module.exports = {
             },
         },
         {
+            resolve: `gatsby-source-filesystem`,
+            options: {
+                path: `${__dirname}/config`,
+                name: `Config`,
+            },
+        },
+        {
             resolve: `gatsby-mdx`,
             options: {
                 extensions: ['.mdx', '.md'],
@@ -107,6 +114,7 @@ module.exports = {
             },
         },
         `gatsby-transformer-sharp`,
+        `gatsby-transformer-yaml`,
         `gatsby-plugin-sharp`,
         {
             resolve: `gatsby-plugin-google-analytics`,

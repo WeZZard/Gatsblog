@@ -1,9 +1,9 @@
 const onCreateMDXDocuments = require('./onCreateMDXDocuments');
-
-const _functions = [
-    onCreateMDXDocuments,
-];
+const onCreateConfigYaml = require('./onCreateConfigYaml');
 
 module.exports = function (arg) {
-    _functions.forEach(_ => _(arg));
+    [
+        onCreateMDXDocuments,
+        onCreateConfigYaml,
+    ].forEach(_ => _(arg));
 };

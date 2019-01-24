@@ -1,0 +1,60 @@
+site:
+    # The title of the site.
+    title: Pieces of My Soul
+
+    # The owner of the site, which is shown in site copyright declaration.
+    owner: WeZZard
+
+    # The description of the site. An SEO option.
+    description: ''
+
+    # The keywords of the site. An SEO option.
+    keywords:
+        - WeZZard
+        - Pieces of My Soul
+
+    url: 'https://wezzard.netlify.com/'
+
+    slogans:
+        - I'm WeZZard
+        - Making Software
+        - Composing Music
+        - Designing UX
+
+    footerMessages:
+        - 'Freiheit ist Wille, Handeln ist Fähigkeit.'
+
+contact:
+    - approach: Email
+      token: me@wezzard.com
+    - approach: GitHub
+      token: WeZZard
+
+navigation:
+    createsNavigationItemsForCategories: true
+
+    overwritingCategoryNavigationItems:
+        - name: Uncategorized
+          weight: 0
+          isVisible: false
+
+    customNavigationItems:
+        - name: Profile
+          slug: /profile
+          weight: 0
+        - name: Feed
+          slug: /feed
+          weight: 0
+
+pagination:
+    - location: Home
+      itemsPerPage: 8
+
+    - location: Category
+      itemsPerPage: 8
+
+    - location: Tags
+      itemsPerPage: 8
+
+    - location: Tag
+      itemsPerPage: 8

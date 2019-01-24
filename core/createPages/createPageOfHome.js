@@ -5,9 +5,8 @@ const {
     makePostExcerpt,
 } = require("./utils");
 
-module.exports = async (args) => {
-    const { graphql, actions } = args;
-    const { createPage } = actions;
+const _createPageOfHomeForLocale = async (args) => {
+    const { locale, graphql, createPage } = args;
 
     const {
         data: {
@@ -47,6 +46,7 @@ module.exports = async (args) => {
     await createPagesByIndexing({
         graphql: graphql,
         createPage : createPage,
+        locale: locale,
         itemComponentName : 'PostExcerpt',
         layoutComponentName: 'PostListLayout',
         primitiveItems: posts,
@@ -58,4 +58,37 @@ module.exports = async (args) => {
         previousPageTitle: "Earlier Posts",
         nextPageTitle: "Later Posts",
     });
+};
+
+module.exports = async (args) => {
+    const { graphql, actions } = args;
+    const { createPage } = actions;
+    const {
+        data: {
+            allLocale: { edges: locales },
+        }
+    } = await graphql(`
+        {
+            allLocale {
+                edges {
+                    node {
+                        identifier
+                        slug
+                    }
+                }
+            }
+        }
+    `);
+
+    await Promise.all(
+        locales.map(async (locale) => {
+            const args = {
+                locale: locale,
+                graphql: graphql,
+                createPage: createPage,
+            };
+            await _createPageOfHomeForLocale(args)
+        })
+    )
+
 };
