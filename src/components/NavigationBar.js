@@ -24,15 +24,23 @@ class NavigationItems extends React.Component {
                     {name: `Home`, slug: `/`}
                 ];
 
-                const createsNavigationItemsForCategories = data.site.siteMetadata.createsNavigationItemsForCategories;
-                const categoryNavigationItems = data.site.siteMetadata.categoryNavigationItems;
-                const categories = data.allCategory.edges.map(category => category.node);
-                let userNavigationItems = data.site.siteMetadata.navigationItems;
+                const {
+                    configYaml: {
+                        navigation: {
+                            createsNavigationItemsForCategories,
+                            overwritingCategoryNavigationItems: categoryNavigationItems,
+                            customNavigationItems: userNavigationItems,
+                        }
+                    },
+                    allCategory: {
+                        edges: categories
+                    }
+                } = data;
 
                 let customizedCategoryNavigationItems = [];
 
                 if (createsNavigationItemsForCategories) {
-                    let rawCategoryNavigationItems = categories.map(category => ({name: category.name, slug: category.slug, weight: 0}));
+                    let rawCategoryNavigationItems = categories.map(category => ({name: category.node.name, slug: category.node.slug, weight: 0}));
 
                     categoryNavigationItems.forEach(categoryNavigationItem => {
                         const {name, weight, isVisible} = categoryNavigationItem;
@@ -90,15 +98,15 @@ export default NavigationBar
 
 const _navigationQuery = graphql`
     query NavigationQuery {
-        site {
-            siteMetadata {
+        configYaml {
+            navigation {
                 createsNavigationItemsForCategories
-                categoryNavigationItems {
+                overwritingCategoryNavigationItems {
                     name
                     weight
                     isVisible
                 }
-                navigationItems {
+                customNavigationItems {
                     name
                     slug
                     weight

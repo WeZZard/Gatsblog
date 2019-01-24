@@ -21,8 +21,8 @@ module.exports = async (args) => {
 
     const {
         data: {
-            site: {
-                siteMetadata: {
+            configYaml: {
+                site: {
                     keywords: siteKeywords,
                     description: siteDescription
                 },
@@ -30,11 +30,11 @@ module.exports = async (args) => {
         }
     } = await graphql(`
         {
-            site {
-                siteMetadata {
-                    keywords
-                    description
-                }
+            configYaml {
+              site {
+                keywords
+                description
+              }
             }
         }
     `);

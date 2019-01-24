@@ -23,8 +23,14 @@ class SiteFooter extends React.Component {
             <StaticQuery
                 query={_SiteFooterMessagesQuery}
                 render={data => {
-                    const slogans = data.site.siteMetadata.slogans;
-                    const siteOwner = data.site.siteMetadata.siteOwner;
+                    const {
+                        configYaml: {
+                            site: {
+                                owner: siteOwner,
+                                slogans,
+                            },
+                        },
+                    } = data;
                     const sloganComponents = slogans.map((footerMessage) => (
                         <Slogan key={footerMessage} message={footerMessage} />
                     ));
@@ -53,9 +59,9 @@ export default SiteFooter
 
 const _SiteFooterMessagesQuery=graphql`
     query SiteFooterMessagesQuery {
-        site {
-            siteMetadata {
-                siteOwner
+        configYaml {
+            site {
+                owner
                 slogans
             }
         }

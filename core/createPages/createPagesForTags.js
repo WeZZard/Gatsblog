@@ -2,8 +2,10 @@ const createPagesByIndexing = require('./_createPagesByIndexing');
 const {
     getTagPageTitle,
     getTagPagePath,
-    makePostExcerpt,
 } = require("./utils");
+
+const { makePostExcerptPayloadWithPost } = require('../makePayloads');
+const { getItemsPerPageInLocation } = require('../Config');
 
 module.exports = async (args) => {
     const { graphql, actions } = args;
@@ -11,20 +13,10 @@ module.exports = async (args) => {
 
     const {
         data: {
-            site: {
-                siteMetadata: {
-                    postCountPerPageInCategory: postExcerptPerPage
-                },
-            },
             allTag: { edges: tags },
         }
     } = await graphql(`
         {
-            site {
-                siteMetadata {
-                    postCountPerPageInCategory
-                }
-            }
             allTag {
                 edges {
                     node {
@@ -36,6 +28,8 @@ module.exports = async (args) => {
             }
         }
     `);
+
+    const itemsPerPage = getItemsPerPageInLocation('Tags', graphql);
 
     await Promise.all(tags.map(async (tag) => {
 
@@ -71,8 +65,8 @@ module.exports = async (args) => {
             itemComponentName : 'PostExcerpt',
             layoutComponentName: 'PostListLayout',
             primitiveItems: posts,
-            itemsPerPage: postExcerptPerPage,
-            createItem: async (post) => await makePostExcerpt(post, graphql),
+            itemsPerPage: itemsPerPage,
+            createItem: async (post) => await makePostExcerptPayloadWithPost(post, graphql),
             createPageTitle: (pageIndex) => getTagPageTitle(tag.node.name, pageIndex),
             createPagePath: (pageIndex) => getTagPagePath(tag.node.slug, pageIndex),
             showsPageTitle: true,

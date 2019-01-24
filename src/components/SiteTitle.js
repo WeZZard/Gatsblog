@@ -6,14 +6,14 @@ class SiteTitle extends  React.Component {
         return <StaticQuery
             query={graphql`
                 query SiteTitleQuery {
-                    site {
-                        siteMetadata {
+                    configYaml {
+                        site {
                             title
                         }
                     }
                 }
             `}
-            render={(data) => <label>{data.site.siteMetadata.title}</label>}
+            render={(data) => <label>{data.configYaml.site.title}</label>}
         />
     }
 }

@@ -2,29 +2,20 @@ const createPagesByIndexing = require('./_createPagesByIndexing');
 const {
     getCategoryPageTitle,
     getCategoryPagePath,
-    makePostExcerpt,
 } = require("./utils");
 
-module.exports = async (args) => {
-    const { graphql, actions } = args;
-    const { createPage } = actions;
+const { makePostExcerptPayloadWithPost } = require('../makePayloads');
+const { getItemsPerPageInLocation } = require('../Config');
+
+const _createPageForCategoriesForLocale = async (args) => {
+    const { locale, graphql, createPage } = args;
 
     const {
         data: {
-            site: {
-                siteMetadata: {
-                    postCountPerPageInCategory: postExcerptPerPage
-                },
-            },
             allCategory: { edges: categories },
         }
     } = await graphql(`
         {
-            site {
-                siteMetadata {
-                    postCountPerPageInCategory
-                }
-            }
             allCategory {
                 edges {
                     node {
@@ -37,8 +28,14 @@ module.exports = async (args) => {
         }
     `);
 
+    const itemsPerPage = getItemsPerPageInLocation('Category', graphql);
+
     await Promise.all(categories.map(async (category) => {
-        const tuple = await graphql(`
+        const {
+            data: {
+                allPost: { edges: posts },
+            },
+        } = await graphql(`
             {
                 allPost(
                     filter: { category: { eq: "${category.node.id}" } }
@@ -60,20 +57,15 @@ module.exports = async (args) => {
             }
         `);
 
-        const {
-            data: {
-                allPost: { edges: posts },
-            },
-        } = tuple;
-
         await createPagesByIndexing({
             graphql: graphql,
             createPage : createPage,
+            locale: locale,
             itemComponentName : 'PostExcerpt',
             layoutComponentName: 'PostListLayout',
             primitiveItems: posts,
-            itemsPerPage: postExcerptPerPage,
-            createItem: async (post) => await makePostExcerpt(post, graphql),
+            itemsPerPage: itemsPerPage,
+            createItem: async (post) => await makePostExcerptPayloadWithPost(post, graphql),
             createPageTitle: (pageIndex) => getCategoryPageTitle(category.node.name, pageIndex),
             createPagePath: (pageIndex) => getCategoryPagePath(category.node.slug, pageIndex),
             showsPageTitle: true,
@@ -81,4 +73,37 @@ module.exports = async (args) => {
             nextPageTitle: "Later Posts",
         });
     }));
+};
+
+module.exports = async (args) => {
+    const { graphql, actions } = args;
+    const { createPage } = actions;
+
+    const {
+        data: {
+            allLocale: { edges: locales },
+        }
+    } = await graphql(`
+        {
+            allLocale {
+                edges {
+                    node {
+                        identifier
+                        slug
+                    }
+                }
+            }
+        }
+    `);
+
+    await Promise.all(
+        locales.map(async (locale) => {
+            const args = {
+                locale: locale,
+                graphql: graphql,
+                createPage: createPage,
+            };
+            await _createPageForCategoriesForLocale(args)
+        })
+    )
 };

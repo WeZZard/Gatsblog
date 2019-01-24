@@ -10,11 +10,11 @@ const SEO = ({ description: pageDescription, lang, meta, keywords, pageTitle}) =
             render={data => {
 
                 const {
-                    site: {
-                        siteMetadata: {
-                        title: siteTitle,
+                    configYaml: {
+                        site: {
+                            title: siteTitle,
                             description: siteDescription,
-                            siteOwner,
+                            owner: siteOwner,
                         }
                     },
                 } = data;
@@ -98,11 +98,11 @@ export default SEO
 
 const detailsQuery = graphql`
     query SEOQuery {
-        site {
-            siteMetadata {
+        configYaml {
+            site {
                 title
                 description
-                siteOwner
+                owner
             }
         }
     }

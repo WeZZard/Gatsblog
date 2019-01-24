@@ -2,28 +2,20 @@ const createPagesByIndexing = require('./_createPagesByIndexing');
 const {
     getHomePageTitle,
     getHomePagePath,
-    makePostExcerpt,
 } = require("./utils");
+
+const { makePostExcerptPayloadWithPost } = require('../makePayloads');
+const { getItemsPerPageInLocation } = require('../Config');
 
 const _createPageOfHomeForLocale = async (args) => {
     const { locale, graphql, createPage } = args;
 
     const {
         data: {
-            site: {
-                siteMetadata: {
-                    postCountPerPageInHome: postExcerptPerPage
-                },
-            },
             allPost: { edges: posts },
         }
     } = await graphql(`
         {
-            site {
-                siteMetadata {
-                    postCountPerPageInHome
-                }
-            }
             allPost(
                 sort: { fields: [createdTime], order: DESC }
             ) {
@@ -43,6 +35,8 @@ const _createPageOfHomeForLocale = async (args) => {
         }
     `);
 
+    const itemsPerPage = await getItemsPerPageInLocation('Home', graphql);
+
     await createPagesByIndexing({
         graphql: graphql,
         createPage : createPage,
@@ -50,8 +44,8 @@ const _createPageOfHomeForLocale = async (args) => {
         itemComponentName : 'PostExcerpt',
         layoutComponentName: 'PostListLayout',
         primitiveItems: posts,
-        itemsPerPage: postExcerptPerPage,
-        createItem: async (post) => await makePostExcerpt(post, graphql),
+        itemsPerPage: itemsPerPage,
+        createItem: async (post) => await makePostExcerptPayloadWithPost(post, graphql),
         createPageTitle: getHomePageTitle,
         createPagePath: getHomePagePath,
         showsPageTitle: false,
@@ -63,11 +57,7 @@ const _createPageOfHomeForLocale = async (args) => {
 module.exports = async (args) => {
     const { graphql, actions } = args;
     const { createPage } = actions;
-    const {
-        data: {
-            allLocale: { edges: locales },
-        }
-    } = await graphql(`
+    const { data: { allLocale: { edges: locales } } } = await graphql(`
         {
             allLocale {
                 edges {
@@ -90,5 +80,4 @@ module.exports = async (args) => {
             await _createPageOfHomeForLocale(args)
         })
     )
-
 };

@@ -6,7 +6,11 @@ import SEO from '../components/SEO'
 class NotFoundPage extends React.Component {
   render() {
     const { data } = this.props;
-    const siteTitle = data.site.siteMetadata.title;
+    const {
+        configYaml: {
+            site: { siteTitle }
+        }
+    } = data;
 
     return (
       <div>
@@ -22,8 +26,8 @@ export default NotFoundPage
 
 export const pageQuery = graphql`
   query {
-    site {
-      siteMetadata {
+    configYaml {
+      site {
         title
       }
     }

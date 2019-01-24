@@ -22,7 +22,7 @@ class ContentFooter extends React.Component {
             <StaticQuery
                 query={_contentFooterMessagesQuery}
                 render={data => {
-                    const footerMessages = data.site.siteMetadata.footerMessages;
+                    const footerMessages = data.configYaml.site.footerMessages;
                     return footerMessages.map((footerMessage, index) => (
                         <ContentFooterItem key={`${index}`} message={footerMessage} />
                     ))
@@ -47,8 +47,8 @@ export default ContentFooter
 
 const _contentFooterMessagesQuery=graphql`
     query ContentFooterMessagesQuery {
-        site {
-            siteMetadata {
+        configYaml {
+            site {
                 footerMessages
             }
         }

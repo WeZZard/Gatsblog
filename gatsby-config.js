@@ -1,43 +1,4 @@
 module.exports = {
-    siteMetadata: {
-        title: `Pieces of My Soul`,
-        siteOwner: `WeZZard`,
-        description: ``,
-        keywords: [
-            `WeZZard`,
-            `Pieces of My Soul`
-        ],
-        siteUrl: `https://wezzard.netlify.com/`,
-        social: {
-            github: `WeZZard`,
-        },
-        createsNavigationItemsForCategories: true,
-        categoryNavigationItems: [
-            {
-                name: `Uncategorized`,
-                weight: 0,
-                isVisible: false,
-            }
-        ],
-        navigationItems: [
-            {
-                name: `Profile`,
-                slug: `/profile`,
-                weight: 0,
-            },
-        ],
-        slogans: [
-            `I'm WeZZard`,
-            `Making Software`,
-            `Composing Music`,
-            `Designing UX`,
-        ],
-        footerMessages: [`Freiheit ist Wille, Handeln ist Fähigkeit.`],
-        postCountPerPageInHome: 8,
-        postCountPerPageInCategory: 8,
-        tagCountPerPageInTagIndex: 8,
-        postCountPerPageInTag: 8,
-    },
     plugins: [
         {
             resolve: `gatsby-source-filesystem`,
