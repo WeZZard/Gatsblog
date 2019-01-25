@@ -1,5 +1,3 @@
-const getItemsPerPageInLocation = require('./getItemsPerPageInLocation');
-
 module.exports = {
-    getItemsPerPageInLocation: getItemsPerPageInLocation,
+    getItemsPerPageInLocation: require('./getItemsPerPageInLocation'),
 };

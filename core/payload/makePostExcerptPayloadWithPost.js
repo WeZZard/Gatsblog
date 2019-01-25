@@ -1,7 +1,7 @@
 const makeCategoryPayloadByNodeID = require('./makeCategoryPayloadByNodeID');
 const makeTagPayloadByNodeID = require('./makeTagPayloadByNodeID');
 
-    module.exports = async (post, graphql) => {
+module.exports = async (post, graphql) => {
     const {
         data: {
             allMdx: { edges: mdxDocuments },

@@ -30,6 +30,7 @@ const _createPageOfHomeForLocale = async (args) => {
         }
     `);
 
+
     const { edges: posts } = allPost || { edges: [] };
 
     const itemsPerPage = await getItemsPerPageInLocation(page.location, graphql);

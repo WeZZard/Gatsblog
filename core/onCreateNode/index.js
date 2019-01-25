@@ -1,7 +1,5 @@
-const onCreateMDXDocuments = require('./onCreateMDXDocuments');
-
 module.exports = function (arg) {
     [
-        onCreateMDXDocuments,
+        require('./onCreateMDXDocuments'),
     ].forEach(_ => _(arg));
 };

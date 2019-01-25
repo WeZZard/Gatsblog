@@ -1,11 +1,6 @@
-const makeCategoryPayloadByNodeID = require('./makeCategoryPayloadByNodeID');
-const makePostExcerptPayloadWithPost = require('./makePostExcerptPayloadWithPost');
-const makeTagPayloadByNodeID = require('./makeTagPayloadByNodeID');
-const makeTagSummaryPayloadWithTag = require('./makeTagSummaryPayloadWithTag');
-
 module.exports = {
-    makeCategoryPayloadByNodeID: makeCategoryPayloadByNodeID,
-    makePostExcerptPayloadWithPost: makePostExcerptPayloadWithPost,
-    makeTagPayloadByNodeID: makeTagPayloadByNodeID,
-    makeTagSummaryPayloadWithTag: makeTagSummaryPayloadWithTag,
+    makeCategoryPayloadByNodeID: require('./makeCategoryPayloadByNodeID'),
+    makePostExcerptPayloadWithPost: require('./makePostExcerptPayloadWithPost'),
+    makeTagPayloadByNodeID: require('./makeTagPayloadByNodeID'),
+    makeTagSummaryPayloadWithTag: require('./makeTagSummaryPayloadWithTag'),
 };
