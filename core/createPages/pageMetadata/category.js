@@ -9,14 +9,11 @@ module.exports = {
     },
     getPagePath: (category, locale, pageIndex) => {
         if (locale.node.identifier === 'none') {
-            return pageIndex > 0
-                ? `/${category.node.slug}/${pageIndex}`
-                : `/${category.node.slug}`;
+            return `/${category.node.slug}`
+                + (pageIndex > 0 ? `/page-${pageIndex}` : ``);
         } else {
-            return `/${locale.node.slug}`
-                + (pageIndex > 0
-                    ? `/${category.node.slug}/${pageIndex}`
-                    : `/${category.node.slug}`);
+            return `/${locale.node.slug}/${category.node.slug}`
+                + (pageIndex > 0 ? `/page-${pageIndex}` : `/`);
         }
     },
     getPreviousPageTitle: (locale) => {

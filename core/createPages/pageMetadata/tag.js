@@ -3,20 +3,16 @@ module.exports = {
     itemComponentName : 'PostExcerpt',
     layoutComponentName: 'PostListLayout',
     getPageTitle: (tag, locale, pageIndex) => {
-        return `Tag: ` + (pageIndex === 0
-            ? `${tag.node.name}`
-            : `${tag.node.name} (Page ${pageIndex})`)
+        return `Tag: ${tag.node.name}`
+            + (pageIndex === 0 ? `` : ` (Page ${pageIndex})`)
     },
     getPagePath: (tag, locale, pageIndex) => {
         if (locale.node.identifier === 'none') {
-            return pageIndex > 0
-                ? `/${tag.node.slug}/${pageIndex}`
-                : `/${tag.node.slug}`;
+            return `/${tag.node.slug}`
+                + (pageIndex > 0 ? `/page-${pageIndex}` : `/`);
         } else {
-            return `/${locale.node.slug}`
-                + (pageIndex > 0
-                    ? `/${tag.node.slug}/${pageIndex}`
-                    : `/${tag.node.slug}`);
+            return `/${locale.node.slug}/${tag.node.slug}`
+                + (pageIndex > 0 ? `/page-${pageIndex}` : ``);
         }
     },
     getPreviousPageTitle: (locale) => {

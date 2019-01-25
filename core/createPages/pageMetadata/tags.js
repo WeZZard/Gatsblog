@@ -10,8 +10,10 @@ module.exports = {
     getPagePath: (locale, pageIndex) => {
         if (locale.node.identifier === 'none') {
             return `/tags`
+                + (pageIndex > 0 ? `/page-${pageIndex}` : ``)
         } else {
             return `/${locale.node.slug}/tags`
+                + (pageIndex > 0 ? `/page-${pageIndex}` : ``)
         }
     },
     getPreviousPageTitle: (locale) => {

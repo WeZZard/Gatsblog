@@ -1,6 +1,7 @@
 const createPagesByIndexing = require('./_createPagesByIndexing');
 const { tags: page } = require('./pageMetadata');
 const { makeTagSummaryPayloadWithTag } = require('../payload');
+const { getItemsPerPageInLocation } = require('../config');
 
 const _createPageOfTagForLocale = async (args) => {
     const { locale, graphql, createPage } = args;
@@ -25,51 +26,21 @@ const _createPageOfTagForLocale = async (args) => {
 
     const itemsPerPage = await getItemsPerPageInLocation(page.location, graphql);
 
-    await Promise.all(tags.map(async (tag) => {
-        const { data: { allPost } } = await graphql(`
-            {
-                allPost(
-                    filter: { 
-                        tags: { in: "${tag.node.id}" } 
-                        locale: { eq: "${locale.node.id}" } 
-                    }
-                    sort: { fields: [createdTime], order: DESC }
-                    limit: 5
-                ) {
-                    edges {
-                        node {
-                            title
-                            createdTime
-                            tags
-                            category
-                            slug
-                            parent {
-                                id
-                            }
-                        }
-                    }
-                }
-            }
-        `);
-
-        const { edges: posts } = allPost || { edges: [] };
-
-        await createPagesByIndexing({
-            graphql: graphql,
-            createPage : createPage,
-            locale: locale,
-            itemComponentName : page.itemComponentName,
-            layoutComponentName: page.layoutComponentName,
-            primitiveItems: posts,
-            itemsPerPage: itemsPerPage,
-            createItem: async (tag) => await makeTagSummaryPayloadWithTag(tag, graphql),
-            createPageTitle: (locale, pageIndex) => page.getPageTitle(tag, locale, pageIndex),
-            createPagePath: (locale, pageIndex) => page.getPagePath(tag, locale, pageIndex),
-            showsPageTitle: true,
-            previousPageTitle: page.getPreviousPageTitle(locale),
-            nextPageTitle: page.getNextPageTitle(locale),
-        });
-    }));
+    await createPagesByIndexing({
+        graphql: graphql,
+        createPage : createPage,
+        locale: locale,
+        itemComponentName : page.itemComponentName,
+        layoutComponentName: page.layoutComponentName,
+        primitiveItems: tags,
+        itemsPerPage: itemsPerPage,
+        createItem: async (tag) => await makeTagSummaryPayloadWithTag(tag, graphql),
+        createPageTitle: (locale, pageIndex) => page.getPageTitle(locale, pageIndex),
+        createPagePath: (locale, pageIndex) => page.getPagePath(locale, pageIndex),
+        showsPageTitle: true,
+        previousPageTitle: page.getPreviousPageTitle(locale),
+        nextPageTitle: page.getNextPageTitle(locale),
+    });
 };
 
 module.exports = async (args) => {

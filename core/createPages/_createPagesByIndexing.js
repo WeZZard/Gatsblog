@@ -1,6 +1,6 @@
 const path = require('path');
 
-const _IndexTemplate = path.resolve('src/templates/Index.js');
+const Template = path.resolve('src/templates/Index.js');
 
 module.exports = async (args) => {
     const {
@@ -61,7 +61,7 @@ module.exports = async (args) => {
 
         createPage({
             path: pagePath,
-            component: _IndexTemplate,
+            component: Template,
             context: {
                 locale: {
                     identifier: locale.node.identifier,

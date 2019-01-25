@@ -11,8 +11,8 @@ module.exports = function (arg) {
         documentType: string('Post', 'Page')
         documentIdentifier: string
         title: string
-        isIndexPage: bool
-        isDraft: bool
+        isIndex: bool
+        isPublished: bool
         createdTime: string(ISO 8601)
         lastModifiedTime: string(ISO 8601)
         tags: [string]
@@ -41,7 +41,7 @@ module.exports = function (arg) {
 
         metadata.isIndex = relativePathMetadata.isIndex;
 
-        metadata.isDraft = node.frontmatter.isDraft || false;
+        metadata.isPublished = node.frontmatter.isPublished || true;
 
         metadata.tags = node.frontmatter.tags || [];
 

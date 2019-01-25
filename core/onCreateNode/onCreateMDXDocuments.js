@@ -71,7 +71,7 @@ const onCreateMDXDocuments = (arg) => {
             document: {
                 title: metadata.title,
                 documentIdentifier: metadata.documentIdentifier,
-                isDraft: metadata.isDraft,
+                isPublished: metadata.isPublished,
                 createdTime: metadata.createdTime,
                 lastModifiedTime: metadata.lastModifiedTime,
                 tags: tags,

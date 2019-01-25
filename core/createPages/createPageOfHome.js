@@ -30,27 +30,25 @@ const _createPageOfHomeForLocale = async (args) => {
         }
     `);
 
-    if (allPost) {
-        const { edges: posts } = allPost;
+    const { edges: posts } = allPost || { edges: [] };
 
-        const itemsPerPage = await getItemsPerPageInLocation(page.location, graphql);
+    const itemsPerPage = await getItemsPerPageInLocation(page.location, graphql);
 
-        await createPagesByIndexing({
-            graphql: graphql,
-            createPage : createPage,
-            locale: locale,
-            itemComponentName : page.itemComponentName,
-            layoutComponentName: page.layoutComponentName,
-            primitiveItems: posts,
-            itemsPerPage: itemsPerPage,
-            createItem: async (post) => await makePostExcerptPayloadWithPost(post, graphql),
-            createPageTitle: page.getPageTitle,
-            createPagePath: page.getPagePath,
-            showsPageTitle: false,
-            previousPageTitle: page.getPreviousPageTitle(locale),
-            nextPageTitle: page.getNextPageTitle(locale),
-        });
-    }
+    await createPagesByIndexing({
+        graphql: graphql,
+        createPage : createPage,
+        locale: locale,
+        itemComponentName : page.itemComponentName,
+        layoutComponentName: page.layoutComponentName,
+        primitiveItems: posts,
+        itemsPerPage: itemsPerPage,
+        createItem: async (post) => await makePostExcerptPayloadWithPost(post, graphql),
+        createPageTitle: page.getPageTitle,
+        createPagePath: page.getPagePath,
+        showsPageTitle: false,
+        previousPageTitle: page.getPreviousPageTitle(locale),
+        nextPageTitle: page.getNextPageTitle(locale),
+    });
 };
 
 module.exports = async (args) => {

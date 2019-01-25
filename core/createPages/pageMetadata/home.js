@@ -7,9 +7,10 @@ module.exports = {
     },
     getPagePath: (locale, pageIndex) => {
         if (locale.node.identifier === 'none') {
-            return pageIndex > 0 ? `/${pageIndex}` : `/`;
+            return pageIndex > 0 ? `/page-${pageIndex}` : `/`;
         } else {
-            return `/${locale.node.slug}` + (pageIndex > 0 ? `/${pageIndex}` : `/`);
+            return `/${locale.node.slug}`
+                + (pageIndex > 0 ? `/page-${pageIndex}` : `/`);
         }
     },
     getPreviousPageTitle: (locale) => {

@@ -7,9 +7,9 @@ const createPagesForTags = require('./createPagesForEachTag');
 
 const _functions = [
     createPageOfHome,
-    // createPageOfTags,
-    // createPagesForPosts,
-    // createPagesForPages,
+    createPageOfTags,
+    createPagesForPosts,
+    createPagesForPages,
     createPagesForCategories,
     createPagesForTags,
 ];
