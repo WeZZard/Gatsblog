@@ -8,13 +8,11 @@ module.exports = {
             : `${category.name} (Page ${pageIndex})`
     },
     getPagePath: (category, locale, pageIndex) => {
-        if (locale.identifier === 'none') {
-            return `/${category.slug}`
-                + (pageIndex > 0 ? `/page-${pageIndex}` : ``);
-        } else {
-            return `/${locale.slug}/${category.slug}`
-                + (pageIndex > 0 ? `/page-${pageIndex}` : ``);
-        }
+        return [
+            `${locale.slug}`,
+            `${category.slug}`,
+            pageIndex > 0 ? `page-${pageIndex}` : ``,
+        ].filter(_ => _).join('/');
     },
     getPreviousPageTitle: (locale) => {
         return 'Earlier Posts'

@@ -7,13 +7,11 @@ module.exports = {
             + (pageIndex === 0 ? `` : ` (Page ${pageIndex})`)
     },
     getPagePath: (tag, locale, pageIndex) => {
-        if (locale.identifier === 'none') {
-            return `/${tag.slug}`
-                + (pageIndex > 0 ? `/page-${pageIndex}` : ``);
-        } else {
-            return `/${locale.slug}/${tag.slug}`
-                + (pageIndex > 0 ? `/page-${pageIndex}` : ``);
-        }
+        return [
+            `${locale.slug}`,
+            `${tag.slug}`,
+            pageIndex > 0 ? `page-${pageIndex}` : ``,
+        ].filter(_ => _).join('/');
     },
     getPreviousPageTitle: (locale) => {
         return 'Earlier Posts'

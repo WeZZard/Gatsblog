@@ -8,13 +8,11 @@ module.exports = {
             : `Tags (Page ${pageIndex})`
     },
     getPagePath: (locale, pageIndex) => {
-        if (locale.identifier === 'none') {
-            return `/tag`
-                + (pageIndex > 0 ? `/page-${pageIndex}` : ``)
-        } else {
-            return `/${locale.slug}/tag`
-                + (pageIndex > 0 ? `/page-${pageIndex}` : ``)
-        }
+        return [
+            `${locale.slug}`,
+            `tag`,
+            pageIndex > 0 ? `page-${pageIndex}` : ``,
+        ].filter(_ => _).join('/');
     },
     getPreviousPageTitle: (locale) => {
         return 'Previous Page'
