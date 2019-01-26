@@ -28,5 +28,5 @@ module.exports = function (args) {
 
     createParentChildLink({parent: getNode(parent), child: getNode(nodeId)});
 
-    return nodeId;
+    return document;
 };

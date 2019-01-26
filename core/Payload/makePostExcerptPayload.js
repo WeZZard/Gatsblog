@@ -1,7 +1,11 @@
-const makeCategoryPayloadByNodeID = require('./makeCategoryPayloadByNodeID');
-const makeTagPayloadByNodeID = require('./makeTagPayloadByNodeID');
+const {
+    filterTagsForPostNode,
+    filterCategoryForPostNode
+} = require('./utils');
 
-module.exports = async (post, graphql) => {
+module.exports = async (args) => {
+    const { post, tags, categories, graphql } = args;
+
     const {
         data: {
             allMdx: { edges: mdxDocuments },
@@ -18,8 +22,8 @@ module.exports = async (post, graphql) => {
         }
     `);
 
-    const tags = await Promise.all(post.node.tags.map(async (tag) => makeTagPayloadByNodeID(tag, graphql)));
-    const category = await makeCategoryPayloadByNodeID(post.node.category, graphql);
+    const postTags = filterTagsForPostNode(post, tags);
+    const postCategory = filterCategoryForPostNode(post, categories);
 
     if (mdxDocuments.length === 0) {
         throw `No relative MDX document found for post: "${post.node.slug}".`
@@ -27,10 +31,10 @@ module.exports = async (post, graphql) => {
         const mdxDocument = mdxDocuments[0];
         return {
             title: post.node.title,
-            // subtitle: post.node.subtitle,
+            subtitle: post.node.subtitle,
             createdTime: post.node.createdTime,
-            tags: tags,
-            category: category,
+            tags: postTags,
+            category: postCategory,
             excerpt: mdxDocument.node.excerpt || "<i>The content is intentionally left blank.</i>",
             slug: post.node.slug,
         }

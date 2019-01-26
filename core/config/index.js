@@ -1,3 +1,3 @@
 module.exports = {
-    getItemsPerPageInLocation: require('./getItemsPerPageInLocation'),
+    getItemsPerPageInIndexWithName: require('./getItemsPerPageInIndexWithName'),
 };

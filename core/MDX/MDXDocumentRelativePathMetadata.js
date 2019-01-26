@@ -20,7 +20,7 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
       name: string,
       documentIdentifier,
       isIndex: bool,
-      localeIdentifier: string?
+      locale: string?
       createdTime: Date?
       slug: string
   }
@@ -51,7 +51,7 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
         metadata.name = match[22] || match[26] || match[29];
         metadata.isIndex = match[24] === `index` || match[27] === `index`;
         if (match[23]) {
-            metadata.localeIdentifier = match[23];
+            metadata.locale = match[23];
         }
 
         const year = match[2];
@@ -80,8 +80,8 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
 
         metadata.createdTime = new Date(createdTime);
         metadata.documentIdentifier = createdDate + "-" + (match[22] || match[26] || match[29]);
-        metadata.slug = metadata.localeIdentifier
-            ? `${metadata.localeIdentifier}/${metadata.documentIdentifier}`
+        metadata.slug = metadata.locale
+            ? `${metadata.locale}/${metadata.documentIdentifier}`
             : metadata.documentIdentifier
     }
 
@@ -94,7 +94,7 @@ const _parseMetadataForRelativePathOfPage = relativePath => {
       name: string,
       documentIdentifier,
       isIndex: bool,
-      localeIdentifier: string?
+      locale: string?
       slug: string
   }
   */
@@ -115,11 +115,11 @@ const _parseMetadataForRelativePathOfPage = relativePath => {
         metadata.name = match[4] || match[19] || match[22];
         metadata.isIndex = match[20] === `index` || match[8] === `index`;
         if (match[6]) {
-            metadata.localeIdentifier = match[6];
+            metadata.locale = match[6];
         }
         metadata.documentIdentifier = match[4] || match[19] || match[22];
-        metadata.slug = metadata.localeIdentifier
-            ? `${metadata.localeIdentifier}/${metadata.documentIdentifier}`
+        metadata.slug = metadata.locale
+            ? `${metadata.locale}/${metadata.documentIdentifier}`
             : metadata.documentIdentifier
     }
     return metadata;

@@ -1,19 +1,36 @@
 site:
     # The title of the site.
+    #
     title: Pieces of My Soul
 
     # The owner of the site, which is shown in site copyright declaration.
+    #
     owner: WeZZard
 
     # The description of the site. An SEO option.
+    #
     description: ''
 
     # The keywords of the site. An SEO option.
+    #
     keywords:
         - WeZZard
         - Pieces of My Soul
 
-    url: 'https://wezzard.netlify.com/'
+    # Displays the site owner as the author of a rendered
+    # page of a markdown document if no authors have been
+    # specified in the document's front matter.
+    #
+    displaysTheSiteOwnerAsAuthorIfNoAuthorsSpecified: true
+
+    # Whether builds an index page for taxonomies.
+    #
+    indexing:
+        - name: Tags
+          enabled: true
+
+        - name: Categories
+          enabled: true
 
     slogans:
         - I'm WeZZard
@@ -22,13 +39,14 @@ site:
         - Designing UX
 
     footerMessages:
-        - 'Freiheit ist Wille, Handeln ist Fähigkeit.'
+        - Freiheit ist Wille, Handeln ist Fähigkeit.
 
 contact:
-    - approach: Email
-      token: me@wezzard.com
-    - approach: GitHub
-      token: WeZZard
+    - service: Email
+      identifier: me@wezzard.com
+
+    - service: GitHub
+      identifier: WeZZard
 
 navigation:
     createsNavigationItemsForCategories: true
@@ -46,15 +64,28 @@ navigation:
           slug: /feed
           weight: 0
 
+# The pagination config for index pages.
+#
 pagination:
-    - location: Home
+    - indexName: Home
       itemsPerPage: 8
 
-    - location: Category
+    # The page displays all the categories.
+    #
+    - indexName: Categories
       itemsPerPage: 8
 
-    - location: Tags
+    # The page displays all the posts under a category.
+    #
+    - indexName: Category
       itemsPerPage: 8
 
-    - location: Tag
+    # The page displays all the tags.
+    #
+    - indexName: Tags
+      itemsPerPage: 8
+
+    # The page displays all the posts under a tag.
+    #
+    - indexName: Tag
       itemsPerPage: 8

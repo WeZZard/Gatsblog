@@ -4,7 +4,7 @@ const assert = require('assert');
 
 module.exports = function(args) {
     const {
-        localeIdentifier = 'none',
+        locale,
         getNodesByType,
         createNode,
         createNodeId,
@@ -13,13 +13,13 @@ module.exports = function(args) {
 
     const pattern = /^\w+$/;
 
-    if (!pattern.exec(localeIdentifier)) {
-        throws `Invalid locale: "${localeIdentifier}".`
+    if (!pattern.exec(locale)) {
+        throws `Invalid locale: "${locale}".`
     }
 
     const localeData = {
-        identifier: localeIdentifier,
-        slug: localeIdentifier === 'none' ? '' : localeIdentifier
+        identifier: locale,
+        slug: locale === 'none' ? '' : `${locale}`
     };
     const existedNodes = getNodesByType(`Locale`).filter(node => node.identifier === localeData.identifier);
     if (existedNodes.length === 1) {
@@ -27,23 +27,23 @@ module.exports = function(args) {
         if (node.identifier !== localeData.identifier) {
             throw `Duplicate locale "${node.identifier}".`;
         }
-        debug(`Returns the existed locale node: ${node}`);
-        return node.id;
+        debug(`Returns the data of existed locale node: ${node}`);
+        return localeData;
     } else if (existedNodes.length === 0) {
-        const nodeId = createNodeId(`locale-${localeIdentifier}`);
+        const nodeId = createNodeId(`locale-${locale}`);
         const nodeData = Object.assign({}, localeData, {
             id: nodeId,
             parent: null,
             children: [],
             internal: {
                 type: `Locale`,
-                content: localeIdentifier,
+                content: locale,
                 contentDigest: createContentDigest(localeData.identifier),
             },
         });
-        debug(`Create locale node: ${localeIdentifier}`);
+        debug(`Create locale node: ${locale}`);
         createNode(nodeData);
-        return nodeId;
+        return localeData;
     } else {
         throw `Multiple locale nodes was found. ${existedNodes}`;
     }

@@ -1,6 +1,7 @@
 const {
     getDocumentType,
     getTitle,
+    getSubtitle,
     getCreatedTime
 } = require('./MDXShims');
 const MDXDocumentRelativePathMetadata = require('./MDXDocumentRelativePathMetadata');
@@ -17,7 +18,7 @@ module.exports = function (arg) {
         lastModifiedTime: string(ISO 8601)
         tags: [string]
         category: string?
-        localeIdentifier: string?
+        locale: string?
         slug: string
     }
     */
@@ -37,7 +38,7 @@ module.exports = function (arg) {
 
         metadata.documentIdentifier = relativePathMetadata.documentIdentifier;
 
-        metadata.localeIdentifier = relativePathMetadata.localeIdentifier;
+        metadata.locale = relativePathMetadata.locale;
 
         metadata.isIndex = relativePathMetadata.isIndex;
 
@@ -46,6 +47,8 @@ module.exports = function (arg) {
         metadata.tags = node.frontmatter.tags || [];
 
         metadata.title = getTitle(node.frontmatter.title, node.rawBody, relativePathMetadata.name);
+
+        metadata.subtitle = getSubtitle(node.frontmatter.subtitle, node.rawBody);
 
         metadata.category = node.frontmatter.category || "Uncategorized";
 

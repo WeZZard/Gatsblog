@@ -11,7 +11,7 @@ const _getDocumentType = (sourceInstanceName) => {
     }
 };
 
-const _getFirstHeading = (rawBody) => {
+const _getTitleWithRawMarkdown = (rawBody) => {
     const astNode = remark.parse(rawBody);
     if (astNode.children && astNode.children.length > 0) {
         const firstChildren = astNode.children[0];
@@ -22,10 +22,27 @@ const _getFirstHeading = (rawBody) => {
     return null;
 };
 
+const _getSubtitleWithRawMarkdown = (rawBody) => {
+    const astNode = remark.parse(rawBody);
+    if (astNode.children && astNode.children.length > 1) {
+        const secondChildren = astNode.children[1];
+        if (secondChildren.type === 'heading' && secondChildren.depth === 1) {
+            return secondChildren.children[0].value;
+        }
+    }
+    return null;
+};
+
 const _getTitle = (frontMatterTitle, rawBody, documentName) => {
-    const firstHeading = _getFirstHeading(rawBody);
+    const firstHeading = _getTitleWithRawMarkdown(rawBody);
     const titles = [frontMatterTitle, firstHeading, documentName].filter(_ => _);
-    return titles.reverse().pop();
+    return titles.reverse().pop() || "";
+};
+
+const _getSubtitle = (frontMatterSubtitle, rawBody) => {
+    const firstHeading = _getSubtitleWithRawMarkdown(rawBody);
+    const subtitles = [frontMatterSubtitle, firstHeading].filter(_ => _);
+    return subtitles.reverse().pop() || "";
 };
 
 const _getCreatedTime = (frontMatterDate, documentNameDate, birthTime) => {
@@ -35,7 +52,8 @@ const _getCreatedTime = (frontMatterDate, documentNameDate, birthTime) => {
 
 module.exports = {
     getDocumentType: _getDocumentType,
-    _getFirstHeading: _getFirstHeading,
+    _getTitleWithRawMarkdown: _getTitleWithRawMarkdown,
     getTitle: _getTitle,
+    getSubtitle: _getSubtitle,
     getCreatedTime: _getCreatedTime,
 };

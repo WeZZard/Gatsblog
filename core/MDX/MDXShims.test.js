@@ -1,7 +1,8 @@
 const {
     getDocumentType,
-    _getFirstHeading,
+    _getTitleWithRawMarkdown,
     getTitle,
+    getSubtitle,
     getCreatedTime
 } = require('./MDXShims');
 
@@ -19,17 +20,17 @@ test('getDocumentType returns undefined the sourceInstanceName is not Page or Po
     expect(getDocumentType(`BlahBlahBlah`)).toBeUndefined();
 });
 
-// MARK: - _getFirstHeading
-test('_getFirstHeading returns the first heading when the rawBody contains the first heading at the beginning of the document', () => {
-    expect(_getFirstHeading(`# Title`)).toBe(`Title`);
+// MARK: - _getTitleWithRawMarkdown
+test('_getTitleWithRawMarkdown returns the first heading when the rawBody contains the first heading at the beginning of the document', () => {
+    expect(_getTitleWithRawMarkdown(`# Title`)).toBe(`Title`);
 });
 
-test('_getFirstHeading returns null when the rawBody contains the first heading but not at the beginning of the document', () => {
-    expect(_getFirstHeading(`Anything\n# Title`)).toBeNull();
+test('_getTitleWithRawMarkdown returns null when the rawBody contains the first heading but not at the beginning of the document', () => {
+    expect(_getTitleWithRawMarkdown(`Anything\n# Title`)).toBeNull();
 });
 
-test('_getFirstHeading returns null when the rawBody does not contain anything', () => {
-    expect(_getFirstHeading(``)).toBeNull();
+test('_getTitleWithRawMarkdown returns null when the rawBody does not contain anything', () => {
+    expect(_getTitleWithRawMarkdown(``)).toBeNull();
 });
 
 // MARK: - getTitle
@@ -47,6 +48,23 @@ test('getTitle returns the document name when rawBody is given but no first head
 
 test('getTitle returns documentName when documentName is given and frontMatterTitle and rawBody is both not given', () => {
     expect(getTitle(null, null, `documentName`)).toBe(`documentName`);
+});
+
+test('getTitle returns an empty string when all the arguments are not given', () => {
+    expect(getTitle(null, null, null)).toBe("");
+});
+
+// MARK: - getSubtitle
+test('getSubtitle returns frontMatterTitle when frontMatterTitle is given', () => {
+    expect(getSubtitle(`frontMatterTitle`, `rawBody`)).toBe(`frontMatterTitle`);
+});
+
+test('getSubtitle returns the first heading of rawBody when rawBody is given and frontMatterTitle is not given', () => {
+    expect(getSubtitle(null ,`# Raw Body\n# Subtitle`)).toBe(`Subtitle`);
+});
+
+test('getSubtitle returns an empty string when rawBody is given but no first heading located at the beginning of the frontMatterTitle is not given', () => {
+    expect(getSubtitle(null, `rawBody`)).toBe("");
 });
 
 // MARK: - getCreatedTime

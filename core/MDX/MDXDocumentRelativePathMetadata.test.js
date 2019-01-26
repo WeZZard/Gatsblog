@@ -28,7 +28,7 @@ test('MDXDocumentRelativePathMetadata creates metadata for localized root Page r
     ).toEqual({
         name: `page-name`,
         documentIdentifier: `page-name`,
-        localeIdentifier: `zh`,
+        locale: `zh`,
         isIndex: true,
         slug: `zh/page-name`,
     });
@@ -65,7 +65,7 @@ test('MDXDocumentRelativePathMetadata creates metadata for localized non-root Pa
     ).toEqual({
         name: `folder/page-name`,
         documentIdentifier: `folder/page-name`,
-        localeIdentifier: `zh`,
+        locale: `zh`,
         isIndex: true,
         slug: `zh/folder/page-name`,
     });
@@ -109,7 +109,7 @@ test('MDXDocumentRelativePathMetadata creates metadata for localized wrapped Pos
     ).toEqual({
         name: `post-name`,
         documentIdentifier: `1990-01-02-post-name`,
-        localeIdentifier: `zh`,
+        locale: `zh`,
         isIndex: true,
         createdTime: new Date(`1990-01-02`),
         slug: `zh/1990-01-02-post-name`,

@@ -1,26 +1,30 @@
-const createPagesByIndexing = require('./_createPagesByIndexing');
+const createIndexPages = require('./_createIndexPages');
 const { home: page } = require('./pageMetadata');
-const { makePostExcerptPayloadWithPost } = require('../payload');
-const { getItemsPerPageInLocation } = require('../config');
+const { makePostExcerptPayload } = require('../Payload');
+const { getItemsPerPageInIndexWithName } = require('../config');
 
-const _createPageOfHomeForLocale = async (args) => {
-    const { locale, graphql, createPage } = args;
+module.exports = async (args, pendingSchemaData) => {
+    const { graphql, actions } = args;
+    const { createPage } = actions;
+    const { locales, tags, categories } = pendingSchemaData;
 
-    const { data: { allPost } } = await graphql(`
+    await Promise.all(locales.map(async (locale) => {
+        const result = await graphql(`
         {
             allPost(
                 filter: {
-                    locale: { eq: "${locale.node.id}" }
+                    locale: { eq: "${locale.identifier}" }
                 }
                 sort: { fields: [createdTime], order: DESC }
             ) {
                 edges {
                     node {
                         title
+                        subtitle
+                        slug
                         createdTime
                         tags
                         category
-                        slug
                         parent {
                             id
                         }
@@ -28,53 +32,43 @@ const _createPageOfHomeForLocale = async (args) => {
                 }
             }
         }
-    `);
+        `);
 
-
-    const { edges: posts } = allPost || { edges: [] };
-
-    const itemsPerPage = await getItemsPerPageInLocation(page.location, graphql);
-
-    await createPagesByIndexing({
-        graphql: graphql,
-        createPage : createPage,
-        locale: locale,
-        itemComponentName : page.itemComponentName,
-        layoutComponentName: page.layoutComponentName,
-        primitiveItems: posts,
-        itemsPerPage: itemsPerPage,
-        createItem: async (post) => await makePostExcerptPayloadWithPost(post, graphql),
-        createPageTitle: page.getPageTitle,
-        createPagePath: page.getPagePath,
-        showsPageTitle: false,
-        previousPageTitle: page.getPreviousPageTitle(locale),
-        nextPageTitle: page.getNextPageTitle(locale),
-    });
-};
-
-module.exports = async (args) => {
-    const { graphql, actions } = args;
-    const { createPage } = actions;
-    const { data: { allLocale: { edges: locales } } } = await graphql(`
-        {
-            allLocale {
-                edges {
-                    node {
-                        id
-                        identifier
-                        slug
-                    }
-                }
-            }
+        if (result.errors) {
+            throw result.errors
         }
-    `);
 
-    await Promise.all(locales.map(async (locale) => {
-        const args = {
-            locale: locale,
+        const {
+            data: {
+                allPost,
+            },
+        } = result;
+
+        const {
+            edges: posts
+        } = (allPost || { edges: [] });
+
+        const itemsPerPage = await getItemsPerPageInIndexWithName(page.name, graphql);
+
+        await createIndexPages({
             graphql: graphql,
-            createPage: createPage,
-        };
-        await _createPageOfHomeForLocale(args)
+            createPage : createPage,
+            locale: locale,
+            itemComponentName : page.itemComponentName,
+            layoutComponentName: page.layoutComponentName,
+            primitiveItems: posts,
+            itemsPerPage: itemsPerPage,
+            createItem: async (post) => await makePostExcerptPayload({
+                post: post,
+                graphql: graphql,
+                tags: tags,
+                categories: categories,
+            }),
+            createPageTitle: page.getPageTitle,
+            createPagePath: page.getPagePath,
+            showsPageTitle: false,
+            previousPageTitle: page.getPreviousPageTitle(locale),
+            nextPageTitle: page.getNextPageTitle(locale),
+        });
     }))
 };

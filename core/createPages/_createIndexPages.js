@@ -63,10 +63,7 @@ module.exports = async (args) => {
             path: pagePath,
             component: Template,
             context: {
-                locale: {
-                    identifier: locale.node.identifier,
-                    slug: locale.node.slug,
-                },
+                locale: locale,
                 itemComponentName: itemComponentName,
                 layoutComponentName: layoutComponentName,
                 pageTitle: pageTitle,

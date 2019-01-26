@@ -12,15 +12,15 @@ module.exports = function(args) {
     } = args;
 
     const kebabCategory = _.kebabCase(category);
-    const categoryData = {name: category, slug: `${kebabCategory}`};
+    const categoryData = {name: category, slug: `/category/${kebabCategory}`};
     const existedNodes = getNodesByType(`Category`).filter(node => node.slug === categoryData.slug);
     if (existedNodes.length === 1) {
         const node = existedNodes[0];
         if (node.name !== categoryData.name) {
             throw `Category "${node.name}" and "${categoryData.name}" shares the same slug: ${node.slug}, which is not allowed.`;
         }
-        debug(`Returns the existed category node: ${node}`);
-        return node.id;
+        debug(`Returns the data of existed category node: ${node}`);
+        return categoryData;
     } else if (existedNodes.length === 0) {
         assert(category !== "");
         const nodeId = createNodeId(`category-${kebabCategory}`);
@@ -36,7 +36,7 @@ module.exports = function(args) {
         });
         debug(`Create category node: ${category}`);
         createNode(nodeData);
-        return nodeId;
+        return categoryData;
     } else {
         throw `Multiple category nodes was found. ${existedNodes}`;
     }

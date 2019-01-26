@@ -1,17 +1,17 @@
 module.exports = {
-    location: 'Tag',
+    name: 'Tag',
     itemComponentName : 'PostExcerpt',
     layoutComponentName: 'PostListLayout',
     getPageTitle: (tag, locale, pageIndex) => {
-        return `Tag: ${tag.node.name}`
+        return `Tag: ${tag.name}`
             + (pageIndex === 0 ? `` : ` (Page ${pageIndex})`)
     },
     getPagePath: (tag, locale, pageIndex) => {
-        if (locale.node.identifier === 'none') {
-            return `/${tag.node.slug}`
-                + (pageIndex > 0 ? `/page-${pageIndex}` : `/`);
+        if (locale.identifier === 'none') {
+            return `/${tag.slug}`
+                + (pageIndex > 0 ? `/page-${pageIndex}` : ``);
         } else {
-            return `/${locale.node.slug}/${tag.node.slug}`
+            return `/${locale.slug}/${tag.slug}`
                 + (pageIndex > 0 ? `/page-${pageIndex}` : ``);
         }
     },

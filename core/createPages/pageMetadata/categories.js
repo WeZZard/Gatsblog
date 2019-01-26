@@ -1,18 +1,18 @@
 module.exports = {
-    name: 'Tags',
-    itemComponentName : 'TagSummary',
-    layoutComponentName: 'TagListLayout',
+    name: 'Categories',
+    itemComponentName : 'CategorySummary',
+    layoutComponentName: 'CategoryListLayout',
     getPageTitle: (locale, pageIndex) => {
         return pageIndex === 0
-            ? `Tags`
-            : `Tags (Page ${pageIndex})`
+            ? `Categories`
+            : `Categories (Page ${pageIndex})`
     },
     getPagePath: (locale, pageIndex) => {
         if (locale.identifier === 'none') {
-            return `/tag`
+            return `/category`
                 + (pageIndex > 0 ? `/page-${pageIndex}` : ``)
         } else {
-            return `/${locale.slug}/tag`
+            return `/${locale.slug}/category`
                 + (pageIndex > 0 ? `/page-${pageIndex}` : ``)
         }
     },

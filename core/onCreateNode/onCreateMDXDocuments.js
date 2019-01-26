@@ -18,51 +18,19 @@ const getDocumentNodeCreator = (documentType) => {
     }
 };
 
-const onCreateMDXDocuments = (arg) => {
+const onCreateMDXDocuments = (args) => {
     const {
         node,
         actions,
         getNode,
-        getNodesByType,
         createNodeId,
         createContentDigest,
-    } = arg;
+    } = args;
 
     const { createNode, createParentChildLink } = actions;
 
     if (node.internal.type === 'Mdx') {
-        const metadata = new MDXMetadata(arg);
-
-        const tags = metadata.tags.map(tag => {
-            const tagArgs = {
-                tag: tag,
-                getNodesByType: getNodesByType,
-                createNode: createNode,
-                createNodeId: createNodeId,
-                createContentDigest: createContentDigest,
-            };
-            return createNodeForTag(tagArgs);
-        });
-
-        const categoryArgs = {
-            category: metadata.category,
-            getNodesByType: getNodesByType,
-            createNode: createNode,
-            createNodeId: createNodeId,
-            createContentDigest: createContentDigest,
-        };
-
-        const category = createNodeForCategory(categoryArgs);
-
-        const localeArgs = {
-            localeIdentifier: metadata.localeIdentifier,
-            getNodesByType: getNodesByType,
-            createNode: createNode,
-            createNodeId: createNodeId,
-            createContentDigest: createContentDigest,
-        };
-
-        const locale = createNodeForLocale(localeArgs);
+        const metadata = new MDXMetadata(args);
 
         const documentNodeCreator = getDocumentNodeCreator(metadata.documentType);
 
@@ -70,14 +38,15 @@ const onCreateMDXDocuments = (arg) => {
             parent: node.id,
             document: {
                 title: metadata.title,
+                subtitle: metadata.subtitle,
                 documentIdentifier: metadata.documentIdentifier,
                 isPublished: metadata.isPublished,
                 createdTime: metadata.createdTime,
                 lastModifiedTime: metadata.lastModifiedTime,
-                tags: tags,
-                category: category,
+                tags: metadata.tags,
+                category: metadata.category,
                 slug: metadata.slug,
-                locale: locale,
+                locale: metadata.locale || 'none',
             },
             getNode: getNode,
             createNode: createNode,
