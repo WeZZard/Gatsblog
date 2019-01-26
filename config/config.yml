@@ -17,20 +17,14 @@ site:
         - WeZZard
         - Pieces of My Soul
 
-    # Displays the site owner as the author of a rendered
-    # page of a markdown document if no authors have been
-    # specified in the document's front matter.
-    #
-    displaysTheSiteOwnerAsAuthorIfNoAuthorsSpecified: true
-
     # Whether builds an index page for taxonomies.
     #
     indexing:
         - name: Tags
-          enabled: true
+          isEnabled: true
 
         - name: Categories
-          enabled: true
+          isEnabled: false
 
     slogans:
         - I'm WeZZard
@@ -60,6 +54,7 @@ navigation:
         - name: Profile
           slug: /profile
           weight: 0
+
         - name: Feed
           slug: /feed
           weight: 0

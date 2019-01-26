@@ -7,7 +7,7 @@ module.exports = {
     },
     getPagePath: (locale, pageIndex) => {
         if (locale.identifier === 'none') {
-            return pageIndex > 0 ? `/page-${pageIndex}` : `/`;
+            return '/' + (pageIndex > 0 ? `page-${pageIndex}` : ``);
         } else {
             return `/${locale.slug}`
                 + (pageIndex > 0 ? `/page-${pageIndex}` : `/`);

@@ -11,10 +11,6 @@ module.exports = async (args) => {
 
     const { createNode } = actions;
 
-    const isPreviewEnabled = process.env.GATSBY_IS_PREVIEW_ENABLED || false;
-
-    const filter = isPreviewEnabled ? "" : "(filter: {isPublished: {eq: true}})";
-
     const {
         data: {
             allPost: {
@@ -23,7 +19,7 @@ module.exports = async (args) => {
         },
     } = await graphql(`
         {
-            allPost${filter} {
+            allPost {
                 edges {
                     node {
                         locale

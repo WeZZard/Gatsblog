@@ -15,6 +15,8 @@ module.exports = (args) => {
     const { createNode, createParentChildLink } = actions;
 
     if (node.internal.type === 'Mdx') {
+        const isPreviewEnabled = process.env.GATSBY_IS_PREVIEW_ENABLED || false;
+
         const metadata = new MDXMetadata(args);
 
         const documentNodeCreator = getDocumentNodeCreator(metadata.documentType);
@@ -40,7 +42,9 @@ module.exports = (args) => {
             createParentChildLink: createParentChildLink,
         };
 
-        documentNodeCreator(documentArgs);
+        if (isPreviewEnabled || metadata.isPublished) {
+            documentNodeCreator(documentArgs);
+        }
     }
 };
 

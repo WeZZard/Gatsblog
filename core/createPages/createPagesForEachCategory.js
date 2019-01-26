@@ -3,8 +3,13 @@ const { category: page } = require('./pageMetadata');
 const { makePostExcerptPayload } = require('../Payload');
 const { getItemsPerPageInIndexWithName } = require('../config');
 
-module.exports = async (args, pendingSchemaData) => {
-    const { graphql, actions } = args;
+module.exports = async (args) => {
+    const {
+        createPagesArgs,
+        pendingSchemaData,
+    } = args;
+
+    const { graphql, actions } = createPagesArgs;
     const { createPage } = actions;
 
     const { tags, categories, locales } = pendingSchemaData;

@@ -2,9 +2,12 @@ const path = require('path');
 
 const Template = path.resolve('src/templates/Post.js');
 
-module.exports = async (args, pendingSchemaData) => {
-    const { graphql, actions, getNode } = args;
-    const { createPage } = actions;
+module.exports = async (args) => {
+    const {
+        createPagesArgs,
+        pendingSchemaData,
+    } = args;
 
-    const isPreviewEnabled = process.env.GATSBY_IS_PREVIEW_ENABLED || false;
+    const { graphql, actions } = createPagesArgs;
+    const { createPage } = actions;
 };
