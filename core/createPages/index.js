@@ -1,13 +1,15 @@
-const createNodesForEachTag = require('../createNode/createNodesForEachTag');
-const createNodesForEachCategory = require('../createNode/createNodesForEachCategory');
-const createNodesForEachLocale = require('../createNode/createNodesForEachLocale');
+const {
+    createNodesForEachTag,
+    createNodesForEachCategory,
+    createNodesForEachLocale,
+} = require('../createNode');
 
 module.exports = async (args) => {
     const { graphql } = args;
 
-    // Gatsby.js doesn't create schema after you create the node immediately,
-    // we have to pass the following pending data to the create-page function
-    // series.
+    // Gatsby.js doesn't update the GraphQL schema after you create the node
+    // immediately, we have to pass the following pending data to the
+    // create-page function series.
     //
     const pendingSchemaData = {
         tags: await createNodesForEachTag(args),
@@ -50,5 +52,6 @@ module.exports = async (args) => {
         require('./createPagesForEachPage'),
         require('./createPagesForEachCategory'),
         require('./createPagesForEachTag'),
+        require('./createPagesForLocalizedAliasOfEachPost'),
     ].forEach(_ => _(createPagesArgs));
 };

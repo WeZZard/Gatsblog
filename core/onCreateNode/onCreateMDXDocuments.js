@@ -1,6 +1,8 @@
 const MDXMetadata = require('../MDX/MDXMetadata');
-const createNodeForPost = require('../createNode/createNodeForPost');
-const createNodeForPage = require('../createNode/createNodeForPage');
+const {
+    createNodeForPost,
+    createNodeForPage,
+} = require('../createNode');
 const debug = require('debug');
 
 module.exports = (args) => {
