@@ -1,24 +1,9 @@
 const MDXMetadata = require('../MDX/MDXMetadata');
 const createNodeForPost = require('../createNode/createNodeForPost');
 const createNodeForPage = require('../createNode/createNodeForPage');
-const createNodeForTag = require('../createNode/createNodeForTag');
-const createNodeForCategory = require('../createNode/createNodeForCategory');
-const createNodeForLocale = require('../createNode/createNodeForLocale');
 const debug = require('debug');
 
-const getDocumentNodeCreator = (documentType) => {
-    switch (documentType) {
-        case 'Post':
-            return createNodeForPost;
-        case 'Page':
-            return createNodeForPage;
-        default:
-            debug(`Unexpected document type: ${metadata.documentType}.`);
-            return undefined;
-    }
-};
-
-const onCreateMDXDocuments = (args) => {
+module.exports = (args) => {
     const {
         node,
         actions,
@@ -59,4 +44,14 @@ const onCreateMDXDocuments = (args) => {
     }
 };
 
-module.exports = onCreateMDXDocuments;
+const getDocumentNodeCreator = (documentType) => {
+    switch (documentType) {
+        case 'Post':
+            return createNodeForPost;
+        case 'Page':
+            return createNodeForPage;
+        default:
+            debug(`Unexpected document type: ${metadata.documentType}.`);
+            return undefined;
+    }
+};
