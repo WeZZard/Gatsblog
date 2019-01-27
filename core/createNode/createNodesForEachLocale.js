@@ -1,4 +1,4 @@
-const _ = require('./createNodeForLocale');
+const createNodeForLocale = require('./createNodeForLocale');
 
 module.exports = async (args) => {
     const {
@@ -34,7 +34,7 @@ module.exports = async (args) => {
 
     const nonDuplicateLocales = new Set(locales);
 
-    return [...nonDuplicateLocales].map(locale => _({
+    return [...nonDuplicateLocales].map(locale => createNodeForLocale({
         locale: locale,
         getNodesByType: getNodesByType,
         createNode: createNode,

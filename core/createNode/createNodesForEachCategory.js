@@ -1,4 +1,4 @@
-const _ = require('./createNodeForCategory');
+const createNodeForCategory = require('./createNodeForCategory');
 
 module.exports = async (args) => {
     const {
@@ -34,7 +34,7 @@ module.exports = async (args) => {
 
     const nonDuplicateCategories = new Set(categories);
 
-    return [...nonDuplicateCategories].map(category => _({
+    return [...nonDuplicateCategories].map(category => createNodeForCategory({
         category: category,
         getNodesByType: getNodesByType,
         createNode: createNode,
