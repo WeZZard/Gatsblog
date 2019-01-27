@@ -4,14 +4,15 @@ const {
     getSubtitle,
     getCreatedTime
 } = require('./MDXShims');
-const MDXDocumentRelativePathMetadata = require('./MDXDocumentRelativePathMetadata');
+const MDXRelativePathMetadata = require('./MDXRelativePathMetadata');
 
-module.exports = function (arg) {
+module.exports = function (args) {
     /*
     {
         documentType: string('Post', 'Page')
         documentIdentifier: string
         title: string
+        subtitle: string
         isIndex: bool
         isPublished: bool
         createdTime: string(ISO 8601)
@@ -23,7 +24,7 @@ module.exports = function (arg) {
     }
     */
 
-    const { node, getNode } = arg;
+    const { node, getNode } = args;
 
     if (node.internal.type === 'Mdx') {
         let metadata = {};
@@ -32,9 +33,13 @@ module.exports = function (arg) {
         const sourceInstanceName = parentNode.sourceInstanceName;
         const relativePath = parentNode.relativePath;
 
+        const createdTime = node.frontmatter.date ? new Date(node.frontmatter.date) : null;
+        const lastModifiedTime = node.frontmatter.lastModifiedTime ? new Date(node.frontmatter.lastModifiedTime) : null;
+        const birthTime = parentNode.birthTime ? new Date(parentNode.birthTime) : null;
+
         metadata.documentType = getDocumentType(sourceInstanceName);
 
-        const relativePathMetadata = new MDXDocumentRelativePathMetadata(sourceInstanceName, relativePath);
+        const relativePathMetadata = new MDXRelativePathMetadata(sourceInstanceName, relativePath);
 
         metadata.documentIdentifier = relativePathMetadata.documentIdentifier;
 
@@ -52,9 +57,9 @@ module.exports = function (arg) {
 
         metadata.category = node.frontmatter.category || "Uncategorized";
 
-        metadata.createdTime = getCreatedTime(node.frontmatter.date, relativePathMetadata.createdTime, parentNode.birthTime);
+        metadata.createdTime = getCreatedTime(createdTime, relativePathMetadata.createdTime, birthTime);
 
-        metadata.lastModifiedTime = node.frontmatter.lastModifiedTime || metadata.createdTime;
+        metadata.lastModifiedTime = lastModifiedTime || metadata.createdTime;
 
         metadata.slug = relativePathMetadata.slug;
 

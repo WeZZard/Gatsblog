@@ -1,5 +1,5 @@
 const debug = require('debug');
-const assert = require('assert')
+const assert = require('assert');
 const locales = require('i18n-locales');
 
 let _isLocaleIdentifierPatternInitialized = false;
@@ -25,7 +25,7 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
       slug: string
   }
   */
-    const datePattern = `([0-9]{4})\-([0-9]{2})-([0-9]{2})`;
+    const datePattern = `([0-9]{4})-([0-9]{2})-([0-9]{2})`;
     const timePattern = `T([0-9]{2})_([0-9]{2})_([0-9]{2})`;
     const timezoneOffsetPattern1 = `([0-9]{2})_([0-9]{2})`;
     const timezoneOffsetPattern3 = `([0-9]{2})([0-9]{2})`;
@@ -79,10 +79,11 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
         }
 
         metadata.createdTime = new Date(createdTime);
-        metadata.documentIdentifier = createdDate + "-" + (match[22] || match[26] || match[29]);
-        metadata.slug = metadata.locale
-            ? `${metadata.locale}/${metadata.documentIdentifier}`
-            : metadata.documentIdentifier
+        metadata.documentIdentifier = (createdDate + "-" + (match[22] || match[26] || match[29])).toLocaleLowerCase();
+        metadata.slug = [metadata.locale, 'post', metadata.documentIdentifier]
+            .filter(_ => _)
+            .map(_ => _.toLocaleLowerCase())
+            .join("/")
     }
 
     return metadata;
@@ -117,22 +118,25 @@ const _parseMetadataForRelativePathOfPage = relativePath => {
         if (match[6]) {
             metadata.locale = match[6];
         }
-        metadata.documentIdentifier = match[4] || match[19] || match[22];
-        metadata.slug = metadata.locale
-            ? `${metadata.locale}/${metadata.documentIdentifier}`
-            : metadata.documentIdentifier
+        metadata.documentIdentifier = (match[4] || match[19] || match[22]).toLocaleLowerCase();
+        metadata.slug = [metadata.locale, metadata.documentIdentifier]
+            .filter(_ => _)
+            .map(_ => _.toLocaleLowerCase())
+            .join("/")
     }
     return metadata;
 };
 
 module.exports = function(sourceInstanceName, relativePath) {
+    assert(typeof sourceInstanceName === 'string');
+    assert(typeof relativePath === 'string');
+
     switch (sourceInstanceName) {
         case 'Post':
             return _parseMetadataForRelativePathOfPost(relativePath);
         case 'Page':
             return _parseMetadataForRelativePathOfPage(relativePath);
         default:
-            debug(`Unexpected source instance name: ${sourceInstanceName}`);
-            return undefined;
+            assert.fail(`Unexpected source instance name: ${sourceInstanceName}`);
     }
 };

@@ -37,11 +37,11 @@ module.exports = (args) => {
                 slug: metadata.slug,
                 locale: metadata.locale || 'none',
             },
-            getNode: getNode,
-            createNode: createNode,
-            createNodeId: createNodeId,
-            createContentDigest: createContentDigest,
-            createParentChildLink: createParentChildLink,
+            getNode,
+            createNode,
+            createNodeId,
+            createContentDigest,
+            createParentChildLink,
         };
 
         if (isPreviewEnabled || metadata.isPublished) {

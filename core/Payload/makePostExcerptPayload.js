@@ -39,6 +39,6 @@ module.exports = async (args) => {
             slug: post.node.slug,
         }
     } else {
-        throw `Multiple relative MDX document found for post: "${post.node.slug}".`
+        throw `Multiple relative MDX document were found for post: "${post.node.slug}".`
     }
 };
