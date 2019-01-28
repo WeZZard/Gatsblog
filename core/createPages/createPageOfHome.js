@@ -1,6 +1,6 @@
 const createIndexPages = require('./_createIndexPages');
 const { home: page } = require('./pageMetadata');
-const { makePostExcerptPayload } = require('../Payload');
+const { makePostPayload } = require('../Payload');
 const { getItemsPerPageInIndexWithName } = require('../config');
 
 module.exports = async (args) => {
@@ -31,13 +31,14 @@ module.exports = async (args) => {
                     node {
                         title
                         subtitle
-                        slug
                         createdTime
+                        documentIdentifier
                         tags
                         category
                         parent {
                             id
                         }
+                        slug
                     }
                 }
             }
@@ -68,11 +69,12 @@ module.exports = async (args) => {
             layoutComponentName: page.layoutComponentName,
             primitiveItems: posts,
             itemsPerPage: itemsPerPage,
-            createItem: async (post) => await makePostExcerptPayload({
+            createItem: async (post) => await makePostPayload({
                 post: post,
                 graphql: graphql,
                 tags: tags,
                 categories: categories,
+                style: "Excerpt",
             }),
             createPageTitle: page.getPageTitle,
             createPagePath: page.getPagePath,

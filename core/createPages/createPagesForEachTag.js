@@ -1,6 +1,6 @@
 const createIndexPages = require('./_createIndexPages');
 const { tag: page } = require('./pageMetadata');
-const { makePostExcerptPayload } = require('../Payload');
+const { makePostPayload } = require('../Payload');
 const { getItemsPerPageInIndexWithName } = require('../config');
 
 module.exports = async (args) => {
@@ -54,6 +54,7 @@ const _createPageForTagsForLocale = async (args) => {
                             title
                             subtitle
                             createdTime
+                            documentIdentifier
                             tags
                             category
                             slug
@@ -88,11 +89,12 @@ const _createPageForTagsForLocale = async (args) => {
             layoutComponentName: page.layoutComponentName,
             primitiveItems: posts || [],
             itemsPerPage: itemsPerPage,
-            createItem: async (post) => await makePostExcerptPayload({
+            createItem: async (post) => await makePostPayload({
                 post: post,
                 graphql: graphql,
                 tags: tags,
                 categories: categories,
+                style: "Excerpt",
             }),
             createPageTitle: (locale, pageIndex) => page.getPageTitle(tag, locale, pageIndex),
             createPagePath: (locale, pageIndex) => page.getPagePath(tag, locale, pageIndex),

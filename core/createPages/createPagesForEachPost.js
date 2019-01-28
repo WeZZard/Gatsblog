@@ -1,13 +1,9 @@
 const path = require('path');
 const assert = require('assert');
 const {
-    makePostExcerptPayload,
+    makePostPayload,
     makeMdxDocumentPayload,
 } = require('../Payload');
-const {
-    filterCategoryForPostNode,
-    filterTagsForPostNode,
-} = require('../Payload/utils');
 const Template = path.resolve('src/templates/Post.js');
 
 module.exports = async (args) => {
@@ -27,8 +23,6 @@ module.exports = async (args) => {
                         isPublished
                         createdTime
                         lastModifiedTime
-                        tags
-                        category
                         documentIdentifier
                         slug
                         lang
@@ -50,51 +44,35 @@ module.exports = async (args) => {
     const { edges: posts } = allPost || { edges: [] };
 
     posts.forEach( async (postNode, index) => {
-        const postTags = filterTagsForPostNode(postNode, tags);
-
-        const postCategory = filterCategoryForPostNode(postNode, categories);
-
-        const mdxDocument = await makeMdxDocumentPayload({
-            id: postNode.node.parent.id,
-            graphql: graphql,
+        const postPayload = makePostPayload({
+            post: postNode,
+            tags,
+            categories,
+            graphql,
+            style: 'FullText',
         });
-
-        const postPayload = {
-            title: postNode.node.title,
-            subtitle: postNode.node.subtitle,
-            isPublished: postNode.node.isPublished,
-            createdTime: postNode.node.createdTime,
-            lastModifiedTime: postNode.node.lastModifiedTime,
-            tags: postTags,
-            category: postCategory,
-            slug: postNode.node.slug,
-            tableOfContent: mdxDocument.tableOfContent,
-            headings: mdxDocument.headings,
-            html: mdxDocument.html,
-            code: mdxDocument.code,
-            keywords: [],
-            description: mdxDocument.excerpt,
-        };
 
         let earlierPostExcerpt = null;
         if (index - 1 >= 0) {
             const earlierPost = posts[index - 1];
-            earlierPostExcerpt = await makePostExcerptPayload({
+            earlierPostExcerpt = await makePostPayload({
                 post: earlierPost,
                 tags,
                 categories,
-                graphql
+                graphql,
+                style: 'Excerpt',
             })
         }
 
         let laterPostExcerpt = null;
         if (index + 1 < posts.length) {
             const laterPost = posts[index + 1];
-            laterPostExcerpt  = await makePostExcerptPayload({
+            laterPostExcerpt  = await makePostPayload({
                 post: laterPost,
                 tags,
                 categories,
-                graphql
+                graphql,
+                style: 'Excerpt',
             })
         }
 
