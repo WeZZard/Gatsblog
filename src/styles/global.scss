@@ -3,6 +3,6 @@
 body {
     font-family: $font-ui-sans;
     font-size: 10px;
+    -webkit-font-smoothing: antialiased;
     font-weight: normal;
-    -webkit-font-smoothing : antialiased;
 }
