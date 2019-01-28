@@ -4,6 +4,7 @@ module.exports = function (args) {
     const {
         parent,
         post,
+        relativePath,
         getNode,
         createNode,
         createNodeId,
@@ -11,15 +12,15 @@ module.exports = function (args) {
         createParentChildLink
     } = args;
 
-    const nodeId = createNodeId(`post-${post.slug}`);
+    const nodeId = createNodeId(`post-${relativePath}`);
     const nodeData = Object.assign({}, post, {
         id: nodeId,
         parent: parent,
         children: [],
         internal: {
             type: `Post`,
-            content: post.relativePath,
-            contentDigest: createContentDigest(post.relativePath),
+            content: relativePath,
+            contentDigest: createContentDigest(relativePath),
         },
     });
 

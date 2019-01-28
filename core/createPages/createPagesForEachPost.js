@@ -29,6 +29,7 @@ module.exports = async (args) => {
                         lastModifiedTime
                         tags
                         category
+                        documentIdentifier
                         slug
                         lang
                         parent {
