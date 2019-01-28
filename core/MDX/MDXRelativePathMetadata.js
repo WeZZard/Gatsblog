@@ -46,6 +46,7 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
             metadata.lang = match[23];
             metadata.isLocalized = true
         } else {
+            metadata.lang = null;
             metadata.isLocalized = false
         }
 
@@ -126,6 +127,7 @@ const _parseMetadataForRelativePathOfPage = relativePath => {
             metadata.lang = match[6];
             metadata.isLocalized = true
         } else {
+            metadata.lang = null;
             metadata.isLocalized = false
         }
         metadata.documentIdentifier = metadata.name.toLocaleLowerCase();

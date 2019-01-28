@@ -38,15 +38,15 @@ module.exports = function (args) {
         const lastModifiedTime = node.frontmatter.lastModifiedTime ? new Date(node.frontmatter.lastModifiedTime) : null;
         const birthTime = parentNode.birthTime ? new Date(parentNode.birthTime) : null;
 
-        metadata.documentType = getDocumentType(sourceInstanceName);
-
         const relativePathMetadata = new MDXRelativePathMetadata(sourceInstanceName, relativePath);
+
+        metadata.documentType = getDocumentType(sourceInstanceName);
 
         metadata.title = getTitle(node.frontmatter.title, node.rawBody, relativePathMetadata.name);
 
         metadata.subtitle = getSubtitle(node.frontmatter.subtitle, node.rawBody);
 
-        metadata.lang = relativePathMetadata.lang || node.frontmatter.lang;
+        metadata.lang = relativePathMetadata.lang || node.frontmatter.lang || '';
 
         metadata.isLocalized = relativePathMetadata.isLocalized;
 
