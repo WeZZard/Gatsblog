@@ -75,28 +75,14 @@ const getCreatedTime = (frontMatterDate, documentNameDate, birthTime) => {
 };
 
 const makeDisambiguateIdentifier = (string, seed) => {
-    const comp1 = (seed === undefined) ? 0x1c9 : seed;
-    const comp2 = (seed === undefined) ? 0x852 : seed;
-    const comp3 = (seed === undefined) ? 0x3ba : seed;
-    const comp4 = (seed === undefined) ? 0xe0d : seed;
+    let comp = (seed === undefined) ? 0x85ba : seed;
 
-    const comps = [comp1, comp2, comp3, comp4];
-
-    const compLength = string.length >> 2;
-
-    for (let offset = 0; offset < 4; offset ++) {
-        for (let i = 0; i < compLength; i++) {
-            comps[offset] ^= string.charCodeAt(offset * compLength + i);
-            comps[offset] += (comps[offset] << 1) + (comps[offset] << 4) + (comps[offset] << 7) + (comps[offset] << 8) + (comps[offset] << 24);
-        }
+    for (let i = 0; i < string.length; i++) {
+        comp ^= string.charCodeAt(i);
+        comp += (comp << 1) + (comp << 4) + (comp << 7) + (comp << 8) + (comp << 24);
     }
 
-    const substr1 = ("00" + (comps[0] >>> 0).toString(16)).substr(-3);
-    const substr2 = ("00" + (comps[1] >>> 0).toString(16)).substr(-3);
-    const substr3 = ("00" + (comps[2] >>> 0).toString(16)).substr(-3);
-    const substr4 = ("00" + (comps[3] >>> 0).toString(16)).substr(-3);
-
-    return substr1 + substr2 + substr3 + substr4
+    return ("000" + (comp).toString(16)).substr(-4);
 };
 
 let _isLocaleIdentifierPatternInitialized = false;
