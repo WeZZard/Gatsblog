@@ -21,43 +21,59 @@ module.exports = (args) => {
 
         const metadata = new MDXMetadata(args);
 
-        const documentNodeCreator = getDocumentNodeCreator(metadata.documentType);
-
-        const documentArgs = {
-            parent: node.id,
-            document: {
-                title: metadata.title,
-                subtitle: metadata.subtitle,
-                documentIdentifier: metadata.documentIdentifier,
-                isPublished: metadata.isPublished,
-                createdTime: metadata.createdTime,
-                lastModifiedTime: metadata.lastModifiedTime,
-                tags: metadata.tags,
-                category: metadata.category,
-                slug: metadata.slug,
-                locale: metadata.locale || 'none',
-            },
-            getNode,
-            createNode,
-            createNodeId,
-            createContentDigest,
-            createParentChildLink,
-        };
-
         if (isPreviewEnabled || metadata.isPublished) {
-            documentNodeCreator(documentArgs);
+            switch (metadata.documentType) {
+                case 'Post':
+                    const postArgs = {
+                        parent: node.id,
+                        post: {
+                            title: metadata.title,
+                            subtitle: metadata.subtitle,
+                            documentIdentifier: metadata.documentIdentifier,
+                            isPublished: metadata.isPublished,
+                            createdTime: metadata.createdTime,
+                            lastModifiedTime: metadata.lastModifiedTime,
+                            tags: metadata.tags,
+                            category: metadata.category,
+                            slug: metadata.slug,
+                            lang: metadata.lang,
+                            isLocalized: metadata.isLocalized,
+                            relativePath: metadata.relativePath,
+                        },
+                        getNode,
+                        createNode,
+                        createNodeId,
+                        createContentDigest,
+                        createParentChildLink,
+                    };
+                    createNodeForPost(postArgs);
+                    break;
+                case 'Page':
+                    const pageArgs = {
+                        parent: node.id,
+                        page: {
+                            title: metadata.title,
+                            subtitle: metadata.subtitle,
+                            documentIdentifier: metadata.documentIdentifier,
+                            isPublished: metadata.isPublished,
+                            createdTime: metadata.createdTime,
+                            lastModifiedTime: metadata.lastModifiedTime,
+                            slug: metadata.slug,
+                            lang: metadata.lang,
+                            isLocalized: metadata.isLocalized,
+                            relativePath: metadata.relativePath,
+                        },
+                        getNode,
+                        createNode,
+                        createNodeId,
+                        createContentDigest,
+                        createParentChildLink,
+                    };
+                    createNodeForPage(pageArgs);
+                    break;
+                default:
+                    debug(`Unexpected document type: ${metadata.documentType}.`);
+            }
         }
-    }
-};
-
-const getDocumentNodeCreator = (documentType) => {
-    switch (documentType) {
-        case 'Post':
-            return createNodeForPost;
-        case 'Page':
-            return createNodeForPage;
-        default:
-            debug(`Unexpected document type: ${metadata.documentType}.`);
-            return undefined;
     }
 };

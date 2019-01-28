@@ -1,6 +1,9 @@
 const _ = require("lodash");
 const debug = require('debug');
 const assert = require('assert');
+const {
+    localeIdentifierPattern
+} = require('../MDX/MDXShims');
 
 module.exports = function(args) {
     const {
@@ -11,16 +14,14 @@ module.exports = function(args) {
         createContentDigest
     } = args;
 
-    const pattern = /^\w+$/;
+    const pattern = new RegExp(localeIdentifierPattern());
 
     if (!pattern.exec(locale)) {
-        throws `Invalid locale: "${locale}".`
+        throw `Invalid locale: "${locale}".`
     }
 
-    const localeData = {
-        identifier: locale,
-        slug: locale === 'none' ? '' : `${locale}`
-    };
+    const localeData = { identifier: locale, slug: locale };
+
     const existedNodes = getNodesByType(`Locale`).filter(node => node.identifier === localeData.identifier);
     if (existedNodes.length === 1) {
         const node = existedNodes[0];

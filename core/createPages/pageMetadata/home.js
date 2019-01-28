@@ -6,8 +6,9 @@ module.exports = {
         return pageIndex === 0 ? null : `All Posts (Page ${pageIndex})`;
     },
     getPagePath: (locale, pageIndex) => {
+        const localeSlug = locale ? locale.slug : '';
         return [
-            `${locale.slug}`,
+            localeSlug,
             pageIndex > 0 ? `page-${pageIndex}` : ``,
         ].filter(_ => _).join('/') || '/';
     },

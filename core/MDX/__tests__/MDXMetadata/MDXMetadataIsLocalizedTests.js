@@ -1,7 +1,7 @@
 const MDXMetadata = require('../../MDXMetadata');
 const { makeDisambiguateIdentifier: _ } = require('../../MDXShims');
 
-test('MDXMetadata creates metadata whose isPublished can fallback to true', () => {
+test('MDXMetadata creates metadata whose isLocalized can fallback to false', () => {
     const parentNode = {
         internal: {
             type: 'File',

@@ -7,6 +7,7 @@ module.exports = async (args) => {
     const {
         createPagesArgs,
         pendingSchemaData,
+        siteLang
     } = args;
 
     const { graphql, actions } = createPagesArgs;
@@ -14,12 +15,16 @@ module.exports = async (args) => {
     const { locales, tags, categories } = pendingSchemaData;
 
     await Promise.all(locales.map(async (locale) => {
+        const postFilter = locale
+            ? (locale.identifier === siteLang
+                    ? `filter: { lang: { in: [ null, "${locale.identifier}" ] } }`
+                    : `filter: { lang: { eq: "${locale.identifier}" } }`
+            ) : 'filter: { isLocalized: { eq: false } }';
+
         const result = await graphql(`
         {
             allPost(
-                filter: {
-                    locale: { eq: "${locale.identifier}" }
-                }
+                ${postFilter}
                 sort: { fields: [createdTime], order: DESC }
             ) {
                 edges {

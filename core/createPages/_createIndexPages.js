@@ -1,5 +1,5 @@
 const path = require('path');
-
+const { makePostPayload } = require('../Payload');
 const Template = path.resolve('src/templates/Index.js');
 
 module.exports = async (args) => {

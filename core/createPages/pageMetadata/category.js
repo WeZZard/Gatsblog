@@ -8,9 +8,10 @@ module.exports = {
             : `${category.name} (Page ${pageIndex})`
     },
     getPagePath: (category, locale, pageIndex) => {
+        const localeSlug = locale ? locale.slug : '';
         return [
-            `${locale.slug}`,
-            `${category.slug}`,
+            localeSlug,
+            category.slug,
             pageIndex > 0 ? `page-${pageIndex}` : ``,
         ].filter(_ => _).join('/');
     },

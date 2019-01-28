@@ -1,4 +1,5 @@
 const MDXRelativePathMetadata = require('../../MDXRelativePathMetadata');
+const { makeDisambiguateIdentifier: _ } = require('../../MDXShims');
 
 test('MDXRelativePathMetadata creates metadata for standalone Post relative path of valid date', () => {
     expect(
@@ -8,7 +9,8 @@ test('MDXRelativePathMetadata creates metadata for standalone Post relative path
         documentIdentifier: `1990-01-02-post-name`,
         isIndex: false,
         createdTime: new Date(`1990-01-02`),
-        slug: `post/1990-01-02-post-name`,
+        slug: `post/1990/01/post-name-${_(`1990-01-02-post-name`)}`,
+        isLocalized: false,
     });
 });
 
@@ -20,10 +22,11 @@ test('MDXRelativePathMetadata creates metadata for standalone Post relative path
         ),
     ).toEqual({
         name: `post-name`,
-        documentIdentifier: `1990-01-02-post-name`,
+        documentIdentifier: `1990-01-02T04:03:02-post-name`,
         isIndex: false,
         createdTime: new Date(`1990-01-02T04:03:02`),
-        slug: `post/1990-01-02-post-name`,
+        slug: `post/1990/01/post-name-${_(`1990-01-02T04:03:02-post-name`)}`,
+        isLocalized: false,
     });
 });
 
@@ -48,10 +51,11 @@ test('MDXRelativePathMetadata creates metadata for language localized wrapped Po
     ).toEqual({
         name: `post-name`,
         documentIdentifier: `1990-01-02-post-name`,
-        locale: `zh`,
         isIndex: true,
         createdTime: new Date(`1990-01-02`),
-        slug: `zh/post/1990-01-02-post-name`,
+        slug: `post/1990/01/post-name-${_(`1990-01-02-post-name`)}`,
+        isLocalized: true,
+        lang: `zh`,
     });
 });
 
@@ -64,10 +68,11 @@ test('MDXRelativePathMetadata creates metadata for language and script localized
     ).toEqual({
         name: `post-name`,
         documentIdentifier: `1990-01-02-post-name`,
-        locale: `zh-Hant`,
         isIndex: true,
         createdTime: new Date(`1990-01-02`),
-        slug: `zh-hant/post/1990-01-02-post-name`,
+        slug: `post/1990/01/post-name-${_(`1990-01-02-post-name`)}`,
+        isLocalized: true,
+        lang: `zh-Hant`,
     });
 });
 
@@ -82,7 +87,8 @@ test('MDXRelativePathMetadata creates metadata for wrapped Post relative path of
         documentIdentifier: `1990-01-02-post-name`,
         isIndex: true,
         createdTime: new Date(`1990-01-02`),
-        slug: `post/1990-01-02-post-name`,
+        slug: `post/1990/01/post-name-${_(`1990-01-02-post-name`)}`,
+        isLocalized: false,
     });
 });
 
@@ -94,10 +100,11 @@ test('MDXRelativePathMetadata creates metadata for wrapped Post relative path of
         ),
     ).toEqual({
         name: `post-name`,
-        documentIdentifier: `1990-01-02-post-name`,
+        documentIdentifier: `1990-01-02T04:03:02-post-name`,
         isIndex: true,
         createdTime: new Date(`1990-01-02T04:03:02`),
-        slug: `post/1990-01-02-post-name`,
+        slug: `post/1990/01/post-name-${_(`1990-01-02T04:03:02-post-name`)}`,
+        isLocalized: false,
     });
 });
 
@@ -109,10 +116,11 @@ test('MDXRelativePathMetadata creates metadata for wrapped Post relative path of
         ),
     ).toEqual({
         name: `post-name`,
-        documentIdentifier: `1990-01-02-post-name`,
+        documentIdentifier: `1990-01-02T04:03:02+08:00-post-name`,
         isIndex: true,
         createdTime: new Date(`1990-01-02T04:03:02+08:00`),
-        slug: `post/1990-01-02-post-name`,
+        slug: `post/1990/01/post-name-${_(`1990-01-02T04:03:02+08:00-post-name`)}`,
+        isLocalized: false,
     });
 });
 
@@ -124,10 +132,11 @@ test('MDXRelativePathMetadata creates metadata for wrapped Post relative path of
         ),
     ).toEqual({
         name: `post-name`,
-        documentIdentifier: `1990-01-02-post-name`,
+        documentIdentifier: `1990-01-02T04:03:02+0800-post-name`,
         isIndex: true,
         createdTime: new Date(`1990-01-02T04:03:02+0800`),
-        slug: `post/1990-01-02-post-name`,
+        slug: `post/1990/01/post-name-${_(`1990-01-02T04:03:02+0800-post-name`)}`,
+        isLocalized: false,
     });
 });
 

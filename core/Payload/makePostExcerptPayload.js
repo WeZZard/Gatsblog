@@ -15,7 +15,7 @@ module.exports = async (args) => {
             allMdx( filter: {id: {eq: "${post.node.parent.id}" } } ) {
                 edges {
                     node {
-                        excerpt
+                        excerpt(pruneLength: 300)
                     }
                 }
             }

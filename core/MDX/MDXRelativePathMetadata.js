@@ -1,18 +1,9 @@
-const debug = require('debug');
 const assert = require('assert');
 const locales = require('i18n-locales');
-
-let _isLocaleIdentifierPatternInitialized = false;
-let _localeIdentifierPattern_;
-
-const _localeIdentifierPattern = () => {
-    if (!_isLocaleIdentifierPatternInitialized) {
-        _localeIdentifierPattern_ = locales.join('|');
-    }
-    assert(typeof _localeIdentifierPattern_  === 'string');
-    assert(_localeIdentifierPattern_  !== '');
-    return _localeIdentifierPattern_;
-};
+const {
+    localeIdentifierPattern,
+    makeDisambiguateIdentifier : _
+} = require('./MDXShims');
 
 const _parseMetadataForRelativePathOfPost = relativePath => {
     /*
@@ -20,7 +11,8 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
       name: string,
       documentIdentifier,
       isIndex: bool,
-      locale: string?
+      lang: string?
+      isLocalized: bool
       createdTime: Date?
       slug: string
   }
@@ -34,7 +26,7 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
 
     const standalonePostNamePattern = `(.+).mdx?`;
     const wrappedPostNamePattern = `(.+)/${indexDocumentPattern}`;
-    const localizedPostNamePattern = `(.+)/(${_localeIdentifierPattern()})/${indexDocumentPattern}`;
+    const localizedPostNamePattern = `(.+)/(${localeIdentifierPattern()})/${indexDocumentPattern}`;
     const pattern = new RegExp(
         `^`
         + `(${datePattern})` /* Year-Month-Day (required) */
@@ -51,7 +43,10 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
         metadata.name = match[22] || match[26] || match[29];
         metadata.isIndex = match[24] === `index` || match[27] === `index`;
         if (match[23]) {
-            metadata.locale = match[23];
+            metadata.lang = match[23];
+            metadata.isLocalized = true
+        } else {
+            metadata.isLocalized = false
         }
 
         const year = match[2];
@@ -60,13 +55,15 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
         const hour = match[7];
         const minute = match[8];
         const second = match[9];
-        const timezoneOffset = match[12] || match[10];
-        const timezoneHourOffset = match[15] || match[18];
-        const timezoneMinuteOffset = match[16] || match[19];
+        const zuluTime = match[10];
+        const timezoneOffset = match[12];
+        const timezoneHourOffset = match[15];
+        const timezoneMinuteOffset = match[16];
 
-        const createdDate = `${year}-${month}-${day}`;
+        const concatenatedTimezoneHourOffset = match[18];
+        const concatenatedTimezoneMinuteOffset = match[19];
 
-        let createdTime = createdDate;
+        let createdTime = `${year}-${month}-${day}`;
 
         if (hour && minute && second) {
             createdTime += `T${hour}:${minute}:${second}`
@@ -74,16 +71,25 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
 
         if (timezoneOffset && timezoneHourOffset && timezoneMinuteOffset) {
             createdTime += `${timezoneOffset}${timezoneHourOffset}:${timezoneMinuteOffset}`
-        } else if (timezoneOffset === `Z`) {
+        }
+
+        if (timezoneOffset && concatenatedTimezoneHourOffset && concatenatedTimezoneMinuteOffset) {
+            createdTime += `${timezoneOffset}${concatenatedTimezoneHourOffset}${concatenatedTimezoneMinuteOffset}`
+        }
+
+        if (zuluTime === `Z`) {
             createdTime += `Z`
         }
 
         metadata.createdTime = new Date(createdTime);
-        metadata.documentIdentifier = (createdDate + "-" + (match[22] || match[26] || match[29])).toLocaleLowerCase();
-        metadata.slug = [metadata.locale, 'post', metadata.documentIdentifier]
-            .filter(_ => _)
-            .map(_ => _.toLocaleLowerCase())
-            .join("/")
+
+        metadata.documentIdentifier = createdTime + "-" + metadata.name;
+
+        const disambiguateIdentifier = _(metadata.documentIdentifier);
+
+        const resourceName = `${year}/${month}/${metadata.name}-${disambiguateIdentifier}`;
+
+        metadata.slug = `post/${resourceName}`.toLocaleLowerCase();
     }
 
     return metadata;
@@ -95,7 +101,8 @@ const _parseMetadataForRelativePathOfPage = relativePath => {
       name: string,
       documentIdentifier,
       isIndex: bool,
-      locale: string?
+      lang: string?
+      isLocalized: bool
       slug: string
   }
   */
@@ -103,7 +110,7 @@ const _parseMetadataForRelativePathOfPage = relativePath => {
     const rootPathPattern = documentNamePattern;
     const nonRootIndexPathPattern = `(((.+)\/)+)(index).mdx?`;
     const nonRootNonIndexPathPattern = `(((.+)\/)+(((!index).+))).mdx?`;
-    const localizedPathPattern = `(((.+)\/)+((${_localeIdentifierPattern()})\/)(${documentNamePattern})`;
+    const localizedPathPattern = `(((.+)\/)+((${localeIdentifierPattern()})\/)(${documentNamePattern})`;
     const namePattern = `^(${localizedPathPattern})|(${nonRootNonIndexPathPattern})|(${nonRootIndexPathPattern})|(${rootPathPattern}))$`;
 
     const pattern = new RegExp(`${namePattern}`);
@@ -116,13 +123,13 @@ const _parseMetadataForRelativePathOfPage = relativePath => {
         metadata.name = match[4] || match[19] || match[22];
         metadata.isIndex = match[20] === `index` || match[8] === `index`;
         if (match[6]) {
-            metadata.locale = match[6];
+            metadata.lang = match[6];
+            metadata.isLocalized = true
+        } else {
+            metadata.isLocalized = false
         }
-        metadata.documentIdentifier = (match[4] || match[19] || match[22]).toLocaleLowerCase();
-        metadata.slug = [metadata.locale, metadata.documentIdentifier]
-            .filter(_ => _)
-            .map(_ => _.toLocaleLowerCase())
-            .join("/")
+        metadata.documentIdentifier = metadata.name.toLocaleLowerCase();
+        metadata.slug = metadata.documentIdentifier;
     }
     return metadata;
 };

@@ -7,6 +7,11 @@ site:
     #
     owner: WeZZard
 
+    # The language of the site. This also being used for posts and pages whose
+    # "lang" field of their frontmatters are not specified.
+    #
+    lang: en-US
+
     # The description of the site. An SEO option.
     #
     description: ''

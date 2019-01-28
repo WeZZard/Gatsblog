@@ -11,30 +11,60 @@ module.exports = async (args) => {
 
     const { createNode } = actions;
 
-    const {
-        data: {
-            allPost: {
-                edges: posts,
-            },
-        },
-    } = await graphql(`
+    const result = await graphql(`
         {
             allPost {
                 edges {
                     node {
-                        locale
+                        lang
                     }
+                }
+            }
+            allPage {
+                edges {
+                    node {
+                        lang
+                    }
+                }
+            }
+            configYaml {
+                site {
+                    lang
                 }
             }
         }
     `);
 
-    const locales = (posts || [])
-        .map(post => post.node.locale);
+    if (result.errors && !result.data) {
+        throw result.errors
+    }
 
-    const nonDuplicateLocales = new Set(locales);
+    const { data } = result;
 
-    return [...nonDuplicateLocales].map(locale => createNodeForLocale({
+    const { allPost, allPage, configYaml } = data || {
+        allPost: { edges: [] },
+        allPage: { edges: [] },
+        configYaml: { site: { lang: 'en-US' } },
+    };
+
+    const { edges: posts } = allPost || { edges: [] };
+
+    const { edges: pages } = allPage || { edges: [] };
+
+    const { site } = configYaml || { site: { lang: 'en-US' } };
+
+    const { lang: siteLanguage } = site || { lang: 'en-US' };
+
+    const contentLanguages = [...posts, ...pages]
+        .map(object => object.node.lang)
+        .filter(_ => _);
+
+    const allLanguages = [...contentLanguages, siteLanguage];
+
+    const nonDuplicateLocales = new Set(allLanguages);
+
+    return [...nonDuplicateLocales]
+        .map(locale => createNodeForLocale({
         locale: locale,
         getNodesByType: getNodesByType,
         createNode: createNode,

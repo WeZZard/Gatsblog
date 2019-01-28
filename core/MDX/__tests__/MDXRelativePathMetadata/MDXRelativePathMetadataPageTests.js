@@ -6,6 +6,17 @@ test('MDXRelativePathMetadata creates metadata for standalone root Page relative
         documentIdentifier: `page-name`,
         isIndex: false,
         slug: `page-name`,
+        isLocalized: false,
+    });
+});
+
+test('MDXRelativePathMetadata creates metadata for standalone root Page relative path with upper cased letters', () => {
+    expect(MDXRelativePathMetadata(`Page`, `Page-Name.md`)).toEqual({
+        name: `Page-Name`,
+        documentIdentifier: `page-name`,
+        isIndex: false,
+        slug: `page-name`,
+        isLocalized: false,
     });
 });
 
@@ -17,6 +28,19 @@ test('MDXRelativePathMetadata creates metadata for standalone non-root Page rela
         documentIdentifier: `folder/page-name`,
         isIndex: false,
         slug: `folder/page-name`,
+        isLocalized: false,
+    });
+});
+
+test('MDXRelativePathMetadata creates metadata for standalone non-root Page relative path with upper cased letters', () => {
+    expect(
+        MDXRelativePathMetadata(`Page`, `folder/Page-Name.md`),
+    ).toEqual({
+        name: `folder/Page-Name`,
+        documentIdentifier: `folder/page-name`,
+        isIndex: false,
+        slug: `folder/page-name`,
+        isLocalized: false,
     });
 });
 
@@ -28,6 +52,7 @@ test('MDXRelativePathMetadata creates metadata for wrapped root Page relative pa
         documentIdentifier: `page-name`,
         isIndex: true,
         slug: `page-name`,
+        isLocalized: false,
     });
 });
 
@@ -39,6 +64,7 @@ test('MDXRelativePathMetadata creates metadata for wrapped non-root Page relativ
         documentIdentifier: `folder/page-name`,
         isIndex: true,
         slug: `folder/page-name`,
+        isLocalized: false,
     });
 });
 
@@ -48,9 +74,10 @@ test('MDXRelativePathMetadata creates metadata for localized root Page relative 
     ).toEqual({
         name: `page-name`,
         documentIdentifier: `page-name`,
-        locale: `zh`,
         isIndex: true,
-        slug: `zh/page-name`,
+        slug: `page-name`,
+        lang: `zh`,
+        isLocalized: true,
     });
 });
 
@@ -63,8 +90,9 @@ test('MDXRelativePathMetadata creates metadata for localized non-root Page relat
     ).toEqual({
         name: `folder/page-name`,
         documentIdentifier: `folder/page-name`,
-        locale: `zh`,
         isIndex: true,
-        slug: `zh/folder/page-name`,
+        slug: `folder/page-name`,
+        lang: `zh`,
+        isLocalized: true,
     });
 });

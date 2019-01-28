@@ -7,25 +7,21 @@ const {
 module.exports = async (args) => {
     const { graphql } = args;
 
-    // Gatsby.js doesn't update the GraphQL schema after you create the node
-    // immediately, we have to pass the following pending data to the
-    // create-page function series.
+    const tags = await createNodesForEachTag(args);
+    const categories = await createNodesForEachCategory(args);
+    const locales = await createNodesForEachLocale(args);
+
+    // Gatsby.js doesn't immediately update the GraphQL schema after you create
+    // the node, we have to pass the following pending data to the create-page
+    // function series.
     //
     const pendingSchemaData = {
-        tags: await createNodesForEachTag(args),
-        categories: await createNodesForEachCategory(args),
-        locales: await createNodesForEachLocale(args),
+        tags: tags,
+        categories: categories,
+        locales: [null, ...locales],
     };
 
-    const {
-        data: {
-            configYaml: {
-                site: {
-                    indexing: indexingConfig
-                }
-            }
-        }
-    } = await graphql(`
+    const result = await graphql(`
     {
         configYaml {
             site {
@@ -33,15 +29,34 @@ module.exports = async (args) => {
                     name
                     isEnabled
                 }
+                lang
             }
         }
     }
     `);
 
+    if (result.errors) {
+        throw result.errors
+    }
+
+    const {
+        data: {
+            configYaml
+        }
+    } = result;
+
+    const {
+        site: {
+            indexing: indexingConfig,
+            lang,
+        },
+    } = configYaml || { site : { indexing: [], lang: 'en-US' } };
+
     const createPagesArgs = {
         createPagesArgs: args,
         pendingSchemaData,
         indexingConfig,
+        siteLang: lang,
     };
 
     [
