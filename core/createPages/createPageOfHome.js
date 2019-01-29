@@ -70,7 +70,7 @@ module.exports = async (args) => {
                     graphql: graphql,
                     tags: tags,
                     categories: categories,
-                    style: "FullText",
+                    style: "Excerpt",
                 })
             }));
 
