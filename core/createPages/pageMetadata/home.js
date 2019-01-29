@@ -3,7 +3,7 @@ module.exports = {
     itemComponentName : 'PostExcerpt',
     layoutComponentName: 'PostListLayout',
     getPageTitle: (locale, pageIndex) => {
-        return pageIndex === 0 ? null : `All Posts (Page ${pageIndex})`;
+        return pageIndex === 0 ? null : `All the Posts (Page ${pageIndex + 1})`;
     },
     getPagePath: (locale, pageIndex) => {
         const localeSlug = locale ? locale.slug : '';

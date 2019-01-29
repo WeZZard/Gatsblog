@@ -16,18 +16,18 @@ class PostExcerptMetadata extends React.Component {
         const categoryComponent = <CategoryLabel category={post.category}/>;
 
         const tags = post.tags;
-        const tagsComponent = tags.length > 0 ? (<TagsLabel tags={tags}/>) : null;
+        const tagsComponent = tags.length > 0 ? <TagsLabel tags={tags}/> : null;
 
         const lines = [[createdTimeComponent, categoryComponent], [tagsComponent]];
 
-        lines.filter((line) => {
+        const filteredLines = lines.filter((line) => {
             assert(Array.isArray(line));
-            const filteredLine = line.filter(component => component !== null );
-            return filteredLine.length === 0
+            const filteredLine = line.filter(component => component);
+            return filteredLine.length
         });
 
         return <div className={styles.postExcerptMetadata}>
-            {lines.map((line, lineNumber) => <div key={`${lineNumber}`} className={styles.postExcerptMetadataLine}>
+            {filteredLines.map((line, lineNumber) => <div key={`${lineNumber}`} className={styles.postExcerptMetadataLine}>
                 {line.map((component, componentNumber) => <div key={`${componentNumber}`} className={styles.postExcerptMetadataItem}>
                     {component}
                 </div>)}

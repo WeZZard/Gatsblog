@@ -4,7 +4,7 @@ module.exports = {
     layoutComponentName: 'PostListLayout',
     getPageTitle: (tag, locale, pageIndex) => {
         return `Tag: ${tag.name}`
-            + (pageIndex === 0 ? `` : ` (Page ${pageIndex})`)
+            + (pageIndex === 0 ? `` : ` (Page ${pageIndex + 1})`)
     },
     getPagePath: (tag, locale, pageIndex) => {
         const localeSlug = locale ? locale.slug : '';

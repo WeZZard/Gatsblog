@@ -1,0 +1,56 @@
+@import '../styles/colors';
+@import '../styles/fonts';
+
+.paginator {
+    margin-left: 5.5em;
+    margin-right: 5.5em;
+    margin-bottom: 5.2em;
+
+    .previousPageTitle {
+        display: inline-block;
+        margin-right: 1.3em;
+        text-transform: uppercase;
+
+        a::before {
+            content: "<";
+            margin-right: 0.5em;
+            vertical-align: 0.05em;
+        }
+    }
+
+    .pageIndicator {
+        display: inline-block;
+        color: $color-ui-caption-secondary;
+    }
+
+    .nextPageTitle {
+        display: inline-block;
+        margin-left: 1.3em;
+        text-transform: uppercase;
+
+        a::after {
+            content: ">";
+            margin-left: 0.5em;
+            vertical-align: 0.05em;
+        }
+    }
+
+    a {
+        font-size: 1.1em;
+        font-weight: 500;
+        line-height: 1.18;
+        text-decoration: none;
+        color: $color-ui-caption-primary;
+        transition: color 0.3s ease-in-out;
+
+        &:visited {
+            color: $color-ui-caption-primary;
+        }
+
+        &:hover,
+        &:visited:hover {
+            color: $color-hover;
+            transition: color 0.3s ease-in-out;
+        }
+    }
+}

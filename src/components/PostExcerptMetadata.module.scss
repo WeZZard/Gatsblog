@@ -5,7 +5,7 @@
 }
 
 .postExcerptMetadataLine {
-    margin-bottom: 1.6em;
+    margin-bottom: 1.5em;
 
     &:last-child {
         margin-bottom: 0;
@@ -15,15 +15,15 @@
 .postExcerptMetadataItem {
     display: inline-block;
 
-    &:after {
-        color: $gray-89;
+    &::after {
+        color: $color-ui-caption-separator;
         content: '•';
-        margin-left: .8em;
-        margin-right: .8em;
+        margin-left: 0.8em;
+        margin-right: 0.8em;
     }
 
     &:last-child {
-        &:after {
+        &::after {
             content: none;
             margin: 0;
         }

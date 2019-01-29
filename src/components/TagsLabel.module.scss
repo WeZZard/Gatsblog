@@ -1,9 +1,17 @@
 @import '../styles/colors';
 
-.tags a  {
-    color: $gray-34;
+.tags a {
+    text-decoration: none;
+    color: $color-ui-caption-secondary;
+    transition: color 0.3s ease-in-out;
 
-    &:hover {
-        color: darken($primary-color, 0.2);
+    &:visited {
+        color: $color-ui-caption-secondary;
+    }
+
+    &:hover,
+    &:visited:hover {
+        color: $color-hover;
+        transition: color 0.3s ease-in-out;
     }
 }

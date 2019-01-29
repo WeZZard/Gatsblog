@@ -1,31 +1,38 @@
-@import '../styles/colors.scss';
+@import '../styles/colors';
 
 .contentFooter {
-    margin-bottom: 3.4em;
-    margin-top: 3.4em;
-    color: $gray-55;
-}
-
-.contentFooter a {
-    &:hover {
-        color: $gray-8;
-    }
-
-    &:visited {
-        color: $gray-55;
-    }
+    padding-left: 5.5em;
+    padding-right: 5.5em;
+    padding-top: 5.3em;
+    padding-bottom: 5.2em;
 }
 
 .contentFooterItem {
-    margin-bottom: 1.3em;
+    margin-bottom: 0.8em;
 
     &:last-child {
         margin-bottom: 0;
     }
-}
 
-.contentFooterItem span {
-    font-size: 1.1em;
-    font-weight: 400;
-    line-height: 0.73em;
+    span {
+        color: $color-ui-footnote;
+        font-size: 1.1em;
+        font-weight: 400;
+        line-height: 1.18em;
+
+        a {
+            color: $color-ui-footnote;
+            transition: color 0.3s ease-in-out;
+
+            &:visited {
+                color: $color-ui-footnote;
+            }
+
+            &:hover,
+            &:visited:hover {
+                color: $color-hover;
+                transition: color 0.3s ease-in-out;
+            }
+        }
+    }
 }

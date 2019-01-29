@@ -5,7 +5,7 @@ module.exports = {
     getPageTitle: (locale, pageIndex) => {
         return pageIndex === 0
             ? `Tags`
-            : `Tags (Page ${pageIndex})`
+            : `Tags (Page ${pageIndex + 1})`
     },
     getPagePath: (locale, pageIndex) => {
         const localeSlug = locale ? locale.slug : '';

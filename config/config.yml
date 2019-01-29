@@ -22,6 +22,10 @@ site:
         - WeZZard
         - Pieces of My Soul
 
+    # The theme of the site. Currently only slate is available.
+    #
+    theme: slate
+
     # Whether builds an index page for taxonomies.
     #
     indexing:

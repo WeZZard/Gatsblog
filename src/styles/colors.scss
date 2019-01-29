@@ -1,34 +1,46 @@
-$gray-lightest:     #f8f8f8;
-$gray-lighter:      #eee;
-$gray-light:        #ddd;
-$gray:              #ccc;
-$gray-dark:         #999;
-$gray-darker:       #666;
-$gray-darkest:      #333;
+// Color Constants
+$_black:                                #000;
+$_white:                                #fff;
+$_gray-8:                               #141414;
+$_gray-13:                              #212121;
+$_gray-21:                              #363636;
+$_gray-34:                              #575757;
+$_gray-55:                              #8c8c8c;
+$_gray-89:                              #e3e3e3;
 
-$green:             #156f78;
-$purple:            #493252;
-$red:               #e25440;
-$orange:            #fb9c50;
-$slate:             #3d4260;
-$blue:              #2568a3;
-$cat-red:           #bf1827;
-$shallow-red:       #ce404b;
-$light-red:         #d95059;
+// Color Variables
+$color-theme:                           #3d4260;
+$color-theme-gradient-begin:            rgba(61, 66, 96, 0.6);
+$color-theme-gradient-end:              rgba(21, 23, 34, 0.8);
 
-$primary-color:     $light-red;
-$secondary-color:   #5ba4e5;
+$color-tint:                            #d95059;
+$color-hover:                           darken($color-tint, 15%);
 
-$link-color:        $primary-color;
-$hover-color:       darken($link-color, 15%);
-$body-color:        darken($gray-darker, 30%);
+$color-ui-nav-headline-normal:          $_white;
+$color-ui-nav-headline-selected:        $_gray-55;
+$color-ui-nav-headline-shadow:          rgba(0, 0, 0, 0.5);
+$color-ui-nav-footnote:                 $_gray-55;
+$color-ui-nav-background:               $_gray-8;
 
-$black:             #000;
-$white:             #fff;
-$gray-8:            #141414;
-$gray-13:           #212121;
-$gray-21:           #363636;
-$gray-34:           #575757;
-$gray-55:           #8c8c8c;
-$gray-89:           #e3e3e3;
+$color-ui-main-headline-primary:        $_gray-21;
+$color-ui-main-headline-secondary:      $_gray-55;
 
+$color-ui-caption-label:                $_gray-55;
+$color-ui-caption-primary:              $color-tint;
+$color-ui-caption-secondary:            $_gray-34;
+$color-ui-caption-separator:            $_gray-89;
+
+$color-ui-footnote:                     $_gray-55;
+
+$color-content-headline-primary:        $_gray-21;
+$color-content-headline-secondary:      $_gray-34;
+$color-content-summary:                 $_gray-55;
+$color-content-heading:                 $_gray-21;
+$color-content-body:                    $_gray-34;
+$color-content-quote:                   $_gray-8;
+$color-content-code-block-background:   #e8f2ff;
+$color-content-code-block-indicator:    #b6d2f2;
+$color-content-table-separator:         $_gray-89;
+$color-content-list-indicator:          $_gray-89;
+$color-content-quote-indicator:         $_gray-8;
+$color-content-footer-text:             $_gray-55;

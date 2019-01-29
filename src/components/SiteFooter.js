@@ -21,7 +21,7 @@ class SiteFooter extends React.Component {
     render() {
         const customFooterMessages=(
             <StaticQuery
-                query={_SiteFooterMessagesQuery}
+                query={siteFooterMessagesQuery}
                 render={data => {
                     const {
                         configYaml: {
@@ -57,7 +57,7 @@ class SiteFooter extends React.Component {
 
 export default SiteFooter
 
-const _SiteFooterMessagesQuery=graphql`
+const siteFooterMessagesQuery=graphql`
     query SiteFooterMessagesQuery {
         configYaml {
             site {

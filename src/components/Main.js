@@ -12,7 +12,7 @@ class Main extends React.Component {
 
         return (
             <div className={styles.appContainer}>
-                <SEO lang={lang} pageTitle={pageTitle} description={description} keywords={keywords}/>
+                <SEO lang={lang} title={pageTitle} description={description} keywords={keywords}/>
                 <section className={styles.controlWrapper}>
                     <header className={styles.navigationContainer}>
                         <NavigationBar navigationStack={navigationStack}/>
@@ -26,6 +26,7 @@ class Main extends React.Component {
                     <main className={styles.mainContentContainer}>
                         {children}
                     </main>
+                    <hr className={styles.contentSeparator}/>
                     <footer className={styles.footerContentContainer}>
                         <ContentFooter />
                     </footer>

@@ -5,28 +5,32 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    color: $gray-55;
+    color: $color-ui-nav-footnote;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
+    text-align: end;
+    padding-top: 1.7em;
+    padding-left: 3.4em;
+    padding-right: 3.4em;
+    padding-bottom: 3.1em;
 
-.sloganItem {
-    margin-top: 2.8em;
-    margin-left: 0;
-    padding: 0;
-}
+    .sloganItem {
+        margin: 0;
+        padding: 0;
 
-.sloganItem span {
-    font-size: 3em;
-    font-weight: 500;
-    line-height: 0.7em;
-}
+        span {
+            font-size: 3em;
+            font-weight: 500;
+            line-height: 1.83;
+        }
+    }
 
-.copyrightItem {
-    margin-top: 3.4em;
-}
+    .copyrightItem {
+        margin-top: 1.5em;
 
-.copyrightItem span {
-    font-size: 1.1em;
-    font-weight: 400;
-    line-height: 0.73em;
+        span {
+            font-size: 1.1em;
+            font-weight: 400;
+            line-height: 1.18;
+        }
+    }
 }

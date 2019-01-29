@@ -25,7 +25,7 @@ class PostExcerpt extends React.Component {
             <footer className={styles.postExcerptFooter}>
                 <PostExcerptMetadata post={item}/>
             </footer>
-        </section>;
+        </section>
     }
 }
 

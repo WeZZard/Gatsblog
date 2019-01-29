@@ -10,7 +10,7 @@
 
 .controlWrapper {
     align-items: flex-end;
-    background: url('../../assets/images/background-cover.jpg') no-repeat $gray-8;
+    background: url('../../assets/images/background-cover.jpg') no-repeat $color-ui-nav-background;
     background-size: cover;
     display: flex;
     flex-direction: column;
@@ -21,19 +21,9 @@
     width: 30%;
 }
 
-.contentWrapper {
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    justify-content: flex-start;
-    margin-left: 30%;
-    width: 70%;
-}
-
 .controlWrapperOverlay {
-    background-color: transparentize($slate, .8);
-    background-image: linear-gradient(140deg, rgba(61, 66, 96, 0.6) 20%, rgba(21, 23, 34, 0.8));
+    background-color: transparentize($color-theme, 0.8);
+    background-image: linear-gradient(140deg, $color-theme-gradient-end 20%, $color-theme-gradient-end);
     bottom: 0;
     height: 100%;
     left: 0;
@@ -44,36 +34,51 @@
     z-index: -1;
 }
 
+.contentWrapper {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: flex-start;
+    margin-left: 30%;
+    width: 61.8%;
+    min-width: 890px;
+}
+
 // Control Containers
 
 .navigationContainer {
     flex-grow: 1;
     flex-shrink: 0;
-    margin-left: 3.4em;
-    margin-right: 3.4em;
-    margin-top: 3.4em;
+    width: 61.8%;
 }
 
 .siteFooterContainer {
-    margin-bottom: 3.4em;
-    margin-left: 3.4em;
-    margin-right: 3.4em;
+    width: 61.8%;
 }
 
 // Content Containers
 
 .mainContentContainer {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-grow: 1;
     flex-shrink: 0;
+}
+
+.contentSeparator {
+    display: flex;
     margin-left: 5.5em;
     margin-right: 5.5em;
-    max-width: 77%;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    width: calc(100% - 11em);
+    border: 0;
+    border-top: 1px solid $_gray-89;
 }
 
 .footerContentContainer {
-    margin-left: 5.5em;
-    margin-right: 5.5em;
-    max-width: 77%;
+    display: flex;
+    flex-direction: column;
 }

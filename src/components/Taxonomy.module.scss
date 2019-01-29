@@ -12,13 +12,13 @@
 }
 
 .taxonomyName {
-    color: $gray-55;
+    color: $color-ui-caption-label;
     display: inline-block;
 
     &::after {
         content: '|';
-        margin-left: .5em;
-        margin-right: .5em;
+        margin-left: 0.5em;
+        margin-right: 0.5em;
     }
 }
 
@@ -31,14 +31,6 @@
 .taxonomyItem {
     display: inline-block;
     margin: 0;
-    margin-right: .5em;
+    margin-right: 0.5em;
     padding: 0;
-
-    a {
-        text-decoration: none;
-
-        &:hover {
-            transition: color .3s;
-        }
-    }
 }

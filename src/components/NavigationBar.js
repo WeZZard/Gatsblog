@@ -2,8 +2,6 @@ import React from 'react'
 import { StaticQuery, graphql, Link } from 'gatsby'
 import styles from './NavigationBar.module.scss'
 
-import SiteTitle from './SiteTitle'
-
 class NavigationItem extends React.Component {
     render() {
         const { navigationItem } = this.props;
@@ -14,8 +12,10 @@ class NavigationItem extends React.Component {
     }
 }
 
-class NavigationItems extends React.Component {
-    render () {
+class NavigationBar extends React.Component {
+    render() {
+        const { navigationStack } = this.props;
+
         return <StaticQuery
             query={_navigationQuery}
 
@@ -26,10 +26,13 @@ class NavigationItems extends React.Component {
 
                 const {
                     configYaml: {
+                        site: {
+                            title: siteTitle
+                        },
                         navigation: {
                             createsNavigationItemsForCategories,
-                            overwritingCategoryNavigationItems: categoryNavigationItems,
-                            customNavigationItems: userNavigationItems,
+                            overwritingCategoryNavigationItems,
+                            customNavigationItems,
                         }
                     },
                     allCategory: {
@@ -37,22 +40,22 @@ class NavigationItems extends React.Component {
                     }
                 } = data;
 
-                let customizedCategoryNavigationItems = [];
+                let overwrittenCategoryNavigationItems = [];
 
                 if (createsNavigationItemsForCategories) {
-                    let rawCategoryNavigationItems = categories.map(category => ({name: category.node.name, slug: category.node.slug, weight: 0}));
+                    let systemCategoryNavigationItems = categories.map(category => ({name: category.node.name, slug: category.node.slug, weight: 0}));
 
-                    categoryNavigationItems.forEach(categoryNavigationItem => {
-                        const {name, weight, isVisible} = categoryNavigationItem;
+                    overwritingCategoryNavigationItems.forEach(overwritingCategoryNavigationItem => {
+                        const { name, weight, isVisible } = overwritingCategoryNavigationItem;
 
                         if (isVisible) {
-                            const candidateNavigationItems = rawCategoryNavigationItems.filter(item => { return item.name === name });
+                            const candidateOverwrittenCategoryNavigationItems = systemCategoryNavigationItems.filter(item => item.name === name);
 
-                            if (candidateNavigationItems.length === 1) {
-                                const customizedNavigationItem = candidateNavigationItems[0];
-                                customizedNavigationItem.weight = weight;
-                                customizedCategoryNavigationItems.push(customizedNavigationItem);
-                            } else if (candidateNavigationItems.length === 0) {
+                            if (candidateOverwrittenCategoryNavigationItems.length === 1) {
+                                const overwrittenCategoryNavigationItem = candidateOverwrittenCategoryNavigationItems[0];
+                                overwrittenCategoryNavigationItem.weight = weight;
+                                overwrittenCategoryNavigationItems.push(overwrittenCategoryNavigationItem);
+                            } else if (candidateOverwrittenCategoryNavigationItems.length === 0) {
                                 // do nothing
                             } else {
                                 throw `Multiple category navigation item with the same name found.`
@@ -61,36 +64,34 @@ class NavigationItems extends React.Component {
                     });
                 }
 
-                const navigationItems = systemNavigationItems.concat(customizedCategoryNavigationItems).concat(userNavigationItems);
+                const userNavigationItems = [
+                    ...overwrittenCategoryNavigationItems,
+                    ...customNavigationItems,
+                ].sort((a, b) => a.weight >= b.weight);
+
+                const navigationItems = [
+                    ...systemNavigationItems,
+                    ...userNavigationItems,
+                ];
 
                 const components = navigationItems.map((navigationItem) => {
                     return <li key={navigationItem.slug}><NavigationItem navigationItem={navigationItem}/></li>
                 });
 
-                return <React.Fragment>
-                    {components}
-                </React.Fragment>
+                return (
+                    <nav className={styles.navigationBar}>
+                        <div className={styles.siteTitle}>
+                            <label>{siteTitle}</label>
+                        </div>
+                        <div className={styles.navigationContent}>
+                            <ol>
+                                {components}
+                            </ol>
+                        </div>
+                    </nav>
+                )
             }}
-        />
-    }
-}
-
-class NavigationBar extends React.Component {
-    render() {
-        const { navigationStack } = this.props;
-
-        return (
-            <nav className={styles.navigationBar}>
-                <div className={styles.siteTitle}>
-                    <SiteTitle/>
-                </div>
-                <div className={styles.navigationContent}>
-                    <ol>
-                        <NavigationItems/>
-                    </ol>
-                </div>
-            </nav>
-        )
+        />;
     }
 }
 
@@ -99,6 +100,9 @@ export default NavigationBar
 const _navigationQuery = graphql`
     query NavigationQuery {
         configYaml {
+            site {
+                title
+            }
             navigation {
                 createsNavigationItemsForCategories
                 overwritingCategoryNavigationItems {

@@ -5,7 +5,7 @@ module.exports = {
     getPageTitle: (category, locale, pageIndex) => {
         return pageIndex === 0
             ? `${category.name}`
-            : `${category.name} (Page ${pageIndex})`
+            : `${category.name} (Page ${pageIndex + 1})`
     },
     getPagePath: (category, locale, pageIndex) => {
         const localeSlug = locale ? locale.slug : '';

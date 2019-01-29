@@ -1,10 +1,17 @@
 @import '../styles/colors';
 
-.category a  {
-    color: $primary-color;
+.category a {
+    text-decoration: none;
+    color: $color-ui-caption-primary;
+    transition: color 0.3s ease-in-out;
 
-    &:hover {
-        color: darken($primary-color, 0.3);
-        transition: color .3s;
+    &:visited {
+        color: $color-ui-caption-primary;
+    }
+
+    &:hover,
+    &:visited:hover {
+        color: $color-hover;
+        transition: color 0.3s ease-in-out;
     }
 }

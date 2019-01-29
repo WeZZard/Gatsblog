@@ -5,7 +5,7 @@ class TimeLabel extends React.Component {
     render() {
         const {
             dateTime: primitiveDateTime,
-            locale = `enUS`,
+            locale = `en-US`,
             localizedFormatOption = { year: 'numeric', month: 'short', day: 'numeric' }
         } = this.props;
 
