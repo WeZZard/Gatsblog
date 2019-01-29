@@ -8,81 +8,76 @@
     &:last-child {
         margin-bottom: 0;
     }
-}
 
-.postExcerptHeader {
-    a {
-        h1,
-        h2 {
-            margin: 0;
-            display: inline-block;
-            transition: color 0.3s ease-in-out;
-        }
+    .postExcerptHeader {
+        a {
+            h1,
+            h2 {
+                margin: 0;
+                display: inline-block;
+                transition: color 0.3s ease-in-out;
+            }
 
-        h1 {
-            color: $color-ui-main-headline-primary;
-            font-size: 2.4em;
-            line-height: 0.875;
-        }
-
-        h2 {
-            color: $color-ui-main-headline-secondary;
-            font-size: 1.5em;
-            line-height: 1.2;
-        }
-
-        &:visited {
             h1 {
                 color: $color-ui-main-headline-primary;
+                font-size: 2.4em;
+                line-height: 0.875;
             }
 
             h2 {
                 color: $color-ui-main-headline-secondary;
+                font-size: 1.5em;
+                line-height: 1.2;
             }
-        }
 
-        &:hover,
-        &:visited:hover {
-            h1,
-            h2 {
-                color: $color-hover;
-                transition: color 0.3s ease-in-out;
+            &:visited {
+                h1 {
+                    color: $color-ui-main-headline-primary;
+                }
+
+                h2 {
+                    color: $color-ui-main-headline-secondary;
+                }
+            }
+
+            &:hover,
+            &:visited:hover {
+                h1,
+                h2 {
+                    color: $color-hover;
+                    transition: color 0.3s ease-in-out;
+                }
             }
         }
     }
-}
 
-.postExcerptBody {
-    margin-top: 1.2em;
-
-    a {
-        text-decoration: none;
+    .postExcerptBody {
+        margin-top: 1.2em;
 
         p {
-            color: $color-content-summary;
-            font-family: $font-text-serif;
-            font-size: 1.7em;
-            line-height: 2;
-            margin: 0;
-            transition: color 0.3s ease-in-out;
-        }
-
-        &:visited {
-            p {
+            a {
+                text-decoration: none;
                 color: $color-content-summary;
-            }
-        }
-
-        &:hover,
-        &:visited:hover {
-            p {
-                color: $color-hover;
+                font-family: $font-text-serif;
+                font-size: 1.7em;
+                line-height: 2;
+                margin: 0;
                 transition: color 0.3s ease-in-out;
+
+                &:visited {
+                    color: $color-content-summary;
+                }
+
+                &:hover,
+                &:visited:hover {
+                    color: $color-hover;
+                    transition: color 0.3s ease-in-out;
+                }
             }
         }
     }
-}
 
-.postExcerptFooter {
-    margin-top: 2.5em;
+    .postExcerptFooter {
+        margin-top: 2.5em;
+    }
 }
