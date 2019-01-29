@@ -66,16 +66,18 @@ module.exports = async (args) => {
                 ? pageNode.node.lang
                 : '';
 
-            let path = [localeSlug, pageNode.node.slug].filter(_ => _).join('/');
+            let path = [localeSlug, pageNode.node.slug].filter(_ => _).join();
 
             console.log(`Create page for page: ${path}`);
+
+            const lang = (pageNode.node.lang && pageNode.node.lang.identifier) || siteLang;
 
             createPage({
                 path: path,
                 component: Template,
                 context: {
                     isLocalized: pageNode.node.isLocalized,
-                    lang: pageNode.node.lang.identifier || siteLang,
+                    lang: lang,
                     page: pagePayload,
                 },
             });

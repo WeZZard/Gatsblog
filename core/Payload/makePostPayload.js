@@ -59,63 +59,104 @@ module.exports = async (args) => {
 
     const postCategory = filterCategoryForPostNode(primaryPost, categories);
 
-    const mdxResult = await graphql(`
-        {
-            allMdx( filter: {id: {eq: "${post.node.parent.id}" } } ) {
-                edges {
-                    node {
-                        excerpt(pruneLength: 300)
-                        html
-                        code {
-                            body
-                            scope
+    switch (style) {
+        case 'Excerpt':
+            const excerptResult = await graphql(`
+                {
+                    allMdx( filter: {id: {eq: "${post.node.parent.id}" } } ) {
+                        edges {
+                            node {
+                                excerpt(pruneLength: 140)
+                            }
                         }
                     }
                 }
+            `);
+
+            if (!excerptResult.data && excerptResult.errors) {
+                throw excerptResult.errors
             }
-        }
-    `);
 
-    if (!mdxResult.data && mdxResult.errors) {
-        throw mdxResult.errors
-    }
+            if (excerptResult.errors) {
+                console.log('mdx excerpt query errors: ', excerptResult.errors);
+            }
 
-    const {
-        data: {
-            allMdx: { edges: mdxDocuments },
-        },
-    } = mdxResult;
+            const {
+                data: {
+                    allMdx: { edges: mdxExcerpts },
+                },
+            } = excerptResult;
 
-    if (mdxDocuments.length === 0) {
-        throw `No relative MDX document found for post: "${post.node.slug}".`
-    } else if (mdxDocuments.length === 1) {
-        const mdxDocument = mdxDocuments[0];
-        switch (style) {
-            case 'Excerpt':
-                return {
-                    title: post.node.title,
-                    subtitle: post.node.subtitle,
-                    createdTime: post.node.createdTime,
-                    tags: postTags,
-                    category: postCategory,
-                    excerpt: mdxDocument.node.excerpt || "<i>The content is intentionally left blank.</i>",
-                    slug: post.node.slug,
-                };
-            case 'FullText':
-                return {
-                    title: post.node.title,
-                    subtitle: post.node.subtitle,
-                    createdTime: post.node.createdTime,
-                    tags: postTags,
-                    category: postCategory,
-                    html: mdxDocument.html,
-                    code: mdxDocument.code,
-                    slug: post.node.slug,
-                };
-            default:
-                throw `Unexpected style: ${style}`;
-        }
-    } else {
-        throw `Multiple relative MDX document were found for post: "${post.node.slug}".`
+            let mdxExcerpt;
+
+            if (mdxExcerpts.length === 0) {
+                throw `No relative MDX document found for post: "${post.node.slug}".`
+            } else if (mdxExcerpts.length === 1) {
+                mdxExcerpt = mdxExcerpts[0];
+            } else {
+                throw `Multiple relative MDX document were found for post: "${post.node.slug}".`
+            }
+
+            return {
+                title: post.node.title,
+                subtitle: post.node.subtitle,
+                createdTime: post.node.createdTime,
+                tags: postTags,
+                category: postCategory,
+                excerpt: mdxExcerpt.node.excerpt || "<i>The content is intentionally left blank.</i>",
+                slug: post.node.slug,
+            };
+        case 'FullText':
+            const mdxResult = await graphql(`
+                {
+                    allMdx( filter: {id: {eq: "${post.node.parent.id}" } } ) {
+                        edges {
+                            node {
+                                html
+                                code {
+                                    body
+                                    scope
+                                }
+                            }
+                        }
+                    }
+                }
+            `);
+
+            if (!mdxResult.data && mdxResult.errors) {
+                throw mdxResult.errors
+            }
+
+            if (mdxResult.errors) {
+                console.log('mdx full text query errors: ', mdxResult.errors);
+            }
+
+            const {
+                data: {
+                    allMdx: { edges: mdxDocuments },
+                },
+            } = mdxResult;
+
+            let mdxDocument;
+
+            if (mdxDocuments.length === 0) {
+                throw `No relative MDX document found for post: "${post.node.slug}".`
+            } else if (mdxDocuments.length === 1) {
+                mdxDocument = mdxDocuments[0];
+            } else {
+                throw `Multiple relative MDX document were found for post: "${post.node.slug}".`
+            }
+
+            return {
+                title: post.node.title,
+                subtitle: post.node.subtitle,
+                createdTime: post.node.createdTime,
+                tags: postTags,
+                category: postCategory,
+                html: mdxDocument.node.html,
+                code: mdxDocument.node.code,
+            };
+        default:
+            throw `Unexpected style: ${style}`;
     }
 };

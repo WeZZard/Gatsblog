@@ -34,7 +34,7 @@ module.exports = (args) => {
 
         const pageTitle = createPageTitle(locale, pageIndex);
 
-        const pagePath = createPagePath(locale, pageIndex);
+        const pagePath = createPagePath(locale, pageIndex) || '/';
 
         console.log(`create index page at: ${pagePath}`);
 

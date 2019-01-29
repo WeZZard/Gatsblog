@@ -46,7 +46,6 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
             metadata.lang = match[23];
             metadata.isLocalized = true
         } else {
-            metadata.lang = null;
             metadata.isLocalized = false
         }
 
@@ -90,7 +89,7 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
 
         const resourceName = `${year}/${month}/${metadata.name}-${disambiguateIdentifier}`;
 
-        metadata.slug = `post/${resourceName}`.toLocaleLowerCase();
+        metadata.slug = `/post/${resourceName}`.toLocaleLowerCase();
     }
 
     return metadata;
@@ -127,11 +126,10 @@ const _parseMetadataForRelativePathOfPage = relativePath => {
             metadata.lang = match[6];
             metadata.isLocalized = true
         } else {
-            metadata.lang = null;
             metadata.isLocalized = false
         }
         metadata.documentIdentifier = metadata.name.toLocaleLowerCase();
-        metadata.slug = metadata.documentIdentifier;
+        metadata.slug = `/${metadata.documentIdentifier}`;
     }
     return metadata;
 };

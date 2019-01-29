@@ -46,7 +46,7 @@ module.exports = function (args) {
 
         metadata.subtitle = getSubtitle(node.frontmatter.subtitle, node.rawBody);
 
-        metadata.lang = relativePathMetadata.lang || node.frontmatter.lang || '';
+        metadata.lang = relativePathMetadata.lang || node.frontmatter.lang;
 
         metadata.isLocalized = relativePathMetadata.isLocalized;
 

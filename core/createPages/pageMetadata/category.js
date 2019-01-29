@@ -12,8 +12,8 @@ module.exports = {
         return [
             localeSlug,
             category.slug,
-            pageIndex > 0 ? `page-${pageIndex + 1}` : ``,
-        ].filter(_ => _).join('/');
+            pageIndex > 0 ? `/page-${pageIndex + 1}` : ``,
+        ].filter(_ => _).join();
     },
     getPreviousPageTitle: (locale) => {
         return 'Earlier Posts'

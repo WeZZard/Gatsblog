@@ -1,10 +1,10 @@
 import React from 'react'
 
-class PageContent extends React.Component {
+class PageFullText extends React.Component {
     render() {
         return <div>
         </div>
     }
 }
 
-export default PageContent
+export default PageFullText

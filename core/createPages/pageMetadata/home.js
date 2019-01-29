@@ -9,8 +9,8 @@ module.exports = {
         const localeSlug = locale ? locale.slug : '';
         return [
             localeSlug,
-            pageIndex > 0 ? `page-${pageIndex + 1}` : ``,
-        ].filter(_ => _).join('/') || '/';
+            pageIndex > 0 ? `/page-${pageIndex + 1}` : ``,
+        ].filter(_ => _).join();
     },
     getPreviousPageTitle: (locale) => {
         return 'Earlier Posts'

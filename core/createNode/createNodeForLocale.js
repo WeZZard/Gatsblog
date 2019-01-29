@@ -20,7 +20,7 @@ module.exports = function(args) {
         throw `Invalid locale: "${locale}".`
     }
 
-    const localeData = { identifier: locale, slug: locale };
+    const localeData = { identifier: locale, slug: `/${locale}` };
 
     const existedNodes = getNodesByType(`Locale`).filter(node => node.identifier === localeData.identifier);
     if (existedNodes.length === 1) {

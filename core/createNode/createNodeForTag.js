@@ -11,7 +11,7 @@ module.exports = function(args) {
     } = args;
 
     const kebabTag = _.kebabCase(tag);
-    const tagData = {name: tag, slug: `tag/${kebabTag}`};
+    const tagData = {name: tag, slug: `/tag/${kebabTag}`};
     const existedNodes = getNodesByType(`Tag`).filter(node => node.slug === tagData.slug);
     if (existedNodes.length === 1) {
         const node = existedNodes[0];

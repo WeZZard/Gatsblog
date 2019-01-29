@@ -50,7 +50,7 @@ test('MDXMetadata creates metadata of Post whose title can fallback to its first
         category: 'Category1',
         lang: undefined,
         isLocalized: false,
-        slug: `post/2019/01/post-title-${_('2019-01-01-Post-Title')}`,
+        slug: `/post/2019/01/post-title-${_('2019-01-01-Post-Title')}`,
         relativePath: '2019-01-01-Post-Title.md',
     };
 
@@ -104,7 +104,7 @@ test('MDXMetadata creates metadata of Post whose title can fallback to its docum
         category: 'Category1',
         lang: undefined,
         isLocalized: false,
-        slug: `post/2019/01/post-title-${_('2019-01-01-Post-Title')}`,
+        slug: `/post/2019/01/post-title-${_('2019-01-01-Post-Title')}`,
         relativePath: '2019-01-01-Post-Title.md',
     };
 
@@ -156,7 +156,7 @@ test('MDXMetadata creates metadata of Page whose title can fallback to its first
         lastModifiedTime: new Date('2019-01-02'),
         lang: undefined,
         isLocalized: false,
-        slug: 'page-title',
+        slug: '/page-title',
         relativePath: 'Page-Title.md',
     };
 
@@ -206,7 +206,7 @@ test('MDXMetadata creates metadata of Page whose title can fallback to its docum
         lastModifiedTime: new Date('2019-01-02'),
         lang: undefined,
         isLocalized: false,
-        slug: 'page-title',
+        slug: '/page-title',
         relativePath: 'Page-Title.md',
     };
     expect(MDXMetadata(args)).toEqual(result);
