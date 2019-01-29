@@ -3,11 +3,8 @@ import Main from '../components/Main'
 
 class Post extends React.Component {
     render() {
-        return (
-            <Main>
-
-            </Main>
-        )
+        return <Main>
+        </Main>
     }
 }
 

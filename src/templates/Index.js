@@ -1,4 +1,5 @@
 import React from 'react'
+import assert from 'assert'
 import Main from '../components/Main'
 import ContentTitle from "../components/ContentTitle";
 import Paginator from "../components/Paginator";
@@ -41,11 +42,13 @@ class Index extends React.Component {
         const itemComponents = items.map((item, itemIndex) => React.createElement(Item, {item: item, key: `${itemIndex}`}));
         const layoutComponent = React.createElement(Layout, {children: itemComponents});
 
+        const contentTitle = showsPageTitle ? <ContentTitle title={pageTitle} subtitle={subtitle}/> : null;
+
         return <Main pageTitle={pageTitle} description={description} keywords={keywords}>
-            <ContentTitle title={pageTitle} subtitle={subtitle} showsPageTitle={showsPageTitle}/>
+            {contentTitle}
             {layoutComponent}
             <Paginator paginationInfo={paginationInfo}/>
-        </Main>;
+        </Main>
     }
 }
 
