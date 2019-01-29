@@ -27,6 +27,7 @@ module.exports = async (args) => {
                         documentIdentifier
                         slug
                         lang
+                        isLocalized
                         parent {
                             id
                         }
@@ -54,10 +55,10 @@ module.exports = async (args) => {
                 style: 'FullText',
             });
 
-            let earlierPostExcerpt = null;
+            let earlierPostPayload = null;
             if (index - 1 >= 0) {
                 const earlierPost = posts[index - 1];
-                earlierPostExcerpt = await makePostPayload({
+                earlierPostPayload = await makePostPayload({
                     post: earlierPost,
                     tags,
                     categories,
@@ -66,10 +67,10 @@ module.exports = async (args) => {
                 })
             }
 
-            let laterPostExcerpt = null;
+            let laterPostPayload = null;
             if (index + 1 < posts.length) {
                 const laterPost = posts[index + 1];
-                laterPostExcerpt  = await makePostPayload({
+                laterPostPayload  = await makePostPayload({
                     post: laterPost,
                     tags,
                     categories,
@@ -78,41 +79,43 @@ module.exports = async (args) => {
                 })
             }
 
-            let path = postNode.node.slug;
+            let localeSlug = postNode.node.isLocalized
+                ? postNode.node.lang
+                : '';
 
-            let localeLang = postNode.node.lang || siteLang;
-
-            assert(localeLang);
-
-            let localizedPath = `${localeLang}/${postNode.node.slug}`;
+            let path = [localeSlug, postNode.node.slug].filter(_ => _).join('/');
 
             console.log(`Create page for post: ${path}`);
-
-            console.log(`Create localized page for post: ${localizedPath}`);
 
             createPage({
                 path: path,
                 component: Template,
                 context: {
-                    isLocalized: false,
-                    lang: postNode.node.lang,
+                    isLocalized: postNode.node.isLocalized,
+                    lang: postNode.node.lang.identifier || siteLang,
                     post: postPayload,
-                    earlier: earlierPostExcerpt,
-                    later: laterPostExcerpt,
+                    earlier: earlierPostPayload,
+                    later: laterPostPayload,
                 },
             });
 
-            createPage({
-                path: localizedPath,
-                component: Template,
-                context: {
-                    isLocalized: true,
-                    lang: postNode.node.lang,
-                    post: postPayload,
-                    earlier: earlierPostExcerpt,
-                    later: laterPostExcerpt,
-                },
-            });
+            if (!postNode.node.isLocalized && postNode.node.lang) {
+                let localizedPath = `${postNode.node.lang}/${postNode.node.slug}`;
+
+                console.log(`Create localized page for post: ${localizedPath}`);
+
+                createPage({
+                    path: localizedPath,
+                    component: Template,
+                    context: {
+                        isLocalized: postNode.node.isLocalized,
+                        lang: postNode.node.lang.identifier,
+                        post: postPayload,
+                        earlier: earlierPostPayload,
+                        later: laterPostPayload,
+                    },
+                });
+            }
         })
     );
 };

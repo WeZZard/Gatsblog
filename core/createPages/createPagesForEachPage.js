@@ -24,6 +24,7 @@ module.exports = async (args) => {
                         lastModifiedTime
                         slug
                         lang
+                        isLocalized
                         parent {
                             id
                         }
@@ -61,37 +62,39 @@ module.exports = async (args) => {
                 description: mdxDocument.excerpt,
             };
 
-            const path = pageNode.node.slug;
+            let localeSlug = pageNode.node.isLocalized
+                ? pageNode.node.lang
+                : '';
 
-            let localeLang = pageNode.node.lang || siteLang;
-
-            assert(localeLang);
-
-            let localizedPath = `${localeLang}/${pageNode.node.slug}`;
+            let path = [localeSlug, pageNode.node.slug].filter(_ => _).join('/');
 
             console.log(`Create page for page: ${path}`);
-
-            console.log(`Create page for localized page: ${path}`);
 
             createPage({
                 path: path,
                 component: Template,
                 context: {
-                    isLocalized: false,
-                    lang: pageNode.node.lang,
+                    isLocalized: pageNode.node.isLocalized,
+                    lang: pageNode.node.lang.identifier || siteLang,
                     page: pagePayload,
                 },
             });
 
-            createPage({
-                path: localizedPath,
-                component: Template,
-                context: {
-                    isLocalized: true,
-                    lang: pageNode.node.lang,
-                    page: pagePayload,
-                },
-            });
+            if (!pageNode.node.isLocalized && pageNode.node.lang) {
+                let localizedPath = `${pageNode.node.lang}/${pageNode.node.slug}`;
+
+                console.log(`Create localized page for page: ${localizedPath}`);
+
+                createPage({
+                    path: localizedPath,
+                    component: Template,
+                    context: {
+                        isLocalized: pageNode.node.isLocalized,
+                        lang: pageNode.node.lang.identifier,
+                        page: pagePayload,
+                    },
+                });
+            }
         })
     );
 };

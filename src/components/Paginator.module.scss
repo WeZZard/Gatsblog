@@ -36,9 +36,6 @@
     }
 
     a {
-        font-size: 1.1em;
-        font-weight: 500;
-        line-height: 1.18;
         text-decoration: none;
         color: $color-ui-caption-primary;
         transition: color 0.3s ease-in-out;
@@ -52,5 +49,11 @@
             color: $color-hover;
             transition: color 0.3s ease-in-out;
         }
+    }
+
+    span {
+        font-weight: 500;
+        font-size: 1.1em;
+        line-height: 1.18;
     }
 }
