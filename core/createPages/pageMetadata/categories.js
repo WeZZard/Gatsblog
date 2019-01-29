@@ -12,7 +12,7 @@ module.exports = {
         return [
             localeSlug,
             `category`,
-            pageIndex > 0 ? `page-${pageIndex}` : ``,
+            pageIndex > 0 ? `page-${pageIndex + 1}` : ``,
         ].filter(_ => _).join('/');
     },
     getPreviousPageTitle: (locale) => {

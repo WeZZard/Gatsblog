@@ -1,5 +1,4 @@
 import React from 'react'
-import assert from 'assert'
 import Main from '../components/Main'
 import ContentTitle from "../components/ContentTitle";
 import Paginator from "../components/Paginator";

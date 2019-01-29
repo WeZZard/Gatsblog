@@ -1,17 +1,16 @@
 const path = require('path');
-const { makePostPayload } = require('../Payload');
 const Template = path.resolve('src/templates/Index.js');
 
-module.exports = async (args) => {
+module.exports = (args) => {
     const {
-        graphql,
         createPage,
+        siteKeywords,
+        siteDescription,
         locale,
         itemComponentName,
         layoutComponentName,
-        primitiveItems,
+        items,
         itemsPerPage,
-        createItem,
         createPageTitle,
         createPagePath,
         showsPageTitle,
@@ -19,27 +18,7 @@ module.exports = async (args) => {
         nextPageTitle,
     } = args;
 
-    const {
-        data: {
-            configYaml: {
-                site: {
-                    keywords: siteKeywords,
-                    description: siteDescription
-                },
-            }
-        }
-    } = await graphql(`
-        {
-            configYaml {
-              site {
-                keywords
-                description
-              }
-            }
-        }
-    `);
-
-    const itemsCount = primitiveItems.length;
+    const itemsCount = items.length;
 
     const pagesOccupied = itemsCount % itemsPerPage === 0
         ? itemsCount / itemsPerPage
@@ -51,13 +30,13 @@ module.exports = async (args) => {
         const start = pageIndex * itemsPerPage;
         const end = Math.min(start + itemsPerPage, itemsCount);
 
-        const primitiveItemsInRange = primitiveItems.slice(start, end);
-
-        const items = await Promise.all(primitiveItemsInRange.map(createItem));
+        const itemsInRange = items.slice(start, end);
 
         const pageTitle = createPageTitle(locale, pageIndex);
 
         const pagePath = createPagePath(locale, pageIndex);
+
+        console.log(`create index page at: ${pagePath}`);
 
         createPage({
             path: pagePath,
@@ -70,7 +49,7 @@ module.exports = async (args) => {
                 showsPageTitle,
                 keywords: siteKeywords,
                 description: siteDescription,
-                items,
+                items: itemsInRange,
                 paginationInfo: {
                     basePath: createPagePath(locale, 0),
                     pageIndex,

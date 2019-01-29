@@ -8,6 +8,8 @@ module.exports = async (args) => {
         createPagesArgs,
         pendingSchemaData,
         indexingConfig,
+        siteKeywords,
+        siteDescription,
     } = args;
 
     const { graphql, actions } = createPagesArgs;
@@ -19,22 +21,26 @@ module.exports = async (args) => {
     if (config.isEnabled) {
         const itemsPerPage = await getItemsPerPageInIndexWithName(page.name, graphql);
 
-        await Promise.all(locales.map(async (locale) => {
-            await createIndexPages({
-                graphql: graphql,
+        const items = await Promise.all(categories.map(async (category) => {
+            return await makeCategorySummaryPayload(category, graphql)
+        }));
+
+        locales.forEach((locale) => {
+            createIndexPages({
                 createPage : createPage,
+                siteKeywords,
+                siteDescription,
                 locale: locale,
                 itemComponentName : page.itemComponentName,
                 layoutComponentName: page.layoutComponentName,
-                primitiveItems: categories,
-                itemsPerPage: itemsPerPage,
-                createItem: async (category) => await makeCategorySummaryPayload(category, graphql),
+                items,
+                itemsPerPage,
                 createPageTitle: page.getPageTitle,
                 createPagePath: page.getPagePath,
                 showsPageTitle: true,
                 previousPageTitle: page.getPreviousPageTitle(locale),
                 nextPageTitle: page.getNextPageTitle(locale),
             });
-        }))
+        });
     }
 };

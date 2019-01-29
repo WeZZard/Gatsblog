@@ -1,35 +1,38 @@
-import React from 'react'
-import { graphql } from 'gatsby'
+import React from 'react';
+import { graphql } from 'gatsby';
 
-import SEO from '../components/SEO'
+// import SEO from '../components/SEO';
 
 class NotFoundPage extends React.Component {
-  render() {
-    const { data } = this.props;
-    const {
-        configYaml: {
-            site: { siteTitle }
-        }
-    } = data;
+    render() {
+        const { data } = this.props;
+        const {
+            configYaml: {
+                site: { siteTitle },
+            },
+        } = data;
 
-    return (
-      <div>
-        <SEO title="404: Not Found" />
-        <h1>Not Found</h1>
-        <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
-      </div>
-    )
-  }
+        // <SEO title="404: Not Found" />
+        return (
+            <div>
+
+                <h1>Not Found</h1>
+                <p>
+                    You just hit a route that doesn&#39;t exist... the sadness.
+                </p>
+            </div>
+        );
+    }
 }
 
-export default NotFoundPage
+export default NotFoundPage;
 
 export const pageQuery = graphql`
-  query {
-    configYaml {
-      site {
-        title
-      }
+    query {
+        configYaml {
+            site {
+                title
+            }
+        }
     }
-  }
 `;

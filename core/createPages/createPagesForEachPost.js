@@ -1,13 +1,14 @@
 const path = require('path');
 const assert = require('assert');
-const {
-    makePostPayload,
-    makeMdxDocumentPayload,
-} = require('../Payload');
+const { makePostPayload } = require('../Payload');
 const Template = path.resolve('src/templates/Post.js');
 
 module.exports = async (args) => {
-    const { createPagesArgs, pendingSchemaData, siteLang } = args;
+    const {
+        createPagesArgs,
+        pendingSchemaData,
+        siteLang,
+    } = args;
 
     const { graphql, actions } = createPagesArgs;
     const { createPage } = actions;
@@ -43,73 +44,75 @@ module.exports = async (args) => {
 
     const { edges: posts } = allPost || { edges: [] };
 
-    posts.forEach( async (postNode, index) => {
-        const postPayload = makePostPayload({
-            post: postNode,
-            tags,
-            categories,
-            graphql,
-            style: 'FullText',
-        });
-
-        let earlierPostExcerpt = null;
-        if (index - 1 >= 0) {
-            const earlierPost = posts[index - 1];
-            earlierPostExcerpt = await makePostPayload({
-                post: earlierPost,
+    await Promise.all(
+        posts.map( async (postNode, index) => {
+            const postPayload = await makePostPayload({
+                post: postNode,
                 tags,
                 categories,
                 graphql,
-                style: 'Excerpt',
-            })
-        }
+                style: 'FullText',
+            });
 
-        let laterPostExcerpt = null;
-        if (index + 1 < posts.length) {
-            const laterPost = posts[index + 1];
-            laterPostExcerpt  = await makePostPayload({
-                post: laterPost,
-                tags,
-                categories,
-                graphql,
-                style: 'Excerpt',
-            })
-        }
+            let earlierPostExcerpt = null;
+            if (index - 1 >= 0) {
+                const earlierPost = posts[index - 1];
+                earlierPostExcerpt = await makePostPayload({
+                    post: earlierPost,
+                    tags,
+                    categories,
+                    graphql,
+                    style: 'Excerpt',
+                })
+            }
 
-        let path = postNode.node.slug;
+            let laterPostExcerpt = null;
+            if (index + 1 < posts.length) {
+                const laterPost = posts[index + 1];
+                laterPostExcerpt  = await makePostPayload({
+                    post: laterPost,
+                    tags,
+                    categories,
+                    graphql,
+                    style: 'Excerpt',
+                })
+            }
 
-        let localeLang = postNode.node.lang || siteLang;
+            let path = postNode.node.slug;
 
-        assert(localeLang);
+            let localeLang = postNode.node.lang || siteLang;
 
-        let localizedPath = `${localeLang}/${postNode.node.slug}`;
+            assert(localeLang);
 
-        console.log(`Create page for post: ${path}`);
+            let localizedPath = `${localeLang}/${postNode.node.slug}`;
 
-        console.log(`Create localized page for post: ${localizedPath}`);
+            console.log(`Create page for post: ${path}`);
 
-        createPage({
-            path: path,
-            component: Template,
-            context: {
-                isLocalized: false,
-                lang: postNode.node.lang,
-                post: postPayload,
-                earlier: earlierPostExcerpt,
-                later: laterPostExcerpt,
-            },
-        });
+            console.log(`Create localized page for post: ${localizedPath}`);
 
-        createPage({
-            path: localizedPath,
-            component: Template,
-            context: {
-                isLocalized: true,
-                lang: postNode.node.lang,
-                post: postPayload,
-                earlier: earlierPostExcerpt,
-                later: laterPostExcerpt,
-            },
-        });
-    });
+            createPage({
+                path: path,
+                component: Template,
+                context: {
+                    isLocalized: false,
+                    lang: postNode.node.lang,
+                    post: postPayload,
+                    earlier: earlierPostExcerpt,
+                    later: laterPostExcerpt,
+                },
+            });
+
+            createPage({
+                path: localizedPath,
+                component: Template,
+                context: {
+                    isLocalized: true,
+                    lang: postNode.node.lang,
+                    post: postPayload,
+                    earlier: earlierPostExcerpt,
+                    later: laterPostExcerpt,
+                },
+            });
+        })
+    );
 };

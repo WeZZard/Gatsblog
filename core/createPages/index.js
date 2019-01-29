@@ -30,6 +30,8 @@ module.exports = async (args) => {
                     isEnabled
                 }
                 lang
+                keywords
+                description
             }
         }
     }
@@ -48,25 +50,38 @@ module.exports = async (args) => {
     const {
         site: {
             indexing: indexingConfig,
-            lang,
+            lang: siteLang,
+            keywords: siteKeywords,
+            description: siteDescription
         },
-    } = configYaml || { site : { indexing: [], lang: 'en-US' } };
+    } = configYaml || {
+        site : {
+            indexing: [],
+            lang: 'en-US',
+            keywords: [],
+            description: '',
+        }
+    };
 
     const createPagesArgs = {
         createPagesArgs: args,
         pendingSchemaData,
         indexingConfig,
-        siteLang: lang,
+        siteLang,
+        siteKeywords,
+        siteDescription,
     };
 
-    [
-        require('./createPageOfHome'),
-        require('./createPageOfTags'),
-        require('./createPageOfCategories'),
-        require('./createPagesForEachPost'),
-        require('./createPagesForEachPage'),
-        require('./createPagesForEachCategory'),
-        require('./createPagesForEachTag'),
-        require('./createPagesForLocalizedAliasOfEachPost'),
-    ].forEach(_ => _(createPagesArgs));
+    await Promise.all(
+        [
+            require('./createPageOfHome'),
+            require('./createPageOfTags'),
+            require('./createPageOfCategories'),
+            require('./createPagesForEachPost'),
+            require('./createPagesForEachPage'),
+            require('./createPagesForEachCategory'),
+            require('./createPagesForEachTag'),
+            require('./createPagesForLocalizedAliasOfEachPost'),
+        ].map(async fn => await fn(createPagesArgs))
+    );
 };

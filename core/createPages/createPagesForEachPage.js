@@ -4,7 +4,10 @@ const { makeMdxDocumentPayload } = require('../Payload');
 const Template = path.resolve('src/templates/Page.js');
 
 module.exports = async (args) => {
-    const { createPagesArgs, siteLang } = args;
+    const {
+        createPagesArgs,
+        siteLang,
+    } = args;
 
     const { graphql, actions } = createPagesArgs;
     const { createPage } = actions;
@@ -38,55 +41,57 @@ module.exports = async (args) => {
 
     const { edges: pages } = allPage || { edges: [] };
 
-    pages.forEach( async (pageNode) => {
-        const mdxDocument = await makeMdxDocumentPayload({
-            id: pageNode.node.parent.id,
-            graphql: graphql,
-        });
+    await Promise.all(
+        pages.map( async (pageNode) => {
+            const mdxDocument = await makeMdxDocumentPayload({
+                id: pageNode.node.parent.id,
+                graphql: graphql,
+            });
 
-        const pagePayload = {
-            title: pageNode.node.title,
-            subtitle: pageNode.node.subtitle,
-            isPublished: pageNode.node.isPublished,
-            createdTime: pageNode.node.createdTime,
-            lastModifiedTime: pageNode.node.lastModifiedTime,
-            slug: pageNode.node.slug,
-            html: mdxDocument.html,
-            code: mdxDocument.code,
-            keywords: [],
-            description: mdxDocument.excerpt,
-        };
+            const pagePayload = {
+                title: pageNode.node.title,
+                subtitle: pageNode.node.subtitle,
+                isPublished: pageNode.node.isPublished,
+                createdTime: pageNode.node.createdTime,
+                lastModifiedTime: pageNode.node.lastModifiedTime,
+                slug: pageNode.node.slug,
+                html: mdxDocument.html,
+                code: mdxDocument.code,
+                keywords: [],
+                description: mdxDocument.excerpt,
+            };
 
-        const path = pageNode.node.slug;
+            const path = pageNode.node.slug;
 
-        let localeLang = pageNode.node.lang || siteLang;
+            let localeLang = pageNode.node.lang || siteLang;
 
-        assert(localeLang);
+            assert(localeLang);
 
-        let localizedPath = `${localeLang}/${pageNode.node.slug}`;
+            let localizedPath = `${localeLang}/${pageNode.node.slug}`;
 
-        console.log(`Create page for page: ${path}`);
+            console.log(`Create page for page: ${path}`);
 
-        console.log(`Create page for localized page: ${path}`);
+            console.log(`Create page for localized page: ${path}`);
 
-        createPage({
-            path: path,
-            component: Template,
-            context: {
-                isLocalized: false,
-                lang: pageNode.node.lang,
-                page: pagePayload,
-            },
-        });
+            createPage({
+                path: path,
+                component: Template,
+                context: {
+                    isLocalized: false,
+                    lang: pageNode.node.lang,
+                    page: pagePayload,
+                },
+            });
 
-        createPage({
-            path: localizedPath,
-            component: Template,
-            context: {
-                isLocalized: true,
-                lang: pageNode.node.lang,
-                page: pagePayload,
-            },
-        });
-    });
+            createPage({
+                path: localizedPath,
+                component: Template,
+                context: {
+                    isLocalized: true,
+                    lang: pageNode.node.lang,
+                    page: pagePayload,
+                },
+            });
+        })
+    );
 };

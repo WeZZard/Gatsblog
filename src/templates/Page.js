@@ -4,6 +4,7 @@ import Main from '../components/Main'
 class Page extends React.Component {
     render() {
         return <Main>
+
         </Main>
     }
 }

@@ -1,6 +1,5 @@
 const _ = require("lodash");
 const debug = require('debug');
-const assert = require('assert');
 
 module.exports = function(args) {
     const {
@@ -22,7 +21,6 @@ module.exports = function(args) {
         debug(`Returns the data of existed category node: ${node}`);
         return categoryData;
     } else if (existedNodes.length === 0) {
-        assert(category !== "");
         const nodeId = createNodeId(`category-${kebabCategory}`);
         const nodeData = Object.assign({}, categoryData, {
             id: nodeId,

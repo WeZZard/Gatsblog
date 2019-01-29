@@ -66,10 +66,6 @@ module.exports = async (args) => {
                     node {
                         excerpt(pruneLength: 300)
                         html
-                        code {
-                            body
-                            scope
-                        }
                     }
                 }
             }
@@ -109,9 +105,11 @@ module.exports = async (args) => {
                     tags: postTags,
                     category: postCategory,
                     html: mdxDocument.html,
-                    code: mdxDocument.code,
+                    // code: mdxDocument.code,
                     slug: post.node.slug,
                 };
+            default:
+                throw `Unexpected style: ${style}`;
         }
     } else {
         throw `Multiple relative MDX document were found for post: "${post.node.slug}".`
