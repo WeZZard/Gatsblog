@@ -4,6 +4,7 @@ import styles from './Main.module.scss'
 import NavigationBar from './NavigationBar'
 import ContentFooter from './ContentFooter'
 import SiteFooter from './SiteFooter'
+import ContentSeparator from './ContentSeparator'
 import SEO from './SEO'
 
 class Main extends React.Component {
@@ -26,7 +27,7 @@ class Main extends React.Component {
                     <main className={styles.mainContentContainer}>
                         {children}
                     </main>
-                    <hr className={styles.contentSeparator}/>
+                    <ContentSeparator/>
                     <footer className={styles.footerContentContainer}>
                         <ContentFooter />
                     </footer>

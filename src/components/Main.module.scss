@@ -61,21 +61,11 @@
     flex-direction: column;
     flex-grow: 1;
     flex-shrink: 0;
-}
-
-.contentSeparator {
-    display: flex;
-    margin-left: 5.5rem;
-    margin-right: 5.5rem;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: 0;
-    width: calc(100% - 11rem);
-    border: 0;
-    border-top: 1px solid $_gray-89;
+    width: 100%;
 }
 
 .footerContentContainer {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }

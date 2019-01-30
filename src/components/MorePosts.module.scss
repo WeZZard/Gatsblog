@@ -1,0 +1,19 @@
+.morePostsContainer {
+    margin-left: 5.5rem;
+    margin-right: 5.5rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 3.1rem;
+    padding-bottom: 5.2rem;
+    display: flex;
+
+    .morePostItemContainer {
+        display: inline-block;
+        width: calc(50% - 3.4rem);
+        margin-right: 3.4rem;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}

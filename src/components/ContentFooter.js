@@ -30,16 +30,14 @@ class ContentFooter extends React.Component {
             />
         );
 
-        return (
-            <div className={styles.contentFooter}>
-                {customFooterMessages}
-                <ContentFooterItem
-                    message={
-                        'Built with <a href="https://www.gatsbyjs.org">Gatsby.js</a>.'
-                    }
-                />
-            </div>
-        )
+        return <div className={styles.contentFooter}>
+            {customFooterMessages}
+            <ContentFooterItem
+                message={
+                    'Built with <a href="https://www.gatsbyjs.org">Gatsby.js</a>.'
+                }
+            />
+        </div>
     }
 }
 
