@@ -22,9 +22,20 @@ site:
         - WeZZard
         - Pieces of My Soul
 
-    # The theme of the site. Currently only slate is available.
+    # The default license for each post.
     #
-    theme: slate
+    # Currently only support Creative Common 4.0.
+    #
+    # Suffixes Meaning:
+    # - BY = Attribution
+    # - ND = No Derivatives
+    # - NC = Non-Commercial
+    # - SA = ShareAlike
+    # - PD = Public Domain
+    #
+    # * SA is exclusive to ND.
+    #
+    license: cc4.0-by-nc-nd
 
     # Whether builds an index page for taxonomies.
     #
