@@ -1,7 +1,6 @@
 const {
     getDocumentType,
     getTitle,
-    getSubtitle,
     getCreatedTime,
 } = require('./MDXShims');
 const MDXRelativePathMetadata = require('./MDXRelativePathMetadata');
@@ -42,11 +41,11 @@ module.exports = function (args) {
 
         metadata.documentType = getDocumentType(sourceInstanceName);
 
-        metadata.title = getTitle(node.frontmatter.title, node.rawBody, relativePathMetadata.name);
+        metadata.title = getTitle(node.frontmatter.title, relativePathMetadata.name);
 
-        metadata.subtitle = getSubtitle(node.frontmatter.subtitle, node.rawBody);
+        metadata.subtitle = node.frontmatter.subtitle || '';
 
-        metadata.lang = relativePathMetadata.lang || node.frontmatter.lang;
+        metadata.lang = relativePathMetadata.lang || node.frontmatter.lang || '';
 
         metadata.isLocalized = relativePathMetadata.isLocalized;
 

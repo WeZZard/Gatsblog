@@ -63,10 +63,10 @@ module.exports = async (args) => {
             };
 
             let localeSlug = pageNode.node.isLocalized
-                ? pageNode.node.lang
+                ? `/${pageNode.node.lang}`
                 : '';
 
-            let path = [localeSlug, pageNode.node.slug].filter(_ => _).join();
+            let path = [localeSlug, pageNode.node.slug].filter(_ => _).join('');
 
             console.log(`Create page for page: ${path}`);
 
@@ -83,7 +83,7 @@ module.exports = async (args) => {
             });
 
             if (!pageNode.node.isLocalized && pageNode.node.lang) {
-                let localizedPath = `${pageNode.node.lang}/${pageNode.node.slug}`;
+                let localizedPath = `/${pageNode.node.lang}/${pageNode.node.slug}`;
 
                 console.log(`Create localized page for page: ${localizedPath}`);
 

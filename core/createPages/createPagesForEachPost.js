@@ -80,12 +80,12 @@ module.exports = async (args) => {
             }
 
             let localeSlug = postNode.node.isLocalized
-                ? postNode.node.lang
+                ? `/${postNode.node.lang}`
                 : '';
 
-            let path = [localeSlug, postNode.node.slug].filter(_ => _).join();
+            let path = [localeSlug, postNode.node.slug].filter(_ => _).join('');
 
-            console.log(`Create page for post: ${path}`);
+            console.log(`Create page for post: ${path}.`);
 
             const lang = (postNode.node.lang && postNode.node.lang.identifier) || siteLang;
 
@@ -102,7 +102,7 @@ module.exports = async (args) => {
             });
 
             if (!postNode.node.isLocalized && postNode.node.lang) {
-                let localizedPath = `${postNode.node.lang}/${postNode.node.slug}`;
+                let localizedPath = `/${postNode.node.lang}/${postNode.node.slug}`;
 
                 console.log(`Create localized page for post: ${localizedPath}`);
 

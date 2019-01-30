@@ -1,5 +1,4 @@
 const assert = require('assert');
-const locales = require('i18n-locales');
 const {
     localeIdentifierPattern,
     makeDisambiguateIdentifier : _
@@ -16,7 +15,7 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
       createdTime: Date?
       slug: string
   }
-  */
+    */
     const datePattern = `([0-9]{4})-([0-9]{2})-([0-9]{2})`;
     const timePattern = `T([0-9]{2})_([0-9]{2})_([0-9]{2})`;
     const timezoneOffsetPattern1 = `([0-9]{2})_([0-9]{2})`;
