@@ -112,7 +112,6 @@ module.exports = async (args) => {
                     allMdx( filter: {id: {eq: "${post.node.parent.id}" } } ) {
                         edges {
                             node {
-                                html
                                 code {
                                     body
                                     scope
@@ -153,7 +152,6 @@ module.exports = async (args) => {
                 createdTime: post.node.createdTime,
                 tags: postTags,
                 category: postCategory,
-                html: mdxDocument.node.html,
                 code: mdxDocument.node.code,
             };
         default:

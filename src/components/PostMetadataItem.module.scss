@@ -1,0 +1,19 @@
+@import '../styles/colors';
+
+.postMetadataItem {
+    display: inline-block;
+
+    &::after {
+        color: $color-ui-caption-separator;
+        content: '•';
+        margin-left: 0.8rem;
+        margin-right: 0.8rem;
+    }
+
+    &:last-child {
+        &::after {
+            content: none;
+            margin: 0;
+        }
+    }
+}

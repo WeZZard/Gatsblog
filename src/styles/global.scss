@@ -1,9 +1,34 @@
 @import 'fonts';
 @import 'colors';
 
-body {
+html {
     font-family: $font-ui-sans;
     font-size: 10px;
+    font-weight: 300;
     -webkit-font-smoothing: antialiased;
-    font-weight: normal;
+}
+
+span.katex-display {
+    margin: 0;
+    margin-bottom: 4.2rem;
+    padding: 2.1rem;
+    color: $color-content-heading;
+    background-color: $color-content-math-block-background;
+    overflow-x: scroll;
+}
+
+
+p {
+    span.katex {
+        margin: 0;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        padding-top: 0.5rem;
+        font-size: 0.88em;
+        line-height: 1.143;
+        font-weight: 400;
+        color: $color-content-heading;
+        background-color: $color-content-math-block-background;
+        border-bottom: solid 2px $color-content-math-block-indicator;
+    }
 }

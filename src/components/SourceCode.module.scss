@@ -1,0 +1,56 @@
+@import '../styles/fonts';
+@import '../styles/colors';
+
+.sourceCode {
+    display: flex;
+    flex-direction: row;
+
+    font-family: $font-text-monospaced;
+    font-size: 0.88em;
+    line-height: 1.2;
+    padding-top: 3.1rem;
+    padding-bottom: 3.3rem;
+    padding-left: 2.1rem;
+    padding-right: 2.1rem;
+    margin-bottom: 4.9rem;
+
+    .lineNumberList {
+        display: inline-block;
+        counter-reset: codeblock;
+
+        .lineNumber {
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            margin-bottom: 0.9rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            &::before {
+                counter-increment: codeblock;
+                content: counter(codeblock);
+                color: $color-content-code-block-line-number;
+                margin-right: 2.1rem;
+                text-align: right;
+            }
+        }
+    }
+
+    .codeContent {
+        display: inline-block;
+
+        .line {
+            margin-bottom: 0.9rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            .token {
+
+            }
+        }
+    }
+}

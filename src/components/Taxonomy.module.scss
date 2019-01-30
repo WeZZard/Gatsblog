@@ -6,7 +6,7 @@
     span {
         font-size: 1.1em;
         font-weight: 500;
-        line-height: 1.18em;
+        line-height: 1.18;
         text-transform: uppercase;
     }
 }
@@ -17,8 +17,8 @@
 
     &::after {
         content: '|';
-        margin-left: 0.5em;
-        margin-right: 0.5em;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
     }
 }
 
@@ -31,6 +31,6 @@
 .taxonomyItem {
     display: inline-block;
     margin: 0;
-    margin-right: 0.5em;
+    margin-right: 0.5rem;
     padding: 0;
 }

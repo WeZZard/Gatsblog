@@ -5,27 +5,9 @@
 }
 
 .postExcerptMetadataLine {
-    margin-bottom: 1.5em;
+    margin-bottom: 1.5rem;
 
     &:last-child {
         margin-bottom: 0;
-    }
-}
-
-.postExcerptMetadataItem {
-    display: inline-block;
-
-    &::after {
-        color: $color-ui-caption-separator;
-        content: '•';
-        margin-left: 0.8em;
-        margin-right: 0.8em;
-    }
-
-    &:last-child {
-        &::after {
-            content: none;
-            margin: 0;
-        }
     }
 }

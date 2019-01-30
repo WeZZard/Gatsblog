@@ -2,19 +2,19 @@
 @import '../styles/fonts';
 
 .paginator {
-    margin-left: 5.5em;
-    margin-right: 5.5em;
-    margin-bottom: 5.2em;
+    margin-left: 5.5rem;
+    margin-right: 5.5rem;
+    margin-bottom: 5.2rem;
 
     .previousPageTitle {
         display: inline-block;
-        margin-right: 1.3em;
+        margin-right: 1.3rem;
         text-transform: uppercase;
 
         a::before {
             content: "<";
-            margin-right: 0.5em;
-            vertical-align: 0.05em;
+            margin-right: 0.5rem;
+            vertical-align: 0.05rem;
         }
     }
 
@@ -25,13 +25,13 @@
 
     .nextPageTitle {
         display: inline-block;
-        margin-left: 1.3em;
+        margin-left: 1.3rem;
         text-transform: uppercase;
 
         a::after {
             content: ">";
-            margin-left: 0.5em;
-            vertical-align: 0.05em;
+            margin-left: 0.5rem;
+            vertical-align: 0.05rem;
         }
     }
 

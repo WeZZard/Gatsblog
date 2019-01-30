@@ -9,10 +9,10 @@
     text-shadow: 0 2px 4px $color-ui-nav-headline-shadow;
     text-transform: uppercase;
     text-align: end;
-    padding-top: 2.6em;
-    padding-left: 3.4em;
-    padding-right: 3.4em;
-    padding-bottom: 2.8em;
+    padding-top: 2.6rem;
+    padding-left: 3.4rem;
+    padding-right: 3.4rem;
+    padding-bottom: 2.8rem;
 
     a {
         text-decoration: none;
@@ -22,10 +22,10 @@
         &::after {
             content: "";
             display: inline-block;
-            width: 0.13em;
-            height: 0.7em;
+            width: 0.3rem;
+            height: 2.1rem;
             background: $color-ui-nav-headline-normal;
-            margin-left: 0.77em;
+            margin-left: 2.1rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
             transition: background 0.3s ease-in-out;
         }
@@ -55,6 +55,7 @@
 
         label {
             font-size: 3em;
+            font-weight: 400;
             line-height: 1.13;
         }
     }
@@ -63,16 +64,17 @@
         ol {
             margin: 0;
             list-style: none;
-        }
 
-        li {
-            margin-top: 2em;
-            display: flex;
-            flex-direction: row-reverse;
+            li {
+                margin-top: 2rem;
+                display: flex;
+                flex-direction: row-reverse;
+            }
         }
 
         .navigationItem {
             font-size: 3em;
+            font-weight: 400;
             line-height: 1.13;
         }
     }
