@@ -46,14 +46,26 @@
         font-family: $font-text-serif;
         line-height: 2;
 
+        a {
+            text-decoration: underline;
+            color: $color-tint;
+            transition: color 0.3s ease-in-out;
+
+            &:visited {
+                color: $color-content-body;
+            }
+
+            &:hover,
+            &:visited:hover {
+                color: $color-hover;
+                transition: color 0.3s ease-in-out;
+            }
+        }
+
         p {
             margin: 0;
             margin-bottom: 4.2rem;
             color: $color-content-body;
-
-            &:last-child {
-                margin-bottom: 0;
-            }
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -214,10 +226,45 @@
                 border-bottom: 1px solid $color-content-table-separator;
             }
         }
+
+        blockquote {
+            border-left: 3px solid $color-content-quote-indicator;
+            margin: 0;
+            margin-top: 5.3rem;
+            margin-bottom: 4.2rem;
+            padding-left: 3.4rem;
+            padding-top: 1.7rem;
+            padding-bottom: 1.9rem;
+            font-weight: 600;
+            font-style: italic;
+            color: $color-content-quote;
+        }
+
+        hr {
+            margin-top: 3.4rem;
+            margin-bottom: 3.5rem;
+            border: 0;
+            text-align: center;
+
+            &:before {
+                margin: auto;
+                display: inline-block;
+                content: ". . .";
+                position: relative;
+                top: -3.4rem;
+                font-size: 1.65em;
+                font-weight: 600;
+                color: $color-content-divider;
+            }
+        }
+
+        :last-child {
+            margin-bottom: 0;
+        }
     }
 
     .postFooter {
-
+        margin-bottom: 5.2rem;
     }
 
     .postLicense {

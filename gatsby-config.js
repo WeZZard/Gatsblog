@@ -83,8 +83,8 @@ module.exports = {
             options: {
                 google: {
                     families: [
-                        `Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i:latin,latin-ext`,
-                        `Roboto Mono:100,100i,300,300i,400,400i,500,500i,700,700i:latin,latin-ext`,
+                        `Roboto:300,300i,400,400i,500,500i:latin,latin-ext`,
+                        `Roboto Mono:300,300i,400,400i,500,500i:latin,latin-ext`,
                         `Gentium Book Basic:400,400i,700,700i:latin,latin-ext`,
                     ]
                 }

@@ -41,7 +41,7 @@ class PostFullText extends React.Component {
             <section className={styles.postContent}>
                 <MDXRenderer>{code.body}</MDXRenderer>
             </section>
-            <footer>
+            <footer className={styles.postFooter}>
                 <PostMetadataItem>{tagsComponent}</PostMetadataItem>
             </footer>
         </article>

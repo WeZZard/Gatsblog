@@ -2,6 +2,7 @@ import React from 'react'
 import { MDXProvider } from '@mdx-js/tag'
 import SourceCode from './src/components/SourceCode'
 import HorizontalScroller from './src/components/HorizontalScroller'
+import BlockquoteContainer from './src/components/BlockquoteContainer'
 import AutoLinkHeader from "mdx-component-autolink-header";
 import { preToCodeBlock } from 'mdx-utils'
 
@@ -33,10 +34,6 @@ const components = {
     table: props => <HorizontalScroller>
         <table {...props}/>
     </HorizontalScroller>,
-    span: props => {
-        console.log(props);
-        return <span {...props}/>
-    }
 };
 
 export default ({ element }) => (

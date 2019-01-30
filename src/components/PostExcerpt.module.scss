@@ -21,13 +21,16 @@
             h1 {
                 color: $color-ui-main-headline-primary;
                 font-size: 2.4em;
+                font-weight: 500;
                 line-height: 0.875;
             }
 
             h2 {
                 color: $color-ui-main-headline-secondary;
                 font-size: 1.5em;
+                font-weight: 400;
                 line-height: 1.2;
+                margin-left: 1.3rem;
             }
 
             &:visited {
