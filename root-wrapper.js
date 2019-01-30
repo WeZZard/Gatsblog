@@ -21,14 +21,10 @@ const components = {
         const codeBlock = preToCodeBlock(props);
         // if there's a codeString and some props, we passed the test
         if (codeBlock) {
-            return <HorizontalScroller>
-                <SourceCode {...codeBlock} />
-            </HorizontalScroller>
+            return <SourceCode {...codeBlock} />
         } else {
             // it's possible to have a pre without a code in it
-            return  <HorizontalScroller>
-                <pre {...props} />
-            </HorizontalScroller>
+            return  <pre {...props} />
         }
     },
     table: props => <HorizontalScroller>

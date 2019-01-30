@@ -188,6 +188,8 @@ minus id quod maxime placeat facere
 
 ```c
 #include <stdio.h>
+
+#define MACRO
  
 int main() {
     int x;
@@ -198,6 +200,16 @@ int main() {
     printf("The integer is: %d\\n", x);
  
     return 0;
+}
+```
+
+```css
+.selector {
+
+}
+
+#fuck {
+
 }
 ```
 
