@@ -116,6 +116,7 @@ module.exports = async (args) => {
                                     body
                                     scope
                                 }
+                                tableOfContents
                             }
                         }
                     }
