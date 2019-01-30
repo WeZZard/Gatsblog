@@ -39,15 +39,19 @@ module.exports = {
                 extensions: ['.mdx', '.md'],
                 gatsbyRemarkPlugins: [
                     {
-                        resolve: `gatsby-remark-copy-linked-files`,
-                        options: { },
-                    },
-                    {
                         resolve: `gatsby-remark-images`,
                         options: {
-                            maxWidth: 590,
+                            maxWidth: 780,
                             sizeByPixelDensity: true,
+                            showCaptions: true,
+                            wrapperStyle: "",
+                            quality: 100,
+                            withWebp: true,
                         },
+                    },
+                    {
+                        resolve: `gatsby-remark-copy-linked-files`,
+                        options: { },
                     },
                     {
                         resolve: `gatsby-remark-smartypants`,

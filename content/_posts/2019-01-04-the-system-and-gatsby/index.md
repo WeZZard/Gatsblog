@@ -1,5 +1,5 @@
 ---
-title: A Document Wrapper Post Example
+title: The System and Gatsby
 
 ---
 
