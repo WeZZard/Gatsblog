@@ -1,7 +1,5 @@
 import React from 'react'
-import { Link } from 'gatsby'
 import styles from './TableOfContents.module.scss'
-import assert from 'assert'
 
 class TableOfContents extends React.Component {
     render() {
@@ -65,7 +63,7 @@ class TableOfContents extends React.Component {
             }
         }
 
-        return <div className={styles.tableOfContents}>
+        return <div className={[styles.tableOfContents, styles.tableOfContentsBackgroundBlur].join(' ')}>
             <div className={styles.tableOfContentsHeader}>
                 <h1>Table of Contents</h1>
             </div>

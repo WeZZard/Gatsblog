@@ -10,9 +10,20 @@
     width: calc(100% - 4.2rem);
 
     text-align: right;
-    background-color: transparentize($_black, 0.5);
     -webkit-backdrop-filter:saturate(180%) blur(20px);
     backdrop-filter: saturate(180%) blur(20px);
+}
+
+.tableOfContentsBackgroundBlur {
+    background-color: $_black;
+}
+
+@supports ((-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
+    .tableOfContentsBackgroundBlur {
+        background-color: transparentize($_black, 0.5);
+        -webkit-backdrop-filter:saturate(180%) blur(20px);
+        backdrop-filter: saturate(180%) blur(20px);
+    }
 }
 
 .tableOfContentsHeader {
