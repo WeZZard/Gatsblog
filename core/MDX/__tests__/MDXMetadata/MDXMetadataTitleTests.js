@@ -48,10 +48,11 @@ test('MDXMetadata creates metadata of Post whose title can fallback to its docum
         lastModifiedTime: new Date('2019-01-02'),
         tags: ['Tag1', 'Tag2', 'Tag3'],
         category: 'Category1',
-        lang: undefined,
+        lang: '',
         isLocalized: false,
         slug: `/post/2019/01/post-title-${_('2019-01-01-Post-Title')}`,
         relativePath: '2019-01-01-Post-Title.md',
+        license: '',
     };
 
     expect(MDXMetadata(args)).toEqual(result);
@@ -100,10 +101,11 @@ test('MDXMetadata creates metadata of Page whose title can fallback to its docum
         isPublished: true,
         createdTime: new Date('2019-01-01'),
         lastModifiedTime: new Date('2019-01-02'),
-        lang: undefined,
+        lang: '',
         isLocalized: false,
         slug: '/page-title',
         relativePath: 'Page-Title.md',
+        license: '',
     };
     expect(MDXMetadata(args)).toEqual(result);
 });

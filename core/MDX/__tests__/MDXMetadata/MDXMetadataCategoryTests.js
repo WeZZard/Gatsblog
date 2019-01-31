@@ -46,10 +46,11 @@ test('MDXMetadata creates metadata whose category can fallback to "Uncategorized
         lastModifiedTime: new Date('2019-01-02'),
         tags: [],
         category: 'Category1',
-        lang: undefined,
+        lang: '',
         isLocalized: false,
         slug: `/post/2019/01/post-title-${_('2019-01-01-Post-Title')}`,
         relativePath: '2019-01-01-Post-Title.md',
+        license: '',
     };
 
     expect(MDXMetadata(args)).toEqual(result);

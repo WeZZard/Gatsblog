@@ -69,6 +69,8 @@ module.exports = function (args) {
 
         metadata.relativePath = relativePath;
 
+        metadata.license = node.frontmatter.license || '';
+
         return metadata
     }
 

@@ -62,10 +62,11 @@ test('MDXMetadata creates metadata of Post', () => {
         lastModifiedTime: new Date('2019-01-03'),
         tags: ['Tag1', 'Tag2', 'Tag3'],
         category: 'Category1',
-        lang: undefined,
+        lang: '',
         isLocalized: false,
         slug: `/post/2019/01/post-title-${_('2019-01-01-Post-Title')}`,
         relativePath: '2019-01-01-Post-Title.md',
+        license: '',
     };
 
     expect(MDXMetadata(args)).toEqual(result);
@@ -121,6 +122,7 @@ test('MDXMetadata creates metadata of localized Post', () => {
         isLocalized: true,
         slug: `/post/2019/01/post-title-${_('2019-01-01-Post-Title')}`,
         relativePath: '2019-01-01-Post-Title/en-US/index.md',
+        license: '',
     };
 
     expect(MDXMetadata(args)).toEqual(result);
@@ -170,10 +172,11 @@ test('MDXMetadata creates metadata of Page', () => {
         isPublished: true,
         createdTime: new Date('2019-01-01'),
         lastModifiedTime: new Date('2019-01-02'),
-        lang: undefined,
+        lang: '',
         isLocalized: false,
         slug: '/page-title',
         relativePath: 'Page-Title.md',
+        license: '',
     };
 
     expect(MDXMetadata(args)).toEqual(result);
@@ -225,6 +228,7 @@ test('MDXMetadata creates metadata of localized Page', () => {
         isLocalized: true,
         slug: '/page-title',
         relativePath: 'Page-Title/en-US/index.md',
+        license: '',
     };
 
     expect(MDXMetadata(args)).toEqual(result);
@@ -273,10 +277,11 @@ test('MDXMetadata creates metadata of Page with tags omitted', () => {
         isPublished: true,
         createdTime: new Date('2019-01-01'),
         lastModifiedTime: new Date('2019-01-02'),
-        lang: undefined,
+        lang: '',
         isLocalized: false,
         slug: '/page-title',
         relativePath: 'Page-Title.md',
+        license: '',
     };
 
     expect(MDXMetadata(args)).toEqual(result);
@@ -325,10 +330,11 @@ test('MDXMetadata creates metadata of Page with category omitted', () => {
         isPublished: true,
         createdTime: new Date('2019-01-01'),
         lastModifiedTime: new Date('2019-01-02'),
-        lang: undefined,
+        lang: '',
         isLocalized: false,
         slug: '/page-title',
         relativePath: 'Page-Title.md',
+        license: '',
     };
 
     expect(MDXMetadata(args)).toEqual(result);

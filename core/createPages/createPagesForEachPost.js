@@ -8,6 +8,7 @@ module.exports = async (args) => {
         createPagesArgs,
         pendingSchemaData,
         siteLang,
+        defaultLicense
     } = args;
 
     const { graphql, actions } = createPagesArgs;
@@ -25,6 +26,7 @@ module.exports = async (args) => {
                         createdTime
                         lastModifiedTime
                         documentIdentifier
+                        license
                         slug
                         lang
                         isLocalized
@@ -99,6 +101,7 @@ module.exports = async (args) => {
                     earlier: earlierPostPayload,
                     later: laterPostPayload,
                     tableOfContents: postPayload.tableOfContents,
+                    defaultLicense: defaultLicense,
                 },
             });
 
@@ -117,6 +120,7 @@ module.exports = async (args) => {
                         earlier: earlierPostPayload,
                         later: laterPostPayload,
                         tableOfContents: postPayload.tableOfContents,
+                        defaultLicense: defaultLicense,
                     },
                 });
             }

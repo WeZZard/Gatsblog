@@ -45,10 +45,11 @@ test('MDXMetadata creates metadata whose isPublished can fallback to true', () =
         lastModifiedTime: new Date('2019-01-02'),
         tags: [],
         category: 'Category1',
-        lang: undefined,
+        lang: '',
         isLocalized: false,
         slug: `/post/2019/01/post-title-${_('2019-01-01-Post-Title')}`,
         relativePath: '2019-01-01-Post-Title.md',
+        license: '',
     };
 
     expect(MDXMetadata(args)).toEqual(result);
