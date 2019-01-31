@@ -1,6 +1,6 @@
 const path = require('path');
 const assert = require('assert');
-const { makeMdxDocumentPayload } = require('../Payload');
+const { makeMdxDocumentPayload } = require('../utils');
 const Template = path.resolve('src/templates/Page.js');
 
 module.exports = async (args) => {

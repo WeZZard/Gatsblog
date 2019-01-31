@@ -2,7 +2,7 @@ const assert = require('assert');
 const {
     filterTagsForPostNode,
     filterCategoryForPostNode
-} = require('./utils');
+} = require('./filters');
 
 module.exports = async (args) => {
     const {

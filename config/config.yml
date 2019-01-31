@@ -26,12 +26,19 @@ site:
     #
     # Currently only support Creative Common 4.0.
     #
+    # Available Options:
+    #   - cc4.0-by
+    #   - cc4.0-by-sa
+    #   - cc4.0-by-nd
+    #   - cc4.0-by-nc
+    #   - cc4.0-by-nc-sa
+    #   - cc4.0-by-nc-nd
+    #
     # Suffixes Meaning:
-    # - BY = Attribution
-    # - ND = No Derivatives
-    # - NC = Non-Commercial
-    # - SA = ShareAlike
-    # - PD = Public Domain
+    #   - BY = Attribution
+    #   - ND = No Derivatives
+    #   - NC = Non-Commercial
+    #   - SA = ShareAlike
     #
     # * SA is exclusive to ND.
     #

@@ -22,6 +22,7 @@ module.exports = async (args) => {
                 lang
                 keywords
                 description
+                license
             }
         }
     }
@@ -42,7 +43,8 @@ module.exports = async (args) => {
             indexing: indexingConfig,
             lang: siteLang,
             keywords: siteKeywords,
-            description: siteDescription
+            description: siteDescription,
+            license: defaultLicense
         },
     } = configYaml || {
         site : {
@@ -50,6 +52,7 @@ module.exports = async (args) => {
             lang: 'en-US',
             keywords: [],
             description: '',
+            license: 'cc4.0-by-nc-nd',
         }
     };
 
@@ -70,6 +73,7 @@ module.exports = async (args) => {
         siteLang,
         siteKeywords,
         siteDescription,
+        defaultLicense,
     };
 
     await Promise.all(

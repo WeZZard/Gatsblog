@@ -1,6 +1,6 @@
 const createIndexPages = require('./_createIndexPages');
 const { tags: page } = require('./pageMetadata');
-const { makeTagSummaryPayload } = require('../Payload');
+const { makeTagSummaryPayload } = require('../utils');
 const { getItemsPerPageInIndexWithName } = require('../config');
 
 module.exports = async (args) => {

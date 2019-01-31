@@ -1,6 +1,6 @@
 const path = require('path');
 const assert = require('assert');
-const { makePostPayload } = require('../Payload');
+const { makePostPayload } = require('../utils');
 const Template = path.resolve('src/templates/Post.js');
 
 module.exports = async (args) => {
