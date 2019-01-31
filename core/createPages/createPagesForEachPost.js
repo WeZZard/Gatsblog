@@ -95,6 +95,7 @@ module.exports = async (args) => {
                 path: path,
                 component: Template,
                 context: {
+                    slug: path,
                     isLocalized: postNode.node.isLocalized,
                     lang: lang,
                     post: postPayload,
@@ -114,6 +115,7 @@ module.exports = async (args) => {
                     path: localizedPath,
                     component: Template,
                     context: {
+                        slug: localizedPath,
                         isLocalized: postNode.node.isLocalized,
                         lang: postNode.node.lang.identifier,
                         post: postPayload,

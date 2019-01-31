@@ -3,7 +3,9 @@ import Main from '../components/Main'
 
 class Page extends React.Component {
     render() {
-        return <Main>
+        const { pageContext } = this.props;
+        const { slug } = pageContext;
+        return <Main selectedNavigationItem={{slug: slug}}>
         </Main>
     }
 }

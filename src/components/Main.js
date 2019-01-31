@@ -11,7 +11,7 @@ import SEO from './SEO'
 class Main extends React.Component {
     render() {
         const {
-            navigationStack,
+            selectedNavigationItem,
             lang,
             pageTitle,
             description,
@@ -34,7 +34,7 @@ class Main extends React.Component {
                 />
                 <section className={styles.controlWrapper}>
                     <header className={styles.navigationContainer}>
-                        <NavigationBar navigationStack={navigationStack}/>
+                        <NavigationBar selectedNavigationItem={selectedNavigationItem}/>
                         {tableOfContentsComponents}
                     </header>
                     <section className={styles.siteFooterContainer}>

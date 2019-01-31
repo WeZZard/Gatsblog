@@ -42,6 +42,7 @@ module.exports = (args) => {
             path: pagePath,
             component: Template,
             context: {
+                slug: pagePath,
                 locale,
                 itemComponentName,
                 layoutComponentName,

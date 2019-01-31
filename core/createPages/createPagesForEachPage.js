@@ -76,6 +76,7 @@ module.exports = async (args) => {
                 path: path,
                 component: Template,
                 context: {
+                    slug: path,
                     isLocalized: pageNode.node.isLocalized,
                     lang: lang,
                     page: pagePayload,
@@ -91,6 +92,7 @@ module.exports = async (args) => {
                     path: localizedPath,
                     component: Template,
                     context: {
+                        slug: localizedPath,
                         isLocalized: pageNode.node.isLocalized,
                         lang: pageNode.node.lang.identifier,
                         page: pagePayload,

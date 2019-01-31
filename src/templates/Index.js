@@ -33,17 +33,40 @@ class Index extends React.Component {
 
     render() {
         const { pageContext } = this.props;
-        const { itemComponentName, layoutComponentName, items, paginationInfo, pageTitle, subtitle, showsPageTitle, description, keywords} = pageContext;
+        const {
+            slug,
+            itemComponentName,
+            layoutComponentName,
+            items,
+            paginationInfo,
+            pageTitle,
+            subtitle,
+            showsPageTitle,
+            description,
+            keywords
+        } = pageContext;
 
         const Item = Index._getItemComponentByName(itemComponentName);
         const Layout = Index._getLayoutComponentByName(layoutComponentName);
 
-        const itemComponents = items.map((item, itemIndex) => React.createElement(Item, {item: item, key: `${itemIndex}`}));
-        const layoutComponent = React.createElement(Layout, {children: itemComponents});
+        const itemComponents = items.map((item, itemIndex) =>
+            React.createElement(Item, {item: item, key: `${itemIndex}`})
+        );
+        const layoutComponent = React.createElement(
+            Layout,
+            {children: itemComponents}
+            );
 
-        const contentTitle = showsPageTitle ? <ContentTitle title={pageTitle} subtitle={subtitle}/> : null;
+        const contentTitle = showsPageTitle
+            ? <ContentTitle title={pageTitle} subtitle={subtitle}/>
+            : null;
 
-        return <Main pageTitle={pageTitle} description={description} keywords={keywords}>
+        return <Main
+            pageTitle={pageTitle}
+            description={description}
+            keywords={keywords}
+            selectedNavigationItem={{slug: slug}}
+        >
             {contentTitle}
             {layoutComponent}
             <Paginator paginationInfo={paginationInfo}/>

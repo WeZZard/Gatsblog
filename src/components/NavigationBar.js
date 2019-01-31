@@ -4,17 +4,23 @@ import styles from './NavigationBar.module.scss'
 
 class NavigationItem extends React.Component {
     render() {
-        const { navigationItem } = this.props;
+        const { navigationItem, isSelected } = this.props;
 
         const { name, slug } = navigationItem;
 
-        return <span className={styles.navigationItem}><Link to={slug}>{name}</Link></span>
+        const className = isSelected
+            ? [styles.navigationItem, styles.selected].join(' ')
+            : styles.navigationItem;
+
+        return <span className={className}><Link to={slug}>{name}</Link></span>
     }
 }
 
 class NavigationBar extends React.Component {
     render() {
-        const { navigationStack } = this.props;
+        const { selectedNavigationItem } = this.props;
+
+        console.log('selectedNavigationItem: ', selectedNavigationItem);
 
         return <StaticQuery
             query={_navigationQuery}
@@ -75,7 +81,12 @@ class NavigationBar extends React.Component {
                 ];
 
                 const components = navigationItems.map((navigationItem) => {
-                    return <li key={navigationItem.slug}><NavigationItem navigationItem={navigationItem}/></li>
+                    return <li key={navigationItem.slug}>
+                        <NavigationItem
+                            navigationItem={navigationItem}
+                            isSelected={selectedNavigationItem && navigationItem.slug === selectedNavigationItem.slug}
+                        />
+                    </li>
                 });
 
                 return (

@@ -7,6 +7,7 @@ class Post extends React.Component {
     render() {
         const { pageContext } = this.props;
         const {
+            slug,
             isLocalized,
             lang,
             post,
@@ -20,7 +21,9 @@ class Post extends React.Component {
             ? <MorePosts earlier={earlier} later={later}/>
             : null;
 
-        return <Main tableOfContents={tableOfContents}>
+        return <Main
+            tableOfContents={tableOfContents}
+            selectedNavigationItem={{slug: slug}}>
             <PostFullText post={post} defaultLicense={defaultLicense}/>
             {morePostsComponent}
         </Main>
