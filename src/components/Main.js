@@ -5,22 +5,41 @@ import NavigationBar from './NavigationBar'
 import ContentFooter from './ContentFooter'
 import SiteFooter from './SiteFooter'
 import ContentSeparator from './ContentSeparator'
+import TableOfContents from './TableOfContents'
 import SEO from './SEO'
 
 class Main extends React.Component {
     render() {
-        const { navigationStack, lang, pageTitle, description, keywords, children } = this.props;
+        const {
+            navigationStack,
+            lang,
+            pageTitle,
+            description,
+            keywords,
+            tableOfContents,
+            children
+        } = this.props;
+
+        const tableOfContentsComponents = tableOfContents
+            ? <TableOfContents tableOfContents={tableOfContents}/>
+            : null;
 
         return (
             <div className={styles.appContainer}>
-                <SEO lang={lang} title={pageTitle} description={description} keywords={keywords}/>
+                <SEO
+                    lang={lang}
+                    title={pageTitle}
+                    description={description}
+                    keywords={keywords}
+                />
                 <section className={styles.controlWrapper}>
                     <header className={styles.navigationContainer}>
                         <NavigationBar navigationStack={navigationStack}/>
+                        {tableOfContentsComponents}
                     </header>
-                    <footer className={styles.siteFooterContainer}>
+                    <section className={styles.siteFooterContainer}>
                         <SiteFooter/>
-                    </footer>
+                    </section>
                     <div className={styles.controlWrapperOverlay}/>
                 </section>
                 <section className={styles.contentWrapper}>

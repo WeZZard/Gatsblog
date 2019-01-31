@@ -2,17 +2,13 @@
 @import '../styles/colors';
 
 .navigationBar {
-    align-items: flex-end;
     color: $color-ui-nav-headline-normal;
     display: flex;
     flex-direction: column;
     text-shadow: 0 2px 4px $color-ui-nav-headline-shadow;
     text-transform: uppercase;
     text-align: end;
-    padding-top: 2.6rem;
-    padding-left: 3.4rem;
-    padding-right: 3.4rem;
-    padding-bottom: 2.8rem;
+    margin-bottom: 2.8rem;
 
     a {
         text-decoration: none;

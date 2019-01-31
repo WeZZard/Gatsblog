@@ -98,6 +98,7 @@ module.exports = async (args) => {
                     post: postPayload,
                     earlier: earlierPostPayload,
                     later: laterPostPayload,
+                    tableOfContents: postPayload.tableOfContents,
                 },
             });
 
@@ -115,6 +116,7 @@ module.exports = async (args) => {
                         post: postPayload,
                         earlier: earlierPostPayload,
                         later: laterPostPayload,
+                        tableOfContents: postPayload.tableOfContents,
                     },
                 });
             }

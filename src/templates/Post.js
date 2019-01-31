@@ -12,13 +12,14 @@ class Post extends React.Component {
             post,
             earlier,
             later,
+            tableOfContents
         } = pageContext;
 
         const morePostsComponent = (earlier || later)
             ? <MorePosts earlier={earlier} later={later}/>
             : null;
 
-        return <Main>
+        return <Main tableOfContents={tableOfContents}>
             <PostFullText post={post}/>
             {morePostsComponent}
         </Main>

@@ -154,6 +154,7 @@ module.exports = async (args) => {
                 tags: postTags,
                 category: postCategory,
                 code: mdxDocument.node.code,
+                tableOfContents: mdxDocument.node.tableOfContents,
             };
         default:
             throw `Unexpected style: ${style}`;

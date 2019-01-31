@@ -12,9 +12,9 @@ class MorePostItem extends React.Component {
         const subtitleComponent =  item.subtitle !== "" ? <h2>{item.subtitle}</h2> : null;
 
         return <section className={styles.morePostItem}>
-            <caption className={styles.morePostItemCaption}>
+            <div className={styles.morePostItemCaption}>
                 <span>{title}</span>
-            </caption>
+            </div>
             <div>
                 <header className={styles.morePostHeader}>
                     <Link to={item.slug}>
