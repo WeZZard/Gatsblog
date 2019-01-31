@@ -6,10 +6,11 @@ import PostMetadataItem from './PostMetadataItem'
 import CategoryLabel from './CategoryLabel'
 import TagsLabel from './TagsLabel'
 import TimeLabel from './TimeLabel'
+import License from './License';
 
 class PostFullText extends React.Component {
     render() {
-        const { post } = this.props;
+        const { post, defaultLicense } = this.props;
         const {
             title,
             subtitle,
@@ -17,6 +18,7 @@ class PostFullText extends React.Component {
             tags,
             category,
             code,
+            license
         } = post;
 
         const createdTimeComponent = <TimeLabel dateTime={createdTime}/>;
@@ -43,6 +45,7 @@ class PostFullText extends React.Component {
             </section>
             <footer className={styles.postFooter}>
                 <PostMetadataItem>{tagsComponent}</PostMetadataItem>
+                <License license={license || defaultLicense} />
             </footer>
         </article>
     }

@@ -12,7 +12,8 @@ class Post extends React.Component {
             post,
             earlier,
             later,
-            tableOfContents
+            tableOfContents,
+            defaultLicense,
         } = pageContext;
 
         const morePostsComponent = (earlier || later)
@@ -20,7 +21,7 @@ class Post extends React.Component {
             : null;
 
         return <Main tableOfContents={tableOfContents}>
-            <PostFullText post={post}/>
+            <PostFullText post={post} defaultLicense={defaultLicense}/>
             {morePostsComponent}
         </Main>
     }
