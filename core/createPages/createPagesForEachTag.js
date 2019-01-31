@@ -55,31 +55,31 @@ const _createPageForTagsForLocale = async (args) => {
                 ) : 'isLocalized: { eq: false }';
 
             const result = await graphql(`
-            {
-                allPost(
-                    filter: {
-                        tags: { in: "${tag.name}" }
-                        ${postFilter}
-                    }
-                    sort: { fields: [createdTime], order: DESC }
-                ) {
-                    edges {
-                        node {
-                            title
-                            subtitle
-                            createdTime
-                            documentIdentifier
-                            tags
-                            category
-                            slug
-                            parent {
-                                id
+                {
+                    allPost(
+                        filter: {
+                            tags: { in: "${tag.name}" }
+                            ${postFilter}
+                        }
+                        sort: { fields: [createdTime], order: DESC }
+                    ) {
+                        edges {
+                            node {
+                                title
+                                subtitle
+                                createdTime
+                                documentIdentifier
+                                tags
+                                category
+                                slug
+                                parent {
+                                    id
+                                }
                             }
                         }
                     }
                 }
-            }
-        `);
+            `);
 
             if (result.errors) {
                 throw result.errors
