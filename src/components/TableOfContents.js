@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './TableOfContents.module.scss'
+import _ from 'lodash'
 
 class TableOfContents extends React.Component {
     render() {
@@ -20,7 +21,8 @@ class TableOfContents extends React.Component {
                 let listItem = {};
 
                 if (url && title) {
-                    listItem.link = <a href={url}>{title}</a>;
+                    const correctUrl = `#${_.kebabCase(title)}`;
+                    listItem.link = <a href={correctUrl}>{title}</a>;
                 }
 
                 stack.push({

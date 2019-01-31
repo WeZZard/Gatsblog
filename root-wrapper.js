@@ -5,6 +5,7 @@ import HorizontalScroller from './src/components/HorizontalScroller'
 import BlockquoteContainer from './src/components/BlockquoteContainer'
 import AutoLinkHeader from "mdx-component-autolink-header";
 import { preToCodeBlock } from 'mdx-utils'
+import _ from "lodash"
 
 // components is its own object outside of render so that the references to
 // components are stable
@@ -30,6 +31,36 @@ const components = {
     table: props => <HorizontalScroller>
         <table {...props}/>
     </HorizontalScroller>,
+    h1: props => {
+        const { children } = props;
+        const name = `${_.kebabCase(children)}`;
+        return <h1 id={name} {...props}/>
+    },
+    h2: props => {
+        const { children } = props;
+        const name = `${_.kebabCase(children)}`;
+        return <h2 id={name} {...props}/>
+    },
+    h3: props => {
+        const { children } = props;
+        const name = `${_.kebabCase(children)}`;
+        return <h3 id={name} {...props}/>
+    },
+    h4: props => {
+        const { children } = props;
+        const name = `${_.kebabCase(children)}`;
+        return <h4 id={name} {...props}/>
+    },
+    h5: props => {
+        const { children } = props;
+        const name = `${_.kebabCase(children)}`;
+        return <h5 id={name} {...props}/>
+    },
+    h6: props => {
+        const { children } = props;
+        const name = `${_.kebabCase(children)}`;
+        return <h6 id={name} {...props}/>
+    },
 };
 
 export default ({ element }) => (
