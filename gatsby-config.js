@@ -40,7 +40,7 @@ module.exports = {
                 gatsbyRemarkPlugins: [
                     {
                         resolve: `gatsby-remark-images`,
-                        options: {
+                        pluginOptions: {
                             maxWidth: 780,
                             sizeByPixelDensity: true,
                             showCaptions: true,
@@ -51,15 +51,15 @@ module.exports = {
                     },
                     {
                         resolve: `gatsby-remark-copy-linked-files`,
-                        options: { },
+                        pluginOptions: { },
                     },
                     {
                         resolve: `gatsby-remark-smartypants`,
-                        options: { },
+                        pluginOptions: { },
                     },
                     {
                         resolve: `gatsby-remark-katex`,
-                        options: { },
+                        pluginOptions: { },
                     },
                 ],
             },

@@ -30,3 +30,27 @@ const components = {
 export default ({ element }) => (
     <MDXProvider components={components}>{element}</MDXProvider>
 );
+
+const pToMathBlock = (pProps) => {
+    if (
+        pProps.children &&
+        Array.isArray(pProps.children)
+    ) {
+        const content = pProps.children.map(child => {
+            if (child.props && child.props.children) {
+                return child.props.children;
+            } else {
+                return `${child}`;
+            }
+        }).join('');
+
+        console.log('content: ', content);
+
+        if (content.startsWith('$$\n') && content.endsWith('\n$$')) {
+            const mathFormula = content.substring(3, content.length - 3);
+            return {
+                children: mathFormula,
+            }
+        }
+    }
+};
