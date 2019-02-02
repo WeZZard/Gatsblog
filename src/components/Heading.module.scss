@@ -1,0 +1,50 @@
+@import '../styles/colors';
+@import '../styles/fonts';
+
+@mixin heading {
+    margin: 0;
+    color: $color-content-heading;
+    font-family: $font-text-sans;
+}
+
+.h1 {
+    @include heading;
+    font-size: call(3.9em * 10 / 17);
+    font-weight: 200;
+    line-height: 1.08;
+}
+
+.h2 {
+    @include heading;
+    font-size: call(3em * 10 / 17);
+    font-weight: 300;
+    line-height: 1.17;
+}
+
+.h3 {
+    @include heading;
+    font-size: call(2.4em * 10 / 17);
+    font-weight: 400;
+    line-height: 1.79;
+}
+
+.h4 {
+    @include heading;
+    font-size: call(2em * 10 / 17);
+    font-weight: 400;
+    line-height: 2;
+}
+
+.h5 {
+    @include heading;
+    font-size: call(1.8em * 10 / 17);
+    line-height: 2.17;
+    font-weight: 400;
+}
+
+.h6 {
+    @include heading;
+    font-size: call(1.6em * 10 / 17);
+    font-weight: 600;
+    line-height: 2;
+}

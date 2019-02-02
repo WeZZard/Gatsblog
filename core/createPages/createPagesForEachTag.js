@@ -106,7 +106,7 @@ const _createPageForTagsForLocale = async (args) => {
             }));
 
             await createIndexPages({
-                createPage : createPage,
+                createPage,
                 siteKeywords,
                 siteDescription,
                 locale: locale,

@@ -96,6 +96,12 @@ minus `id quod maxime` `placeat` facere
 |Occaecati | Praesentium | facere |
 |Occaecati | Praesentium | facere |
 
+|Quidem    | Harum       | Soluta |
+|----------|-------------|--------|
+|Occaecati | Praesentium | facere |
+|Occaecati | Praesentium | facere |
+|Occaecati | Praesentium | facere |
+
 Sed ut perspiciatis unde omnis iste natus error sit `voluptatem` accusantium 
 doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
 veritatis et quasi `architecto` beatae vitae dicta sunt explicabo. Nemo enim ipsam

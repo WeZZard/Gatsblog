@@ -2,12 +2,12 @@ import React from 'react';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import styles from './SourceCode.module.scss'
+import { preToCodeBlock } from 'mdx-utils';
 
 const SourceCode = ({ codeString, language, ...props }) => {
-    const safeCoreString = codeString.replace(/\n/, '\n');
     if (props['react-live']) {
         return (
-            <LiveProvider code={safeCoreString} noInline={true}>
+            <LiveProvider code={codeString} noInline={true}>
                 <LiveEditor />
                 <LiveError />
                 <LivePreview />
@@ -16,7 +16,7 @@ const SourceCode = ({ codeString, language, ...props }) => {
     } else {
         defaultProps.theme = theme;
         return (
-            <Highlight {...defaultProps} code={safeCoreString} language={language}>
+            <Highlight {...defaultProps} code={codeString} language={language}>
                 {({
                     className,
                     style,

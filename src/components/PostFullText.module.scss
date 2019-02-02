@@ -1,22 +1,20 @@
 @import '../styles/document';
 @import '../styles/fonts';
 @import '../styles/colors';
+@import './HorizontalScroller.module.scss';
 
 .post {
-    @include document;
     margin-top: 4rem;
     margin-left: 5.5rem;
     margin-right: 5.5rem;
 
     .postHeader {
-        @include header;
-
         .postTitle {
             h1 {
                 font-family: $font-text-serif;
                 font-size: 4.4em;
                 font-weight: 300;
-                line-height: 1.32;
+                line-height: 1.18;
                 color: $color-content-headline-primary;
                 margin: 0;
             }
@@ -27,24 +25,184 @@
                 font-family: $font-text-serif;
                 font-size: 2.8em;
                 font-weight: 300;
-                line-height: 1.32;
+                line-height: 1.46;
                 color: $color-content-headline-secondary;
                 margin: 0;
-                margin-top: 1.2rem;
+                margin-top: 0.5rem;
             }
         }
     }
 
     .postCaption {
-        margin-top: 5.3rem;
+        margin-top: 4rem;
     }
 
     .postContent {
-        margin-top: 3.8rem;
+        margin-top: 4.1rem;
         margin-bottom: 4.1rem;
         font-size: 1.7em;
         font-family: $font-text-serif;
-        line-height: 2;
+        line-height: 1.7;
+
+        :first-child {
+            margin-top: 0;
+        }
+
+        :last-child {
+            margin-bottom: 0;
+        }
+
+        p {
+            margin: 0;
+            margin-top: 1.3rem;
+            margin-bottom: 1.3rem;
+            color: $color-content-body;
+        }
+
+        code {
+            font-family: $font-text-monospaced;
+            font-weight: 400;
+            font-size: 0.76em;
+            line-height: 2.23;
+            background-color: $color-content-code-block-background;
+            padding-left: 0.3rem;
+            padding-right: 0.3rem;
+            margin-left: 0.3rem;
+            margin-right: 0.3rem;
+            border-left: solid 2px $color-content-code-block-indicator;
+            border-right: solid 2px $color-content-code-block-indicator;
+            word-wrap: break-word;
+        }
+
+        :global {
+            .horizontalScroller {
+                margin-top: 4.5rem;
+                margin-bottom: 4.4rem;
+            }
+        }
+
+        h2 {
+            margin-top: 3.8rem;
+            margin-bottom: 0.3rem;
+        }
+
+        h3 {
+            margin-top: 3.2rem;
+            margin-bottom: -0.2rem;
+        }
+
+        h4 {
+            margin-top: 3.2rem;
+            margin-bottom: -0.2rem;
+        }
+
+        h5 {
+            margin-top: 3.2rem;
+            margin-bottom: -0.3rem;
+        }
+
+        h6 {
+            margin-top: 3.3rem;
+            margin-bottom: -0.2rem;
+        }
+
+        blockquote {
+            margin: 0;
+            margin-top: 5.3rem;
+            margin-bottom: 4.2rem;
+            padding: 0;
+            padding-left: 3.4rem;
+            padding-top: 1.1rem;
+            padding-bottom: 1rem;
+            border-left: 3px solid $color-content-quote-indicator;
+            border-collapse: collapse;
+            font-weight: bold;
+            font-style: italic;
+            color: $color-content-quote;
+        }
+
+        ul {
+            margin-top: 3.4rem;
+            margin-bottom: 3.4rem;
+            padding: 0;
+            list-style: none;
+            color: $color-content-body;
+
+            li {
+                margin-bottom: 0.6rem;
+                line-height: 1.7;
+
+                &::before {
+                    content: "\2022";
+                    color: $color-content-list-indicator-light;
+                    margin-left: 2.1rem;
+                    margin-right: 1.3rem;
+                }
+            }
+
+            ul, ol {
+                margin: 0;
+                margin-top: 0.6rem;
+                padding-left: 5.5rem;
+
+                &:first-child {
+                    margin-top: 0.6rem;
+                }
+            }
+        }
+
+        ol {
+            margin-top: 3.4rem;
+            margin-bottom: 3.4rem;
+            padding: 0;
+            list-style: none;
+            color: $color-content-body;
+
+            counter-reset: ordered-list;
+
+            li {
+                margin-bottom: 0.6rem;
+                line-height: 1.7;
+
+                &::before {
+                    counter-increment: ordered-list;
+                    content: counters(ordered-list, ".") " ";
+                    color: $color-content-list-indicator-dark;
+                    margin-left: 2.1rem;
+                    margin-right: 1.3rem;
+                    font-family: $font-text-monospaced;
+                    font-size: 0.88em;
+                }
+            }
+
+            ul, ol {
+                margin: 0;
+                margin-top: 0.6rem;
+                padding-left: 5.5rem;
+
+                &:first-child {
+                    margin-top: 0.6rem;
+                }
+            }
+        }
+
+        hr {
+            margin-top: 4.4rem;
+            margin-bottom: 4.5rem;
+            border: 0;
+            text-align: center;
+
+            &:before {
+                margin: auto;
+                display: inline-block;
+                content: ". . .";
+                position: relative;
+                top: -2.8rem;
+                font-size: 1.65em;
+                font-weight: 600;
+                color: $color-content-divider;
+            }
+        }
 
         a {
             text-decoration: underline;
@@ -62,204 +220,105 @@
             }
         }
 
-        p {
-            margin: 0;
-            margin-bottom: 4.2rem;
-            color: $color-content-body;
+        // Normalization for Adjacent Blocked Elements
+        pre + pre {
+            margin-top: 5.5rem;
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            margin: 0;
-            color: $color-content-heading;
-            font-family: $font-text-sans;
+        pre + :global(.horizontalScroller) {
+            margin-top: 5.5rem;
         }
 
-        h1 {
-            font-size: 2.35em;
-            font-weight: 200;
-            line-height: 1.375;
-            margin-bottom: 2.2rem;
+        pre + img {
+            margin-top: 5.5rem;
         }
 
-        h2 {
-            font-size: 1.88em;
-            font-weight: 300;
-            line-height: 1.1875;
-            margin-bottom: 2.7rem;
+        pre + blockquote {
+            margin-top: 5.5rem;
         }
 
-        h3 {
-            font-size: 1.53em;
-            font-weight: 400;
-            line-height: 1.19;
-            margin-bottom: 2.7rem;
-        }
-
-        h4 {
-            font-size: 1.41em;
-            font-weight: 400;
-            line-height: 1.21;
-            margin-bottom: 2.8rem;
-        }
-
-        h5 {
-            font-size: 1.17em;
-            font-weight: 500;
-            line-height: 1.2;
-            margin-bottom: 3rem;
-        }
-
-        h6 {
-            font-size: 0.88em;
-            font-weight: 600;
-            line-height: 1.2;
-            margin-bottom: 3.3rem;
-        }
-
-        code {
-            font-family: $font-text-monospaced;
-            font-weight: 400;
-            font-size: 0.88em;
-            line-height: 1.143;
-            background-color: $color-content-code-block-background;
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
-            border-bottom: solid 2px $color-content-code-block-indicator;
-            word-wrap: break-word;
-        }
-
-        ul {
-            margin: 0;
-            margin-bottom: 4.2rem;
-            padding: 0;
-            list-style: none;
-            color: $color-content-body;
-
-            li {
-                margin-bottom: 1.1rem;
-                line-height: 1.35;
-                text-decoration: none;
-
-                &::before {
-                    content: "\2022";
-                    color: $color-content-list-indicator-light;
-                    margin-left: 2.1rem;
-                    margin-right: 1.3rem;
-                }
-            }
-
-            ul, ol {
-                margin: 0;
-                margin-top: 1.1rem;
-                padding-left: 5.5rem;
-            }
-        }
-
-        ol {
-            margin: 0;
-            margin-bottom: 4.2rem;
-            padding: 0;
-            list-style: none;
-            color: $color-content-body;
-
-            counter-reset: ordered-list;
-
-            li {
-                margin-bottom: 1.1rem;
-                line-height: 1.35;
-
-                &::before {
-                    counter-increment: ordered-list;
-                    content: counters(ordered-list, ".") " ";
-                    color: $color-content-list-indicator-dark;
-                    margin-left: 2.1rem;
-                    margin-right: 1.3rem;
-                    font-family: $font-text-monospaced;
-                    font-size: 0.88em;
-                }
-            }
-
-            ul, ol {
-                margin: 0;
-                margin-top: 1.1rem;
-                padding-left: 5.5rem;
-            }
-        }
-
-        table {
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 4.2rem;
-            font-family: $font-text-sans;
-            border-collapse: collapse;
-
-            thead {
-                font-weight: 600;
-                border-top: 3px solid $color-content-table-separator;
-                border-bottom: 3px solid $color-content-table-separator;
-                color: $color-content-heading;
-
-                th {
-                    padding-left: 3.4rem;
-
-                    &:last-child {
-                        padding-right: 3.4rem;
-                    }
-                }
-            }
-
-            tbody {
-                font-weight: 300;
-                border-bottom: 3px solid $color-content-table-separator;
-                color: $color-content-body;
-
-                td {
-                    padding-left: 3.4rem;
-
-                    &:last-child {
-                        padding-right: 3.4rem;
-                    }
-                }
-            }
-
-            tr {
-                border-bottom: 1px solid $color-content-table-separator;
-            }
-        }
-
-        blockquote {
-            border-left: 3px solid $color-content-quote-indicator;
-            margin: 0;
-            margin-top: 5.3rem;
-            margin-bottom: 4.2rem;
-            padding-left: 3.4rem;
-            padding-top: 1.7rem;
-            padding-bottom: 1.9rem;
-            font-weight: 600;
-            font-style: italic;
-            color: $color-content-quote;
-        }
-
-        hr {
+        pre + hr {
             margin-top: 3.4rem;
-            margin-bottom: 3.5rem;
-            border: 0;
-            text-align: center;
-
-            &:before {
-                margin: auto;
-                display: inline-block;
-                content: ". . .";
-                position: relative;
-                top: -3.4rem;
-                font-size: 1.65em;
-                font-weight: 600;
-                color: $color-content-divider;
-            }
         }
 
-        :last-child {
-            margin-bottom: 0;
+        :global(.horizontalScroller) + pre {
+            margin-top: 5.5rem;
+        }
+
+        :global(.horizontalScroller) + :global(.horizontalScroller) {
+            margin-top: 5.5rem;
+        }
+
+        :global(.horizontalScroller) + img {
+            margin-top: 5.5rem;
+        }
+
+        :global(.horizontalScroller) + blockquote {
+            margin-top: 5.5rem;
+        }
+
+        :global(.horizontalScroller) + hr {
+            margin-top: 3.4rem;
+        }
+
+        img + pre {
+            margin-top: 5.5rem;
+        }
+
+        img + :global(.horizontalScroller) {
+            margin-top: 5.5rem;
+        }
+
+        img + img {
+            margin-top: 5.5rem;
+        }
+
+        img + blockquote {
+            margin-top: 5.5rem;
+        }
+
+        img + hr {
+            margin-top: 3.4rem;
+        }
+
+        blockquote + pre {
+            margin-top: 5.5rem;
+        }
+
+        blockquote + :global(.horizontalScroller) {
+            margin-top: 5.5rem;
+        }
+
+        blockquote + image {
+            margin-top: 5.5rem;
+        }
+
+        blockquote + blockquote {
+            margin-top: 5.5rem;
+        }
+
+        blockquote + hr {
+            margin-top: 3.4rem;
+        }
+
+        hr + pre {
+            margin-top: 5.5rem;
+        }
+
+        hr + :global(.horizontalScroller) {
+            margin-top: 5.5rem;
+        }
+
+        hr + img {
+            margin-top: 5.5rem;
+        }
+
+        hr + blockquote {
+            margin-top: 5.5rem;
+        }
+
+        hr + hr {
+            margin-top: 3.4rem;
         }
     }
 
