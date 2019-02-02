@@ -225,6 +225,10 @@
             margin-top: 5.5rem;
         }
 
+        pre + :global(span.katex-display) {
+            margin-top: 5.5rem;
+        }
+
         pre + :global(.horizontalScroller) {
             margin-top: 5.5rem;
         }
@@ -241,7 +245,35 @@
             margin-top: 3.4rem;
         }
 
+        :global(span.katex-display) + pre {
+            margin-top: 5.5rem;
+        }
+
+        :global(span.katex-display) + span.katex-display {
+            margin-top: 5.5rem;
+        }
+
+        :global(span.katex-display) + :global(.horizontalScroller) {
+            margin-top: 5.5rem;
+        }
+
+        :global(span.katex-display) + img {
+            margin-top: 5.5rem;
+        }
+
+        :global(span.katex-display) + blockquote {
+            margin-top: 5.5rem;
+        }
+
+        :global(span.katex-display) + hr {
+            margin-top: 5.5rem;
+        }
+
         :global(.horizontalScroller) + pre {
+            margin-top: 5.5rem;
+        }
+
+        :global(.horizontalScroller) + :global(span.katex-display) {
             margin-top: 5.5rem;
         }
 
@@ -265,6 +297,10 @@
             margin-top: 5.5rem;
         }
 
+        img + :global(span.katex-display) {
+            margin-top: 5.5rem;
+        }
+
         img + :global(.horizontalScroller) {
             margin-top: 5.5rem;
         }
@@ -285,6 +321,10 @@
             margin-top: 5.5rem;
         }
 
+        blockquote + :global(span.katex-display) {
+            margin-top: 5.5rem;
+        }
+
         blockquote + :global(.horizontalScroller) {
             margin-top: 5.5rem;
         }
@@ -302,6 +342,10 @@
         }
 
         hr + pre {
+            margin-top: 5.5rem;
+        }
+
+        hr + :global(span.katex-display) {
             margin-top: 5.5rem;
         }
 
