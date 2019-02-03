@@ -5,6 +5,18 @@ const {
 } = require('../createNode');
 const debug = require('debug');
 
+function MDXAccessoryInfo(args) {
+    const {
+        node,
+        actions,
+        getNode,
+        createNodeId,
+        createContentDigest,
+    } = args;
+
+    console.log(node.rawBody);
+}
+
 module.exports = (args) => {
     const {
         node,
@@ -20,6 +32,8 @@ module.exports = (args) => {
         const isPreviewEnabled = process.env.GATSBY_IS_PREVIEW_ENABLED || false;
 
         const metadata = new MDXMetadata(args);
+
+        const accessoryInfo = new MDXAccessoryInfo(args);
 
         if (isPreviewEnabled || metadata.isPublished) {
             switch (metadata.documentType) {

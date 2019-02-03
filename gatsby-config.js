@@ -39,9 +39,6 @@ module.exports = {
                 extensions: ['.mdx', '.md'],
                 gatsbyRemarkPlugins: [
                     {
-                        resolve: `gatsby-remark-smartypants`,
-                    },
-                    {
                         resolve: `gatsby-remark-katex`,
                     },
                 ],
