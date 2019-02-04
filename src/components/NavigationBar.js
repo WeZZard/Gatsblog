@@ -79,10 +79,16 @@ class NavigationBar extends React.Component {
                 ];
 
                 const components = navigationItems.map((navigationItem) => {
+                    const slugPattern = navigationItem.slug === '/'
+                        ? `^((${navigationItem.slug})|(/page-\\d+))$`
+                        : `^((${navigationItem.slug})|(${navigationItem.slug}/page-\\d+))$`;
+                    const slugRegex = new RegExp(slugPattern);
+                    const isSelected = selectedNavigationItem && slugRegex.exec(selectedNavigationItem.slug);
+
                     return <li key={navigationItem.slug}>
                         <NavigationItem
                             navigationItem={navigationItem}
-                            isSelected={selectedNavigationItem && navigationItem.slug === selectedNavigationItem.slug}
+                            isSelected={isSelected}
                         />
                     </li>
                 });
