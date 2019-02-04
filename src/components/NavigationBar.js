@@ -20,8 +20,6 @@ class NavigationBar extends React.Component {
     render() {
         const { selectedNavigationItem } = this.props;
 
-        console.log('selectedNavigationItem: ', selectedNavigationItem);
-
         return <StaticQuery
             query={_navigationQuery}
 

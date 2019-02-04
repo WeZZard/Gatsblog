@@ -1,29 +1,45 @@
 import React from "react"
+import { graphql } from 'gatsby'
 import Main from '../components/Main'
 import PostFullText from '../components/PostFullText'
 import MorePosts from '../components/MorePosts'
 
 class Post extends React.Component {
     render() {
-        const { pageContext } = this.props;
+        const { data } = this.props;
+
         const {
-            slug,
-            isLocalized,
-            lang,
+            config: {
+                site: {
+                    lang,
+                    license: defaultLicense,
+                },
+            },
             post,
-            earlier,
-            later,
-            tableOfContents,
-            defaultLicense,
-        } = pageContext;
+            earlierPostExcerpt,
+            laterPostExcerpt,
+        } = data;
 
-        const morePostsComponent = (earlier || later)
-            ? <MorePosts earlier={earlier} later={later}/>
+        const {
+            file: {
+                childMdx: {
+                    tableOfContents,
+                },
+            },
+        } = post;
+
+        /*
+        const morePostsComponent = (earlierPostExcerpt || laterPostExcerpt)
+            ? <MorePosts
+                earlierPostExcerpt={earlierPostExcerpt}
+                laterPostExcerpt={laterPostExcerpt}
+            />
             : null;
+        */
 
-        return <Main
-            tableOfContents={tableOfContents}
-            selectedNavigationItem={{slug: slug}}>
+        const morePostsComponent = null;
+
+        return <Main tableOfContents={tableOfContents}>
             <PostFullText post={post} defaultLicense={defaultLicense}/>
             {morePostsComponent}
         </Main>
@@ -31,3 +47,72 @@ class Post extends React.Component {
 }
 
 export default Post
+
+export const pageQuery = graphql`
+    query PostQuery($postId: String!, $earlierPostId: String, $laterPostId: String) {
+        config: configYaml {
+            site {
+                lang
+                license
+            }
+        }
+        post(id: {eq: $postId}) {
+            title
+            subtitle
+            isPublished
+            createdTime
+            lastModifiedTime
+            license
+            tags
+            category
+            accessories {
+                images {
+                    src {
+                        publicURL
+                        childImageSharp {
+                            fluid {
+                                ...GatsbyImageSharpFluid
+                                ...GatsbyImageSharpFluid_withWebp
+                            }
+                        }
+                    }
+                    alt
+                    title
+                }
+            }
+            file {
+                childMdx {
+                    code {
+                        body
+                        scope
+                    }
+                    tableOfContents
+                }
+            }
+        }
+        earlierPostExcerpt: post(id: {eq: $earlierPostId}) {
+            title
+            subtitle
+            createdTime
+            tags
+            category
+            file {
+                childMdx {
+                    excerpt(pruneLength: 300)
+                }
+            }
+        }
+        laterPostExcerpt: post(id: {eq: $laterPostId}) {
+            title
+            subtitle
+            createdTime
+            tags
+            category
+            file {
+                childMdx {
+                    excerpt(pruneLength: 300)
+                }
+            }
+        }
+    }
+`;

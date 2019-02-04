@@ -6,6 +6,10 @@ import PostMetadataItem from './PostMetadataItem'
 import CategoryLabel from './CategoryLabel'
 import TagsLabel from './TagsLabel'
 import TimeLabel from './TimeLabel'
+import FluidImage from './FluidImage'
+import Image from './Image'
+import Picture from './Picture'
+import Source from './Source'
 import License from './License';
 
 class PostFullText extends React.Component {
@@ -17,10 +21,37 @@ class PostFullText extends React.Component {
             createdTime,
             tags,
             category,
-            code,
+            file: {
+                childMdx: {
+                    code
+                },
+            },
             license
         } = post;
 
+        const createdTimeComponent = <TimeLabel dateTime={createdTime}/>;
+
+        const subtitleComponent = subtitle
+            ? <div className={styles.postSubtitle}><h2>{subtitle}</h2></div>
+            : null;
+
+        return <article className={styles.post}>
+            <header className={styles.postHeader}>
+                <div className={styles.postTitle}><h1>{title}</h1></div>
+                {subtitleComponent}
+                <div className={styles.postCaption}>
+                    <PostMetadataItem>{createdTimeComponent}</PostMetadataItem>
+                </div>
+            </header>
+            <section className={styles.postContent}>
+                <MDXRenderer scope={{Image, Picture, Source}}>{code.body}</MDXRenderer>
+            </section>
+            <footer className={styles.postFooter}>
+                <License license={license || defaultLicense} />
+            </footer>
+        </article>
+
+        /*
         const createdTimeComponent = <TimeLabel dateTime={createdTime}/>;
 
         const categoryComponent = <CategoryLabel category={category}/>;
@@ -48,6 +79,7 @@ class PostFullText extends React.Component {
                 <License license={license || defaultLicense} />
             </footer>
         </article>
+        */
     }
 }
 

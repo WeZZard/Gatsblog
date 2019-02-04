@@ -41,6 +41,13 @@ module.exports = {
                     {
                         resolve: `gatsby-remark-katex`,
                     },
+                    {
+                        resolve: `gatsby-remark-props-images`,
+                        options: {
+                            withWebp: true,
+                            maxWidth: 780,
+                        },
+                    },
                 ],
             },
         },

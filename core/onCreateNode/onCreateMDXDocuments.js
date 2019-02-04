@@ -1,21 +1,10 @@
 const MDXMetadata = require('../MDX/MDXMetadata');
+const MDXAccessoryInfo = require('../MDX/MDXAccessoryInfo');
 const {
     createNodeForPost,
     createNodeForPage,
 } = require('../createNode');
 const debug = require('debug');
-
-function MDXAccessoryInfo(args) {
-    const {
-        node,
-        actions,
-        getNode,
-        createNodeId,
-        createContentDigest,
-    } = args;
-
-    console.log(node.rawBody);
-}
 
 module.exports = (args) => {
     const {
@@ -33,7 +22,7 @@ module.exports = (args) => {
 
         const metadata = new MDXMetadata(args);
 
-        const accessoryInfo = new MDXAccessoryInfo(args);
+        const accessories = new MDXAccessoryInfo(args);
 
         if (isPreviewEnabled || metadata.isPublished) {
             switch (metadata.documentType) {
@@ -53,8 +42,11 @@ module.exports = (args) => {
                             lang: metadata.lang,
                             isLocalized: metadata.isLocalized,
                             license: metadata.license,
+                            file: metadata.fileName,
+                            accessories,
                         },
-                        relativePath: metadata.relativePath,
+                        nodeIdBase: metadata.relativePath,
+                        nodeContent: node.rawBody,
                         getNode,
                         createNode,
                         createNodeId,
@@ -77,8 +69,11 @@ module.exports = (args) => {
                             lang: metadata.lang,
                             isLocalized: metadata.isLocalized,
                             license: metadata.license,
+                            file: metadata.fileName,
+                            accessories,
                         },
-                        relativePath: metadata.relativePath,
+                        nodeIdBase: metadata.relativePath,
+                        nodeContent: node.rawBody,
                         getNode,
                         createNode,
                         createNodeId,

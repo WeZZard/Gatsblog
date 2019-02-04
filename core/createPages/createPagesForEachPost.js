@@ -20,19 +20,10 @@ module.exports = async (args) => {
             allPost(sort: { fields: [createdTime], order: DESC }) {
                 edges {
                     node {
-                        title
-                        subtitle
-                        isPublished
-                        createdTime
-                        lastModifiedTime
-                        documentIdentifier
-                        license
+                        id
                         slug
                         lang
                         isLocalized
-                        parent {
-                            id
-                        }
                     }
                 }
             }
@@ -49,83 +40,36 @@ module.exports = async (args) => {
 
     await Promise.all(
         posts.map( async (postNode, index) => {
-            const postPayload = await makePostPayload({
-                post: postNode,
-                tags,
-                categories,
-                graphql,
-                style: 'FullText',
-            });
+            const earlierPost = (index - 1 >= 0) ? posts[index - 1] : null;
 
-            let earlierPostPayload = null;
-            if (index - 1 >= 0) {
-                const earlierPost = posts[index - 1];
-                earlierPostPayload = await makePostPayload({
-                    post: earlierPost,
-                    tags,
-                    categories,
-                    graphql,
-                    style: 'Excerpt',
-                })
-            }
+            const laterPost = (index + 1 < posts.length) ? posts[index + 1] : null;
 
-            let laterPostPayload = null;
-            if (index + 1 < posts.length) {
-                const laterPost = posts[index + 1];
-                laterPostPayload  = await makePostPayload({
-                    post: laterPost,
-                    tags,
-                    categories,
-                    graphql,
-                    style: 'Excerpt',
-                })
-            }
-
-            let localeSlug = postNode.node.isLocalized
+            const localeSlug = postNode.node.isLocalized
                 ? `/${postNode.node.lang}`
                 : '';
 
-            let path = [localeSlug, postNode.node.slug].filter(_ => _).join('');
+            const originalPath = [localeSlug, postNode.node.slug].filter(_ => _).join('');
 
-            console.log(`Create page for post: ${path}.`);
-
-            const lang = (postNode.node.lang && postNode.node.lang.identifier) || siteLang;
-
-            createPage({
-                path: path,
-                component: Template,
-                context: {
-                    slug: path,
-                    isLocalized: postNode.node.isLocalized,
-                    lang: lang,
-                    post: postPayload,
-                    earlier: earlierPostPayload,
-                    later: laterPostPayload,
-                    tableOfContents: postPayload.tableOfContents,
-                    defaultLicense: defaultLicense,
-                },
-            });
+            let paths = [originalPath];
 
             if (!postNode.node.isLocalized && postNode.node.lang) {
-                let localizedPath = `/${postNode.node.lang}/${postNode.node.slug}`;
+                const localizedPath = `/${postNode.node.lang}/${postNode.node.slug}`;
+                paths.push(localizedPath);
+            }
 
-                console.log(`Create localized page for post: ${localizedPath}`);
+            paths.forEach(path => {
+                console.log(`Create page for post: ${path}.`);
 
                 createPage({
-                    path: localizedPath,
+                    path: path,
                     component: Template,
                     context: {
-                        slug: localizedPath,
-                        isLocalized: postNode.node.isLocalized,
-                        lang: postNode.node.lang.identifier,
-                        post: postPayload,
-                        earlier: earlierPostPayload,
-                        later: laterPostPayload,
-                        tableOfContents: postPayload.tableOfContents,
-                        defaultLicense: defaultLicense,
+                        postId: postNode.node.id,
+                        earlierPostId: (earlierPost && earlierPost.node.id) || null,
+                        laterPostId: (laterPost && laterPost.node.id) || null,
                     },
                 });
-            }
+            });
         })
     );
 };

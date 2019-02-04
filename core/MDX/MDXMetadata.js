@@ -10,6 +10,7 @@ module.exports = function (args) {
     {
         documentType: string('Post', 'Page')
         documentIdentifier: string
+        fileName: string
         title: string
         subtitle: string
         isIndex: bool
@@ -68,6 +69,8 @@ module.exports = function (args) {
         metadata.slug = relativePathMetadata.slug;
 
         metadata.relativePath = relativePath;
+
+        metadata.fileName = relativePathMetadata.fileName;
 
         metadata.license = node.frontmatter.license || '';
 

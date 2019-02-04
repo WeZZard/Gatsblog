@@ -21,7 +21,7 @@ const components = {
     table: props => <Table {...props}/>,
     img: props => {
         console.log('img: ', props);
-        return <img {...props}/>;
+        return <img {...props}/>
     },
     h1: props => <Heading level={1} {...props}/>,
     h2: props => <Heading level={2} {...props}/>,

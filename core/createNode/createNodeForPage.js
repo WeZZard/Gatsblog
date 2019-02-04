@@ -4,7 +4,8 @@ module.exports = function (args) {
     const {
         parent,
         page,
-        relativePath,
+        nodeIdBase,
+        nodeContent,
         getNode,
         createNode,
         createNodeId,
@@ -12,15 +13,15 @@ module.exports = function (args) {
         createParentChildLink
     } = args;
 
-    const nodeId = createNodeId(`page-${relativePath}`);
+    const nodeId = createNodeId(`page-${nodeIdBase}`);
     const nodeData = Object.assign({}, page, {
         id: nodeId,
         parent: parent,
         children: [],
         internal: {
             type: `Page`,
-            content: relativePath,
-            contentDigest: createContentDigest(relativePath),
+            content: nodeContent,
+            contentDigest: createContentDigest(nodeContent),
         },
     });
 
