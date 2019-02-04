@@ -15,6 +15,18 @@ const getStyleForLevel = (level) => {
     }
 };
 
+const getGlobalStyleForLevel = (level) => {
+    switch (level) {
+        case 1: return 'h1';
+        case 2: return 'h2';
+        case 3: return 'h3';
+        case 4: return 'h4';
+        case 5: return 'h5';
+        case 6: return 'h6';
+        default: throw `Invalid level of heading: ${level}.`
+    }
+};
+
 const getHeadingForLevel = (level) => {
     return `h${level}`;
 };
@@ -27,7 +39,8 @@ class Heading extends React.Component {
         const name = `${_.kebabCase(children)}`;
         const H = getHeadingForLevel(level);
         const style = getStyleForLevel(level);
-        const headingStyles = [styles.heading, style].join(' ');
+        const globalStyle = getGlobalStyleForLevel(level);
+        const headingStyles = ['heading', globalStyle, style].join(' ');
 
         return <H id={name} className={headingStyles} children={children}/>
     }

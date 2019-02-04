@@ -2,49 +2,50 @@
 @import '../styles/fonts';
 
 @mixin heading {
-    margin: 0;
+    margin-left: 0;
+    margin-right: 0;
     color: $color-content-heading;
     font-family: $font-text-sans;
 }
 
 .h1 {
     @include heading;
-    font-size: call(3.9em * 10 / 17);
-    font-weight: 200;
-    line-height: 1.08;
+    font-size: calc(3.2em * 10 / 17);
+    font-weight: 400;
+    line-height: calc(42 / 32);
 }
 
 .h2 {
     @include heading;
-    font-size: call(3em * 10 / 17);
-    font-weight: 300;
-    line-height: 1.17;
+    font-size: calc(2.6em * 10 / 17);
+    font-weight: 500;
+    line-height: calc(37 / 26);
 }
 
 .h3 {
     @include heading;
-    font-size: call(2.4em * 10 / 17);
-    font-weight: 400;
-    line-height: 1.79;
+    font-size: calc(2.1em * 10 / 17);
+    font-weight: 600;
+    line-height: calc(34 / 21);
 }
 
 .h4 {
     @include heading;
-    font-size: call(2em * 10 / 17);
-    font-weight: 400;
-    line-height: 2;
+    font-size: calc(1.9em * 10 / 17);
+    font-weight: 600;
+    line-height: calc(32 / 19);
 }
 
 .h5 {
     @include heading;
-    font-size: call(1.8em * 10 / 17);
-    line-height: 2.17;
-    font-weight: 400;
+    font-size: calc(1.7em * 10 / 17);
+    font-weight: 700;
+    line-height: calc(31 / 17);
 }
 
 .h6 {
     @include heading;
-    font-size: call(1.6em * 10 / 17);
-    font-weight: 600;
-    line-height: 2;
+    font-size: calc(1.5em * 10 / 17);
+    font-weight: 800;
+    line-height: calc(30 / 15);
 }
