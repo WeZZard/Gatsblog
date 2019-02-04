@@ -72,7 +72,10 @@ const pToPicture = (pProps) => {
         pProps.children.type === 'picture'
         )
     {
-        return { children: pProps.children }
+        return {
+            children: pProps.children.children,
+            ...pProps.children.props
+        }
     }
 };
 

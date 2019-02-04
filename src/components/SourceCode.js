@@ -24,7 +24,7 @@ const SourceCode = ({ codeString, language, ...props }) => {
                     getLineProps,
                     getTokenProps,
                 }) => (
-                    <pre className={[className, styles.sourceCode, 'lineTop', 'lineBottom'].join(" ")} style={style}>
+                    <pre className={[className, styles.sourceCode, 'geometryBlockTop', 'geometryBlockBottom'].join(" ")} style={style}>
                         <div aria-hidden={'true'} className={styles.lineNumberList}>
                             {tokens.map((_, lineNumber) => (
                                 <div aria-hidden={'true'} key={lineNumber} className={styles.lineNumber}/>
