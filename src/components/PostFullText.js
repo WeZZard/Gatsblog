@@ -6,10 +6,6 @@ import PostMetadataItem from './PostMetadataItem'
 import CategoryLabel from './CategoryLabel'
 import TagsLabel from './TagsLabel'
 import TimeLabel from './TimeLabel'
-import FluidImage from './FluidImage'
-import Image from './Image'
-import Picture from './Picture'
-import Source from './Source'
 import License from './License';
 
 class PostFullText extends React.Component {
@@ -44,7 +40,7 @@ class PostFullText extends React.Component {
                 </div>
             </header>
             <section className={styles.postContent}>
-                <MDXRenderer scope={{Image, Picture, Source}}>{code.body}</MDXRenderer>
+                <MDXRenderer>{code.body}</MDXRenderer>
             </section>
             <footer className={styles.postFooter}>
                 <License license={license || defaultLicense} />

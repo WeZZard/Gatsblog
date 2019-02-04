@@ -53,9 +53,8 @@
         }
 
         p {
-            margin: 0;
-            margin-top: 1.3rem;
-            margin-bottom: 1.3rem;
+            margin-left: 0;
+            margin-right: 0;
             color: $color-content-body;
         }
 
@@ -107,9 +106,8 @@
         }
 
         blockquote {
-            margin: 0;
-            margin-top: 5.3rem;
-            margin-bottom: 4.2rem;
+            margin-left: 0;
+            margin-right: 0;
             padding: 0;
             padding-left: 3.4rem;
             padding-top: 1.1rem;
@@ -122,8 +120,6 @@
         }
 
         ul {
-            margin-top: 3.4rem;
-            margin-bottom: 3.4rem;
             padding: 0;
             list-style: none;
             color: $color-content-body;
@@ -152,8 +148,6 @@
         }
 
         ol {
-            margin-top: 3.4rem;
-            margin-bottom: 3.4rem;
             padding: 0;
             list-style: none;
             color: $color-content-body;
@@ -187,8 +181,6 @@
         }
 
         hr {
-            margin-top: 4.4rem;
-            margin-bottom: 4.5rem;
             border: 0;
             text-align: center;
 
@@ -218,151 +210,6 @@
                 color: $color-hover;
                 transition: color 0.3s ease-in-out;
             }
-        }
-
-        // Normalization for Adjacent Blocked Elements
-        pre + pre {
-            margin-top: 5.5rem;
-        }
-
-        pre + :global(span.katex-display) {
-            margin-top: 5.5rem;
-        }
-
-        pre + :global(.horizontalScroller) {
-            margin-top: 5.5rem;
-        }
-
-        pre + img {
-            margin-top: 5.5rem;
-        }
-
-        pre + blockquote {
-            margin-top: 5.5rem;
-        }
-
-        pre + hr {
-            margin-top: 3.4rem;
-        }
-
-        :global(span.katex-display) + pre {
-            margin-top: 5.5rem;
-        }
-
-        :global(span.katex-display) + span.katex-display {
-            margin-top: 5.5rem;
-        }
-
-        :global(span.katex-display) + :global(.horizontalScroller) {
-            margin-top: 5.5rem;
-        }
-
-        :global(span.katex-display) + img {
-            margin-top: 5.5rem;
-        }
-
-        :global(span.katex-display) + blockquote {
-            margin-top: 5.5rem;
-        }
-
-        :global(span.katex-display) + hr {
-            margin-top: 5.5rem;
-        }
-
-        :global(.horizontalScroller) + pre {
-            margin-top: 5.5rem;
-        }
-
-        :global(.horizontalScroller) + :global(span.katex-display) {
-            margin-top: 5.5rem;
-        }
-
-        :global(.horizontalScroller) + :global(.horizontalScroller) {
-            margin-top: 5.5rem;
-        }
-
-        :global(.horizontalScroller) + img {
-            margin-top: 5.5rem;
-        }
-
-        :global(.horizontalScroller) + blockquote {
-            margin-top: 5.5rem;
-        }
-
-        :global(.horizontalScroller) + hr {
-            margin-top: 3.4rem;
-        }
-
-        img + pre {
-            margin-top: 5.5rem;
-        }
-
-        img + :global(span.katex-display) {
-            margin-top: 5.5rem;
-        }
-
-        img + :global(.horizontalScroller) {
-            margin-top: 5.5rem;
-        }
-
-        img + img {
-            margin-top: 5.5rem;
-        }
-
-        img + blockquote {
-            margin-top: 5.5rem;
-        }
-
-        img + hr {
-            margin-top: 3.4rem;
-        }
-
-        blockquote + pre {
-            margin-top: 5.5rem;
-        }
-
-        blockquote + :global(span.katex-display) {
-            margin-top: 5.5rem;
-        }
-
-        blockquote + :global(.horizontalScroller) {
-            margin-top: 5.5rem;
-        }
-
-        blockquote + image {
-            margin-top: 5.5rem;
-        }
-
-        blockquote + blockquote {
-            margin-top: 5.5rem;
-        }
-
-        blockquote + hr {
-            margin-top: 3.4rem;
-        }
-
-        hr + pre {
-            margin-top: 5.5rem;
-        }
-
-        hr + :global(span.katex-display) {
-            margin-top: 5.5rem;
-        }
-
-        hr + :global(.horizontalScroller) {
-            margin-top: 5.5rem;
-        }
-
-        hr + img {
-            margin-top: 5.5rem;
-        }
-
-        hr + blockquote {
-            margin-top: 5.5rem;
-        }
-
-        hr + hr {
-            margin-top: 3.4rem;
         }
     }
 

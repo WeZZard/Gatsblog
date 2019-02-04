@@ -162,7 +162,7 @@ module.exports = function (args, pluginOptions) {
               alt = overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt;
               title = node.title ? node.title : "";
 
-              imageTag = (`<Image alt="` + alt + `" title="` + title + `" src="` + fallbackSrc + `" srcset="` + srcSet + `" sizes="` + fluidResult.sizes + `"/>`).trim();
+              imageTag = (`<img alt="` + alt + `" title="` + title + `" src="` + fallbackSrc + `" srcset="` + srcSet + `" sizes="` + fluidResult.sizes + `"/>`).trim();
 
               // if options.withWebp is enabled, generate a webp version and change the image tag to a picture tag
 
@@ -192,7 +192,7 @@ module.exports = function (args, pluginOptions) {
               return _context.abrupt("return", resolve());
 
             case 33:
-              imageTag = (`<Picture><Source srcset="` + webpFluidResult.srcSet + `" sizes="` + webpFluidResult.sizes + `" type="` + webpFluidResult.srcSetType + `"/><Source srcset="` + srcSet + `" sizes="` + fluidResult.sizes + `" type="` + fluidResult.srcSetType + `"/><Image src="` + fallbackSrc + `" alt="` + alt + `" title="` + title + `"/></Picture>`).trim();
+              imageTag = (`<picture><source srcset="` + webpFluidResult.srcSet + `" sizes="` + webpFluidResult.sizes + `" type="` + webpFluidResult.srcSetType + `"/><source srcset="` + srcSet + `" sizes="` + fluidResult.sizes + `" type="` + fluidResult.srcSetType + `"/><img src="` + fallbackSrc + `" alt="` + alt + `" title="` + title + `"/></picture>`).trim();
 
             case 34:
               ratio = 1 / fluidResult.aspectRatio * 100 + "%"; // Construct new image node w/ aspect ratio placeholder

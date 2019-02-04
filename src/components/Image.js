@@ -6,5 +6,5 @@ export default (props) => {
         alt,
         srcSet
     } = props;
-    return <img src={src} alt={alt} srcSet={srcSet}/>
+    return <img className={'geometryBlockTop geometryBlockBottom'} src={src} alt={alt} srcSet={srcSet}/>
 }

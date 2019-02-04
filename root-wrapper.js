@@ -3,6 +3,14 @@ import { MDXProvider } from '@mdx-js/tag'
 import SourceCode from './src/components/SourceCode'
 import Heading from './src/components/Heading'
 import Table from './src/components/Table'
+import FluidImage from './src/components/FluidImage'
+import Image from './src/components/Image'
+import Picture from './src/components/Picture'
+import Paragraph from './src/components/Paragraph'
+import UnorderedList from './src/components/UnorderedList'
+import OrderedList from './src/components/OrderedList'
+import Blockquote from './src/components/Blockquote'
+import Separator from './src/components/Separator'
 import { preToCodeBlock } from 'mdx-utils'
 
 // components is its own object outside of render so that the references to
@@ -15,14 +23,25 @@ const components = {
             return <SourceCode {...codeBlock} />
         } else {
             // it's possible to have a pre without a code in it
-            return  <pre {...props} />
+            return  <pre className={'lineTop lineBottom'} {...props} />
         }
     },
-    table: props => <Table {...props}/>,
-    img: props => {
-        console.log('img: ', props);
-        return <img {...props}/>
+    p: props => {
+        const image = pToImage(props);
+        if (image) {
+            return <Image {...image}/>
+        }
+        const picture = pToPicture(props);
+        if (picture) {
+            return <Picture {...picture}/>
+        }
+        return <Paragraph {...props}/>
     },
+    table: props => <Table {...props}/>,
+    blockquote: props => <Blockquote {...props}/>,
+    hr: props => <Separator {...props}/>,
+    ol: props => <OrderedList {...props}/>,
+    ul: props => <UnorderedList {...props}/>,
     h1: props => <Heading level={1} {...props}/>,
     h2: props => <Heading level={2} {...props}/>,
     h3: props => <Heading level={3} {...props}/>,
@@ -34,6 +53,28 @@ const components = {
 export default ({ element }) => (
     <MDXProvider components={components}>{element}</MDXProvider>
 );
+
+const pToImage = (pProps) => {
+    if (
+        pProps.children &&
+        pProps.children.type &&
+        pProps.children.type === 'img'
+        )
+    {
+        return { ...pProps.children.props }
+    }
+};
+
+const pToPicture = (pProps) => {
+    if (
+        pProps.children &&
+        pProps.children.type &&
+        pProps.children.type === 'picture'
+        )
+    {
+        return { children: pProps.children }
+    }
+};
 
 const pToMathBlock = (pProps) => {
     if (

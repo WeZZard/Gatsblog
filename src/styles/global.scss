@@ -20,7 +20,6 @@ span.katex-display {
     overflow-x: scroll;
 }
 
-
 p {
     span.katex {
         margin: 0;
@@ -34,4 +33,32 @@ p {
         background-color: $color-content-math-block-background;
         border-bottom: solid 2px $color-content-math-block-indicator;
     }
+}
+
+.textParagraphTop {
+    margin-top: 1.3rem;
+}
+
+.textParagraphBottom {
+    margin-bottom: 1.3rem;
+}
+
+.textBlockTop {
+    margin-top: 3.9rem;
+}
+
+.textBlockBottom {
+    margin-bottom: 3.4rem;
+}
+
+.geometryBlockTop {
+    margin-top: 4.5rem;
+}
+
+.geometryBlockBottom {
+    margin-bottom: 4.4rem;
+}
+
+.geometryBlockBottom + .geometryBlockTop {
+    margin-top: 5.5rem;
 }

@@ -7,7 +7,7 @@ import { preToCodeBlock } from 'mdx-utils';
 const SourceCode = ({ codeString, language, ...props }) => {
     if (props['react-live']) {
         return (
-            <LiveProvider code={codeString} noInline={true}>
+            <LiveProvider className={'geometryBlockTop geometryBlockBottom'} code={codeString} noInline={true}>
                 <LiveEditor />
                 <LiveError />
                 <LivePreview />
@@ -24,7 +24,7 @@ const SourceCode = ({ codeString, language, ...props }) => {
                     getLineProps,
                     getTokenProps,
                 }) => (
-                    <pre className={[className, styles.sourceCode].join(" ")} style={style}>
+                    <pre className={[className, styles.sourceCode, 'lineTop', 'lineBottom'].join(" ")} style={style}>
                         <div aria-hidden={'true'} className={styles.lineNumberList}>
                             {tokens.map((_, lineNumber) => (
                                 <div aria-hidden={'true'} key={lineNumber} className={styles.lineNumber}/>
