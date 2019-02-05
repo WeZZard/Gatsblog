@@ -2,9 +2,25 @@ import React from 'react';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import styles from './SourceCode.module.scss'
-import { preToCodeBlock } from 'mdx-utils';
 
-const SourceCode = ({ codeString, language, ...props }) => {
+const Codes = ({ tokens, getLineProps, getTokenProps }) => {
+    return <React.Fragment>
+        <div aria-hidden={'true'} className={styles.lineNumberList}>
+            {tokens.map((_, lineNumber) => (
+                <div aria-hidden={'true'} key={lineNumber} className={styles.lineNumber}/>))}
+        </div>
+        <div className={styles.codeContent}>
+            {tokens.map((line, lineNumber) => (
+                <div {...getLineProps({ line, key: lineNumber })} className={styles.line}>
+                    {line.map((token, key) => (
+                        <span {...getTokenProps({ token, key })} className={styles.token} />))}
+                </div>
+            ))}
+        </div>
+    </React.Fragment>
+};
+
+export default ({ codeString, language, ...props }) => {
     if (props['react-live']) {
         return (
             <LiveProvider className={'geometryBlockTop geometryBlockBottom'} code={codeString} noInline={true}>
@@ -15,30 +31,40 @@ const SourceCode = ({ codeString, language, ...props }) => {
         );
     } else {
         defaultProps.theme = theme;
+
+        const path = props['path'];
+
+        const languageClass = language
+            ? styles.languageSpecified
+            : styles.languageUnspecified;
+
+        const pathLabel = path
+            ? <div key={'path'} className={styles.sourceCodePath}>{path}</div>
+            : null;
+
+        const languageLabel = language
+            ? <div key={'language'} className={[styles.sourceCodeLanguage, `language-${language}`].join(' ')}>{language}</div>
+            : null;
+
+        const sourceCodeMetadataLabels = [pathLabel, languageLabel]
+            .filter(_ => _);
+
+        const sourceCodeMetadata = sourceCodeMetadataLabels.length > 0
+            ? <React.Fragment>{sourceCodeMetadataLabels}</React.Fragment>
+            : null;
+
         return (
             <Highlight {...defaultProps} code={codeString} language={language}>
-                {({
-                    className,
-                    style,
-                    tokens,
-                    getLineProps,
-                    getTokenProps,
-                }) => (
-                    <pre className={[className, styles.sourceCode, 'geometryBlockTop', 'geometryBlockBottom'].join(" ")} style={style}>
-                        <div aria-hidden={'true'} className={styles.lineNumberList}>
-                            {tokens.map((_, lineNumber) => (
-                                <div aria-hidden={'true'} key={lineNumber} className={styles.lineNumber}/>
-                            ))}
-                        </div>
-                        <div className={styles.codeContent}>
-                            {tokens.map((line, lineNumber) => (
-                                <div {...getLineProps({ line, key: lineNumber })} className={styles.line}>
-                                    {line.map((token, key) => (
-                                        <span {...getTokenProps({ token, key })} className={styles.token} />
-                                    ))}
-                                </div>
-                            ))}
-                        </div>
+                {({ className, style, tokens, getLineProps, getTokenProps }) => (
+                    <pre className={[className, styles.sourceCode, languageClass, 'geometryBlockTop', 'geometryBlockBottom'].join(' ')} style={style}>
+                        {sourceCodeMetadata}
+                        <code className={[styles.codeBlock, languageClass].join(' ')}>
+                            <Codes
+                                tokens={tokens}
+                                getLineProps={getLineProps}
+                                getTokenProps={getTokenProps}
+                            />
+                        </code>
                     </pre>
                 )}
             </Highlight>
@@ -252,5 +278,3 @@ var theme = {
         },
     ]
 };
-
-export default SourceCode;

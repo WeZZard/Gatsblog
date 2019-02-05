@@ -171,6 +171,8 @@ minus `id quod maxime` `placeat` facere
      +- `YEAR`-`MONTH`-`DAY`T`HOUR`_`MINUTE`Z-standalone-post-2.md
      |
      +- `YEAR`-`MONTH`-`DAY`T`HOUR`_`MINUTE`Z`+/-``HOUR``MINUTE`-standalone-post-3.md
+     |
+     +- `YEAR`-`MONTH`-`DAY`T`HOUR`_`MINUTE`Z`+/-``HOUR``MINUTE`-yet-another-standalone-post.md
 ```
 
 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 

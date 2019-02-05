@@ -3,65 +3,184 @@
 
 .sourceCode {
     display: flex;
-    flex-direction: row;
-
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
     font-family: $font-text-monospaced;
-    font-size: 0.824em;
+    font-size: calc(14em / 17);
     font-weight: 400;
-    line-height: 2.07;
-    padding-top: 1.9rem;
-    padding-bottom: 1.8rem;
-    padding-left: 2.1rem;
-    padding-right: 2.1rem;
+    line-height: calc(29 / 14);
+    padding: 0;
     margin-top: 4.5rem;
     margin-bottom: 4.9rem;
     margin-left: -2.1rem;
     margin-right: -2.1rem;
-
     background-color: $color-content-code-block-background;
-    overflow-x: scroll;
 
-    .lineNumberList {
-        display: inline-block;
+    .sourceCodePath {
+        display: block;
+        font-size: calc(13em / 14);
+        line-height: 1;
+        width: calc(100% - 4.2rem);
+        padding: 0;
+        padding-top: 1.9rem;
+        padding-bottom: 1rem;
+        padding-left: 2.1rem;
+        padding-right: 2.1rem;
         margin: 0;
-        counter-reset: codeblock;
-
-        .lineNumber {
-            user-select: none;
-            -moz-user-select: none;
-            -webkit-user-select: none;
-            margin-bottom: 0;
-
-            &:last-child {
-                margin-bottom: 0;
-            }
-
-            &::before {
-                counter-increment: codeblock;
-                content: counter(codeblock);
-                color: $color-content-code-block-line-number;
-                margin-right: 2.1rem;
-                text-align: right;
-            }
-        }
-    }
-
-    .codeContent {
-        display: inline-block;
-        margin: 0;
-        padding-right: 3.4rem;
+        overflow-x: scroll;
+        border-bottom: 1px solid $color-content-code-block-indicator;
         color: $color-content-body;
+    }
 
-        .line {
-            margin-bottom: 0;
+    .sourceCodeLanguage {
+        display: block;
+        font-family: $font-text-monospaced;
+        font-size: calc(11em / 14);
+        line-height: 1;
+        font-weight: 600;
+        margin-left: 0;
+        margin-top: -0.1rem;
+        margin-bottom: 0;
+        margin-right: 2.1rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.6rem;
+        padding-left: 0.8rem;
+        padding-right: 0.8rem;
+        background-color: $color-theme;
+        color: $color-ui-nav-headline-normal;
+        border-bottom-left-radius: 7px;
+        border-bottom-right-radius: 7px;
+        text-transform: uppercase;
+        right: 2.1rem;
+    }
 
-            &:last-child {
+    .codeBlock {
+        align-self: flex-start;
+        display: flex;
+        padding-top: 1rem;
+        padding-left: 2.1rem;
+        padding-right: 2.1rem;
+        width: calc(100% - 4.2rem);
+
+        .lineNumberList {
+            flex-grow: 0;
+            flex-shrink: 0;
+            margin: 0;
+            counter-reset: codeblock;
+
+            .lineNumber {
+                user-select: none;
+                -moz-user-select: none;
+                -webkit-user-select: none;
                 margin-bottom: 0;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+
+                &::before {
+                    counter-increment: codeblock;
+                    content: counter(codeblock);
+                    color: $color-content-code-block-line-number;
+                    margin-right: 2.1rem;
+                    text-align: right;
+                }
             }
+        }
 
-            .token {
+        .codeContent {
+            flex-grow: 1;
+            flex-shrink: 1;
+            margin: 0;
+            padding-right: 3.4rem;
+            color: $color-content-body;
+            overflow-x: scroll;
 
+            .line {
+                margin-bottom: 0;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+
+                .token {
+
+                }
             }
         }
     }
+
+    .codeBlock.languageUnspecified {
+        padding-top: 2.3rem;
+        padding-bottom: 2.4rem;
+    }
+
+    .codeBlock.languageSpecified {
+        margin-top: -0.1rem;
+        padding-top: 0;
+        padding-bottom: 2.4rem;
+    }
+}
+
+.sourceCodeLanguage:global(.language-swift) {
+    background-color: #ff6b28;
+    color: #fff;
+}
+
+.sourceCodeLanguage:global(.language-javascript) {
+    background-color: #f7df1e;
+}
+
+.sourceCodeLanguage:global(.language-js) {
+    background-color: #f7df1e;
+}
+
+.sourceCodeLanguage:global(.language-jsx) {
+    background-color: #61dafb;
+}
+
+.sourceCodeLanguage:global(.language-graphql) {
+    background-color: #E10098;
+    color: #fff;
+}
+
+.sourceCodeLanguage:global(.language-html) {
+    background-color: #005A9C;
+    color: #fff;
+}
+
+.sourceCodeLanguage:global(.language-css) {
+    background-color: #ff9800;
+    color: #fff;
+}
+
+.sourceCodeLanguage:global(.language-shell),
+.sourceCodeLanguage:global(.language-sh),
+.sourceCodeLanguage:global(.language-bash) {
+
+}
+
+.sourceCodeLanguage:global(.language-yaml) {
+    background-color: #ffa8df;
+}
+
+.sourceCodeLanguage:global(.language-markdown) {
+}
+
+.sourceCodeLanguage:global(.language-json),
+.sourceCodeLanguage:global(.language-json5) {
+    background-color: linen;
+}
+
+.sourceCodeLanguage:global(.language-diff) {
+    background-color: #e6ffed;
+}
+
+.sourceCodeLanguage:global(.language-text) {
+    background-color: #fff;
+}
+
+.sourceCodeLanguage:global(.language-flow) {
+    background-color: #E8BD36;
 }
