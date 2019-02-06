@@ -6,6 +6,7 @@ test('MDXRelativePathMetadata creates metadata for standalone root Page relative
         documentIdentifier: `page-name`,
         isIndex: false,
         slug: `/page-name`,
+        inlineFileLink: 'page-name.md',
         isLocalized: false,
     });
 });
@@ -16,6 +17,7 @@ test('MDXRelativePathMetadata creates metadata for standalone root Page relative
         documentIdentifier: `page-name`,
         isIndex: false,
         slug: `/page-name`,
+        inlineFileLink: 'Page-Name.md',
         isLocalized: false,
     });
 });
@@ -28,6 +30,7 @@ test('MDXRelativePathMetadata creates metadata for standalone non-root Page rela
         documentIdentifier: `folder/page-name`,
         isIndex: false,
         slug: `/folder/page-name`,
+        inlineFileLink: 'page-name.md',
         isLocalized: false,
     });
 });
@@ -40,6 +43,7 @@ test('MDXRelativePathMetadata creates metadata for standalone non-root Page rela
         documentIdentifier: `folder/page-name`,
         isIndex: false,
         slug: `/folder/page-name`,
+        inlineFileLink: 'Page-Name.md',
         isLocalized: false,
     });
 });
@@ -52,6 +56,7 @@ test('MDXRelativePathMetadata creates metadata for wrapped root Page relative pa
         documentIdentifier: `page-name`,
         isIndex: true,
         slug: `/page-name`,
+        inlineFileLink: 'index.md',
         isLocalized: false,
     });
 });
@@ -64,6 +69,7 @@ test('MDXRelativePathMetadata creates metadata for wrapped non-root Page relativ
         documentIdentifier: `folder/page-name`,
         isIndex: true,
         slug: `/folder/page-name`,
+        inlineFileLink: 'index.md',
         isLocalized: false,
     });
 });
@@ -76,6 +82,7 @@ test('MDXRelativePathMetadata creates metadata for localized root Page relative 
         documentIdentifier: `page-name`,
         isIndex: true,
         slug: `/page-name`,
+        inlineFileLink: 'index.md',
         lang: `zh`,
         isLocalized: true,
     });
@@ -92,6 +99,7 @@ test('MDXRelativePathMetadata creates metadata for localized non-root Page relat
         documentIdentifier: `folder/page-name`,
         isIndex: true,
         slug: `/folder/page-name`,
+        inlineFileLink: 'index.md',
         lang: `zh`,
         isLocalized: true,
     });

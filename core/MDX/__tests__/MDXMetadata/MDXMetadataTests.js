@@ -66,6 +66,7 @@ test('MDXMetadata creates metadata of Post', () => {
         isLocalized: false,
         slug: `/post/2019/01/post-title-${_('2019-01-01-Post-Title')}`,
         relativePath: '2019-01-01-Post-Title.md',
+        inlineFileLink: '2019-01-01-Post-Title.md',
         license: '',
     };
 
@@ -122,6 +123,7 @@ test('MDXMetadata creates metadata of localized Post', () => {
         isLocalized: true,
         slug: `/post/2019/01/post-title-${_('2019-01-01-Post-Title')}`,
         relativePath: '2019-01-01-Post-Title/en-US/index.md',
+        inlineFileLink: 'index.md',
         license: '',
     };
 
@@ -176,6 +178,7 @@ test('MDXMetadata creates metadata of Page', () => {
         isLocalized: false,
         slug: '/page-title',
         relativePath: 'Page-Title.md',
+        inlineFileLink: 'Page-Title.md',
         license: '',
     };
 
@@ -228,6 +231,7 @@ test('MDXMetadata creates metadata of localized Page', () => {
         isLocalized: true,
         slug: '/page-title',
         relativePath: 'Page-Title/en-US/index.md',
+        inlineFileLink: 'index.md',
         license: '',
     };
 
@@ -281,6 +285,7 @@ test('MDXMetadata creates metadata of Page with tags omitted', () => {
         isLocalized: false,
         slug: '/page-title',
         relativePath: 'Page-Title.md',
+        inlineFileLink: 'Page-Title.md',
         license: '',
     };
 
@@ -334,6 +339,7 @@ test('MDXMetadata creates metadata of Page with category omitted', () => {
         isLocalized: false,
         slug: '/page-title',
         relativePath: 'Page-Title.md',
+        inlineFileLink: 'Page-Title.md',
         license: '',
     };
 

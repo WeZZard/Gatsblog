@@ -1,10 +1,8 @@
 ---
-tags: ["HelloWorld"]
-category: "Introduction"
+tags: [HelloWorld]
+category: Introduction
+title: Hello, World!
 ---
+Hello, world! 
 
-# Hello World
-
-Hello world! 
-
-This is the first post that I've posted.
+Welcome to my blog.

@@ -9,7 +9,7 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
   {
       name: string,
       documentIdentifier: string,
-      fileName: string,
+      inlineFileLink: string,
       isIndex: bool,
       lang: string?
       isLocalized: bool
@@ -26,12 +26,13 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
 
     const standalonePostNamePattern = `(.+).mdx?`;
     const wrappedPostNamePattern = `(.+)/${indexDocumentPattern}`;
-    const localizedPostNamePattern = `(.+)/(${localeIdentifierPattern()})/${indexDocumentPattern}`;
+    const localizedStandalonePostNamePattern = `(.+)/(${localeIdentifierPattern()})/${indexDocumentPattern}`;
+    const localizedWrappedPostNamePattern = `(.+)/(${localeIdentifierPattern()})/${indexDocumentPattern}`;
     const pattern = new RegExp(
         `^`
         + `(${datePattern})` /* Year-Month-Day (required) */
         + `((${timePattern})(${timezonePattern})?)?` /* Hour::Minute::Second and Time Zone Offset (optional) */
-        + `((-${localizedPostNamePattern})|(-${wrappedPostNamePattern})|(-${standalonePostNamePattern}))`
+        + `((-${localizedWrappedPostNamePattern})|(-${wrappedPostNamePattern})|(-${standalonePostNamePattern}))`
         + `$`
     );
 
@@ -91,7 +92,7 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
 
         metadata.slug = `/post/${resourceName}`.toLocaleLowerCase();
 
-        metadata.fileName = relativePath.split('/').pop();
+        metadata.inlineFileLink = relativePath.split('/').pop();
     }
 
     return metadata;
@@ -102,7 +103,7 @@ const _parseMetadataForRelativePathOfPage = relativePath => {
   {
       name: string,
       documentIdentifier: string,
-      fileName: string,
+      inlineFileLink: string,
       isIndex: bool,
       lang: string?
       isLocalized: bool
@@ -133,7 +134,7 @@ const _parseMetadataForRelativePathOfPage = relativePath => {
         }
         metadata.documentIdentifier = metadata.name.toLocaleLowerCase();
         metadata.slug = `/${metadata.documentIdentifier}`;
-        metadata.fileName = relativePath.split('/').pop();
+        metadata.inlineFileLink = relativePath.split('/').pop();
     }
     return metadata;
 };

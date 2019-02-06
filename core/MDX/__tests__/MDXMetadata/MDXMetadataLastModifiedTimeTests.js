@@ -50,6 +50,7 @@ test('MDXMetadata creates metadata whose lastModified can fallback to createdTim
         isLocalized: false,
         slug: `/post/2019/01/post-title-${_('2019-01-01-Post-Title')}`,
         relativePath: '2019-01-01-Post-Title.md',
+        inlineFileLink: '2019-01-01-Post-Title.md',
         license: '',
     };
 

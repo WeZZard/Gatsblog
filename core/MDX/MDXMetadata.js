@@ -10,7 +10,7 @@ module.exports = function (args) {
     {
         documentType: string('Post', 'Page')
         documentIdentifier: string
-        fileName: string
+        inlineFileLink: string
         title: string
         subtitle: string
         isIndex: bool
@@ -70,7 +70,7 @@ module.exports = function (args) {
 
         metadata.relativePath = relativePath;
 
-        metadata.fileName = relativePathMetadata.fileName;
+        metadata.inlineFileLink = relativePathMetadata.inlineFileLink;
 
         metadata.license = node.frontmatter.license || '';
 
