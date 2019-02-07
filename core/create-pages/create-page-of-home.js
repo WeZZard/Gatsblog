@@ -1,7 +1,7 @@
-const createIndexPages = require('./_createIndexPages');
-const { home: page } = require('./pageMetadata');
+const createIndexPages = require('./_create-index-pages');
+const { home: page } = require('./page-meta');
 const { makePostPayload } = require('../utils');
-const { getItemsPerPageInIndexWithName } = require('../config');
+const { itemsPerPageForIndexPageName } = require('../config');
 
 module.exports = async (args) => {
     const {
@@ -62,7 +62,7 @@ module.exports = async (args) => {
                 edges: posts
             } = (allPost || { edges: [] });
 
-            const itemsPerPage = await getItemsPerPageInIndexWithName(page.name, graphql);
+            const itemsPerPage = await itemsPerPageForIndexPageName(page.name, graphql);
 
             const items = await Promise.all(posts.map(async (post) => {
                 return await makePostPayload({

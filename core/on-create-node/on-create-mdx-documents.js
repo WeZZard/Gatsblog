@@ -3,7 +3,7 @@ const MDXAccessoryInfo = require('../MDX/MDXAccessoryInfo');
 const {
     createNodeForPost,
     createNodeForPage,
-} = require('../createNode');
+} = require('../create-node');
 const debug = require('debug');
 
 module.exports = (args) => {

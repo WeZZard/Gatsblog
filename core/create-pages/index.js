@@ -2,7 +2,7 @@ const {
     createNodesForEachTag,
     createNodesForEachCategory,
     createNodesForEachLocale,
-} = require('../createNode');
+} = require('../create-node');
 
 module.exports = async (args) => {
     const { graphql } = args;
@@ -78,14 +78,13 @@ module.exports = async (args) => {
 
     await Promise.all(
         [
-            require('./createPageOfHome'),
-            require('./createPageOfTags'),
-            require('./createPageOfCategories'),
-            require('./createPagesForEachPost'),
-            require('./createPagesForEachPage'),
-            require('./createPagesForEachCategory'),
-            require('./createPagesForEachTag'),
-            require('./createPagesForLocalizedAliasOfEachPost'),
-        ].map(async fn => await fn(createPagesArgs))
+            require('./create-page-of-home'),
+            require('./create-page-of-categories'),
+            require('./create-page-of-tags'),
+            require('./create-pages-for-each-category'),
+            require('./create-pages-for-each-tag'),
+            require('./create-pages-for-each-post'),
+            require('./create-pages-for-each-page'),
+        ].map(async createPages => await createPages(createPagesArgs))
     );
 };

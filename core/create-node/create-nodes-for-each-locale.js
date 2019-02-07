@@ -1,4 +1,4 @@
-const createNodeForLocale = require('./createNodeForLocale');
+const createNodeForLocale = require('./create-node-for-locale');
 
 module.exports = async (args) => {
     const {

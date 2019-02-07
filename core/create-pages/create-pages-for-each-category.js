@@ -1,7 +1,7 @@
-const createIndexPages = require('./_createIndexPages');
-const { category: page } = require('./pageMetadata');
+const createIndexPages = require('./_create-index-pages');
+const { category: page } = require('./page-meta');
 const { makePostPayload } = require('../utils');
-const { getItemsPerPageInIndexWithName } = require('../config');
+const { itemsPerPageForIndexPageName } = require('../config');
 
 module.exports = async (args) => {
     const {
@@ -44,7 +44,7 @@ const _createPageForCategoriesForLocale = async (args) => {
         createPage
     } = args;
 
-    const itemsPerPage = await getItemsPerPageInIndexWithName(page.name, graphql);
+    const itemsPerPage = await itemsPerPageForIndexPageName(page.name, graphql);
 
     await Promise.all(
         categories.map(async (category) => {

@@ -1,7 +1,7 @@
-const createIndexPages = require('./_createIndexPages');
-const { categories: page } = require('./pageMetadata');
-const { makeCategorySummaryPayload } = require('../utils');
-const { getItemsPerPageInIndexWithName } = require('../config');
+const createIndexPages = require('./_create-index-pages');
+const { tags: page } = require('./page-meta');
+const { makeTagSummaryPayload } = require('../utils');
+const { itemsPerPageForIndexPageName } = require('../config');
 
 module.exports = async (args) => {
     const {
@@ -14,15 +14,15 @@ module.exports = async (args) => {
 
     const { graphql, actions } = createPagesArgs;
     const { createPage } = actions;
-    const { locales, categories } = pendingSchemaData;
+    const { locales, tags } = pendingSchemaData;
 
-    const config = indexingConfig.filter(config => config.name === 'Categories')[0] || { isEnabled : true };
+    const config = indexingConfig.filter(config => config.name === 'Tags')[0] || { isEnabled : true };
 
     if (config.isEnabled) {
-        const itemsPerPage = await getItemsPerPageInIndexWithName(page.name, graphql);
+        const itemsPerPage = await itemsPerPageForIndexPageName(page.name, graphql);
 
-        const items = await Promise.all(categories.map(async (category) => {
-            return await makeCategorySummaryPayload(category, graphql)
+        const items = await Promise.all(tags.map(async (tag) => {
+            return await makeTagSummaryPayload(tag, graphql)
         }));
 
         locales.forEach((locale) => {

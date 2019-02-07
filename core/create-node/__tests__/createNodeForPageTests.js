@@ -1,4 +1,4 @@
-const createNodeForPage = require('../createNodeForPage');
+const createNodeForPage = require('../create-node-for-post');
 
 test('createNodeForPage creates node of type Page', () => {
 

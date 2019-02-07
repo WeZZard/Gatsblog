@@ -96,24 +96,31 @@
             color: $color-content-body;
 
             li {
+                display: table;
                 margin-bottom: 0.6rem;
                 line-height: 1.7;
 
                 &::before {
+                    display: table-cell;
                     content: "\2022";
                     color: $color-content-list-indicator-light;
-                    margin-left: 2.1rem;
-                    margin-right: 1.3rem;
+                    padding-left: 1.3rem;
+                    padding-right: 1.3rem;
                 }
             }
 
             ul, ol {
                 margin: 0;
                 margin-top: 0.6rem;
-                padding-left: 5.5rem;
 
                 &:first-child {
                     margin-top: 0.6rem;
+                }
+
+                li {
+                    &::before {
+                        padding-left: 0;
+                    }
                 }
             }
         }
@@ -126,15 +133,17 @@
             counter-reset: ordered-list;
 
             li {
+                display: table;
                 margin-bottom: 0.6rem;
                 line-height: 1.7;
 
                 &::before {
+                    display: table-cell;
                     counter-increment: ordered-list;
                     content: counters(ordered-list, ".") " ";
                     color: $color-content-list-indicator-dark;
-                    margin-left: 2.1rem;
-                    margin-right: 1.3rem;
+                    padding-left: 1.3rem;
+                    padding-right: 1.3rem;
                     font-family: $font-text-monospaced;
                     font-size: 0.88em;
                 }
@@ -143,10 +152,15 @@
             ul, ol {
                 margin: 0;
                 margin-top: 0.6rem;
-                padding-left: 5.5rem;
 
                 &:first-child {
                     margin-top: 0.6rem;
+                }
+
+                li {
+                    &::before {
+                        padding-left: 0;
+                    }
                 }
             }
         }

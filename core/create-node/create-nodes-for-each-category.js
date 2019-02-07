@@ -1,4 +1,4 @@
-const createNodeForTag = require('./createNodeForTag');
+const createNodeForCategory = require('./create-node-for-category');
 
 module.exports = async (args) => {
     const {
@@ -22,21 +22,20 @@ module.exports = async (args) => {
             allPost {
                 edges {
                     node {
-                        tags
+                        category
                     }
                 }
             }
         }
     `);
 
-    const tags = (posts || [])
-        .map(post => post.node.tags)
-        .flatMap(_ => _);
+    const categories = (posts || [])
+        .map(post => post.node.category);
 
-    const nonDuplicateTags = new Set(tags);
+    const nonDuplicateCategories = new Set(categories);
 
-    return [...nonDuplicateTags].map(tag => createNodeForTag({
-        tag: tag,
+    return [...nonDuplicateCategories].map(category => createNodeForCategory({
+        category: category,
         getNodesByType: getNodesByType,
         createNode: createNode,
         createNodeId: createNodeId,
