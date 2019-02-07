@@ -9,7 +9,7 @@
     font-family: $font-text-monospaced;
     font-size: calc(14em / 17);
     font-weight: 400;
-    line-height: calc(29 / 14);
+    line-height: calc(21 / 14);
     padding: 0;
     margin-top: 4.5rem;
     margin-bottom: 4.9rem;
@@ -61,6 +61,7 @@
         padding-top: 1rem;
         padding-left: 2.1rem;
         padding-right: 2.1rem;
+        padding-bottom: 2.4rem;
         width: calc(100% - 4.2rem);
 
         .lineNumberList {
@@ -84,7 +85,6 @@
                     content: counter(codeblock);
                     color: $color-content-code-block-line-number;
                     margin-right: 2.1rem;
-                    text-align: right;
                 }
             }
         }
@@ -96,6 +96,7 @@
             padding-right: 3.4rem;
             color: $color-content-body;
             overflow-x: scroll;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
 
             .line {
                 margin-bottom: 0;
@@ -113,13 +114,11 @@
 
     .codeBlock.languageUnspecified {
         padding-top: 2.3rem;
-        padding-bottom: 2.4rem;
     }
 
     .codeBlock.languageSpecified {
         margin-top: -0.1rem;
         padding-top: 0;
-        padding-bottom: 2.4rem;
     }
 }
 
