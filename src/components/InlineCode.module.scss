@@ -1,0 +1,17 @@
+@import '../styles/fonts';
+@import '../styles/colors';
+
+.inlineCode {
+    font-family: $font-text-monospaced;
+    font-weight: 400;
+    font-size: 0.76em;
+    line-height: 2.23;
+    background-color: $color-content-code-block-background;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
+    border-left: solid 2px $color-content-code-block-indicator;
+    border-right: solid 2px $color-content-code-block-indicator;
+    word-wrap: break-word;
+}

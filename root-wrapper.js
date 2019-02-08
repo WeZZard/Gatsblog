@@ -3,14 +3,18 @@ import { MDXProvider } from '@mdx-js/tag'
 import SourceCode from './src/components/SourceCode'
 import Heading from './src/components/Heading'
 import Table from './src/components/Table'
-import FluidImage from './src/components/FluidImage'
 import Image from './src/components/Image'
 import Picture from './src/components/Picture'
 import Paragraph from './src/components/Paragraph'
-import UnorderedList from './src/components/UnorderedList'
 import OrderedList from './src/components/OrderedList'
+import UnorderedList from './src/components/UnorderedList'
 import Blockquote from './src/components/Blockquote'
 import Separator from './src/components/Separator'
+import Checkbox from './src/components/Checkbox'
+import Strong from './src/components/Strong'
+import InlineCode from './src/components/InlineCode'
+import Footnotes from './src/components/Footnotes'
+import Superscript from './src/components/Superscript'
 import { preToCodeBlock } from 'mdx-utils'
 
 // components is its own object outside of render so that the references to
@@ -23,7 +27,7 @@ const components = {
             return <SourceCode {...codeBlock} />
         } else {
             // it's possible to have a pre without a code in it
-            return  <pre className={'lineTop lineBottom'} {...props} />
+            return  <pre className={'geometryBlockTop geometryBlockBottom'} {...props} />
         }
     },
     p: props => {
@@ -48,6 +52,21 @@ const components = {
     h4: props => <Heading level={4} {...props}/>,
     h5: props => <Heading level={5} {...props}/>,
     h6: props => <Heading level={6} {...props}/>,
+    input: props => {
+        if (props.type && props.type === 'checkbox') {
+            return <Checkbox {...props}/>;
+        }
+        return <input {...props}/>;
+    },
+    strong: props => <Strong {...props}/>,
+    inlineCode: props => <InlineCode {...props}/>,
+    div: props => {
+        if (props.className === 'footnotes') {
+            return <Footnotes {...props}/>
+        }
+        return <div {...props}/>
+    },
+    sup: props => <Superscript {...props}/>
 };
 
 export default ({ element }) => (

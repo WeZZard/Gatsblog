@@ -54,24 +54,10 @@
             margin-left: 0;
             margin-right: 0;
             color: $color-content-body;
-
-            code {
-                font-family: $font-text-monospaced;
-                font-weight: 400;
-                font-size: 0.76em;
-                line-height: 2.23;
-                background-color: $color-content-code-block-background;
-                padding-left: 0.3rem;
-                padding-right: 0.3rem;
-                margin-left: 0.3rem;
-                margin-right: 0.3rem;
-                border-left: solid 2px $color-content-code-block-indicator;
-                border-right: solid 2px $color-content-code-block-indicator;
-                word-wrap: break-word;
-            }
         }
 
         picture {
+            display: block;
             width: calc(100% + 2.1rem * 2);
             margin-left: -2.1rem;
             margin-right: -2.1rem;
@@ -90,104 +76,13 @@
             color: $color-content-quote;
         }
 
-        ul {
-            padding: 0;
-            list-style: none;
-            color: $color-content-body;
-
-            li {
-                display: table;
-                margin-bottom: 0.6rem;
-                line-height: 1.7;
-
-                &::before {
-                    display: table-cell;
-                    content: "\2022";
-                    color: $color-content-list-indicator-light;
-                    padding-left: 1.3rem;
-                    padding-right: 1.3rem;
-                }
-            }
-
-            ul, ol {
-                margin: 0;
-                margin-top: 0.6rem;
-
-                &:first-child {
-                    margin-top: 0.6rem;
-                }
-
-                li {
-                    &::before {
-                        padding-left: 0;
-                    }
-                }
-            }
-        }
-
-        ol {
-            padding: 0;
-            list-style: none;
-            color: $color-content-body;
-
-            counter-reset: ordered-list;
-
-            li {
-                display: table;
-                margin-bottom: 0.6rem;
-                line-height: 1.7;
-
-                &::before {
-                    display: table-cell;
-                    counter-increment: ordered-list;
-                    content: counters(ordered-list, ".") " ";
-                    color: $color-content-list-indicator-dark;
-                    padding-left: 1.3rem;
-                    padding-right: 1.3rem;
-                    font-family: $font-text-monospaced;
-                    font-size: 0.88em;
-                }
-            }
-
-            ul, ol {
-                margin: 0;
-                margin-top: 0.6rem;
-
-                &:first-child {
-                    margin-top: 0.6rem;
-                }
-
-                li {
-                    &::before {
-                        padding-left: 0;
-                    }
-                }
-            }
-        }
-
-        hr {
-            border: 0;
-            text-align: center;
-
-            &:before {
-                margin: auto;
-                display: inline-block;
-                content: ". . .";
-                position: relative;
-                top: -2.8rem;
-                font-size: 1.65em;
-                font-weight: 600;
-                color: $color-content-divider;
-            }
-        }
-
         a {
             text-decoration: underline;
             color: $color-tint;
             transition: color 0.3s ease-in-out;
 
             &:visited {
-                color: $color-content-body;
+                color: $color-tint;
             }
 
             &:hover,

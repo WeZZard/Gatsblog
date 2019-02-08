@@ -1,5 +1,7 @@
 import React from 'react';
+import styles from './OrderedList.module.scss';
 
 export default (props) => {
-    return <ol className={'textBlockTop textBlockBottom'} {...props}/>
+    const className = [styles.orderedList, "textParagraphTop", "textParagraphBottom"].join(' ');
+    return <ol className={className} {...props}/>
 }

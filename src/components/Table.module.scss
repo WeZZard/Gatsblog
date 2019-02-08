@@ -4,8 +4,10 @@
 .table {
     margin-left: auto;
     margin-right: auto;
+    font-size: calc(15em / 17);
     font-family: $font-text-sans;
     border-collapse: collapse;
+    width: 100%;
 
     thead {
         font-weight: 600;
@@ -14,6 +16,8 @@
         color: $color-content-heading;
 
         th {
+            padding-top: 1.8rem;
+            padding-bottom: 1.7rem;
             padding-left: 3.4rem;
 
             &:last-child {
@@ -28,6 +32,8 @@
         color: $color-content-body;
 
         td {
+            padding-top: 1.8rem;
+            padding-bottom: 1.7rem;
             padding-left: 3.4rem;
 
             &:last-child {

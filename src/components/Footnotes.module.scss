@@ -1,0 +1,47 @@
+@import '../styles/fonts';
+@import '../styles/colors';
+
+.footnotes {
+    margin-top: 2.4rem;
+    margin-bottom: 5.1rem;
+    color: $color-content-footer-text;
+
+    .footnoteList {
+        padding: 0;
+        list-style: none;
+
+        .footnoteListItem {
+            margin-top: 3.9rem;
+
+            .footnoteParagraph {
+                margin-top: 1.9rem;
+                margin-bottom: 0;
+                font-size: calc(15em / 17);
+                line-height: call(29/15);
+                font-family: $font-text-sans;
+                color: $color-content-footer-text;
+            }
+
+            .footnoteLabel {
+                font-size: calc(15em / 17);
+                font-family: $font-text-monospaced;
+                font-weight: 500;
+                margin-right: 0.8rem;
+
+                &::before {
+                    content: '[';
+                }
+
+                &::after {
+                    content: ']';
+                }
+            }
+
+            .footnoteBackReference {
+                font-size: calc(15em / 17);
+                font-family: $font-text-monospaced;
+                margin-left: 0.5rem;
+            }
+        }
+    }
+}

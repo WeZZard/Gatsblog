@@ -34,31 +34,16 @@ export default ({ codeString, language, ...props }) => {
 
         const path = props['path'];
 
-        const languageClass = language
-            ? styles.languageSpecified
-            : styles.languageUnspecified;
-
         const pathLabel = path
-            ? <div key={'path'} className={styles.sourceCodePath}>{path}</div>
-            : null;
-
-        const languageLabel = language
-            ? <div key={'language'} className={[styles.sourceCodeLanguage, `language-${language}`].join(' ')}>{language}</div>
-            : null;
-
-        const sourceCodeMetadataLabels = [pathLabel, languageLabel]
-            .filter(_ => _);
-
-        const sourceCodeMetadata = sourceCodeMetadataLabels.length > 0
-            ? <React.Fragment>{sourceCodeMetadataLabels}</React.Fragment>
+            ? <div className={styles.sourceCodePath}><span>{path}</span></div>
             : null;
 
         return (
             <Highlight {...defaultProps} code={codeString} language={language}>
                 {({ className, style, tokens, getLineProps, getTokenProps }) => (
-                    <pre className={[className, styles.sourceCode, languageClass, 'geometryBlockTop', 'geometryBlockBottom'].join(' ')} style={style}>
-                        {sourceCodeMetadata}
-                        <code className={[styles.codeBlock, languageClass].join(' ')}>
+                    <pre className={[className, styles.sourceCode, 'geometryBlockTop', 'geometryBlockBottom'].join(' ')} style={style}>
+                        {pathLabel}
+                        <code className={styles.codeBlock}>
                             <Codes
                                 tokens={tokens}
                                 getLineProps={getLineProps}

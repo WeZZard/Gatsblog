@@ -1,0 +1,15 @@
+@import '../styles/fonts';
+@import '../styles/colors';
+
+.superscript {
+    font-family: $font-text-monospaced;
+    font-size: 0.618em;
+
+    &::before {
+        content: '[';
+    }
+
+    &::after {
+        content: ']';
+    }
+}

@@ -1,5 +1,3 @@
-"use strict";
-
 const _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
 const _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));

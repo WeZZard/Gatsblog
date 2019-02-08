@@ -11,8 +11,6 @@
     font-weight: 400;
     line-height: calc(21 / 14);
     padding: 0;
-    margin-top: 4.5rem;
-    margin-bottom: 4.9rem;
     margin-left: -2.1rem;
     margin-right: -2.1rem;
     background-color: $color-content-code-block-background;
@@ -24,7 +22,7 @@
         width: calc(100% - 4.2rem);
         padding: 0;
         padding-top: 1.9rem;
-        padding-bottom: 1rem;
+        padding-bottom: 1.9rem;
         padding-left: 2.1rem;
         padding-right: 2.1rem;
         margin: 0;
@@ -58,7 +56,7 @@
     .codeBlock {
         align-self: flex-start;
         display: flex;
-        padding-top: 1rem;
+        padding-top: 2rem;
         padding-left: 2.1rem;
         padding-right: 2.1rem;
         padding-bottom: 2.4rem;
@@ -90,8 +88,6 @@
         }
 
         .codeContent {
-            flex-grow: 1;
-            flex-shrink: 1;
             margin: 0;
             padding-right: 3.4rem;
             color: $color-content-body;

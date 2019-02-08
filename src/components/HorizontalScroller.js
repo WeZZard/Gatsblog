@@ -5,7 +5,7 @@ class HorizontalScroller extends React.Component {
     render() {
         const props = this.props;
 
-        return <div className={[styles.horizontalScroller, 'geometryBlockTop', 'geometryBlockBottom'].join(' ')} {...props}/>
+        return <section className={[styles.horizontalScroller, 'geometryBlockTop', 'geometryBlockBottom'].join(' ')} {...props}/>
     }
 }
 

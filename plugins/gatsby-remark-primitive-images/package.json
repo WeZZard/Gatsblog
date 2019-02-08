@@ -3,9 +3,6 @@
     "name": "Kyle Mathews WeZZard",
     "email": "mathews.kyle@gmail.com me@wezzard.com"
   },
-  "bugs": {
-    "url": ""
-  },
   "bundleDependencies": false,
   "dependencies": {
     "@babel/runtime": "^7.0.0",
@@ -37,19 +34,10 @@
   ],
   "license": "MIT",
   "main": "index.js",
-  "name": "gatsby-remark-props-images",
+  "name": "gatsby-remark-primitive-images",
   "peerDependencies": {
     "gatsby": "^2.0.0",
     "gatsby-plugin-sharp": "^2.0.0-beta.5"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-props-images"
-  },
-  "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__",
-    "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__"
   },
   "version": "3.0.3"
 }

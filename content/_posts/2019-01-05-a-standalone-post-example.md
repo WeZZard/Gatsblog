@@ -213,11 +213,8 @@ int main() {
 
 ```css
 .selector {
-
 }
-
 #fuck {
-
 }
 ```
 
