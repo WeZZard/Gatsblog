@@ -1,0 +1,370 @@
+@import '../styles/fonts';
+@import '../styles/colors';
+
+.preFormattedCodeBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding: 0;
+    margin-left: -2.1rem;
+    margin-right: -2.1rem;
+    background-color: $color-content-code-block-background;
+
+    .pathLabel {
+        display: block;
+        width: calc(100% - 4.2rem);
+        padding: 0;
+        padding-top: 1.2rem;
+        padding-bottom: 1.2rem;
+        padding-left: 2.1rem;
+        padding-right: 2.1rem;
+        margin: 0;
+        overflow-x: scroll;
+        border-bottom: 1px solid $color-content-code-block-indicator;
+        color: $color-content-body;
+        font-family: $font-text-monospaced;
+        font-size: calc(13em / 17);
+        font-weight: 400;
+        line-height: 1;
+    }
+
+    @mixin language {
+        display: block;
+        margin-top: -0.1rem;
+        margin-left: auto;
+        margin-right: 2.1rem;
+        margin-bottom: 0.6rem;
+        border-bottom-left-radius: 0.7rem;
+        border-bottom-right-radius: 0.7rem;
+        padding: 0.8rem;
+        font-family: $font-text-monospaced;
+        font-size: calc(11em / 17);
+        font-weight: 400;
+        line-height: 1;
+        text-transform: uppercase;
+    }
+
+    .languageLabel {
+        @include language;
+        color: $color-content-code-block-language;
+        background-color: $color-theme;
+    }
+
+    @mixin code {
+        align-self: flex-start;
+        display: flex;
+        padding-bottom: 2.4rem;
+        padding-left: 2.1rem;
+        padding-right: 2.1rem;
+        width: calc(100% - 4.2rem);
+        font-family: $font-text-monospaced;
+        font-size: calc(13em / 17);
+        font-weight: 400;
+        line-height: calc(26 / 13);
+
+        .lineNumberList {
+            counter-reset: codeblock;
+            display: inline-block;
+            margin: 0;
+
+            .lineNumber {
+                margin-bottom: 0;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                user-select: none;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+
+                &::before {
+                    color: $color-content-code-block-line-number;
+                    content: counter(codeblock);
+                    counter-increment: codeblock;
+                    margin-right: 2.1rem;
+                }
+            }
+        }
+
+        .codeContent {
+            color: $color-content-body;
+            display: inline-block;
+            margin: 0;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+            overflow-x: scroll;
+            padding-right: 3.4rem;
+
+            .line {
+                margin-bottom: 0;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+    .languageSpecifiedCode {
+        @include code;
+
+        padding-top: 0;
+    }
+
+    .languageUnspecifiedCode {
+        @include code;
+
+        padding-top: 2rem;
+    }
+
+    .objectiveC {
+        @include language;
+
+        background-color: #0F4FFF;
+        color: $_white;
+    }
+
+    .objectiveCPP {
+        @include language;
+
+        background-color: #7E0FFF;
+        color: $_white;
+    }
+
+    .swift {
+        @include language;
+
+        background-color: #FF5E00;
+        color: $_white;
+    }
+
+    .rust {
+        @include language;
+
+        background-color: #D13D3D;
+        color: $_white;
+    }
+
+    .python {
+        @include language;
+
+        background-color: #2682BF;
+        color: $_white;
+    }
+
+    .lua {
+        @include language;
+
+        background-color: #3363FF;
+        color: $_white;
+    }
+
+    .javaScript {
+        @include language;
+
+        background-color: #FFF830;
+        color: #363636;
+    }
+
+    .jsx {
+        @include language;
+        background-color: #10EBCC;
+        color: #575757;
+    }
+
+    .typeScript {
+        @include language;
+
+        background-color: #3694FF;
+        color: $_white;
+    }
+
+    .tsx {
+        @include language;
+
+        background-color: #11E5F2;
+        color: #575757;
+    }
+
+    .c {
+        @include language;
+
+        background-color: #0735ED;
+        color: $_white;
+    }
+
+    .cPP {
+        @include language;
+
+        background-color: #0715ED;
+        color: $_white;
+    }
+
+    .graphQL {
+        @include language;
+
+        background-color: #DD36FF;
+        color: $_white;
+    }
+
+    .sql {
+        @include language;
+
+        background-color: #C75A16;
+        color: $_white;
+    }
+
+    .markdown {
+        @include language;
+
+        background-color: #61CF19;
+        color: $_white;
+    }
+
+    .mdx {
+        @include language;
+
+        background-color: #0EF097;
+        color: #575757;
+    }
+
+    .json {
+        @include language;
+
+        background-color: #89EB21;
+        color: #575757;
+    }
+
+    .protobuf {
+        @include language;
+
+        background-color: #35AAE8;
+        color: $_white;
+    }
+
+    .yaml {
+        @include language;
+
+        background-color: #F768F3;
+        color: $_white;
+    }
+
+    .toml {
+        @include language;
+
+        background-color: #FF2626;
+        color: $_white;
+    }
+
+    .html {
+        @include language;
+
+        background-color: #0C3BE8;
+        color: $_white;
+    }
+
+    .xml {
+        @include language;
+
+        background-color: #006AFF;
+        color: $_white;
+    }
+
+    .css {
+        @include language;
+
+        background-color: #36D900;
+        color: $_white;
+    }
+
+    .scss {
+        @include language;
+
+        background-color: #BC22F0;
+        color: $_white;
+    }
+
+    .diff {
+        @include language;
+
+        background-color: #3ACF19;
+        color: $_white;
+    }
+
+    .pseudoCode {
+        @include language;
+
+        background-color: #2250A9;
+        color: $_white;
+    }
+
+    .asm {
+        @include language;
+
+        background-color: #F27911;
+        color: $_white;
+    }
+
+    .laTex {
+        @include language;
+
+        background-color: #14F181;
+        color: #575757;
+    }
+
+    .go {
+        @include language;
+
+        background-color: #2888F2;
+        color: $_white;
+    }
+
+    .dart {
+        @include language;
+
+        background-color: #30B4F4;
+        color: $_white;
+    }
+
+    .config {
+        @include language;
+
+        background-color: #8C8C8C;
+        color: $_white;
+    }
+
+    .ini {
+        @include language;
+
+        background-color: #8C8C8C;
+        color: $_white;
+    }
+
+    .etcHosts {
+        @include language;
+
+        background-color: #8C8C8C;
+        color: $_white;
+    }
+
+    .awk {
+        @include language;
+
+        background-color: #FF2676;
+        color: $_white;
+    }
+
+    .sed {
+        @include language;
+
+        background-color: #FF26B8;
+        color: $_white;
+    }
+
+    .sh {
+        @include language;
+
+        background-color: #363636;
+        color: $_white;
+    }
+}

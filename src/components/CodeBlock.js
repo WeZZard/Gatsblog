@@ -1,23 +1,40 @@
 import React from 'react';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
-import styles from './SourceCode.module.scss'
+import styles from './CodeBlock.module.scss'
 
-const Codes = ({ tokens, getLineProps, getTokenProps }) => {
-    return <React.Fragment>
-        <div aria-hidden={'true'} className={styles.lineNumberList}>
-            {tokens.map((_, lineNumber) => (
-                <div aria-hidden={'true'} key={lineNumber} className={styles.lineNumber}/>))}
-        </div>
-        <div className={styles.codeContent}>
-            {tokens.map((line, lineNumber) => (
-                <div {...getLineProps({ line, key: lineNumber })} className={styles.line}>
-                    {line.map((token, key) => (
-                        <span {...getTokenProps({ token, key })} className={styles.token} />))}
-                </div>
-            ))}
-        </div>
-    </React.Fragment>
+const getLanguageClassName = (language) => {
+    if (/^objective-c$/i.test(language )) {
+        return 'objectiveC';
+    }
+    if (/^objective-c\+\+$/i.test(language )) {
+        return 'objectiveCPP';
+    }
+    if (/^c\+\+$/i.test(language )) {
+        return 'cPP';
+    }
+    if (/^\/etc\/hosts$/.test(language )) {
+        return 'etcHosts';
+    }
+    if (/^pseudo-code$/.test(language )) {
+        return 'pseudoCode';
+    }
+    if (/^js$/.test(language )) {
+        return 'javaScript';
+    }
+    if (/^ts$/.test(language )) {
+        return 'typeScript';
+    }
+    if (/^graphql$/.test(language )) {
+        return 'graphQL';
+    }
+    if (/^latex$/.test(language )) {
+        return 'laTex';
+    }
+    if (/^sass$/.test(language )) {
+        return 'scss';
+    }
+    return language.toLowerCase();
 };
 
 export default ({ codeString, language, ...props }) => {
@@ -35,26 +52,62 @@ export default ({ codeString, language, ...props }) => {
         const path = props['path'];
 
         const pathLabel = path
-            ? <div className={styles.sourceCodePath}><span>{path}</span></div>
+            ? <div key={'path'} className={styles.pathLabel}>
+                <span>{path}</span>
+            </div>
             : null;
 
-        return (
-            <Highlight {...defaultProps} code={codeString} language={language}>
-                {({ className, style, tokens, getLineProps, getTokenProps }) => (
-                    <pre className={[className, styles.sourceCode, 'geometryBlockTop', 'geometryBlockBottom'].join(' ')} style={style}>
+        const languageLabel = language
+            ? <div
+                key={'language'}
+                className={styles[getLanguageClassName(language)] || styles.languageLabel}
+            >
+                <span>{language}</span>
+            </div>
+            : null;
+
+        return <Highlight {...defaultProps} code={codeString} language={language}>
+            {
+                ({ className, style, tokens, getLineProps, getTokenProps }) => {
+                    return <pre
+                        className={[
+                            styles.preFormattedCodeBlock,
+                            'geometryBlockTop',
+                            'geometryBlockBottom'
+                        ].join(' ')}
+                        style={style}
+                    >
                         {pathLabel}
-                        <code className={styles.codeBlock}>
-                            <Codes
+                        {languageLabel}
+                        <code className={language ? styles.languageSpecifiedCode : styles.languageUnspecifiedCode}>
+                            <Code
                                 tokens={tokens}
                                 getLineProps={getLineProps}
                                 getTokenProps={getTokenProps}
                             />
                         </code>
                     </pre>
-                )}
-            </Highlight>
-        );
+                }
+            }
+        </Highlight>
     }
+};
+
+const Code = ({ tokens, getLineProps, getTokenProps }) => {
+    return <React.Fragment>
+        <div aria-hidden={'true'} className={styles.lineNumberList}>
+            {tokens.map((_, lineNumber) => (
+                <div aria-hidden={'true'} key={lineNumber} className={styles.lineNumber}/>))}
+        </div>
+        <div className={styles.codeContent}>
+            {tokens.map((line, lineNumber) => (
+                <div {...getLineProps({ line, key: lineNumber })} className={styles.line}>
+                    {line.map((token, key) => (
+                        <span {...getTokenProps({ token, key })} className={styles.token} />))}
+                </div>
+            ))}
+        </div>
+    </React.Fragment>
 };
 
 const basic =  [

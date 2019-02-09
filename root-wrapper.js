@@ -1,6 +1,6 @@
 import React from 'react'
 import { MDXProvider } from '@mdx-js/tag'
-import SourceCode from './src/components/SourceCode'
+import CodeBlock from './src/components/CodeBlock'
 import Heading from './src/components/Heading'
 import Table from './src/components/Table'
 import Image from './src/components/Image'
@@ -24,7 +24,7 @@ const components = {
         const codeBlock = preToCodeBlock(props);
         // if there's a codeString and some props, we passed the test
         if (codeBlock) {
-            return <SourceCode {...codeBlock} />
+            return <CodeBlock {...codeBlock} />
         } else {
             // it's possible to have a pre without a code in it
             return  <pre className={'geometryBlockTop geometryBlockBottom'} {...props} />
