@@ -3,40 +3,6 @@ import Highlight, { defaultProps } from 'prism-react-renderer';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import styles from './CodeBlock.module.scss'
 
-const getLanguageClassName = (language) => {
-    if (/^objective-c$/i.test(language )) {
-        return 'objectiveC';
-    }
-    if (/^objective-c\+\+$/i.test(language )) {
-        return 'objectiveCPP';
-    }
-    if (/^c\+\+$/i.test(language )) {
-        return 'cPP';
-    }
-    if (/^\/etc\/hosts$/.test(language )) {
-        return 'etcHosts';
-    }
-    if (/^pseudo-code$/.test(language )) {
-        return 'pseudoCode';
-    }
-    if (/^js$/.test(language )) {
-        return 'javaScript';
-    }
-    if (/^ts$/.test(language )) {
-        return 'typeScript';
-    }
-    if (/^graphql$/.test(language )) {
-        return 'graphQL';
-    }
-    if (/^latex$/.test(language )) {
-        return 'laTex';
-    }
-    if (/^sass$/.test(language )) {
-        return 'scss';
-    }
-    return language.toLowerCase();
-};
-
 export default ({ codeString, language, ...props }) => {
     if (props['react-live']) {
         return (
@@ -51,19 +17,14 @@ export default ({ codeString, language, ...props }) => {
 
         const path = props['path'];
 
+        const version = props['version'];
+
         const pathLabel = path
-            ? <div key={'path'} className={styles.pathLabel}>
-                <span>{path}</span>
-            </div>
+            ? <div className={styles.pathLabel}><span>{path}</span></div>
             : null;
 
         const languageLabel = language
-            ? <div
-                key={'language'}
-                className={styles[getLanguageClassName(language)] || styles.languageLabel}
-            >
-                <span>{language}</span>
-            </div>
+            ? <LanguageLabel language={language} version={version}/>
             : null;
 
         return <Highlight {...defaultProps} code={codeString} language={language}>
@@ -92,6 +53,54 @@ export default ({ codeString, language, ...props }) => {
         </Highlight>
     }
 };
+
+class LanguageLabel extends React.Component {
+    render() {
+        const { language, version } = this.props;
+
+        const className = styles[LanguageLabel.getLanguageClassName(language)] || styles.languageLabel;
+
+        const contents = [language, version].filter(_ => _).join(' ');
+
+        return <div className={className}>
+            <span>{contents}</span>
+        </div>
+    }
+
+    static getLanguageClassName (language) {
+        if (/^objective-c$/i.test(language )) {
+            return 'objectiveC';
+        }
+        if (/^objective-c\+\+$/i.test(language )) {
+            return 'objectiveCPP';
+        }
+        if (/^c\+\+$/i.test(language )) {
+            return 'cPP';
+        }
+        if (/^\/etc\/hosts$/.test(language )) {
+            return 'etcHosts';
+        }
+        if (/^pseudo-code$/.test(language )) {
+            return 'pseudoCode';
+        }
+        if (/^js$/.test(language )) {
+            return 'javaScript';
+        }
+        if (/^ts$/.test(language )) {
+            return 'typeScript';
+        }
+        if (/^graphql$/.test(language )) {
+            return 'graphQL';
+        }
+        if (/^latex$/.test(language )) {
+            return 'laTex';
+        }
+        if (/^sass$/.test(language )) {
+            return 'scss';
+        }
+        return language.toLowerCase();
+    };
+}
 
 const Code = ({ tokens, getLineProps, getTokenProps }) => {
     return <React.Fragment>

@@ -21,7 +21,7 @@ feugiat, magna augue pharetra neque, non tincidunt urna ligula convallis dui.
 Sed vestibulum sodales felis sit amet placerat. Sed eget hendrerit nulla, vel 
 hendrerit purus. Ut pellentesque vestibulum quam, et pretium magna posuere quis.
 
-```swift path=src/main.swift
+```swift version=4.2 path=src/main.swift
 class Name {
     var property: Int {
     }
