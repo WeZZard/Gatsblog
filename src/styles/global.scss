@@ -4,124 +4,383 @@
 html {
     font-family: $font-ui-sans;
     font-size: 62.5%;
-    font-weight: 300;
     -webkit-font-smoothing: antialiased;
+    font-weight: 300;
 }
 
 span.katex-display {
-    margin: 0;
-    margin-top: 4.5rem;
+    background-color: $color-content-math-block-background;
+    color: $color-content-heading;
     margin-bottom: 4.9rem;
     margin-left: -2.1rem;
     margin-right: -2.1rem;
-    padding: 2.1rem;
-    color: $color-content-heading;
-    background-color: $color-content-math-block-background;
+    margin-top: 4.5rem;
     overflow-x: scroll;
+    padding: 2.1rem;
 }
 
 p {
     span.katex {
+        background-color: $color-content-math-block-background;
+        border-bottom: solid 2px $color-content-math-block-indicator;
+        color: $color-content-heading;
+        font-size: 0.88em;
+        font-weight: 400;
+        line-height: 1.143;
         margin: 0;
         padding-left: 0.5rem;
         padding-right: 0.5rem;
         padding-top: 0.5rem;
-        font-size: 0.88em;
-        line-height: 1.143;
-        font-weight: 400;
-        color: $color-content-heading;
-        background-color: $color-content-math-block-background;
-        border-bottom: solid 2px $color-content-math-block-indicator;
     }
 }
 
+// h1-6, rectTop, rectBottom, serifTop, serifBottom, sansTop, sansBottom,
+// separator
+
 .h1 {
-    margin-top: 3.4rem;
-    margin-bottom: 1.3rem;
+    margin-bottom: 0;
+    margin-top: 0;
+
+    &:first-child {
+        margin-top: -0.9rem;
+    }
+
+    &:last-child {
+        margin-bottom: -1rem;
+    }
 }
 
 .h2 {
-    margin-top: 3.3rem;
-    margin-bottom: 1.4rem;
+    margin-bottom: 0;
+    margin-top: 0;
+
+    &:first-child {
+        margin-top: -1.2rem;
+    }
+
+    &:last-child {
+        margin-bottom: -0.9rem;
+    }
 }
 
 .h3 {
-    margin-top: 3.4rem;
-    margin-bottom: 1.3rem;
+    margin-bottom: 0;
+    margin-top: 0;
+
+    &:first-child {
+        margin-top: -0.9rem;
+    }
+
+    &:last-child {
+        margin-bottom: -1rem;
+    }
 }
 
 .h4 {
-    margin-top: 3.3rem;
-    margin-bottom: 1.4rem;
+    margin-bottom: 0;
+    margin-top: 0;
+
+    &:first-child {
+        margin-top: -1.2rem;
+    }
+
+    &:last-child {
+        margin-bottom: -0.9rem;
+    }
 }
 
 .h5 {
-    margin-top: 3.3rem;
     margin-bottom: 1.4rem;
+    margin-top: 3.3rem;
+
+    &:first-child {
+        margin-top: -0.8rem;
+    }
+
+    &:last-child {
+        margin-bottom: -0.9rem;
+    }
 }
 
 .h6 {
-    margin-top: 3.4rem;
-    margin-bottom: 1.3rem;
+    margin-bottom: 0;
+    margin-top: 0;
+
+    &:first-child {
+        margin-top: -1.1rem;
+    }
+
+    &:last-child {
+        margin-bottom: -1rem;
+    }
 }
 
-.textParagraphTop {
-    margin-top: 1.3rem;
+.serifTop {
+    margin-bottom: 0;
+    margin-top: 0;
+
+    &:first-child {
+        margin-top: -1.1rem;
+    }
 }
 
-.textParagraphBottom {
-    margin-bottom: 1.3rem;
+.serifBottom {
+    margin-bottom: 0;
+    margin-top: 0;
+
+    &:last-child {
+        margin-bottom: -1rem;
+    }
 }
 
-.geometryBlockTop {
-    margin-top: 2.4rem;
+.sansTop {
+    margin-bottom: 0;
+    margin-top: 0;
 }
 
-.geometryBlockBottom {
-    margin-bottom: 2.3rem;
+.sansBottom {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.rectTop {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.rectBottom {
+    margin-bottom: 0;
+    margin-top: 0;
 }
 
 .separator {
-    margin-top: 4.4rem;
-    margin-bottom: 4.5rem;
+    margin-bottom: 0;
+    margin-top: 0;
 }
 
-.h1 + .geometryBlockTop {
+////////////////////////////////////////////////////////////////////////////////
+// Post
+////////////////////////////////////////////////////////////////////////////////
+
+// h1-6, rectTop, rectBottom, serifTop, serifBottom, separator
+// h1-6/serifBottom/rectBottom/separator + h1-6/serifTop/rectTop/separator:
+// C(9, 1) * C(9, 1) = 81
+
+.h1 + .serifTop,
+.h1 + .h1,
+.h1 + .h2,
+.h1 + .h3,
+.h1 + .h4,
+.h1 + .h5,
+.h1 + .h6 {
+    margin-top: 1.3rem;
+}
+
+.h1 + .rectTop {
     margin-top: 2.4rem;
 }
 
-.h2 + .geometryBlockTop {
+.h1 + .separator {
+    margin-top: 4.5rem;
+}
+
+.h2 + .serifTop,
+.h2 + .h1,
+.h2 + .h2,
+.h2 + .h3,
+.h2 + .h4,
+.h2 + .h5,
+.h2 + .h6 {
+    margin-top: 1.4rem;
+}
+
+.h2 + .rectTop {
     margin-top: 2.5rem;
 }
 
-.h3 + .geometryBlockTop {
+.h2 + .separator {
+    margin-top: 4.6rem;
+}
+
+.h3 + .serifTop,
+.h3 + .h1,
+.h3 + .h2,
+.h3 + .h3,
+.h3 + .h4,
+.h3 + .h5,
+.h3 + .h6 {
+    margin-top: 1.3rem;
+}
+
+.h3 + .rectTop {
     margin-top: 2.4rem;
 }
 
-.h4 + .geometryBlockTop {
+.h3 + .separator {
+    margin-top: 4.5rem;
+}
+
+.h4 + .serifTop,
+.h4 + .h1,
+.h4 + .h2,
+.h4 + .h3,
+.h4 + .h4,
+.h4 + .h5,
+.h4 + .h6 {
+    margin-top: 1.4rem;
+}
+
+.h4 + .rectTop {
     margin-top: 2.5rem;
 }
 
-.h5 + .geometryBlockTop {
+.h4 + .separator {
+    margin-top: 4.6rem;
+}
+
+.h5 + .serifTop,
+.h5 + .h1,
+.h5 + .h2,
+.h5 + .h3,
+.h5 + .h4,
+.h5 + .h5,
+.h5 + .h6 {
+    margin-top: 1.4rem;
+}
+
+.h5 + .rectTop {
     margin-top: 2.5rem;
 }
 
-.h6 + .geometryBlockTop {
+.h5 + .separator {
+    margin-top: 4.6rem;
+}
+
+.h6 + .serifTop,
+.h6 + .h1,
+.h6 + .h2,
+.h6 + .h3,
+.h6 + .h4,
+.h6 + .h5,
+.h6 + .h6 {
+    margin-top: 1.3rem;
+}
+
+.h6 + .rectTop {
     margin-top: 2.4rem;
 }
 
-.geometryBlockBottom + .geometryBlockTop {
+.h6 + .separator {
+    margin-top: 4.5rem;
+}
+
+.serifBottom + .h1 {
     margin-top: 3.4rem;
 }
 
-.geometryBlockBottom + .separator {
+.serifBottom + .h2 {
+    margin-top: 3.3rem;
+}
+
+.serifBottom + .h3 {
+    margin-top: 3.4rem;
+}
+
+.serifBottom + .h4 {
+    margin-top: 3.3rem;
+}
+
+.serifBottom + .h5 {
+    margin-top: 3.3rem;
+}
+
+.serifBottom + .h6 {
+    margin-top: 3.4rem;
+}
+
+.serifBottom + .serifTop {
+    margin-top: 1.3rem;
+}
+
+.serifBottom + .rectTop {
+    margin-top: 2.4rem;
+}
+
+.serifBottom + .separator {
+    margin-top: 4.4rem;
+}
+
+.rectBottom + .h1 {
+    margin-top: 4.4rem;
+}
+
+.rectBottom + .h2 {
+    margin-top: 4.3rem;
+}
+
+.rectBottom + .h3 {
+    margin-top: 4.4rem;
+}
+
+.rectBottom + .h4 {
+    margin-top: 4.3rem;
+}
+
+.rectBottom + .h5 {
+    margin-top: 4.3rem;
+}
+
+.rectBottom + .h6 {
+    margin-top: 4.4rem;
+}
+
+.rectBottom + .serifTop {
+    margin-top: 2.3rem;
+}
+
+.rectBottom + .rectTop {
+    margin-top: 3.4rem;
+}
+
+.rectBottom + .separator {
     margin-top: 5.5rem;
 }
 
-.separator + .geometryBlockTop {
+.separator + .h1 {
+    margin-top: 4.4rem;
+}
+
+.separator + .h2 {
+    margin-top: 4.3rem;
+}
+
+.separator + .h3 {
+    margin-top: 4.4rem;
+}
+
+.separator + .h4 {
+    margin-top: 4.3rem;
+}
+
+.separator + .h5 {
+    margin-top: 4.3rem;
+}
+
+.separator + .h6 {
+    margin-top: 4.4rem;
+}
+
+.separator + .serifTop {
+    margin-top: 4.5rem;
+}
+
+.separator + .rectTop {
     margin-top: 5.5rem;
 }
 
 .separator + .separator {
     margin-top: 5.5rem;
 }
+
+// h1-6, rectTop, rectBottom, sansTop, sansBottom, separator
+// C(11, 2) = 110

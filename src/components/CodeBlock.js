@@ -6,7 +6,7 @@ import styles from './CodeBlock.module.scss'
 export default ({ codeString, language, ...props }) => {
     if (props['react-live']) {
         return (
-            <LiveProvider className={'geometryBlockTop geometryBlockBottom'} code={codeString} noInline={true}>
+            <LiveProvider className={'rectTop rectBottom'} code={codeString} noInline={true}>
                 <LiveEditor />
                 <LiveError />
                 <LivePreview />
@@ -33,8 +33,8 @@ export default ({ codeString, language, ...props }) => {
                     return <pre
                         className={[
                             styles.preFormattedCodeBlock,
-                            'geometryBlockTop',
-                            'geometryBlockBottom'
+                            'rectTop',
+                            'rectBottom'
                         ].join(' ')}
                         style={style}
                     >

@@ -2,35 +2,20 @@
 @import '../styles/fonts';
 
 .unorderedList {
-    padding: 0;
-    list-style: none;
     color: $color-content-body;
+    list-style: none;
+    padding: 0;
 
     li {
         display: table;
-        margin-bottom: 0.6rem;
         line-height: 1.7;
+        margin-bottom: 0.6rem;
 
         &::before {
-            display: table-cell;
-            content: "\2022";
             color: $color-content-list-indicator-light;
+            content: "\2022";
+            display: table-cell;
             padding-right: 1.3rem;
-        }
-    }
-
-    ul, ol {
-        margin: 0;
-        margin-top: 0.6rem;
-
-        &:first-child {
-            margin-top: 0.6rem;
-        }
-
-        li {
-            &::before {
-                padding-left: 0;
-            }
         }
     }
 }

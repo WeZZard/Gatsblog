@@ -27,7 +27,7 @@ const components = {
             return <CodeBlock {...codeBlock} />
         } else {
             // it's possible to have a pre without a code in it
-            return  <pre className={'geometryBlockTop geometryBlockBottom'} {...props} />
+            return  <pre className={'rectTop rectBottom'} {...props} />
         }
     },
     p: props => {

@@ -1,3 +1,3 @@
 import React from 'react';
 
-export default props => <picture  className={'geometryBlockTop geometryBlockBottom'} {...props}/>
+export default props => <picture  className={'rectTop rectBottom'} {...props}/>

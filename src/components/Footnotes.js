@@ -7,7 +7,7 @@ export default (props) => {
     const footnotes = children.slice(1);
     return <React.Fragment>
         {separator}
-        <section className={styles.footnotes}>
+        <section className={[styles.footnotes, 'serifTop'].join(' ')}>
             <FootnoteList {...footnotes[0].props}/>
         </section>
     </React.Fragment>;
