@@ -1,2 +1,15 @@
 @import '../styles/fonts';
 @import '../styles/colors';
+
+.blockquote {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+    padding-left: 3.4rem;
+    padding-top: 2.1rem;
+    padding-bottom: 2.1rem;
+    border-left: 3px solid $color-content-quote-indicator;
+    font-weight: bold;
+    font-style: italic;
+    color: $color-content-quote;
+}

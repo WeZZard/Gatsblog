@@ -8,14 +8,8 @@
 
     li {
         display: table;
-        line-height: 1.7;
-        margin-bottom: 0.6rem;
-
-        &::before {
-            color: $color-content-list-indicator-light;
-            content: "\2022";
-            display: table-cell;
-            padding-right: 1.3rem;
-        }
+        line-height: calc(29 / 17);
+        margin: 0;
+        margin-bottom: 1.3rem;
     }
 }

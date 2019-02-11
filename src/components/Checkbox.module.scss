@@ -4,11 +4,6 @@
 
 // Under task-list-item
 
-:global(li.task-list-item) > .checkbox {
-    margin-left: 0;
-    margin-right: 1.3rem;
-}
-
 :global(li.task-list-item) {
     &::before {
         content: none;

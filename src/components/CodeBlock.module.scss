@@ -47,8 +47,9 @@
 
     .languageLabel {
         @include language;
-        color: $color-content-code-block-language;
+
         background-color: $color-theme;
+        color: $color-content-code-block-language;
     }
 
     @mixin code {

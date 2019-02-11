@@ -1,0 +1,29 @@
+@import '../styles/colors';
+@import '../styles/fonts';
+
+.orderedListItem {
+    &::before {
+        color: $color-content-list-indicator-dark;
+        content: counters(ordered-list, ".") " ";
+        counter-increment: ordered-list;
+        display: table-cell;
+        font-family: $font-text-monospaced;
+        font-size: 0.88em;
+        padding-right: 1.3rem;
+    }
+}
+
+.unorderedListItem {
+    &::before {
+        color: $color-content-list-indicator-light;
+        content: "\2022";
+        display: table-cell;
+        padding-right: 1.3rem;
+    }
+}
+
+.taskListItem {
+    &::before {
+        content: none;
+    }
+}
