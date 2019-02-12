@@ -4,10 +4,7 @@ const { makeMdxDocumentPayload } = require('../utils');
 const Template = path.resolve('src/templates/Page.js');
 
 module.exports = async (args) => {
-    const {
-        createPagesArgs,
-        siteLang,
-    } = args;
+    const { createPagesArgs } = args;
 
     const { graphql, actions } = createPagesArgs;
     const { createPage } = actions;
@@ -17,17 +14,10 @@ module.exports = async (args) => {
             allPage(sort: { fields: [createdTime], order: DESC }) {
                 edges {
                     node {
-                        title
-                        subtitle
-                        isPublished
-                        createdTime
-                        lastModifiedTime
+                        id
                         slug
                         lang
                         isLocalized
-                        parent {
-                            id
-                        }
                     }
                 }
             }
@@ -43,62 +33,31 @@ module.exports = async (args) => {
     const { edges: pages } = allPage || { edges: [] };
 
     await Promise.all(
-        pages.map( async (pageNode) => {
-            const mdxDocument = await makeMdxDocumentPayload({
-                id: pageNode.node.parent.id,
-                graphql: graphql,
-            });
-
-            const pagePayload = {
-                title: pageNode.node.title,
-                subtitle: pageNode.node.subtitle,
-                isPublished: pageNode.node.isPublished,
-                createdTime: pageNode.node.createdTime,
-                lastModifiedTime: pageNode.node.lastModifiedTime,
-                slug: pageNode.node.slug,
-                html: mdxDocument.html,
-                code: mdxDocument.code,
-                keywords: [],
-                description: mdxDocument.excerpt,
-            };
-
-            let localeSlug = pageNode.node.isLocalized
+        pages.map( async pageNode => {
+            const localeSlug = pageNode.node.isLocalized
                 ? `/${pageNode.node.lang}`
                 : '';
 
-            let path = [localeSlug, pageNode.node.slug].filter(_ => _).join('');
+            const originalPath = [localeSlug, pageNode.node.slug].filter(_ => _).join('');
 
-            console.log(`Create page for page: ${path}`);
-
-            const lang = (pageNode.node.lang && pageNode.node.lang.identifier) || siteLang;
-
-            createPage({
-                path: path,
-                component: Template,
-                context: {
-                    slug: path,
-                    isLocalized: pageNode.node.isLocalized,
-                    lang: lang,
-                    page: pagePayload,
-                },
-            });
+            let paths = [originalPath];
 
             if (!pageNode.node.isLocalized && pageNode.node.lang) {
-                let localizedPath = `/${pageNode.node.lang}/${pageNode.node.slug}`;
+                const localizedPath = `/${pageNode.node.lang}/${pageNode.node.slug}`;
+                paths.push(localizedPath);
+            }
 
-                console.log(`Create localized page for page: ${localizedPath}`);
+            paths.forEach(path => {
+                console.log(`Create page for page: ${path}.`);
 
                 createPage({
-                    path: localizedPath,
+                    path: path,
                     component: Template,
                     context: {
-                        slug: localizedPath,
-                        isLocalized: pageNode.node.isLocalized,
-                        lang: pageNode.node.lang.identifier,
-                        page: pagePayload,
+                        pageId: pageNode.node.id,
                     },
                 });
-            }
+            });
         })
     );
 };

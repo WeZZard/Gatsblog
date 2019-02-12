@@ -1,39 +1,27 @@
 import React from 'react'
 import MDXRenderer from "gatsby-mdx/mdx-renderer";
-import styles from './PostDocument.module.scss'
+import styles from './PageDocument.module.scss';
 
-import CategoryLabel from './CategoryLabel'
-import TagsLabel from './TagsLabel'
-import TimeLabel from './TimeLabel'
+import TimeLabel from './TimeLabel';
 import MetadataItem from './MetadataItem'
-import Math from './Math';
 import InlineMath from './InlineMath';
-import License from './License';
+import Math from './Math';
 
-class PostDocument extends React.Component {
+class PageDocument extends React.Component {
     render() {
-        const { post, defaultLicense } = this.props;
+        const { page } = this.props;
         const {
             title,
             subtitle,
             createdTime,
-            tags,
-            category,
             file: {
                 childMdx: {
                     code,
                 },
             },
-            license
-        } = post;
+        } = page;
 
         const createdTimeComponent = <TimeLabel dateTime={createdTime}/>;
-
-        const categoryComponent = <CategoryLabel category={category}/>;
-
-        const tagsComponent = tags.length > 0
-            ? <div><MetadataItem><TagsLabel tags={tags}/></MetadataItem></div>
-            : null;
 
         const subtitleComponent = subtitle
             ? <h2 className={styles.subtitle}>{subtitle}</h2>
@@ -45,18 +33,13 @@ class PostDocument extends React.Component {
                 {subtitleComponent}
                 <div className={styles.caption}>
                     <MetadataItem>{createdTimeComponent}</MetadataItem>
-                    <MetadataItem>{categoryComponent}</MetadataItem>
                 </div>
             </header>
             <section className={styles.content}>
                 <MDXRenderer scope={{InlineMath, Math}}>{code.body}</MDXRenderer>
             </section>
-            <footer className={styles.footer}>
-                {tagsComponent}
-                <div><License license={license || defaultLicense} /></div>
-            </footer>
         </article>
     }
 }
 
-export default PostDocument
+export default PageDocument

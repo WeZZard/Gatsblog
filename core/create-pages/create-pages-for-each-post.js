@@ -4,16 +4,10 @@ const { makePostPayload } = require('../utils');
 const Template = path.resolve('src/templates/Post.js');
 
 module.exports = async (args) => {
-    const {
-        createPagesArgs,
-        pendingSchemaData,
-        siteLang,
-        defaultLicense
-    } = args;
+    const { createPagesArgs } = args;
 
     const { graphql, actions } = createPagesArgs;
     const { createPage } = actions;
-    const { tags, categories } = pendingSchemaData;
 
     const result = await graphql(`
         {
