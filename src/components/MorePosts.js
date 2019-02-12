@@ -8,17 +8,20 @@ import ContentSeparator from './ContentSeparator'
 
 class MorePosts extends React.Component {
     render() {
-        const { earlier, later } = this.props;
+        const { earlierPostExcerpt, laterPostExcerpt } = this.props;
 
-        assert(earlier || later);
+        assert(earlierPostExcerpt || laterPostExcerpt);
 
         const morePostInfo = [
-            { item: earlier, title: 'Earlier Post' },
-            { item: later, title: 'Later Post' },
+            { item: earlierPostExcerpt, title: 'Earlier Post' },
+            { item: laterPostExcerpt, title: 'Later Post' },
         ].filter(_ => _.item);
 
         const components = morePostInfo
-            .map(info => <div key={info.title} className={styles.morePostItemContainer}>
+            .map(info => <div
+                key={info.title}
+                className={styles.morePostItemContainer}
+            >
                 <MorePostItem info={info}/>
             </div>);
 

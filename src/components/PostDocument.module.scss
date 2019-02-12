@@ -1,0 +1,65 @@
+@import '../styles/fonts';
+@import '../styles/colors';
+
+.document {
+    margin-left: 5.5rem;
+    margin-right: 5.5rem;
+    margin-top: 4rem;
+
+    .header {
+        .title {
+            color: $color-content-headline-primary;
+            font-family: $font-text-serif;
+            font-size: 4.4em;
+            font-weight: 300;
+            line-height: 1.18;
+            margin: 0;
+        }
+
+        .subtitle {
+            color: $color-content-headline-secondary;
+            font-family: $font-text-serif;
+            font-size: 2.8em;
+            font-weight: 300;
+            line-height: 1.46;
+            margin: 0;
+            margin-top: 0.5rem;
+        }
+
+        .caption {
+            margin-top: 4rem;
+        }
+    }
+
+    .content {
+        font-family: $font-text-serif;
+        font-size: 1.7em;
+        line-height: 1.7;
+        margin-bottom: 4.1rem;
+        margin-top: 4.1rem;
+
+        a {
+            color: $color-tint;
+            text-decoration: underline;
+            transition: color 0.3s ease-in-out;
+
+            &:visited {
+                color: $color-tint;
+            }
+
+            &:hover,
+            &:visited:hover {
+                color: $color-hover;
+                transition: color 0.3s ease-in-out;
+            }
+        }
+    }
+
+    .footer {
+        margin-bottom: 5.2rem;
+
+        .license {
+
+        }
+    }
+}

@@ -32,16 +32,18 @@ module.exports = async (args) => {
                 ) {
                     edges {
                         node {
+                            slug
                             title
                             subtitle
                             createdTime
                             documentIdentifier
                             tags
                             category
-                            parent {
-                                id
+                            file {
+                                childMdx {
+                                    excerpt(pruneLength: 300)
+                                }
                             }
-                            slug
                         }
                     }
                 }
@@ -64,16 +66,6 @@ module.exports = async (args) => {
 
             const itemsPerPage = await itemsPerPageForIndexPageName(page.name, graphql);
 
-            const items = await Promise.all(posts.map(async (post) => {
-                return await makePostPayload({
-                    post: post,
-                    graphql: graphql,
-                    tags: tags,
-                    categories: categories,
-                    style: "Excerpt",
-                })
-            }));
-
             createIndexPages({
                 createPage : createPage,
                 siteKeywords,
@@ -81,7 +73,7 @@ module.exports = async (args) => {
                 locale: locale,
                 itemComponentName : page.itemComponentName,
                 layoutComponentName: page.layoutComponentName,
-                items,
+                items: posts.map(post => post.node),
                 itemsPerPage,
                 createPageTitle: page.getPageTitle,
                 createPagePath: page.getPagePath,

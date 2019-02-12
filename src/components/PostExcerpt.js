@@ -8,7 +8,11 @@ class PostExcerpt extends React.Component {
     render() {
         const { item } = this.props;
 
-        const subtitleComponent =  item.subtitle !== "" ? <h2>{item.subtitle}</h2> : null;
+        console.log(item);
+
+        const subtitleComponent =  item.subtitle !== ""
+            ? <h2>{item.subtitle}</h2>
+            : null;
 
         return <section className={styles.postExcerptItem}>
             <header className={styles.postExcerptHeader}>
@@ -19,7 +23,10 @@ class PostExcerpt extends React.Component {
             </header>
             <section className={styles.postExcerptBody}>
                 <p>
-                    <Link to={item.slug} dangerouslySetInnerHTML={{ __html: item.excerpt }}/>
+                    <Link
+                        to={item.slug}
+                        dangerouslySetInnerHTML={{ __html: item.excerpt }}
+                    />
                 </p>
             </section>
             <footer className={styles.postExcerptFooter}>
@@ -30,4 +37,3 @@ class PostExcerpt extends React.Component {
 }
 
 export default PostExcerpt
-{}

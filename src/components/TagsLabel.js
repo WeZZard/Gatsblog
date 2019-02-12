@@ -7,8 +7,17 @@ import styles from "./TagsLabel.module.scss";
 class TagsLabel extends React.Component {
     render() {
         const { tags } = this.props;
+        const taxonomies = tags.map(tag => (
+            {
+                name: tag, slug: `/tag/${_.kebabCase(tag)}`
+            }
+        ));
 
-        return <Taxonomy name="Tags" className={styles.tags} taxonomies={tags}/>;
+        return <Taxonomy
+            name="Tags"
+            className={styles.tags}
+            taxonomies={taxonomies}
+        />;
     }
 }
 

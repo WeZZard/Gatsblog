@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from 'gatsby'
 import Main from '../components/Main'
-import PostFullText from '../components/PostFullText'
+import PostDocument from '../components/PostDocument'
 import MorePosts from '../components/MorePosts'
 
 class Post extends React.Component {
@@ -28,19 +28,15 @@ class Post extends React.Component {
             },
         } = post;
 
-        /*
         const morePostsComponent = (earlierPostExcerpt || laterPostExcerpt)
             ? <MorePosts
                 earlierPostExcerpt={earlierPostExcerpt}
                 laterPostExcerpt={laterPostExcerpt}
             />
             : null;
-        */
-
-        const morePostsComponent = null;
 
         return <Main tableOfContents={tableOfContents}>
-            <PostFullText post={post} defaultLicense={defaultLicense}/>
+            <PostDocument post={post} defaultLicense={defaultLicense}/>
             {morePostsComponent}
         </Main>
     }
@@ -76,6 +72,7 @@ export const pageQuery = graphql`
             }
         }
         earlierPostExcerpt: post(id: {eq: $earlierPostId}) {
+            slug
             title
             subtitle
             createdTime
@@ -88,6 +85,7 @@ export const pageQuery = graphql`
             }
         }
         laterPostExcerpt: post(id: {eq: $laterPostId}) {
+            slug
             title
             subtitle
             createdTime

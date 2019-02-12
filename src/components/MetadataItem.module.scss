@@ -1,6 +1,6 @@
 @import '../styles/colors';
 
-.postMetadataItem {
+.metadataItem {
     display: inline-block;
 
     &::after {
@@ -8,6 +8,13 @@
         content: '•';
         margin-left: 0.8rem;
         margin-right: 0.8rem;
+    }
+
+    &:only-child {
+        &::after {
+            content: none;
+            margin: 0;
+        }
     }
 
     &:last-child {

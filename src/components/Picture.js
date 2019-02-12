@@ -1,3 +1,7 @@
 import React from 'react';
+import styles from './Picture.module.scss'
 
-export default props => <picture  className={'rectTop rectBottom'} {...props}/>
+export default props => <picture
+    className={[styles.picture, 'rectTop', 'rectBottom'].join(' ')}
+    {...props}
+/>
