@@ -1,22 +1,22 @@
 @import '../styles/fonts';
 @import '../styles/colors';
 
-.licenseContainer {
+.license {
+    align-items: center;
     display: flex;
     flex-direction: row;
-    align-items: center;
     margin-top: 5.3rem;
 
-    .licenseImage {
+    .image {
         margin-right: 1.3rem;
     }
 
-    .licenseText {
+    .text {
+        color: $color-content-footer-text;
         font-family: $font-text-monospaced;
         font-size: 1.1em;
         font-weight: 400;
         line-height: 1.18;
-        color: $color-content-footer-text;
         text-transform: uppercase;
     }
 }

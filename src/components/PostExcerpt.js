@@ -8,31 +8,31 @@ class PostExcerpt extends React.Component {
     render() {
         const { item } = this.props;
 
-        console.log(item);
-
         const subtitleComponent =  item.subtitle !== ""
             ? <h2>{item.subtitle}</h2>
             : null;
 
-        return <section className={styles.postExcerptItem}>
-            <header className={styles.postExcerptHeader}>
+        const excerpt = item.file.childMdx.excerpt || '<em>The content is intentionally left blank.</em>';
+
+        return <div className={styles.postExcerpt}>
+            <section className={styles.header}>
                 <Link to={item.slug}>
                     <h1>{item.title}</h1>
                     {subtitleComponent}
                 </Link>
-            </header>
-            <section className={styles.postExcerptBody}>
+            </section>
+            <section className={styles.content}>
                 <p>
                     <Link
                         to={item.slug}
-                        dangerouslySetInnerHTML={{ __html: item.excerpt }}
+                        dangerouslySetInnerHTML={{ __html: excerpt }}
                     />
                 </p>
             </section>
-            <footer className={styles.postExcerptFooter}>
+            <section className={styles.footer}>
                 <PostExcerptMetadata post={item}/>
-            </footer>
-        </section>
+            </section>
+        </div>
     }
 }
 

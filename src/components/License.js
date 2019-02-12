@@ -1,51 +1,57 @@
 import React from "react"
 import styles from './License.module.scss'
-import CC40_BY from './CC40_BY'
-import CC40_BY_NC from './CC40_BY_NC'
-import CC40_BY_NC_ND from './CC40_BY_NC_ND'
-import CC40_BY_NC_SA from './CC40_BY_NC_SA'
-import CC40_BY_ND from './CC40_BY_ND'
-import CC40_BY_SA from './CC40_BY_SA'
+import CC40Image from './CC40Image'
 
 class License extends React.Component {
     render() {
         const { license } = this.props;
 
-        let IMG;
+        const cc40Regex = /^cc4\.0-((by)|(by-nc)|(by-nc-nd)|(by-nc-sa)|(by-nd)|(by-sa))$/i;
 
-        switch (license) {
-            case 'cc4.0-by':
-                IMG = CC40_BY;
-                break;
-            case 'cc4.0-by-nc':
-                IMG = CC40_BY_NC;
-                break;
-            case 'cc4.0-by-nc-nd':
-                IMG = CC40_BY_NC_ND;
-                break;
-            case 'cc4.0-by-nc-sa':
-                IMG = CC40_BY_NC_SA;
-                break;
-            case 'cc4.0-by-nd':
-                IMG = CC40_BY_ND;
-                break;
-            case 'cc4.0-by-sa':
-                IMG = CC40_BY_SA;
-                break;
-            default:
-                IMG = undefined;
-                break;
+        const cc40Match = cc40Regex.exec(license);
+
+        if (cc40Match) {
+            const optionString = cc40Match[1].toLowerCase();
+
+            const options = optionString.split('-');
+
+            const text = License.cc40TextForOptions(options);
+
+            return <div className={styles.license}>
+                <span className={styles.image}>
+                    <CC40Image options={optionString}/>
+                </span>
+                <span className={styles.text}>{text}</span>
+            </div>
+        } else {
+            return <div className={styles.license}>
+                <span className={styles.text}>{license}</span>
+            </div>
+        }
+    }
+
+    static cc40TextForOptions(options) {
+        const items = [];
+
+        if (options.includes('by')) {
+            items.push('Attribution')
         }
 
-        const imageComponent = IMG
-            ? <span className={styles.licenseImage}><IMG/></span>
-            : undefined;
+        if (options.includes('nc')) {
+            items.push('NonCommercial')
+        }
 
-        return <div className={styles.licenseContainer}>
-            {imageComponent}
-            <span className={styles.licenseText}>This work is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.</span>
-        </div>
-    }
+        if (options.includes('nd')) {
+            items.push('NonDerivatives')
+        }
+
+        if (options.includes('sa')) {
+            items.push('ShareAlike')
+        }
+
+        return `This work is licensed under a Creative Commons ${items.join('-')} 4.0 International License.`
+    };
+
 }
 
 export default License

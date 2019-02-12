@@ -6,95 +6,14 @@
         margin-bottom: 0;
     }
 
-    .morePostItemCaption {
+    .caption {
+        color: $color-tint;
+        display: block;
         font-family: $font-ui-sans;
         font-size: 1.5em;
         line-height: 1.2;
-        display: block;
         margin-bottom: 2rem;
         text-align: left;
         text-transform: uppercase;
-        color: $color-tint;
-    }
-
-    .morePostHeader {
-        a {
-            text-decoration: none;
-
-            h1,
-            h2 {
-                font-family: $font-ui-sans;
-                margin: 0;
-                display: inline-block;
-                transition: color 0.3s ease-in-out;
-            }
-
-            h1 {
-                display: block;
-                color: $color-ui-main-headline-primary;
-                font-size: 2.4em;
-                font-weight: 500;
-                line-height: 1.2;
-                margin-bottom: 1.7rem;
-            }
-
-            h2 {
-                display: block;
-                color: $color-ui-main-headline-secondary;
-                font-size: 1.5em;
-                font-weight: 400;
-                line-height: 1.2;
-                margin-bottom: 1.3rem;
-            }
-
-            &:visited {
-                h1 {
-                    color: $color-ui-main-headline-primary;
-                }
-
-                h2 {
-                    color: $color-ui-main-headline-secondary;
-                }
-            }
-
-            &:hover,
-            &:visited:hover {
-                h1,
-                h2 {
-                    color: $color-hover;
-                    transition: color 0.3s ease-in-out;
-                }
-            }
-        }
-    }
-
-    .morePostBody {
-        margin-top: 1.2rem;
-
-        p {
-            a {
-                text-decoration: none;
-                color: $color-content-summary;
-                font-family: $font-text-serif;
-                font-size: 1.7em;
-                line-height: 1.7;
-                margin: 0;
-                transition: color 0.3s ease-in-out;
-
-                &:visited {
-                    color: $color-content-summary;
-                }
-
-                &:hover,
-                &:visited:hover {
-                    color: $color-hover;
-                    transition: color 0.3s ease-in-out;
-                }
-            }
-        }
-    }
-
-    .morePostFooter {
-        margin-top: 2.2rem;
     }
 }

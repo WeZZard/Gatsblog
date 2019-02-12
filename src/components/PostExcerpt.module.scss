@@ -1,7 +1,7 @@
 @import '../styles/fonts';
 @import '../styles/colors';
 
-.postExcerptItem {
+.postExcerpt {
     margin-bottom: 5.1rem;
     margin-top: 0;
 
@@ -9,7 +9,7 @@
         margin-bottom: 0;
     }
 
-    .postExcerptHeader {
+    .header {
         a {
             h1,
             h2 {
@@ -55,7 +55,7 @@
         }
     }
 
-    .postExcerptBody {
+    .content {
         margin-top: 1.2rem;
 
         p {
@@ -81,7 +81,7 @@
         }
     }
 
-    .postExcerptFooter {
+    .footer {
         margin-top: 2.5rem;
     }
 }
