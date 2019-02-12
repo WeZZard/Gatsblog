@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './Image.module.scss'
 
 export default (props) => {
     const {
@@ -6,5 +7,10 @@ export default (props) => {
         alt,
         srcSet
     } = props;
-    return <img className={'rectTop rectBottom'} src={src} alt={alt} srcSet={srcSet}/>
+    return <img
+        className={[styles.image, 'rectTop', 'rectBottom'].join(' ')}
+        src={src}
+        alt={alt}
+        srcSet={srcSet}
+    />
 }

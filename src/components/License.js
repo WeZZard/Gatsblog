@@ -38,15 +38,15 @@ class License extends React.Component {
         }
 
         if (options.includes('nc')) {
-            items.push('NonCommercial')
+            items.push('Non-Commercial')
         }
 
         if (options.includes('nd')) {
-            items.push('NonDerivatives')
+            items.push('Non-Derivatives')
         }
 
         if (options.includes('sa')) {
-            items.push('ShareAlike')
+            items.push('Share-Alike')
         }
 
         return `This work is licensed under a Creative Commons ${items.join('-')} 4.0 International License.`
