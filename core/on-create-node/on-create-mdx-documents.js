@@ -1,5 +1,4 @@
 const MDXMetadata = require('../MDX/MDXMetadata');
-const MDXAccessoryInfo = require('../MDX/MDXAccessoryInfo');
 const {
     createNodeForPost,
     createNodeForPage,
@@ -22,8 +21,6 @@ module.exports = (args) => {
 
         const metadata = new MDXMetadata(args);
 
-        const accessories = new MDXAccessoryInfo(args);
-
         if (isPreviewEnabled || metadata.isPublished) {
             switch (metadata.documentType) {
                 case 'Post':
@@ -43,7 +40,6 @@ module.exports = (args) => {
                             isLocalized: metadata.isLocalized,
                             license: metadata.license,
                             file: metadata.inlineFileLink,
-                            accessories,
                         },
                         nodeIdBase: metadata.relativePath,
                         nodeContent: node.rawBody,
@@ -70,7 +66,6 @@ module.exports = (args) => {
                             isLocalized: metadata.isLocalized,
                             license: metadata.license,
                             file: metadata.inlineFileLink,
-                            accessories,
                         },
                         nodeIdBase: metadata.relativePath,
                         nodeContent: node.rawBody,

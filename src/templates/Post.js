@@ -65,21 +65,6 @@ export const pageQuery = graphql`
             license
             tags
             category
-            accessories {
-                images {
-                    src {
-                        publicURL
-                        childImageSharp {
-                            fluid {
-                                ...GatsbyImageSharpFluid
-                                ...GatsbyImageSharpFluid_withWebp
-                            }
-                        }
-                    }
-                    alt
-                    title
-                }
-            }
             file {
                 childMdx {
                     code {
