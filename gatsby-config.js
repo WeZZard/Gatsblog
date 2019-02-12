@@ -2,6 +2,23 @@ require("dotenv").config({
     path: `.env.${process.env.NODE_ENV}`,
 });
 
+const visit = require('unist-util-visit');
+
+function guardBackslashesForMdx() {
+    const nodeTypes = [
+        'text',
+        'code',
+        'inlineCode',
+        'math',
+        'inlineMath',
+    ];
+    return tree => visit(tree, nodeTypes, node => {
+        if (/\\/.test(node.value)) {
+            node.value = node.value.replace(/\\/g, "\\\\");
+        }
+    })
+}
+
 module.exports = {
     plugins: [
         {
@@ -37,9 +54,10 @@ module.exports = {
             resolve: `gatsby-mdx`,
             options: {
                 extensions: ['.mdx', '.md'],
+                mdPlugins: [guardBackslashesForMdx],
                 gatsbyRemarkPlugins: [
                     {
-                        resolve: `gatsby-remark-katex`,
+                        resolve: `gatsby-remark-katex-mdx`,
                     },
                     {
                         resolve: `gatsby-remark-primitive-images`,

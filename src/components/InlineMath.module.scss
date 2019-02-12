@@ -1,0 +1,20 @@
+@import '../styles/colors';
+
+.inlineMath {
+    background-color: $color-content-math-block-background;
+    border-left: solid 2px $color-content-math-block-indicator;
+    border-right: solid 2px $color-content-math-block-indicator;
+    font-size: 0.73em;
+    font-weight: 400;
+    margin: 0;
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    padding-top: 0.6rem;
+    word-break: break-all;
+
+    :global(.katex) {
+        color: $color-content-math;
+    }
+}

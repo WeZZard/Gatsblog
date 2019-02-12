@@ -25,6 +25,10 @@ hendrerit purus. Ut pellentesque vestibulum quam, et pretium magna posuere quis.
 class Name {
     var property: Int {
     }
+    
+    func foo() {
+        print("\n");
+    }
 }
 ```
 

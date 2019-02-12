@@ -1,6 +1,5 @@
 import React from 'react'
 import { MDXProvider } from '@mdx-js/tag'
-import CodeBlock from './src/components/CodeBlock'
 import Heading from './src/components/Heading'
 import Table from './src/components/Table'
 import Image from './src/components/Image'
@@ -12,9 +11,10 @@ import Blockquote from './src/components/Blockquote'
 import Separator from './src/components/Separator'
 import Checkbox from './src/components/Checkbox'
 import Strong from './src/components/Strong'
-import InlineCode from './src/components/InlineCode'
 import Footnotes from './src/components/Footnotes'
 import Superscript from './src/components/Superscript'
+import CodeBlock from './src/components/CodeBlock'
+import InlineCode from './src/components/InlineCode'
 import { preToCodeBlock } from 'mdx-utils'
 
 // components is its own object outside of render so that the references to
@@ -22,9 +22,12 @@ import { preToCodeBlock } from 'mdx-utils'
 const components = {
     pre: props => {
         const codeBlock = preToCodeBlock(props);
+        const mathBlock = preToMathBlock(props);
         // if there's a codeString and some props, we passed the test
         if (codeBlock) {
             return <CodeBlock {...codeBlock} />
+        } else if (preToMathBlock) {
+            return <MathBlock {...mathBlock}/>
         } else {
             // it's possible to have a pre without a code in it
             return  <pre className={'rectTop rectBottom'} {...props} />
@@ -66,7 +69,7 @@ const components = {
         }
         return <div {...props}/>
     },
-    sup: props => <Superscript {...props}/>
+    sup: props => <Superscript {...props}/>,
 };
 
 export default ({ element }) => (
@@ -98,26 +101,16 @@ const pToPicture = (pProps) => {
     }
 };
 
-const pToMathBlock = (pProps) => {
+const preToMathBlock = (preProps) => {
     if (
-        pProps.children &&
-        Array.isArray(pProps.children)
+        // children is MDXTag
+        preProps.children &&
+        // MDXTag props
+        preProps.children.props &&
+        // if MDXTag is going to render a <code>
+        preProps.children.props.name === "Math"
     ) {
-        const content = pProps.children.map(child => {
-            if (child.props && child.props.children) {
-                return child.props.children;
-            } else {
-                return `${child}`;
-            }
-        }).join('');
-
-        console.log('content: ', content);
-
-        if (content.startsWith('$$\n') && content.endsWith('\n$$')) {
-            const mathFormula = content.substring(3, content.length - 3);
-            return {
-                children: mathFormula,
-            }
-        }
+        // we have a <pre><Math> situation
+        return preProps.children.props;
     }
 };

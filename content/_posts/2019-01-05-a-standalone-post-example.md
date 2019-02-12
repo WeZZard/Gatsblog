@@ -202,10 +202,10 @@ minus id quod maxime placeat facere
 int main() {
     int x;
  
-    printf("Input an integer\\n");
+    printf("Input an integer\n");
     scanf("%d", &x); // %d is used for an integer
  
-    printf("The integer is: %d\\n", x);
+    printf("The integer is: %d\n", x);
  
     return 0;
 }
@@ -219,7 +219,7 @@ int main() {
 ```
 
 ```c
-printf("The integer is: %d\\n", x);
+printf("The integer is: %d\n", x);
 ```
 
 - Unordered List Item 1

@@ -3,7 +3,6 @@ import styles from './UnorderedList.module.scss'
 import ListItem from './ListItem'
 
 export default (props) => {
-    console.log(props);
     const { className, children } = props;
     const normalizedChildren = normalizeChildren(children);
     const listClassName = [className, styles.unorderedList, "serifTop", "serifBottom"].join(' ');

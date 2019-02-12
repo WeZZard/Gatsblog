@@ -7,6 +7,8 @@ import CategoryLabel from './CategoryLabel'
 import TagsLabel from './TagsLabel'
 import TimeLabel from './TimeLabel'
 import License from './License';
+import Math from './Math';
+import InlineMath from './InlineMath';
 
 class PostFullText extends React.Component {
     render() {
@@ -40,7 +42,7 @@ class PostFullText extends React.Component {
                 </div>
             </header>
             <section className={styles.postContent}>
-                <MDXRenderer>{code.body}</MDXRenderer>
+                <MDXRenderer scope={{InlineMath, Math}}>{code.body}</MDXRenderer>
             </section>
             <footer className={styles.postFooter}>
                 <License license={license || defaultLicense} />

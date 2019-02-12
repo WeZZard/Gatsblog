@@ -8,32 +8,6 @@ html {
     font-weight: 300;
 }
 
-span.katex-display {
-    background-color: $color-content-math-block-background;
-    color: $color-content-heading;
-    margin-bottom: 4.9rem;
-    margin-left: -2.1rem;
-    margin-right: -2.1rem;
-    margin-top: 4.5rem;
-    overflow-x: scroll;
-    padding: 2.1rem;
-}
-
-p {
-    span.katex {
-        background-color: $color-content-math-block-background;
-        border-bottom: solid 2px $color-content-math-block-indicator;
-        color: $color-content-heading;
-        font-size: 0.88em;
-        font-weight: 400;
-        line-height: 1.143;
-        margin: 0;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-        padding-top: 0.5rem;
-    }
-}
-
 // h1-6, rectTop, rectBottom, serifTop, serifBottom, sansTop, sansBottom,
 // separator
 
