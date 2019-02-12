@@ -15,13 +15,12 @@ module.exports = async (args) => {
     const { graphql, actions } = createPagesArgs;
     const { createPage } = actions;
 
-    const { tags, categories, locales } = pendingSchemaData;
+    const { tags, locales } = pendingSchemaData;
 
     await Promise.all(locales.map(async (locale) => {
         const args = {
             locale,
             tags,
-            categories,
             graphql,
             createPage,
             siteLang,
@@ -35,7 +34,6 @@ module.exports = async (args) => {
 const _createPageForTagsForLocale = async (args) => {
     const {
         tags,
-        categories,
         locale,
         siteLang,
         siteKeywords,
@@ -65,15 +63,17 @@ const _createPageForTagsForLocale = async (args) => {
                     ) {
                         edges {
                             node {
+                                slug
                                 title
                                 subtitle
                                 createdTime
                                 documentIdentifier
                                 tags
                                 category
-                                slug
-                                parent {
-                                    id
+                                file {
+                                    childMdx {
+                                        excerpt(pruneLength: 300)
+                                    }
                                 }
                             }
                         }
@@ -95,16 +95,6 @@ const _createPageForTagsForLocale = async (args) => {
                 edges: posts
             } = allPost || { edges: [] };
 
-            const items = await Promise.all(posts.map(async (post) => {
-                return await makePostPayload({
-                    post: post,
-                    graphql: graphql,
-                    tags: tags,
-                    categories: categories,
-                    style: "Excerpt",
-                })
-            }));
-
             await createIndexPages({
                 createPage,
                 siteKeywords,
@@ -112,7 +102,7 @@ const _createPageForTagsForLocale = async (args) => {
                 locale: locale,
                 itemComponentName : page.itemComponentName,
                 layoutComponentName: page.layoutComponentName,
-                items,
+                items: posts.map(post => post.node),
                 itemsPerPage,
                 createPageTitle: (locale, pageIndex) => page.getPageTitle(tag, locale, pageIndex),
                 createPagePath: (locale, pageIndex) => page.getPagePath(tag, locale, pageIndex),

@@ -1,6 +1,5 @@
 const createIndexPages = require('./_create-index-pages');
 const { category: page } = require('./page-meta');
-const { makePostPayload } = require('../utils');
 const { itemsPerPageForIndexPageName } = require('../config');
 
 module.exports = async (args) => {
@@ -15,12 +14,11 @@ module.exports = async (args) => {
     const { graphql, actions } = createPagesArgs;
     const { createPage } = actions;
 
-    const { tags, categories, locales } = pendingSchemaData;
+    const { categories, locales } = pendingSchemaData;
 
     await Promise.all(locales.map(async (locale) => {
         const args = {
             locale,
-            tags,
             categories,
             graphql,
             createPage,
@@ -34,7 +32,6 @@ module.exports = async (args) => {
 
 const _createPageForCategoriesForLocale = async (args) => {
     const {
-        tags,
         categories,
         locale,
         siteLang,
@@ -55,31 +52,33 @@ const _createPageForCategoriesForLocale = async (args) => {
                 ) : 'isLocalized: { eq: false }';
 
             const result = await graphql(`
-            {
-                allPost(
-                    filter: { 
-                        category: { eq: "${category.name}" }
-                        ${postFilter} 
-                    }
-                    sort: { fields: [createdTime], order: DESC }
-                ) {
-                    edges {
-                        node {
-                            title
-                            subtitle
-                            createdTime
-                            documentIdentifier
-                            tags
-                            category
-                            slug
-                            parent {
-                                id
+                {
+                    allPost(
+                        filter: { 
+                            category: { eq: "${category.name}" }
+                            ${postFilter} 
+                        }
+                        sort: { fields: [createdTime], order: DESC }
+                    ) {
+                        edges {
+                            node {
+                                slug
+                                title
+                                subtitle
+                                createdTime
+                                documentIdentifier
+                                tags
+                                category
+                                file {
+                                    childMdx {
+                                        excerpt(pruneLength: 300)
+                                    }
+                                }
                             }
                         }
                     }
                 }
-            }
-        `);
+            `);
 
             if (result.errors) {
                 throw result.errors
@@ -95,16 +94,6 @@ const _createPageForCategoriesForLocale = async (args) => {
                 edges: posts
             } = allPost || { edges: [] };
 
-            const items = await Promise.all(posts.map(async (post) => {
-                return await makePostPayload({
-                    post: post,
-                    graphql: graphql,
-                    tags: tags,
-                    categories: categories,
-                    style: "Excerpt",
-                })
-            }));
-
             createIndexPages({
                 createPage : createPage,
                 siteKeywords,
@@ -112,7 +101,7 @@ const _createPageForCategoriesForLocale = async (args) => {
                 locale: locale,
                 itemComponentName : page.itemComponentName,
                 layoutComponentName: page.layoutComponentName,
-                items,
+                items: posts.map(post => post.node),
                 itemsPerPage,
                 createPageTitle: (locale, pageIndex) => page.getPageTitle(category, locale, pageIndex),
                 createPagePath: (locale, pageIndex) => page.getPagePath(category, locale, pageIndex),

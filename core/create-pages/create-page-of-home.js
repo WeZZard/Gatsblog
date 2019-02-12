@@ -1,6 +1,5 @@
 const createIndexPages = require('./_create-index-pages');
 const { home: page } = require('./page-meta');
-const { makePostPayload } = require('../utils');
 const { itemsPerPageForIndexPageName } = require('../config');
 
 module.exports = async (args) => {
@@ -14,7 +13,7 @@ module.exports = async (args) => {
 
     const { graphql, actions } = createPagesArgs;
     const { createPage } = actions;
-    const { locales, tags, categories } = pendingSchemaData;
+    const { locales } = pendingSchemaData;
 
     await Promise.all(
         locales.map(async (locale) => {
