@@ -4,14 +4,14 @@
     border: 0;
     text-align: center;
 
-    &:before {
-        margin: auto;
-        display: inline-block;
+    &::before {
+        color: $color-content-divider;
         content: ". . .";
-        position: relative;
-        top: -2.8rem;
+        display: inline-block;
         font-size: 1.65em;
         font-weight: 600;
-        color: $color-content-divider;
+        margin: auto;
+        position: relative;
+        top: -2.8rem;
     }
 }

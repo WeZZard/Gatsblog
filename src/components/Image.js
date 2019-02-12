@@ -1,16 +1,19 @@
 import React from 'react';
 import styles from './Image.module.scss'
+import { edgesWithGridSystem } from '../utils'
 
-export default (props) => {
+export default props => {
     const {
         src,
         alt,
         srcSet
     } = props;
-    return <img
-        className={[styles.image, 'rectTop', 'rectBottom'].join(' ')}
-        src={src}
-        alt={alt}
-        srcSet={srcSet}
-    />
+
+    const className = edgesWithGridSystem({
+        style: styles.image,
+        top: 'rect',
+        bottom: 'rect',
+    });
+
+    return <img className={className} src={src} alt={alt} srcSet={srcSet}/>
 }

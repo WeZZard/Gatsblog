@@ -3,14 +3,13 @@
 
 @mixin heading {
     color: $color-content-heading;
-    font-family: $font-text-sans;
-    margin-left: 0;
-    margin-right: 0;
+    margin: 0;
 }
 
 .h1 {
     @include heading;
 
+    font-family: $font-text-sans;
     font-size: calc(3.2em * 10 / 17);
     font-weight: 400;
     line-height: calc(42 / 32);
@@ -19,6 +18,7 @@
 .h2 {
     @include heading;
 
+    font-family: $font-text-sans;
     font-size: calc(2.6em * 10 / 17);
     font-weight: 500;
     line-height: calc(37 / 26);
@@ -27,6 +27,7 @@
 .h3 {
     @include heading;
 
+    font-family: $font-text-sans;
     font-size: calc(2.1em * 10 / 17);
     font-weight: 600;
     line-height: calc(34 / 21);
@@ -35,6 +36,7 @@
 .h4 {
     @include heading;
 
+    font-family: $font-text-sans;
     font-size: calc(1.9em * 10 / 17);
     font-weight: 600;
     line-height: calc(32 / 19);
@@ -43,6 +45,7 @@
 .h5 {
     @include heading;
 
+    font-family: $font-text-sans;
     font-size: calc(1.7em * 10 / 17);
     font-weight: 700;
     line-height: calc(31 / 17);
@@ -51,6 +54,7 @@
 .h6 {
     @include heading;
 
+    font-family: $font-text-sans;
     font-size: calc(1.5em * 10 / 17);
     font-weight: 800;
     line-height: calc(30 / 15);

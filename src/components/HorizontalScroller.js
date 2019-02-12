@@ -1,12 +1,13 @@
 import React from 'react'
 import styles from './HorizontalScroller.module.scss'
+import { edgesWithGridSystem } from '../utils'
 
-class HorizontalScroller extends React.Component {
-    render() {
-        const props = this.props;
+export default props => {
+    const className = edgesWithGridSystem({
+        style: styles.horizontalScroller,
+        top: 'rect',
+        bottom: 'rect',
+    });
 
-        return <div className={[styles.horizontalScroller, 'rectTop', 'rectBottom'].join(' ')} {...props}/>
-    }
+    return <div className={className} {...props}/>
 }
-
-export default HorizontalScroller

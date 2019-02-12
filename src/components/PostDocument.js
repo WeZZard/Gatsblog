@@ -1,13 +1,11 @@
 import React from 'react'
-import MDXRenderer from "gatsby-mdx/mdx-renderer";
+import Renderer from "./Renderer";
 import styles from './PostDocument.module.scss'
 
+import TimeLabel from './TimeLabel'
 import CategoryLabel from './CategoryLabel'
 import TagsLabel from './TagsLabel'
-import TimeLabel from './TimeLabel'
 import MetadataItem from './MetadataItem'
-import Math from './Math';
-import InlineMath from './InlineMath';
 import License from './License';
 
 class PostDocument extends React.Component {
@@ -49,7 +47,7 @@ class PostDocument extends React.Component {
                 </div>
             </header>
             <section className={styles.content}>
-                <MDXRenderer scope={{InlineMath, Math}}>{code.body}</MDXRenderer>
+                <Renderer textStyle={'serif'}>{code.body}</Renderer>
             </section>
             <footer className={styles.footer}>
                 {tagsComponent}

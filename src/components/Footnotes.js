@@ -1,13 +1,19 @@
 import React from 'react';
 import styles from './Footnotes.module.scss'
+import { edgesWithGridSystem } from '../utils'
 
-export default (props) => {
+export default props => {
     const { children } = props;
     const separator = children[0];
     const footnotes = children.slice(1);
+    const className = edgesWithGridSystem({
+        style: styles.footnotes,
+        top: 'sans',
+        bottom: 'sans',
+    });
     return <React.Fragment>
         {separator}
-        <section className={[styles.footnotes, 'serifTop'].join(' ')}>
+        <section className={className}>
             <FootnoteList {...footnotes[0].props}/>
         </section>
     </React.Fragment>;

@@ -3,7 +3,7 @@ import styles from './ListItem.module.scss'
 
 import Span from './Span'
 
-export default (props) => {
+export default props => {
     const { type, children } = props;
     const normalizedChildren = normalizeChildren(children);
     const processedChildren = processChildren(

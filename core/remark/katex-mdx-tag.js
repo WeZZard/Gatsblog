@@ -1,7 +1,6 @@
 const visit = require(`unist-util-visit`);
-const remarkMath = require(`remark-math`);
 
-module.exports = ({ markdownAST }, pluginOptions = {}) => {
+const wrapMdxTags = (markdownAST) => {
     visit(markdownAST, `inlineMath`, node => {
         node.type = `html`;
         node.value = `<InlineMath>{"${node.value}"}</InlineMath>`
@@ -13,4 +12,4 @@ module.exports = ({ markdownAST }, pluginOptions = {}) => {
     })
 };
 
-module.exports.setParserPlugins = () => [remarkMath];
+module.exports = () => { return wrapMdxTags };

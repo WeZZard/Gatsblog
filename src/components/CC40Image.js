@@ -15,7 +15,7 @@ const getName = (options) => {
     }
 };
 
-export default (props) => <StaticQuery
+export default props => <StaticQuery
     query={graphql`
         {
             by: file(relativePath: { eq: "images/cc4.0-by.png" }) {

@@ -1,11 +1,9 @@
 import React from 'react'
-import MDXRenderer from "gatsby-mdx/mdx-renderer";
+import Renderer from "./Renderer";
 import styles from './PageDocument.module.scss';
 
 import TimeLabel from './TimeLabel';
 import MetadataItem from './MetadataItem'
-import InlineMath from './InlineMath';
-import Math from './Math';
 
 class PageDocument extends React.Component {
     render() {
@@ -36,7 +34,7 @@ class PageDocument extends React.Component {
                 </div>
             </header>
             <section className={styles.content}>
-                <MDXRenderer scope={{InlineMath, Math}}>{code.body}</MDXRenderer>
+                <Renderer textStyle={'sans'}>{code.body}</Renderer>
             </section>
         </article>
     }

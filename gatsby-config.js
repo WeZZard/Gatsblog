@@ -2,7 +2,9 @@ require("dotenv").config({
     path: `.env.${process.env.NODE_ENV}`,
 });
 
-const visit = require('unist-util-visit');
+const remarkMath = require(`remark-math`);
+const mdxBackSlashSafeGuarder = require('./core/remark/mdx-backslash-safe-guarder');
+const kaTexMdxTag = require(`./core/remark/katex-mdx-tag`);
 
 function guardBackslashesForMdx() {
     const nodeTypes = [
@@ -54,11 +56,8 @@ module.exports = {
             resolve: `gatsby-mdx`,
             options: {
                 extensions: ['.mdx', '.md'],
-                mdPlugins: [guardBackslashesForMdx],
+                mdPlugins: [remarkMath, mdxBackSlashSafeGuarder, kaTexMdxTag],
                 gatsbyRemarkPlugins: [
-                    {
-                        resolve: `gatsby-remark-katex-mdx`,
-                    },
                     {
                         resolve: `gatsby-remark-primitive-images`,
                         options: {
