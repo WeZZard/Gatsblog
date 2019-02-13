@@ -1,38 +1,39 @@
 @import '../styles/colors';
 
-.footer {
+.contentFooter {
     padding-left: 5.5rem;
     padding-right: 5.5rem;
     padding-top: 5.3rem;
     padding-bottom: 5.2rem;
-}
 
-.contentFooterItem {
-    margin-bottom: 0.8rem;
+    .contentFooterItem {
+        margin-bottom: 0.8rem;
 
-    &:last-child {
-        margin-bottom: 0;
-    }
+        &:last-child {
+            margin-bottom: 0;
+        }
 
-    span {
-        color: $color-ui-footnote;
-        font-size: 1.1em;
-        font-weight: 400;
-        line-height: 1.18;
-
-        a {
+        span {
             color: $color-ui-footnote;
-            transition: color 0.3s ease-in-out;
+            font-size: 1.1em;
+            font-weight: 400;
+            line-height: 1.18;
 
-            &:visited {
+            a {
                 color: $color-ui-footnote;
-            }
-
-            &:hover,
-            &:visited:hover {
-                color: $color-hover;
                 transition: color 0.3s ease-in-out;
+
+                &:visited {
+                    color: $color-ui-footnote;
+                }
+
+                &:hover,
+                &:visited:hover {
+                    color: $color-hover;
+                    transition: color 0.3s ease-in-out;
+                }
             }
         }
     }
+
 }
