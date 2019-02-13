@@ -25,18 +25,26 @@
             margin: 0;
             margin-top: 0.5rem;
         }
+    }
 
-        .caption {
-            margin-top: 4rem;
-        }
+    .caption {
+        margin: 0;
+    }
+
+    .title + .caption {
+        margin-top: 5.3rem;
+    }
+
+    .subtitle + .caption {
+        margin-top: 5.3rem;
     }
 
     .content {
         font-family: $font-text-serif;
         font-size: 1.7em;
         line-height: 1.7;
-        margin-bottom: 4.1rem;
-        margin-top: 4.1rem;
+        margin-bottom: 5.3rem;
+        margin-top: 5.5rem;
 
         a {
             color: $color-tint;
@@ -57,6 +65,5 @@
 
     .footer {
         margin-bottom: 5.5rem;
-        margin-top: 5.5rem;
     }
 }
