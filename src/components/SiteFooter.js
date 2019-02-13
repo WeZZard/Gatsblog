@@ -7,19 +7,17 @@ class Slogan extends React.Component {
         const { message } = this.props;
 
         return (
-            <div className={styles.sloganItem}>
-                <span
-                    className={styles.slogan}
-                    dangerouslySetInnerHTML= {{ __html: message}}
-                />
-            </div>
+            <span
+                className={styles.slogan}
+                dangerouslySetInnerHTML= {{ __html: message}}
+            />
         )
     }
 }
 
 class SiteFooter extends React.Component {
     render() {
-        const customFooterMessages=(
+        const messages=(
             <StaticQuery
                 query={siteFooterMessagesQuery}
                 render={data => {
@@ -37,11 +35,9 @@ class SiteFooter extends React.Component {
 
                     return <React.Fragment>
                         {sloganComponents}
-                        <div key="copyright" className={styles.copyrightItem}>
-                            <span>
+                        <span key="copyright" className={styles.copyright}>
                                 {`© ${new Date().getFullYear()} ${siteOwner} All Copyright Reserved.`}
-                            </span>
-                        </div>
+                        </span>
                     </React.Fragment>
                 }}
             />
@@ -49,7 +45,7 @@ class SiteFooter extends React.Component {
 
         return (
             <div className={styles.siteFooter}>
-                {customFooterMessages}
+                {messages}
             </div>
         )
     }

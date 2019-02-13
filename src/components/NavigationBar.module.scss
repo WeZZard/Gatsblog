@@ -8,7 +8,6 @@
     text-shadow: 0 2px 4px $color-ui-nav-headline-shadow;
     text-transform: uppercase;
     text-align: end;
-    margin-bottom: 2.8rem;
 
     a {
         text-decoration: none;
@@ -59,6 +58,7 @@
     .navigationContent {
         ol {
             margin: 0;
+            padding: 0;
             list-style: none;
 
             li {

@@ -2,80 +2,91 @@
 @import '../styles/fonts';
 
 .tableOfContents {
-    padding-top: 1.7rem;
-    padding-bottom: 1.8rem;
-    padding-right: 2.1rem;
-    padding-left: 2.1rem;
-    flex-grow: 1;
-    width: calc(100% - 4.2rem);
-
-    text-align: right;
-    -webkit-backdrop-filter:saturate(180%) blur(20px);
+    align-items: stretch;
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
     backdrop-filter: saturate(180%) blur(20px);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 1;
+    width: 100%;
+
+    .header {
+        color: $color-ui-nav-headline-normal;
+        font-size: 1.8em;
+        font-weight: 400;
+        line-height: 1.17;
+        margin: 0;
+        margin-left: 2.1rem;
+        margin-right: 2.1rem;
+        margin-top: 1.7rem;
+        padding: 0;
+        text-align: right;
+        text-transform: uppercase;
+    }
+
+    .list {
+        color: $color-ui-nav-headline-normal;
+        font-family: $font-text-monospaced;
+        font-size: 1.1em;
+        font-weight: 400;
+        line-height: 1.182;
+        margin-bottom: 1.8rem;
+        margin-left: 2.1rem;
+        margin-right: 2.1rem;
+        margin-top: 1.6rem;
+        overflow-y: scroll;
+
+        ol {
+            counter-reset: ordered-list;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+                counter-increment: ordered-list;
+                margin-bottom: 1.6rem;
+                text-align: right;
+                text-transform: uppercase;
+                padding: 0;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+
+                a {
+                    color: $color-ui-nav-headline-normal;
+                    text-decoration: none;
+                    transition: color 0.3s ease-in-out;
+
+                    &:visited {
+                        color: $color-ui-nav-headline-normal;
+                    }
+
+                    &:hover,
+                    &:visited:hover {
+                        color: $color-hover;
+                        transition: color 0.3s ease-in-out;
+                    }
+
+                    &::after {
+                        content: counters(ordered-list, ".") " ";
+                        margin-left: 1.3rem;
+                    }
+                }
+            }
+        }
+    }
 }
 
-.tableOfContentsBackgroundBlur {
+.backdrop {
     background-color: $_black;
 }
 
 @supports ((-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
-    .tableOfContentsBackgroundBlur {
-        background-color: transparentize($_black, 0.5);
+    .backdrop {
         -webkit-backdrop-filter:saturate(180%) blur(20px);
         backdrop-filter: saturate(180%) blur(20px);
-    }
-}
-
-.tableOfContentsHeader {
-    h1 {
-        margin: 0;
-        padding: 0;
-        text-transform: uppercase;
-        color: $color-ui-nav-headline-normal;
-        font-weight: 400;
-        font-size: 1.8em;
-        line-height: 1.17;
-    }
-}
-
-.tableOfContentsList {
-    font-size: 1.1em;
-    font-weight: 400;
-    line-height: 1.182;
-    font-family: $font-text-monospaced;
-    color: $color-ui-nav-headline-normal;
-
-    ol {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        counter-reset: ordered-list;
-
-        li {
-            counter-increment: ordered-list;
-            margin-top: 1.6rem;
-            text-transform: uppercase;
-
-            a {
-                text-decoration: none;
-                color: $color-ui-nav-headline-normal;
-                transition: color 0.3s ease-in-out;
-
-                &:visited {
-                    color: $color-ui-nav-headline-normal;
-                }
-
-                &:hover,
-                &:visited:hover {
-                    color: $color-hover;
-                    transition: color 0.3s ease-in-out;
-                }
-
-                &::after {
-                    content: counters(ordered-list, ".") " ";
-                    margin-left: 1.3rem;
-                }
-            }
-        }
+        background-color: transparentize($_black, 0.5);
     }
 }

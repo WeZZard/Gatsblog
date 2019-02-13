@@ -20,34 +20,38 @@ class Main extends React.Component {
             children
         } = this.props;
 
-        const tableOfContentsComponents = tableOfContents
-            ? <TableOfContents tableOfContents={tableOfContents}/>
+        const tableOfContentsComponents = (tableOfContents && tableOfContents.items && tableOfContents.items.length > 0)
+            ? <section className={styles.tableOfContents}>
+                <TableOfContents tableOfContents={tableOfContents}/>
+            </section>
             : null;
 
         return (
-            <div className={styles.appContainer}>
+            <div className={styles.app}>
                 <SEO
                     lang={lang}
                     title={pageTitle}
                     description={description}
                     keywords={keywords}
                 />
-                <section className={styles.controlWrapper}>
-                    <header className={styles.navigationContainer}>
+                <section className={styles.navigation}>
+                    <section className={styles.navigationBar}>
                         <NavigationBar selectedNavigationItem={selectedNavigationItem}/>
-                        {tableOfContentsComponents}
-                    </header>
-                    <section className={styles.siteFooterContainer}>
-                        <SiteFooter/>
+
                     </section>
-                    <div className={styles.controlWrapperOverlay}/>
+                    {tableOfContentsComponents}
+                    <div className={styles.navigationOverlay}>
+                        <div className={styles.siteInfo}>
+                            <SiteFooter/>
+                        </div>
+                    </div>
                 </section>
-                <section className={styles.contentWrapper}>
-                    <main className={styles.mainContentContainer}>
+                <section className={styles.content}>
+                    <main className={styles.main}>
                         {children}
                     </main>
                     <ContentSeparator/>
-                    <footer className={styles.footerContentContainer}>
+                    <footer className={styles.footer}>
                         <ContentFooter />
                     </footer>
                 </section>

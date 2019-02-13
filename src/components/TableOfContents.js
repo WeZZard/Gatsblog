@@ -65,11 +65,9 @@ class TableOfContents extends React.Component {
             }
         }
 
-        return <div className={[styles.tableOfContents, styles.tableOfContentsBackgroundBlur].join(' ')}>
-            <div className={styles.tableOfContentsHeader}>
-                <h1>Table of Contents</h1>
-            </div>
-            <div className={styles.tableOfContentsList}>
+        return <div className={[styles.tableOfContents, styles.backdrop].join(' ')}>
+            <h1 className={styles.header}>Table of Contents</h1>
+            <div className={styles.list}>
                 {rootList}
             </div>
         </div>;
