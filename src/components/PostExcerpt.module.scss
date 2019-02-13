@@ -56,27 +56,29 @@
     }
 
     .content {
+        font-family: $font-text-serif;
+        font-size: 1.7em;
+        line-height: 1.7;
         margin-top: 1.2rem;
 
         p {
-            a {
-                text-decoration: none;
+            color: $color-content-summary;
+        }
+
+        a {
+            color: $color-content-summary;
+            margin: 0;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+
+            &:visited {
                 color: $color-content-summary;
-                font-family: $font-text-serif;
-                font-size: 1.7em;
-                line-height: 2;
-                margin: 0;
+            }
+
+            &:hover,
+            &:visited:hover {
+                color: $color-hover;
                 transition: color 0.3s ease-in-out;
-
-                &:visited {
-                    color: $color-content-summary;
-                }
-
-                &:hover,
-                &:visited:hover {
-                    color: $color-hover;
-                    transition: color 0.3s ease-in-out;
-                }
             }
         }
     }

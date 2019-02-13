@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'gatsby'
 import styles from './PostExcerpt.module.scss'
 
+import Paragraph from './Paragraph'
 import PostExcerptMetadata from './PostExcerptMetadata'
 
 class PostExcerpt extends React.Component {
@@ -22,12 +23,9 @@ class PostExcerpt extends React.Component {
                 </Link>
             </section>
             <section className={styles.content}>
-                <p>
-                    <Link
-                        to={item.slug}
-                        dangerouslySetInnerHTML={{ __html: excerpt }}
-                    />
-                </p>
+                <Link to={item.slug}>
+                    <span dangerouslySetInnerHTML={{ __html: excerpt }}/>
+                </Link>
             </section>
             <section className={styles.footer}>
                 <PostExcerptMetadata post={item}/>
