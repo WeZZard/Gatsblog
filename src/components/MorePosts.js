@@ -13,8 +13,8 @@ class MorePosts extends React.Component {
         assert(earlierPostExcerpt || laterPostExcerpt);
 
         const morePostInfo = [
-            { item: earlierPostExcerpt, title: 'Earlier Post' },
             { item: laterPostExcerpt, title: 'Later Post' },
+            { item: earlierPostExcerpt, title: 'Earlier Post' },
         ].filter(_ => _.item);
 
         const components = morePostInfo

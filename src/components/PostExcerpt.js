@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'gatsby'
 import styles from './PostExcerpt.module.scss'
 
-import Paragraph from './Paragraph'
 import PostExcerptMetadata from './PostExcerptMetadata'
 
 class PostExcerpt extends React.Component {
@@ -10,22 +9,24 @@ class PostExcerpt extends React.Component {
         const { item } = this.props;
 
         const subtitleComponent =  item.subtitle !== ""
-            ? <h2>{item.subtitle}</h2>
+            ? <h2 className={styles.subtitle}>{item.subtitle}</h2>
             : null;
 
-        const excerpt = item.file.childMdx.excerpt || '<em>The content is intentionally left blank.</em>';
+        const excerpt = item.file.childMdx.excerpt
+            || '<em>The content is intentionally left blank.</em>';
 
         return <div className={styles.postExcerpt}>
             <section className={styles.header}>
                 <Link to={item.slug}>
-                    <h1>{item.title}</h1>
+                    <h1 className={styles.title}>{item.title}</h1>
                     {subtitleComponent}
                 </Link>
             </section>
             <section className={styles.content}>
-                <Link to={item.slug}>
-                    <span dangerouslySetInnerHTML={{ __html: excerpt }}/>
-                </Link>
+                <Link
+                    to={item.slug}
+                    dangerouslySetInnerHTML={{ __html: excerpt }}
+                />
             </section>
             <section className={styles.footer}>
                 <PostExcerptMetadata post={item}/>

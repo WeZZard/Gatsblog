@@ -32,9 +32,9 @@ module.exports = async (args) => {
 
     await Promise.all(
         posts.map( async (postNode, index) => {
-            const earlierPost = (index - 1 >= 0) ? posts[index - 1] : null;
+            const earlierPost = (index + 1 < posts.length) ? posts[index + 1] : null;
 
-            const laterPost = (index + 1 < posts.length) ? posts[index + 1] : null;
+            const laterPost = (index - 1 >= 0) ? posts[index - 1] : null;
 
             const localeSlug = postNode.node.isLocalized
                 ? `/${postNode.node.lang}`

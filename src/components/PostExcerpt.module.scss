@@ -11,59 +11,69 @@
 
     .header {
         a {
-            h1,
-            h2 {
-                margin: 0;
+            display: inline-block;
+            text-decoration: none;
+
+            @mixin heading {
                 display: inline-block;
+                margin: 0;
                 transition: color 0.3s ease-in-out;
             }
 
-            h1 {
+            @mixin heading-hover {
+                color: $color-hover;
+                transition: color 0.3s ease-in-out;
+            }
+
+            .title {
+                @include heading;
+
                 color: $color-ui-main-headline-primary;
                 font-size: 2.4em;
                 font-weight: 500;
                 line-height: 0.875;
             }
 
-            h2 {
+            .subtitle {
+                @include heading;
+
                 color: $color-ui-main-headline-secondary;
                 font-size: 1.5em;
                 font-weight: 400;
                 line-height: 1.2;
                 margin-left: 0.8rem;
-                vertical-align: 0.1rem;
-            }
-
-            &:visited {
-                h1 {
-                    color: $color-ui-main-headline-primary;
-                }
-
-                h2 {
-                    color: $color-ui-main-headline-secondary;
-                }
+                vertical-align: 0.05rem;
             }
 
             &:hover,
             &:visited:hover {
-                h1,
-                h2 {
-                    color: $color-hover;
-                    transition: color 0.3s ease-in-out;
+                .title {
+                    @include heading-hover;
+                }
+
+                .subtitle {
+                    @include heading-hover;
+                }
+            }
+
+            &:visited {
+                .title {
+                    color: $color-ui-main-headline-primary;
+                }
+
+                .subtitle {
+                    color: $color-ui-main-headline-secondary;
                 }
             }
         }
     }
 
     .content {
+        color: $color-content-summary;
         font-family: $font-text-serif;
         font-size: 1.7em;
         line-height: 1.7;
         margin-top: 1.2rem;
-
-        p {
-            color: $color-content-summary;
-        }
 
         a {
             color: $color-content-summary;
