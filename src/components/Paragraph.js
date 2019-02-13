@@ -13,5 +13,10 @@ export default props => {
         bottom: textStyle
     });
 
-    return <p className={className} {...props}/>
+    const standardProps = {
+        ...props
+    };
+    delete standardProps.textStyle;
+
+    return <p className={className} {...standardProps}/>
 }
