@@ -12,22 +12,23 @@
     background-color: $color-content-code-block-background;
 
     .pathLabel {
-        display: block;
-        width: calc(100% - 4.2rem);
-        padding: 0;
-        padding-top: 1.2rem;
-        padding-bottom: 1.2rem;
-        padding-left: 2.1rem;
-        padding-right: 2.1rem;
-        margin: 0;
-        margin-bottom: -0.1rem;
-        overflow-x: scroll;
         border-bottom: 1px solid $color-content-code-block-indicator;
         color: $color-content-body;
+        display: block;
         font-family: $font-text-monospaced;
         font-size: calc(13em / 17);
         font-weight: 400;
         line-height: 1;
+        margin: 0;
+        margin-bottom: -0.1rem;
+        -ms-overflow-style: none;
+        overflow-x: scroll;
+        padding: 0;
+        padding-bottom: 1.2rem;
+        padding-left: 2.1rem;
+        padding-right: 2.1rem;
+        padding-top: 1.2rem;
+        width: calc(100% - 4.2rem);
     }
 
     @mixin language {
@@ -93,7 +94,7 @@
             color: $color-content-body;
             display: inline-block;
             margin: 0;
-            -ms-overflow-style: -ms-autohiding-scrollbar;
+            -ms-overflow-style: none;
             overflow-x: scroll;
             padding-right: 3.4rem;
 

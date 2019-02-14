@@ -1,5 +1,5 @@
 .horizontalScroller {
-    width: 100%;
+    -ms-overflow-style: none;
     overflow-x: scroll;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
+    width: 100%;
 }
