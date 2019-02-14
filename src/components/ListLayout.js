@@ -1,7 +1,7 @@
 import React from 'react'
-import styles from './PostListLayout.module.scss'
+import styles from './ListLayout.module.scss'
 
-class PostListLayout extends React.Component {
+class ListLayout extends React.Component {
     render() {
         const { children } = this.props;
 
@@ -11,4 +11,4 @@ class PostListLayout extends React.Component {
     }
 }
 
-export default PostListLayout
+export default ListLayout

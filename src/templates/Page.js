@@ -6,13 +6,13 @@ import PageDocument from '../components/PageDocument';
 class Page extends React.Component {
     render() {
         const { data } = this.props;
-        const {
-            page,
-        } = data;
+        const { page } = data;
 
-        return <Main selectedNavigationItem={{slug: page.slug}}>
-            <PageDocument page={page}/>
-        </Main>
+        return <Main
+            title={page.title}
+            slug={page.slug}
+            main={<PageDocument page={page}/>}
+        />
     }
 }
 
@@ -20,6 +20,11 @@ export default Page
 
 export const pageQuery = graphql`
     query PageQuery($pageId: String!) {
+        config: configYaml {
+            site {
+                lang
+            }
+        }
         page(id: {eq: $pageId}) {
             title
             slug

@@ -4,14 +4,15 @@ import ContentTitle from "../components/ContentTitle";
 import Paginator from "../components/Paginator";
 
 import ListLayout from '../components/ListLayout';
-import PostExcerpt from '../components/PostExcerpt';
+import TagSummary from '../components/TagSummary';
 import { graphql } from 'gatsby';
 
-class Index extends React.Component {
+class Tags extends React.Component {
     render() {
         const { data, pageContext } = this.props;
         const {
             slug,
+            taxonomies,
             paginationInfo,
             title,
             subtitle,
@@ -20,10 +21,24 @@ class Index extends React.Component {
             keywords
         } = pageContext;
 
-        const { allPost: { edges: posts } } = data;
+        const {
+            allPost: {
+                edges: postNodes
+            }
+        } = data;
 
-        const itemComponents = posts.map((post, index) =>
-            React.createElement(PostExcerpt, {item: post.node, key: `${index}`})
+        const posts = postNodes.map(postNode => postNode.node);
+
+        const components = taxonomies.map((tag, index) =>
+            React.createElement(
+                TagSummary,
+                {
+                    tag,
+                    baseSlug: slug,
+                    posts,
+                    key: index
+                }
+            )
         );
 
         const header = showsPageTitle
@@ -32,7 +47,7 @@ class Index extends React.Component {
 
         const main = <React.Fragment>
             <ListLayout>
-                {itemComponents}
+                {components}
             </ListLayout>
             <Paginator paginationInfo={paginationInfo}/>
         </React.Fragment>;
@@ -48,11 +63,11 @@ class Index extends React.Component {
     }
 }
 
-export default Index
+export default Tags
 
 export const pageQuery = graphql`
-    query IndexQuery($items: [String!]!) {
-        allPost(filter: {id: {in: $items}}) {
+    query TagsQuery($taxonomies: [String!]!) {
+        allPost(filter: {tags: {in: $taxonomies}}) {
             edges {
                 node {
                     slug
@@ -60,15 +75,7 @@ export const pageQuery = graphql`
                     subtitle
                     isPublished
                     createdTime
-                    lastModifiedTime
-                    license
                     tags
-                    category
-                    file {
-                        childMdx {
-                            excerpt(pruneLength: 300)
-                        }
-                    }
                 }
             }
         }

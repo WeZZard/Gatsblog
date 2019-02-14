@@ -11,7 +11,6 @@ class Post extends React.Component {
         const {
             config: {
                 site: {
-                    lang,
                     license: defaultLicense,
                 },
             },
@@ -35,10 +34,16 @@ class Post extends React.Component {
             />
             : null;
 
-        return <Main tableOfContents={tableOfContents}>
+        const main = <React.Fragment>
             <PostDocument post={post} defaultLicense={defaultLicense}/>
             {morePostsComponent}
-        </Main>
+        </React.Fragment>;
+
+        return <Main
+            title={post.title}
+            tableOfContents={tableOfContents}
+            main={main}
+        />
     }
 }
 

@@ -1,4 +1,4 @@
-const createIndexPages = require('./_create-index-pages');
+const createPostIndexPages = require('./_create-post-index-pages');
 const { category: page } = require('./page-meta');
 const { itemsPerPageForIndexPageName } = require('../config');
 
@@ -62,18 +62,7 @@ const _createPageForCategoriesForLocale = async (args) => {
                     ) {
                         edges {
                             node {
-                                slug
-                                title
-                                subtitle
-                                createdTime
-                                documentIdentifier
-                                tags
-                                category
-                                file {
-                                    childMdx {
-                                        excerpt(pruneLength: 300)
-                                    }
-                                }
+                                id
                             }
                         }
                     }
@@ -94,14 +83,12 @@ const _createPageForCategoriesForLocale = async (args) => {
                 edges: posts
             } = allPost || { edges: [] };
 
-            createIndexPages({
-                createPage : createPage,
+            await createPostIndexPages({
+                createPage,
                 siteKeywords,
                 siteDescription,
                 locale: locale,
-                itemComponentName : page.itemComponentName,
-                layoutComponentName: page.layoutComponentName,
-                items: posts.map(post => post.node),
+                items: posts.map(post => post.node.id),
                 itemsPerPage,
                 createPageTitle: (locale, pageIndex) => page.getPageTitle(category, locale, pageIndex),
                 createPagePath: (locale, pageIndex) => page.getPagePath(category, locale, pageIndex),

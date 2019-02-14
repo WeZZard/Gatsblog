@@ -1,4 +1,4 @@
-const createIndexPages = require('./_create-index-pages');
+const createPostIndexPages = require('./_create-post-index-pages');
 const { home: page } = require('./page-meta');
 const { itemsPerPageForIndexPageName } = require('../config');
 
@@ -31,18 +31,7 @@ module.exports = async (args) => {
                 ) {
                     edges {
                         node {
-                            slug
-                            title
-                            subtitle
-                            createdTime
-                            documentIdentifier
-                            tags
-                            category
-                            file {
-                                childMdx {
-                                    excerpt(pruneLength: 300)
-                                }
-                            }
+                            id
                         }
                     }
                 }
@@ -65,14 +54,12 @@ module.exports = async (args) => {
 
             const itemsPerPage = await itemsPerPageForIndexPageName(page.name, graphql);
 
-            createIndexPages({
+            createPostIndexPages({
                 createPage : createPage,
                 siteKeywords,
                 siteDescription,
                 locale: locale,
-                itemComponentName : page.itemComponentName,
-                layoutComponentName: page.layoutComponentName,
-                items: posts.map(post => post.node),
+                items: posts.map(post => post.node.id),
                 itemsPerPage,
                 createPageTitle: page.getPageTitle,
                 createPagePath: page.getPagePath,

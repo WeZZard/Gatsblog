@@ -1,7 +1,6 @@
 module.exports = {
     name: 'Tags',
-    itemComponentName : 'TagSummary',
-    layoutComponentName: 'TagListLayout',
+    componentName : 'TagSummary',
     getPageTitle: (locale, pageIndex) => {
         return pageIndex === 0
             ? `Tags`

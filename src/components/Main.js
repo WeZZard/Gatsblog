@@ -11,50 +11,65 @@ import SEO from './SEO'
 class Main extends React.Component {
     render() {
         const {
-            selectedNavigationItem,
+            slug,
             lang,
-            pageTitle,
+            title,
             description,
             keywords,
             tableOfContents,
-            children
+            header,
+            main,
+            footer
         } = this.props;
 
-        const tableOfContentsComponents = (tableOfContents && tableOfContents.items && tableOfContents.items.length > 0)
-            ? <section className={styles.tableOfContents}>
+        const hasTableOfContents = tableOfContents
+            && tableOfContents.items
+            && tableOfContents.items.length > 0;
+
+        const tableOfContentsComponent = hasTableOfContents
+            ? <div className={styles.tableOfContents}>
                 <TableOfContents tableOfContents={tableOfContents}/>
-            </section>
+            </div>
+            : null;
+
+        const headerComponent = header
+            ? <header className={styles.header}>{header}</header>
+            : null;
+
+        const mainComponent = main
+            ? <main className={styles.main}>{main}</main>
+            : null;
+
+        const footerComponent = footer
+            ? <footer className={styles.footer}>{footer}</footer>
             : null;
 
         return (
             <div className={styles.app}>
                 <SEO
                     lang={lang}
-                    title={pageTitle}
+                    title={title}
                     description={description}
                     keywords={keywords}
                 />
-                <section className={styles.navigation}>
-                    <section className={styles.navigationBar}>
-                        <NavigationBar selectedNavigationItem={selectedNavigationItem}/>
-
-                    </section>
-                    {tableOfContentsComponents}
-                    <div className={styles.navigationOverlay}>
-                        <div className={styles.siteInfo}>
-                            <SiteFooter/>
-                        </div>
+                <div className={styles.navigation}>
+                    <div className={styles.navigationBar}>
+                        <NavigationBar slug={slug}/>
                     </div>
-                </section>
-                <section className={styles.content}>
-                    <main className={styles.main}>
-                        {children}
-                    </main>
+                    {tableOfContentsComponent}
+                    <div className={styles.navigationOverlay}>
+                        <div className={styles.siteInfo}><SiteFooter/></div>
+                    </div>
+                </div>
+                <div className={styles.primary}>
+                    <div className={styles.content}>
+                        {headerComponent}
+                        {mainComponent}
+                        {footerComponent}
+                    </div>
                     <ContentSeparator/>
-                    <footer className={styles.footer}>
-                        <ContentFooter />
-                    </footer>
-                </section>
+                    <div className={styles.contentFooter}><ContentFooter/></div>
+                </div>
             </div>
         )
     }

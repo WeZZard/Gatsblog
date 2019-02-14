@@ -2,10 +2,14 @@ import React from 'react'
 
 class ContentTitle extends React.Component {
     render() {
-        const { pageTitle, subtitle } = this.props;
+        const { title, subtitle } = this.props;
 
-        return <div>
-        </div>
+        const subtitleComponent = subtitle ? <h2>{subtitle}</h2> : null;
+
+        return <React.Fragment>
+            <h1>{title}</h1>
+            {subtitleComponent}
+        </React.Fragment>
     }
 }
 

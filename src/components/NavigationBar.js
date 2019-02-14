@@ -18,7 +18,7 @@ class NavigationItem extends React.Component {
 
 class NavigationBar extends React.Component {
     render() {
-        const { selectedNavigationItem } = this.props;
+        const { slug } = this.props;
 
         return <StaticQuery
             query={_navigationQuery}
@@ -83,7 +83,7 @@ class NavigationBar extends React.Component {
                         ? `^((${navigationItem.slug})|(/page-\\d+))$`
                         : `^((${navigationItem.slug})|(${navigationItem.slug}/page-\\d+))$`;
                     const slugRegex = new RegExp(slugPattern);
-                    const isSelected = selectedNavigationItem && slugRegex.exec(selectedNavigationItem.slug);
+                    const isSelected = slug && slugRegex.exec(slug);
 
                     return <li key={navigationItem.slug}>
                         <NavigationItem

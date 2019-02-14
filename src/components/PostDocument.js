@@ -37,23 +37,25 @@ class PostDocument extends React.Component {
             ? <h2 className={styles.subtitle}>{subtitle}</h2>
             : null;
 
-        return <article className={styles.document}>
-            <header className={styles.header}>
-                <h1 className={styles.title}>{title}</h1>
-                {subtitleComponent}
-                <div className={styles.caption}>
-                    <MetadataItem>{createdTimeComponent}</MetadataItem>
-                    <MetadataItem>{categoryComponent}</MetadataItem>
-                </div>
-            </header>
-            <section className={styles.content}>
-                <Renderer textStyle={'serif'}>{code.body}</Renderer>
-            </section>
-            <footer className={styles.footer}>
-                {tagsComponent}
-                <div><License license={license || defaultLicense} /></div>
-            </footer>
-        </article>
+        return <React.Fragment>
+            <article className={styles.document}>
+                <header className={styles.header}>
+                    <h1 className={styles.title}>{title}</h1>
+                    {subtitleComponent}
+                    <div className={styles.caption}>
+                        <MetadataItem>{createdTimeComponent}</MetadataItem>
+                        <MetadataItem>{categoryComponent}</MetadataItem>
+                    </div>
+                </header>
+                <section className={styles.content}>
+                    <Renderer textStyle={'serif'}>{code.body}</Renderer>
+                </section>
+                <footer className={styles.footer}>
+                    {tagsComponent}
+                    <div><License license={license || defaultLicense} /></div>
+                </footer>
+            </article>
+        </React.Fragment>
     }
 }
 

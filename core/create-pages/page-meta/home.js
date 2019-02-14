@@ -1,7 +1,5 @@
 module.exports = {
     name: 'Home',
-    itemComponentName : 'PostExcerpt',
-    layoutComponentName: 'PostListLayout',
     getPageTitle: (locale, pageIndex) => {
         return pageIndex === 0 ? null : `All the Posts (Page ${pageIndex + 1})`;
     },

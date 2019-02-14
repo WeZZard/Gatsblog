@@ -1,5 +1,4 @@
 const path = require('path');
-const Template = path.resolve('src/templates/Index.js');
 
 module.exports = (args) => {
     const {
@@ -7,8 +6,6 @@ module.exports = (args) => {
         siteKeywords,
         siteDescription,
         locale,
-        itemComponentName,
-        layoutComponentName,
         items,
         itemsPerPage,
         createPageTitle,
@@ -38,15 +35,15 @@ module.exports = (args) => {
 
         console.log(`create index page at: ${pagePath}`);
 
+        const templatePath = `src/templates/Index.js`;
+
         createPage({
             path: pagePath,
-            component: Template,
+            component: path.resolve(templatePath),
             context: {
                 slug: pagePath,
                 locale,
-                itemComponentName,
-                layoutComponentName,
-                pageTitle,
+                title: pageTitle,
                 showsPageTitle,
                 keywords: siteKeywords,
                 description: siteDescription,

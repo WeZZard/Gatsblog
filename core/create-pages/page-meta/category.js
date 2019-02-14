@@ -1,7 +1,5 @@
 module.exports = {
     name: 'Category',
-    itemComponentName : 'PostExcerpt',
-    layoutComponentName: 'PostListLayout',
     getPageTitle: (category, locale, pageIndex) => {
         return pageIndex === 0
             ? `${category.name}`

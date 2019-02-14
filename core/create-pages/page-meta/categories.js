@@ -1,7 +1,6 @@
 module.exports = {
     name: 'Categories',
-    itemComponentName : 'CategorySummary',
-    layoutComponentName: 'CategoryListLayout',
+    componentName : 'CategorySummary',
     getPageTitle: (locale, pageIndex) => {
         return pageIndex === 0
             ? `Categories`

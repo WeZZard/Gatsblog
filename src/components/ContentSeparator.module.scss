@@ -1,13 +1,13 @@
 @import '../styles/colors';
 
 .contentSeparator {
+    border: 0;
+    border-top: 1px solid $_gray-89;
     display: flex;
+    margin-bottom: 0;
     margin-left: 5.5rem;
     margin-right: 5.5rem;
     margin-top: 0;
-    margin-bottom: 0;
     padding: 0;
     width: calc(100% - 11rem);
-    border: 0;
-    border-top: 1px solid $_gray-89;
 }

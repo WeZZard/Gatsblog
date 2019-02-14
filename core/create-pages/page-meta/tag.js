@@ -1,7 +1,5 @@
 module.exports = {
     name: 'Tag',
-    itemComponentName : 'PostExcerpt',
-    layoutComponentName: 'PostListLayout',
     getPageTitle: (tag, locale, pageIndex) => {
         return `Tag: ${tag.name}`
             + (pageIndex === 0 ? `` : ` (Page ${pageIndex + 1})`)

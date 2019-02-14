@@ -1,6 +1,5 @@
-const createIndexPages = require('./_create-index-pages');
+const createTaxonomyIndexPages = require('./_create-taxonomy-index-pages');
 const { tags: page } = require('./page-meta');
-const { makeTagSummaryPayload } = require('../utils');
 const { itemsPerPageForIndexPageName } = require('../config');
 
 module.exports = async (args) => {
@@ -16,24 +15,21 @@ module.exports = async (args) => {
     const { createPage } = actions;
     const { locales, tags } = pendingSchemaData;
 
-    const config = indexingConfig.filter(config => config.name === 'Tags')[0] || { isEnabled : true };
+    const config = indexingConfig.filter(config => config.name === 'Tags')[0]
+        || { isEnabled : true };
 
     if (config.isEnabled) {
         const itemsPerPage = await itemsPerPageForIndexPageName(page.name, graphql);
 
-        const items = await Promise.all(tags.map(async (tag) => {
-            return await makeTagSummaryPayload(tag, graphql)
-        }));
-
         locales.forEach((locale) => {
-            createIndexPages({
+            createTaxonomyIndexPages({
+                template: page.name,
                 createPage : createPage,
                 siteKeywords,
                 siteDescription,
                 locale: locale,
-                itemComponentName : page.itemComponentName,
-                layoutComponentName: page.layoutComponentName,
-                items,
+                componentName : page.componentName,
+                taxonomies: tags.map(tag => tag.name),
                 itemsPerPage,
                 createPageTitle: page.getPageTitle,
                 createPagePath: page.getPagePath,
