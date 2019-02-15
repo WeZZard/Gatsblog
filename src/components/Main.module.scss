@@ -34,6 +34,8 @@
         .siteTitle {
             @include container-column-stretch;
 
+            flex-grow: 0;
+            flex-shrink: 0;
             margin-bottom: 0;
             margin-left: 5.5rem;
             margin-right: 3.4rem;

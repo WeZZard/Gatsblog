@@ -1,79 +1,105 @@
 @import '../styles/colors';
 @import '../styles/fonts';
 
-.tableOfContents {
-    align-items: stretch;
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    backdrop-filter: saturate(180%) blur(20px);
+@mixin container-column-stretch {
+    align-items: flex-end;
     display: flex;
     flex-direction: column;
+}
+
+.tableOfContents {
+    @include container-column-stretch;
+
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
     flex-grow: 1;
     flex-shrink: 1;
-    width: 100%;
+    padding: 2.1rem;
+    width: calc(100% - 4.2rem);
 
     .header {
-        color: $color-ui-nav-headline-normal;
-        font-size: 1.8em;
-        font-weight: 400;
-        line-height: 1.17;
-        margin: 0;
-        margin-left: 2.1rem;
-        margin-right: 2.1rem;
-        margin-top: 1.7rem;
-        padding: 0;
-        text-align: right;
-        text-transform: uppercase;
+        align-items: baseline;
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        margin-bottom: 2.1rem;
+
+        .title {
+            color: $color-ui-nav-headline-normal;
+            flex-shrink: 0;
+            font-size: 1.8em;
+            font-weight: 400;
+            line-height: calc(21 / 18);
+            margin: 0;
+            margin-bottom: -0.4rem;
+            margin-top: -0.4rem;
+            padding: 0;
+            text-transform: uppercase;
+        }
     }
 
-    .list {
-        color: $color-ui-nav-headline-normal;
-        font-family: $font-text-monospaced;
-        font-size: 1.1em;
-        font-weight: 400;
-        line-height: 1.182;
-        margin-bottom: 1.8rem;
-        margin-left: 2.1rem;
-        margin-right: 2.1rem;
+    .body {
+        @include container-column-stretch;
+
         -ms-overflow-style: none;
         overflow-y: scroll;
 
-        ol {
+        .list {
+            @include container-column-stretch;
+
             counter-reset: ordered-list;
+            flex-shrink: 0;
             list-style: none;
             margin: 0;
-            margin-top: 1.6rem;
+            margin-top: 2.1rem;
             padding: 0;
 
-            li {
+            &:first-child {
+                margin-top: 0;
+            }
+
+            .item {
+                @include container-column-stretch;
+
                 counter-increment: ordered-list;
-                margin-bottom: 1.6rem;
+                flex-shrink: 0;
+                margin-bottom: 2.1rem;
                 padding: 0;
-                text-align: right;
                 text-transform: uppercase;
+
+                .content {
+                    a {
+                        color: $color-ui-nav-headline-normal;
+                        font-family: $font-text-monospaced;
+                        font-size: 1.1em;
+                        font-weight: 400;
+                        line-height: 1.182;
+                        margin-bottom: -0.3rem;
+                        margin-top: -0.2rem;
+                        text-decoration: none;
+                        transition: color 0.3s ease-in-out;
+
+                        &:visited {
+                            color: $color-ui-nav-headline-normal;
+                        }
+
+                        &:hover,
+                        &:visited:hover {
+                            color: $color-hover;
+                            transition: color 0.3s ease-in-out;
+                        }
+
+                        &::after {
+                            content: counters(ordered-list, ".") " ";
+                            margin-bottom: -0.3rem;
+                            margin-left: 1.3rem;
+                            margin-top: -0.2rem;
+                        }
+                    }
+                }
 
                 &:last-child {
                     margin-bottom: 0;
-                }
-
-                a {
-                    color: $color-ui-nav-headline-normal;
-                    text-decoration: none;
-                    transition: color 0.3s ease-in-out;
-
-                    &:visited {
-                        color: $color-ui-nav-headline-normal;
-                    }
-
-                    &:hover,
-                    &:visited:hover {
-                        color: $color-hover;
-                        transition: color 0.3s ease-in-out;
-                    }
-
-                    &::after {
-                        content: counters(ordered-list, ".") " ";
-                        margin-left: 1.3rem;
-                    }
                 }
             }
         }

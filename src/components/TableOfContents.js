@@ -16,13 +16,15 @@ class TableOfContents extends React.Component {
             if (tocNode.items && indexToRead < tocNode.items.length) {
                 const childTocNode = tocNode.items[indexToRead];
 
-                const { items, url, title } = childTocNode;
+                const { url, title } = childTocNode;
 
                 let listItem = {};
 
                 if (url && title) {
                     const correctUrl = `#${_.kebabCase(title)}`;
-                    listItem.link = <a href={correctUrl}>{title}</a>;
+                    listItem.link = <span className={styles.content}>
+                        <a href={correctUrl}>{title}</a>
+                    </span>;
                 }
 
                 stack.push({
@@ -36,11 +38,14 @@ class TableOfContents extends React.Component {
                 const sublistItems = listItems.map((listItem, index) => {
                     const linkComponent = listItem.link;
                     const sublistComponent = listItem.sublist;
-                    return <li key={index}>{linkComponent}{sublistComponent}</li>
+                    return <li key={index} className={styles.item}>
+                        {linkComponent}
+                        {sublistComponent}
+                    </li>
                 });
 
                 const sublist = sublistItems.length
-                    ? <ol>{sublistItems}</ol>
+                    ? <ol className={styles.list}>{sublistItems}</ol>
                     : null;
 
                 if (sublist) {
@@ -66,10 +71,12 @@ class TableOfContents extends React.Component {
         }
 
         return <div className={[styles.tableOfContents, styles.backdrop].join(' ')}>
-            <h1 className={styles.header}>Table of Contents</h1>
-            <div className={styles.list}>
-                {rootList}
+            <div className={styles.header}>
+                <label className={styles.title}>Table of Contents</label>
             </div>
+            <nav className={styles.body}>
+                {rootList}
+            </nav>
         </div>;
     }
 }
