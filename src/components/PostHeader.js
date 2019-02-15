@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './PostBody.module.scss'
+import styles from './PostHeader.module.scss'
 
 import TimeLabel from './TimeLabel'
 import CategoryLabel from './CategoryLabel'
@@ -20,13 +20,13 @@ class PostHeader extends React.Component {
         const categoryComponent = <CategoryLabel category={category}/>;
 
         const subtitleComponent = subtitle
-            ? <h2 className={styles.subtitle}>{subtitle}</h2>
+            ? <section className={styles.subtitle}><h2>{subtitle}</h2></section>
             : null;
 
         return <React.Fragment>
-            <h1 className={styles.title}>{title}</h1>
+            <section className={styles.title}><h1>{title}</h1></section>
             {subtitleComponent}
-            <div className={styles.caption}>
+            <div className={styles.metadata}>
                 <MetadataItem>{createdTimeComponent}</MetadataItem>
                 <MetadataItem>{categoryComponent}</MetadataItem>
             </div>

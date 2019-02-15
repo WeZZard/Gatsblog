@@ -29,7 +29,7 @@ class PageDocument extends React.Component {
             <header className={styles.header}>
                 <h1 className={styles.title}>{title}</h1>
                 {subtitleComponent}
-                <div className={styles.caption}>
+                <div className={styles.metadata}>
                     <MetadataItem>{createdTimeComponent}</MetadataItem>
                 </div>
             </header>

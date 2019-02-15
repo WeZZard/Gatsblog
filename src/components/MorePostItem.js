@@ -18,7 +18,7 @@ class MorePostItem extends React.Component {
             || '<em>The content is intentionally left blank.</em>';
 
         return <div className={styles.morePostItem}>
-            <div className={styles.caption}>
+            <div className={styles.metadata}>
                 <span>{title}</span>
             </div>
             <div className={styles.postExcerpt}>
