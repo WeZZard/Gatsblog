@@ -1,5 +1,5 @@
 const createPostIndexPages = require('./_create-post-index-pages');
-const { home: page } = require('./page-meta');
+const { home: meta } = require('./post-index-meta');
 const { itemsPerPageForIndexPageName } = require('../config');
 
 module.exports = async (args) => {
@@ -52,7 +52,7 @@ module.exports = async (args) => {
                 edges: posts
             } = (allPost || { edges: [] });
 
-            const itemsPerPage = await itemsPerPageForIndexPageName(page.name, graphql);
+            const itemsPerPage = await itemsPerPageForIndexPageName(meta.name, graphql);
 
             createPostIndexPages({
                 createPage : createPage,
@@ -61,11 +61,11 @@ module.exports = async (args) => {
                 locale: locale,
                 items: posts.map(post => post.node.id),
                 itemsPerPage,
-                createPageTitle: page.getPageTitle,
-                createPagePath: page.getPagePath,
+                createPageTitle: meta.getPageTitle,
+                createPagePath: meta.getPagePath,
                 showsPageTitle: false,
-                previousPageTitle: page.getPreviousPageTitle(locale),
-                nextPageTitle: page.getNextPageTitle(locale),
+                previousPageTitle: meta.getPreviousPageTitle(locale),
+                nextPageTitle: meta.getNextPageTitle(locale),
             });
         })
     );

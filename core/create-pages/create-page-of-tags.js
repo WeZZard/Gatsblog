@@ -1,5 +1,5 @@
 const createTaxonomyIndexPages = require('./_create-taxonomy-index-pages');
-const { tags: page } = require('./page-meta');
+const { tags: meta } = require('./taxonomy-index-meta');
 const { itemsPerPageForIndexPageName } = require('../config');
 
 module.exports = async (args) => {
@@ -19,23 +19,23 @@ module.exports = async (args) => {
         || { isEnabled : true };
 
     if (config.isEnabled) {
-        const itemsPerPage = await itemsPerPageForIndexPageName(page.name, graphql);
+        const itemsPerPage = await itemsPerPageForIndexPageName(meta.name, graphql);
 
         locales.forEach((locale) => {
             createTaxonomyIndexPages({
-                template: page.name,
+                template: meta.name,
                 createPage : createPage,
                 siteKeywords,
                 siteDescription,
                 locale: locale,
-                componentName : page.componentName,
+                componentName : meta.componentName,
                 taxonomies: tags.map(tag => tag.name).sort((t1, t2) => t1 > t2),
                 itemsPerPage,
-                createPageTitle: page.getPageTitle,
-                createPagePath: page.getPagePath,
+                createPageTitle: meta.getPageTitle,
+                createPagePath: meta.getPagePath,
                 showsPageTitle: true,
-                previousPageTitle: page.getPreviousPageTitle(locale),
-                nextPageTitle: page.getNextPageTitle(locale),
+                previousPageTitle: meta.getPreviousPageTitle(locale),
+                nextPageTitle: meta.getNextPageTitle(locale),
             });
         });
     }
