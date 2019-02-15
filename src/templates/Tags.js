@@ -29,17 +29,19 @@ class Tags extends React.Component {
 
         const posts = postNodes.map(postNode => postNode.node);
 
-        const components = taxonomies.map((tag, index) =>
-            React.createElement(
-                TagSummary,
-                {
-                    tag,
-                    baseSlug: slug,
-                    posts,
-                    key: index
-                }
-            )
-        );
+        const components = taxonomies
+            .sort((t1, t2) => t1 > t2)
+            .map((tag, index) =>
+                React.createElement(
+                    TagSummary,
+                    {
+                        tag,
+                        baseSlug: slug,
+                        posts,
+                        key: index
+                    }
+                )
+            );
 
         const header = showsPageTitle
             ? <ContentTitle title={title} subtitle={subtitle}/>

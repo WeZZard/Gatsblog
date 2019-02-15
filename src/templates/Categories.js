@@ -29,17 +29,19 @@ class Categories extends React.Component {
 
         const posts = postNodes.map(postNode => postNode.node);
 
-        const components = taxonomies.map((category, index) =>
-            React.createElement(
-                CategorySummary,
-                {
-                    category,
-                    baseSlug: slug,
-                    posts,
-                    key: index
-                }
-            )
-        );
+        const components = taxonomies
+            .sort((t1, t2) => t1 > t2)
+            .map((category, index) =>
+                React.createElement(
+                    CategorySummary,
+                    {
+                        category,
+                        baseSlug: slug,
+                        posts,
+                        key: index
+                    }
+                )
+            );
 
         const header = showsPageTitle
             ? <ContentTitle title={title} subtitle={subtitle}/>

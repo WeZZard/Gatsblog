@@ -21,6 +21,9 @@ module.exports = async (args) => {
     if (config.isEnabled) {
         const itemsPerPage = await itemsPerPageForIndexPageName(page.name, graphql);
 
+        const taxonomies = categories.map(category => category.name)
+            .sort((c1, c2) => c1 > c2);
+
         locales.forEach((locale) => {
             createTaxonomyIndexPages({
                 template: page.name,
@@ -29,7 +32,7 @@ module.exports = async (args) => {
                 siteDescription,
                 locale: locale,
                 componentName : page.componentName,
-                taxonomies: categories.map(category => category.name),
+                taxonomies,
                 itemsPerPage,
                 createPageTitle: page.getPageTitle,
                 createPagePath: page.getPagePath,

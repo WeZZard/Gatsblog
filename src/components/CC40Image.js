@@ -15,7 +15,7 @@ const getName = (options) => {
     }
 };
 
-export default props => <StaticQuery
+export default ({ options }) => <StaticQuery
     query={graphql`
         {
             by: file(relativePath: { eq: "images/cc4.0-by.png" }) {
@@ -63,5 +63,5 @@ export default props => <StaticQuery
         }`
     }
 
-    render={ data => <Img fixed={data[getName(props.options)].childImageSharp.fixed}/>}
+    render={ data => <Img fixed={data[getName(options)].childImageSharp.fixed}/>}
 />

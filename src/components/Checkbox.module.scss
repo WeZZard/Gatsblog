@@ -1,11 +1,3 @@
 .checkbox {
     display: inline-block;
 }
-
-// Under task-list-item
-
-:global(li.task-list-item) {
-    &::before {
-        content: none;
-    }
-}

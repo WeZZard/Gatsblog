@@ -20,11 +20,20 @@ class Index extends React.Component {
             keywords
         } = pageContext;
 
-        const { allPost: { edges: posts } } = data;
+        const { allPost: { edges: postNodes } } = data;
 
-        const itemComponents = posts.map((post, index) =>
-            React.createElement(PostExcerpt, {item: post.node, key: `${index}`})
-        );
+        const post = postNodes.map(postNode => postNode.node)
+            .sort((p1, p2) => p1.createdTime < p2.createdTime);
+
+        const itemComponents = post
+            .map((post, index) =>
+                React.createElement(
+                    PostExcerpt,
+                    {item: post, key: `${index}`}
+                    )
+            );
+
+        console.log(postNodes);
 
         const header = showsPageTitle
             ? <ContentTitle title={title} subtitle={subtitle}/>

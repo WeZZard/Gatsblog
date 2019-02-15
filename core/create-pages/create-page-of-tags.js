@@ -29,7 +29,7 @@ module.exports = async (args) => {
                 siteDescription,
                 locale: locale,
                 componentName : page.componentName,
-                taxonomies: tags.map(tag => tag.name),
+                taxonomies: tags.map(tag => tag.name).sort((t1, t2) => t1 > t2),
                 itemsPerPage,
                 createPageTitle: page.getPageTitle,
                 createPagePath: page.getPagePath,

@@ -10,7 +10,7 @@ import Paragraph from './Paragraph'
 import OrderedList from './OrderedList'
 import UnorderedList from './UnorderedList'
 import Blockquote from './Blockquote'
-import Separator from './Separator'
+import SegmentSeparator from './SegmentSeparator'
 import Checkbox from './Checkbox'
 import Strong from './Strong'
 import Footnotes from './Footnotes'
@@ -73,7 +73,7 @@ export default props => {
             }
         },
         strong: props => <Strong {...props}/>,
-        hr: props => <Separator {...props}/>,
+        hr: props => <SegmentSeparator {...props}/>,
         ol: props => <OrderedList {...props}/>,
         ul: props => <UnorderedList {...props}/>,
         table: props => <Table {...props}/>,

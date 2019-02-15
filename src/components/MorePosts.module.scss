@@ -1,3 +1,5 @@
+@import '../styles/colors';
+
 .morePostsContainer {
     display: flex;
     margin-bottom: 0;
@@ -14,5 +16,17 @@
         &:last-child {
             margin-right: 0;
         }
+    }
+
+    .separator {
+        border: 0;
+        border-top: 1px solid $_gray-89;
+        display: flex;
+        margin-bottom: 0;
+        margin-left: 5.5rem;
+        margin-right: 5.5rem;
+        margin-top: 0;
+        padding: 0;
+        width: calc(100% - 11rem);
     }
 }

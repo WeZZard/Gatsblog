@@ -1,12 +1,11 @@
 import React from 'react'
 import styles from './Main.module.scss'
 
-import NavigationBar from './NavigationBar'
-import ContentFooter from './ContentFooter'
-import SiteFooter from './SiteFooter'
-import ContentSeparator from './ContentSeparator'
-import TableOfContents from './TableOfContents'
 import SEO from './SEO'
+import NavigationBar from './NavigationBar'
+import TableOfContents from './TableOfContents'
+import ContentSeparator from './ContentSeparator'
+import { graphql, StaticQuery } from 'gatsby';
 
 class Main extends React.Component {
     render() {
@@ -58,7 +57,9 @@ class Main extends React.Component {
                     </div>
                     {tableOfContentsComponent}
                     <div className={styles.navigationOverlay}>
-                        <div className={styles.siteInfo}><SiteFooter/></div>
+                        <div className={styles.siteInfo}>
+                            <SiteInfo/>
+                        </div>
                     </div>
                 </div>
                 <div className={styles.primary}>
@@ -68,11 +69,72 @@ class Main extends React.Component {
                         {footerComponent}
                     </div>
                     <ContentSeparator/>
-                    <div className={styles.contentFooter}><ContentFooter/></div>
+                    <div className={styles.pageInfo}>
+                        <PageInfo/>
+                    </div>
                 </div>
             </div>
         )
     }
 }
+
+const SiteInfo = () => <StaticQuery
+    query={componentQuery}
+    render={ data => {
+        const {
+            configYaml: {
+                site: {
+                    owner: siteOwner,
+                    slogans,
+                },
+            },
+        } = data;
+
+        return <React.Fragment>
+            {slogans.map(slogan => <span className={styles.slogan} dangerouslySetInnerHTML= {{ __html: slogan}}/>)}
+            <span key="copyright" className={styles.copyright}>
+                © {new Date().getFullYear()} {siteOwner} All Copyright Reserved.
+            </span>
+        </React.Fragment>
+    }}
+/>;
+
+const PageInfo = () => <React.Fragment>
+    <StaticQuery
+        query={componentQuery}
+        render={data => {
+            const {
+                configYaml: {
+                    site: {
+                        footerMessages,
+                    },
+                },
+            } = data;
+
+            return footerMessages.map((message, index) => (
+                <span
+                    key={`${index}`}
+                    className={styles.pageInfoItem}
+                    dangerouslySetInnerHTML= {{ __html: message}}
+                />
+            ))
+        }}
+    />
+    <span className={styles.pageInfoItem}>
+        Built with <a href="https://www.gatsbyjs.org">Gatsby.js</a>.
+    </span>
+</React.Fragment>;
+
+const componentQuery = graphql`
+    query MainQuery {
+        configYaml {
+            site {
+                owner
+                slogans
+                footerMessages
+            }
+        }
+    }
+`;
 
 export default Main

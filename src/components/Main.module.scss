@@ -53,9 +53,32 @@
             z-index: -2;
 
             .siteInfo {
+                align-items: stretch;
+                color: $color-ui-nav-footnote;
+                display: flex;
+                flex-direction: column;
                 margin-bottom: 3.1rem;
                 margin-left: 5.5rem;
                 margin-right: 3.4rem;
+                text-align: right;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+
+                .copyright {
+                    display: block;
+                    font-size: 1.1em;
+                    font-weight: 400;
+                    line-height: 1.18;
+                    margin-top: 1.5rem;
+                }
+
+                .slogan {
+                    display: block;
+                    font-size: 3em;
+                    font-weight: 500;
+                    line-height: 1.83;
+                    margin: 0;
+                    padding: 0;
+                }
             }
         }
     }
@@ -70,6 +93,8 @@
         width: calc(70% * 0.618);
 
         .content {
+            flex-grow: 1;
+
             .header {
                 width: 100%;
             }
@@ -87,10 +112,45 @@
             }
         }
 
-        .contentFooter {
+        .pageInfo {
             display: flex;
             flex-direction: column;
+            flex-shrink: 0;
             width: 100%;
+
+            .pageInfoItem {
+                color: $color-ui-footnote;
+                display: block;
+                font-size: 1.1em;
+                font-weight: 400;
+                line-height: 1.18;
+                margin-left: 5.5rem;
+                margin-right: 5.5rem;
+                margin-bottom: 0.8rem;
+
+                &:first-child {
+                    margin-top: 5.3rem;
+                }
+
+                &:last-child {
+                    margin-bottom: 5.2rem;
+                }
+
+                a {
+                    color: $color-ui-footnote;
+                    transition: color 0.3s ease-in-out;
+
+                    &:visited {
+                        color: $color-ui-footnote;
+                    }
+
+                    &:hover,
+                    &:visited:hover {
+                        color: $color-hover;
+                        transition: color 0.3s ease-in-out;
+                    }
+                }
+            }
         }
     }
 }
