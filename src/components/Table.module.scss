@@ -1,28 +1,35 @@
 @import '../styles/colors';
 @import '../styles/fonts';
 
-.table {
-    border-collapse: collapse;
-    font-family: $font-text-sans;
-    font-size: calc(15em / 17);
-    margin-left: auto;
-    margin-right: auto;
+.tableWrapper {
+    -ms-overflow-style: none;
+    overflow-x: scroll;
     width: 100%;
 
-    thead {
-        border-bottom: 3px solid $color-content-table-separator;
-        border-top: 3px solid $color-content-table-separator;
-        color: $color-content-heading;
-        font-weight: 600;
+    .table {
+        border-collapse: collapse;
+        font-family: $font-text-sans;
+        font-size: calc(15em / 17);
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+
+        thead {
+            border-bottom: 3px solid $color-content-table-separator;
+            border-top: 3px solid $color-content-table-separator;
+            color: $color-content-heading;
+            font-weight: 600;
+        }
+
+        tbody {
+            border-bottom: 3px solid $color-content-table-separator;
+            color: $color-content-body;
+            font-weight: 300;
+        }
+
+        tr {
+            border-bottom: 1px solid $color-content-table-separator;
+        }
     }
 
-    tbody {
-        border-bottom: 3px solid $color-content-table-separator;
-        color: $color-content-body;
-        font-weight: 300;
-    }
-
-    tr {
-        border-bottom: 1px solid $color-content-table-separator;
-    }
 }

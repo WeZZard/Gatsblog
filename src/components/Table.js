@@ -1,9 +1,15 @@
 import React from 'react';
-import HorizontalScroller from './HorizontalScroller';
 import styles from './Table.module.scss'
+import { edgesWithGridSystem } from '../utils'
 
 export default props => {
-    return <HorizontalScroller>
+    const className = edgesWithGridSystem({
+        style: styles.tableWrapper,
+        top: 'rect',
+        bottom: 'rect',
+    });
+
+    return <div className={className}>
         <table className={styles.table} {...props}/>
-    </HorizontalScroller>
+    </div>
 }
