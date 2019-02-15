@@ -1,17 +1,28 @@
 import React from "react";
-import Main from '../components/Main'
+
 import { graphql } from 'gatsby';
-import PageDocument from '../components/PageDocument';
+
+import Main from '../components/Main'
+import PageHeader from '../components/PageHeader';
+import MDXBody from '../components/MDXBody'
 
 class Page extends React.Component {
     render() {
         const { data } = this.props;
         const { page } = data;
 
+        const article = <article>
+            <PageHeader
+                title={page.title}
+                subtitle={page.subtitle}
+                createdTime={page.createdTime}
+            />
+            <MDXBody mdx={page.file} textStyle={'sans'}/>
+        </article>;
+
         return <Main
             title={page.title}
-            slug={page.slug}
-            main={<PageDocument page={page}/>}
+            contents={[article]}
         />
     }
 }

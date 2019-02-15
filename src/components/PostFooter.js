@@ -13,17 +13,17 @@ class PostFooter extends React.Component {
         } = this.props;
 
         const tagsComponent = tags.length > 0
-            ? <aside className={styles.tags}>
+            ? <div className={styles.tags}>
                 <MetadataItem><TagsLabel tags={tags}/></MetadataItem>
-            </aside>
+            </div>
             : null;
 
-        return <React.Fragment>
+        return <footer>
             {tagsComponent}
-            <aside className={styles.license}>
+            <div className={styles.license}>
                 <License license={license}/>
-            </aside>
-        </React.Fragment>
+            </div>
+        </footer>
     }
 }
 

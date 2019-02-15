@@ -1,8 +1,10 @@
 import React from "react"
+
 import { graphql } from 'gatsby'
+
 import Main from '../components/Main'
-import PostBody from '../components/PostBody'
 import PostHeader from '../components/PostHeader'
+import MDXBody from '../components/MDXBody'
 import PostFooter from '../components/PostFooter'
 import MorePosts from '../components/MorePosts'
 
@@ -31,7 +33,7 @@ class Post extends React.Component {
                 createdTime={post.createdTime}
                 category={post.category}
             />
-            <PostBody post={post}/>
+            <MDXBody mdx={post.file} textStyle={'serif'}/>
             <PostFooter tags={post.tags} license={post.license}/>
         </article>;
 

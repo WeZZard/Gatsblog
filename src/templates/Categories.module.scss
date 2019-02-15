@@ -1,0 +1,14 @@
+@mixin index-item {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5.5rem;
+}
+
+.categorySummary {
+    @include index-item;
+}
+
+.paginator {
+    @include index-item;
+}

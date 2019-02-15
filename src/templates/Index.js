@@ -5,12 +5,14 @@ import Main from '../components/Main'
 import ContentTitle from "../components/ContentTitle";
 import PostExcerpt from '../components/PostExcerpt';
 import Paginator from "../components/Paginator";
+
 import { graphql } from 'gatsby';
 
 class Index extends React.Component {
     render() {
         const { data, pageContext } = this.props;
         const {
+            items,
             slug,
             paginationInfo,
             title,
@@ -20,7 +22,9 @@ class Index extends React.Component {
             keywords
         } = pageContext;
 
-        const { allPost: { edges: postNodes } } = data;
+        const { allPost } = data;
+
+        const { edges: postNodes } = allPost || { edges: [] };
 
         const post = postNodes.map(postNode => postNode.node)
             .sort((p1, p2) => p1.createdTime < p2.createdTime);

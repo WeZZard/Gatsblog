@@ -1,10 +1,11 @@
 import React from 'react'
+import styles from './Categories.module.scss';
+
 import Main from '../components/Main'
 import ContentTitle from "../components/ContentTitle";
 import Paginator from "../components/Paginator";
-
-import ListLayout from '../components/ListLayout';
 import CategorySummary from '../components/CategorySummary';
+
 import { graphql } from 'gatsby';
 
 class Categories extends React.Component {
@@ -29,29 +30,29 @@ class Categories extends React.Component {
 
         const posts = postNodes.map(postNode => postNode.node);
 
-        const components = taxonomies
-            .sort((t1, t2) => t1 > t2)
-            .map((category, index) =>
-                React.createElement(
-                    CategorySummary,
-                    {
-                        category,
-                        baseSlug: slug,
-                        posts,
-                        key: index
-                    }
-                )
-            );
-
         const header = showsPageTitle
             ? <ContentTitle title={title} subtitle={subtitle}/>
             : null;
 
-        const main = <React.Fragment>
-            <ListLayout>
-                {components}
-            </ListLayout>
-            <Paginator paginationInfo={paginationInfo}/>
+        const components = taxonomies
+            .sort((t1, t2) => t1 > t2)
+            .map((category, index) =>
+                <div key={index} className={styles.categorySummary}>
+                    {
+                        React.createElement(
+                            CategorySummary,
+                            { category, baseSlug: slug, posts }
+                        )
+                    }
+                </div>
+            );
+
+        const content = <React.Fragment>
+            {header}
+            {components}
+            <div className={styles.paginator}>
+                <Paginator paginationInfo={paginationInfo}/>
+            </div>
         </React.Fragment>;
 
         return <Main
@@ -59,8 +60,7 @@ class Categories extends React.Component {
             title={title}
             description={description}
             keywords={keywords}
-            header={header}
-            main={main}
+            contents={[content]}
         />
     }
 }

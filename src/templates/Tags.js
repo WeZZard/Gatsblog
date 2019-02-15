@@ -1,10 +1,11 @@
 import React from 'react'
+import styles from './Tags.module.scss'
+
 import Main from '../components/Main'
 import ContentTitle from "../components/ContentTitle";
 import Paginator from "../components/Paginator";
-
-import ListLayout from '../components/ListLayout';
 import TagSummary from '../components/TagSummary';
+
 import { graphql } from 'gatsby';
 
 class Tags extends React.Component {
@@ -32,26 +33,30 @@ class Tags extends React.Component {
         const components = taxonomies
             .sort((t1, t2) => t1 > t2)
             .map((tag, index) =>
-                React.createElement(
-                    TagSummary,
+                <div key={index} className={styles.tagSummary}>
                     {
-                        tag,
-                        baseSlug: slug,
-                        posts,
-                        key: index
+                        React.createElement(
+                            TagSummary,
+                            {
+                                tag,
+                                baseSlug: slug,
+                                posts,
+                            }
+                        )
                     }
-                )
+                </div>
             );
 
         const header = showsPageTitle
             ? <ContentTitle title={title} subtitle={subtitle}/>
             : null;
 
-        const main = <React.Fragment>
-            <ListLayout>
-                {components}
-            </ListLayout>
-            <Paginator paginationInfo={paginationInfo}/>
+        const content = <React.Fragment>
+            {header}
+            {components}
+            <div className={styles.paginator}>
+                <Paginator paginationInfo={paginationInfo}/>
+            </div>
         </React.Fragment>;
 
         return <Main
@@ -59,8 +64,7 @@ class Tags extends React.Component {
             title={title}
             description={description}
             keywords={keywords}
-            header={header}
-            main={main}
+            contents={[content]}
         />
     }
 }

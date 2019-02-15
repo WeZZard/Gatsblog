@@ -3,20 +3,16 @@ import styles from './PostHeader.module.scss'
 
 import MetadataItem from './MetadataItem';
 import TimeLabel from './TimeLabel';
-import CategoryLabel from './CategoryLabel'
 
-class PostHeader extends React.Component {
+class PageHeader extends React.Component {
     render() {
         const {
             title,
             subtitle,
             createdTime,
-            category,
         } = this.props;
 
         const createdTimeComponent = <TimeLabel dateTime={createdTime}/>;
-
-        const categoryComponent = <CategoryLabel category={category}/>;
 
         const subtitleComponent = subtitle
             ? <div className={styles.subtitle}><h2>{subtitle}</h2></div>
@@ -27,10 +23,9 @@ class PostHeader extends React.Component {
             {subtitleComponent}
             <div className={styles.metadata}>
                 <MetadataItem>{createdTimeComponent}</MetadataItem>
-                <MetadataItem>{categoryComponent}</MetadataItem>
             </div>
         </header>
     }
 }
 
-export default PostHeader
+export default PageHeader
