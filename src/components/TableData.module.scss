@@ -1,0 +1,9 @@
+.tableData {
+    padding-bottom: calc(1.7rem - 0.8rem);
+    padding-left: 3.4rem;
+    padding-top: calc(1.5rem - 0.8rem);
+
+    &:last-child {
+        padding-right: 3.4rem;
+    }
+}

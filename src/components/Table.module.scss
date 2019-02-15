@@ -2,44 +2,24 @@
 @import '../styles/fonts';
 
 .table {
+    border-collapse: collapse;
+    font-family: $font-text-sans;
+    font-size: calc(15em / 17);
     margin-left: auto;
     margin-right: auto;
-    font-size: calc(15em / 17);
-    font-family: $font-text-sans;
-    border-collapse: collapse;
     width: 100%;
 
     thead {
-        font-weight: 600;
-        border-top: 3px solid $color-content-table-separator;
         border-bottom: 3px solid $color-content-table-separator;
+        border-top: 3px solid $color-content-table-separator;
         color: $color-content-heading;
-
-        th {
-            padding-top: calc(1.5rem - 0.8rem);
-            padding-bottom: calc(1.7rem - 0.8rem);
-            padding-left: 3.4rem;
-
-            &:last-child {
-                padding-right: 3.4rem;
-            }
-        }
+        font-weight: 600;
     }
 
     tbody {
-        font-weight: 300;
         border-bottom: 3px solid $color-content-table-separator;
         color: $color-content-body;
-
-        td {
-            padding-top: calc(1.5rem - 0.8rem);
-            padding-bottom: calc(1.7rem - 0.8rem);
-            padding-left: 3.4rem;
-
-            &:last-child {
-                padding-right: 3.4rem;
-            }
-        }
+        font-weight: 300;
     }
 
     tr {

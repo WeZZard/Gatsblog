@@ -4,6 +4,8 @@ import MDXRenderer from "gatsby-mdx/mdx-renderer";
 
 import Heading from './Heading'
 import Table from './Table'
+import TableHeader from './TableHeader'
+import TableData from './TableData'
 import Image from './Image'
 import Picture from './Picture'
 import Paragraph from './Paragraph'
@@ -36,7 +38,7 @@ export default props => {
     };
 
     const defaultComponents = {
-        wrapper: props => <React.Fragment {...props}/>,
+        wrapper: React.Fragment,
         h1: props => <Heading level={1} {...props}/>,
         h2: props => <Heading level={2} {...props}/>,
         h3: props => <Heading level={3} {...props}/>,
@@ -54,7 +56,7 @@ export default props => {
             }
             return <Paragraph {...props} textStyle={textStyle}/>
         },
-        inlineCode: props => <InlineCode {...props}/>,
+        inlineCode: InlineCode,
         pre: props => {
             const codeBlock = preToCodeBlock(props);
             const mathBlock = preToMathBlock(props);
@@ -72,12 +74,14 @@ export default props => {
                 return  <pre className={className} {...props} />
             }
         },
-        strong: props => <Strong {...props}/>,
-        hr: props => <SegmentSeparator {...props}/>,
-        ol: props => <OrderedList {...props}/>,
-        ul: props => <UnorderedList {...props}/>,
-        table: props => <Table {...props}/>,
-        blockquote: props => <Blockquote {...props}/>,
+        strong: Strong,
+        hr: SegmentSeparator,
+        ol: OrderedList,
+        ul: UnorderedList,
+        table: Table,
+        th: TableHeader,
+        td: TableData,
+        blockquote: Blockquote,
         input: props => {
             if (props.type && props.type === 'checkbox') {
                 return <Checkbox {...props}/>;
@@ -90,7 +94,7 @@ export default props => {
             }
             return <div {...props}/>
         },
-        sup: props => <Superscript {...props}/>,
+        sup: Superscript,
     };
 
     return <MDXRenderer
