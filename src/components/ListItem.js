@@ -32,8 +32,6 @@ export default props => {
                 Math.max(children.length - 1, 0)
             );
 
-            console.log(last);
-
             if (Array.isArray(last)) {
                 if (inlineTags.includes(current.props.name)) {
                     return [...nonInlineChildren, [...last, current]]
