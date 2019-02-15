@@ -23,8 +23,6 @@ export default props => {
         rawStringProcessor
     );
 
-    console.log('processedChildren: ', processedChildren);
-
     const reducedChildren = processedChildren.reduce((children, current) => {
         if (children.length > 0) {
             const last = children[Math.max(children.length - 1, 0)];
