@@ -32,14 +32,22 @@ export default props => {
                 Math.max(children.length - 1, 0)
             );
 
-            if (Array.isArray(last) && inlineTags.includes(current.props.name)) {
-                return [...nonInlineChildren, [...last, current]]
-            } else if (inlineTags.includes(last.props.name) && inlineTags.includes(current.props.name)) {
-                return [...nonInlineChildren, [last, current]]
-            } else if (!inlineTags.includes(last.props.name) && inlineTags.includes(current.props.name)) {
-                return [...children, [current]]
+            console.log(last);
+
+            if (Array.isArray(last)) {
+                if (inlineTags.includes(current.props.name)) {
+                    return [...nonInlineChildren, [...last, current]]
+                } else {
+                    return [...children, current]
+                }
             } else {
-                return [...children, current]
+                if (inlineTags.includes(last.props.name) && inlineTags.includes(current.props.name)) {
+                    return [...nonInlineChildren, [last, current]]
+                } else if (!inlineTags.includes(last.props.name) && inlineTags.includes(current.props.name)) {
+                    return [...children, [current]]
+                } else {
+                    return [...children, current]
+                }
             }
         } else {
             if (inlineTags.includes(current.props.name)) {
