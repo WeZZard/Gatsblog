@@ -91,7 +91,7 @@ const SiteInfo = () => <StaticQuery
         } = data;
 
         return <React.Fragment>
-            {slogans.map(slogan => <span className={styles.slogan} dangerouslySetInnerHTML= {{ __html: slogan}}/>)}
+            {slogans.map((slogan, index) => <span key={index} className={styles.slogan} dangerouslySetInnerHTML= {{ __html: slogan}}/>)}
             <span key="copyright" className={styles.copyright}>
                 © {new Date().getFullYear()} {siteOwner} All Copyright Reserved.
             </span>
