@@ -25,19 +25,17 @@ class Index extends React.Component {
         const post = postNodes.map(postNode => postNode.node)
             .sort((p1, p2) => p1.createdTime < p2.createdTime);
 
-        const itemComponents = post
-            .map((post, index) =>
-                <div key={index} className={styles.postExcerpt}>
-                    {React.createElement(PostExcerpt, {item: post})}
-                </div>
-            );
-
         const header = showsPageTitle
             ? <ContentTitle title={title} subtitle={subtitle}/>
             : null;
 
-        const main = <React.Fragment>
-            {itemComponents}
+        const content = <React.Fragment>
+            {header}
+            {post.map((post, index) =>
+                <div key={index} className={styles.postExcerpt}>
+                    {React.createElement(PostExcerpt, {item: post})}
+                </div>
+            )}
             <div className={styles.paginator}>
                 <Paginator paginationInfo={paginationInfo}/>
             </div>
@@ -48,8 +46,7 @@ class Index extends React.Component {
             title={title}
             description={description}
             keywords={keywords}
-            header={header}
-            main={main}
+            contents={[content]}
         />
     }
 }

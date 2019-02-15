@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './Footnotes.module.scss'
-import { edgesWithGridSystem } from '../utils'
+
+import Link from './Link'
+import { edgesWithGridSystem, normalizeChildren, processChildren } from '../utils'
 
 export default props => {
     const { children } = props;
@@ -46,32 +48,12 @@ class FootnoteList extends React.Component {
 
 }
 
-const normalizeChildren = (children) => {
-    if (Array.isArray(children)) {
-        return children;
-    } else {
-        return [children];
-    }
-};
-
 const processFootnoteListItemChildren = (children, footnoteId, processors) => {
     return children.map((child, index) => {
         if (child.props && child.props.name) {
             const processor = processors[child.props.name];
             if (processor) {
                 return processor(child, index, footnoteId)
-            }
-        }
-        return child;
-    });
-};
-
-const processChildren = (children, processors) => {
-    return children.map((child, index) => {
-        if (child.props && child.props.name) {
-            const processor = processors[child.props.name];
-            if (processor) {
-                return processor(child, index)
             }
         }
         return child;
@@ -113,8 +95,8 @@ const a = (child, index) => {
             href
         } = props;
 
-        return <a key={index} className={styles.footnoteBackReference} href={href}>{'^'}</a>
+        return <Link key={index} className={styles.footnoteBackReference} href={href}>{'^'}</Link>
     }
 
-    return <a key={index} {...props}>{children}</a>
+    return <Link key={index} {...props}>{children}</Link>
 };

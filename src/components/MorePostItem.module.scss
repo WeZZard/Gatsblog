@@ -1,21 +1,40 @@
 @import '../styles/fonts';
 @import '../styles/colors';
 
+@mixin container-column-stretch {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+}
+
 .morePostItem {
-    .metadata {
-        color: $color-tint;
-        display: block;
-        font-family: $font-ui-sans;
-        font-size: 1.1em;
-        font-weight: 500;
-        line-height: calc(13 / 11);
-        margin-top: 3.2rem;
-        text-align: left;
-        text-transform: uppercase;
+    @include container-column-stretch;
+
+    .caption {
+        @include container-column-stretch;
+
+        margin-bottom: 3.4rem;
+
+        .captionContent {
+            color: $color-tint;
+            display: block;
+            font-family: $font-ui-sans;
+            font-size: 1.1em;
+            font-weight: 500;
+            line-height: calc(13 / 11);
+            margin-bottom: -0.3rem;
+            margin-top: -0.2rem;
+            text-align: left;
+            text-transform: uppercase;
+        }
     }
 
     .postExcerpt {
+        @include container-column-stretch;
+
         .header {
+            margin: 0;
+
             a {
                 display: inline-block;
                 text-decoration: none;
@@ -32,76 +51,101 @@
                 }
 
                 .title {
-                    @include heading;
+                    margin: 0;
 
-                    color: $color-ui-main-headline-primary;
-                    font-size: 2.4em;
-                    font-weight: 500;
-                    line-height: 0.875;
-                    margin-top: 2.5rem;
+                    h1 {
+                        @include heading;
+
+                        color: $color-ui-main-headline-primary;
+                        font-size: 2.4em;
+                        font-weight: 500;
+                        line-height: calc(29 / 24);
+                        margin-bottom: -0.6rem;
+                        margin-top: -0.6rem;
+                    }
                 }
 
                 .subtitle {
-                    @include heading;
+                    margin-top: 3.4rem;
 
-                    color: $color-ui-main-headline-secondary;
-                    font-size: 1.5em;
-                    font-weight: 400;
-                    line-height: 1.2;
-                    margin-top: 2.2rem;
-                    vertical-align: 0.05rem;
+                    h2 {
+                        @include heading;
+
+                        color: $color-ui-main-headline-secondary;
+                        font-size: 1.5em;
+                        font-weight: 400;
+                        line-height: calc(18 / 15);
+                        margin-bottom: -0.4rem;
+                        margin-top: -0.6rem;
+                    }
                 }
 
                 &:hover,
                 &:visited:hover {
                     .title {
-                        @include heading-hover;
+                        h1 {
+                            @include heading-hover;
+                        }
                     }
 
                     .subtitle {
-                        @include heading-hover;
+                        h2 {
+                            @include heading-hover;
+                        }
                     }
                 }
 
                 &:visited {
                     .title {
-                        color: $color-ui-main-headline-primary;
+                        h1 {
+                            color: $color-ui-main-headline-primary;
+                        }
                     }
 
                     .subtitle {
-                        color: $color-ui-main-headline-secondary;
+                        h2 {
+                            color: $color-ui-main-headline-secondary;
+                        }
                     }
                 }
             }
         }
 
         .content {
-            color: $color-content-summary;
-            font-family: $font-text-serif;
-            font-size: 1.7em;
-            line-height: 1.7;
-            margin-top: 1.9rem;
+            margin-top: 2.1rem;
 
-            a {
+            .paragraph {
                 color: $color-content-summary;
+                font-family: $font-text-serif;
+                font-size: 1.7em;
+                line-height: calc(29 / 17);
                 margin: 0;
-                text-decoration: none;
-                transition: color 0.3s ease-in-out;
+                margin-bottom: -1rem;
+                margin-top: -1.2rem;
 
-                &:visited {
+                a {
                     color: $color-content-summary;
-                }
-
-                &:hover,
-                &:visited:hover {
-                    color: $color-hover;
+                    margin: 0;
+                    text-decoration: none;
                     transition: color 0.3s ease-in-out;
+
+                    &:visited {
+                        color: $color-content-summary;
+                    }
+
+                    &:hover,
+                    &:visited:hover {
+                        color: $color-hover;
+                        transition: color 0.3s ease-in-out;
+                    }
                 }
             }
         }
 
         .footer {
-            margin-top: 2.2rem;
+            @include container-column-stretch;
+
+            margin-top: 3.4rem;
         }
     }
 }

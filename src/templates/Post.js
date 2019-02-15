@@ -3,6 +3,7 @@ import { graphql } from 'gatsby'
 import Main from '../components/Main'
 import PostBody from '../components/PostBody'
 import PostHeader from '../components/PostHeader'
+import PostFooter from '../components/PostFooter'
 import MorePosts from '../components/MorePosts'
 
 class Post extends React.Component {
@@ -10,11 +11,6 @@ class Post extends React.Component {
         const { data } = this.props;
 
         const {
-            config: {
-                site: {
-                    license: defaultLicense,
-                },
-            },
             post,
             earlierPostExcerpt,
             laterPostExcerpt,
@@ -28,23 +24,33 @@ class Post extends React.Component {
             },
         } = post;
 
-        const header = <PostHeader post={post}/>;
+        const article = <article>
+            <PostHeader
+                title={post.title}
+                subtitle={post.subtitle}
+                createdTime={post.createdTime}
+                category={post.category}
+            />
+            <PostBody post={post}/>
+            <PostFooter tags={post.tags} license={post.license}/>
+        </article>;
 
-        const footer = (earlierPostExcerpt || laterPostExcerpt)
+        const moreItems = (earlierPostExcerpt || laterPostExcerpt)
             ? <MorePosts
                 earlierPostExcerpt={earlierPostExcerpt}
                 laterPostExcerpt={laterPostExcerpt}
             />
             : null;
 
-        const main = <PostBody post={post} defaultLicense={defaultLicense}/>;
+        const contents = [
+            article,
+            moreItems,
+        ];
 
         return <Main
             title={post.title}
             tableOfContents={tableOfContents}
-            header={header}
-            main={main}
-            footer={footer}
+            contents={contents}
         />
     }
 }
@@ -56,7 +62,6 @@ export const pageQuery = graphql`
         config: configYaml {
             site {
                 lang
-                license
             }
         }
         post(id: {eq: $postId}) {

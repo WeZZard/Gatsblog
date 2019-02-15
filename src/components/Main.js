@@ -16,9 +16,7 @@ class Main extends React.Component {
             description,
             keywords,
             tableOfContents,
-            header,
-            main,
-            footer
+            contents,
         } = this.props;
 
         const hasTableOfContents = tableOfContents
@@ -31,20 +29,15 @@ class Main extends React.Component {
             </div>
             : null;
 
-        const headerComponent = header
-            ? <header className={styles.header}>{header}</header>
-            : null;
+        const numberOfContents = contents.length;
 
-        const mainComponent = main
-            ? <main className={styles.main}>{main}</main>
-            : null;
-
-        const footerComponent = footer
-            ? <React.Fragment>
-                <ContentSeparator/>
-                <footer className={styles.footer}>{footer}</footer>
-            </React.Fragment>
-            : null;
+        const children = contents
+            .map((content, index) =>
+                <React.Fragment key={index}>
+                    {content}
+                    {index + 1 < numberOfContents ? <ContentSeparator key={`${index}-separator`}/> : null}
+                </React.Fragment>
+            )
 
         return <div className={styles.app}>
             <SEO
@@ -63,9 +56,7 @@ class Main extends React.Component {
                 <div className={styles.navigationOverlay}/>
             </div>
             <div className={styles.content}>
-                {headerComponent}
-                {mainComponent}
-                {footerComponent}
+                {children}
                 <ContentSeparator/>
                 <footer className={styles.footer}><PageInfo/></footer>
             </div>

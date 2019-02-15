@@ -1,10 +1,8 @@
-import assert from 'assert'
-
 import React from "react"
+import assert from 'assert'
 import styles from './MorePosts.module.scss'
 
 import MorePostItem from './MorePostItem'
-import ContentSeparator from './ContentSeparator'
 
 class MorePosts extends React.Component {
     render() {
@@ -17,17 +15,14 @@ class MorePosts extends React.Component {
             { item: earlierPostExcerpt, title: 'Earlier Post' },
         ].filter(_ => _.item);
 
-        const components = morePostInfo
-            .map(info => <div
-                key={info.title}
-                className={styles.morePostItemContainer}
-            >
+        const components = morePostInfo.map(info =>
+            <div key={info.title} className={styles.morePostItem}>
                 <MorePostItem info={info}/>
-            </div>);
+            </div>
+        );
 
         return <React.Fragment>
-            <ContentSeparator/>
-            <div className={styles.morePostsContainer}>
+            <div className={styles.morePosts}>
                 {components}
             </div>
         </React.Fragment>

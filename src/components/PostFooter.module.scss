@@ -1,0 +1,18 @@
+@mixin container-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.tags {
+    @include container-row;
+
+    align-items: baseline;
+    margin-bottom: 5.5rem;
+}
+
+.license {
+    @include container-row;
+
+    align-items: center;
+    margin-bottom: 5.5rem;
+}

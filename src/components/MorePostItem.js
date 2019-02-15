@@ -11,28 +11,34 @@ class MorePostItem extends React.Component {
         const { title, item } = info;
 
         const subtitleComponent =  item.subtitle !== ""
-            ? <h2 className={styles.subtitle}>{item.subtitle}</h2>
+            ? <div className={styles.subtitle}>
+                <h2>{item.subtitle}</h2>
+            </div>
             : null;
 
         const excerpt = item.file.childMdx.excerpt
             || '<em>The content is intentionally left blank.</em>';
 
         return <div className={styles.morePostItem}>
-            <div className={styles.metadata}>
-                <span>{title}</span>
+            <div className={styles.caption}>
+                <span className={styles.captionContent}>{title}</span>
             </div>
             <div className={styles.postExcerpt}>
                 <section className={styles.header}>
                     <Link to={item.slug}>
-                        <h1 className={styles.title}>{item.title}</h1>
+                        <div className={styles.title}>
+                            <h1>{item.title}</h1>
+                        </div>
                         {subtitleComponent}
                     </Link>
                 </section>
                 <section className={styles.content}>
-                    <Link
-                        to={item.slug}
-                        dangerouslySetInnerHTML={{ __html: excerpt }}
-                    />
+                    <p className={styles.paragraph}>
+                        <Link
+                            to={item.slug}
+                            dangerouslySetInnerHTML={{ __html: excerpt }}
+                        />
+                    </p>
                 </section>
                 <section className={styles.footer}>
                     <PostExcerptMetadata post={item}/>

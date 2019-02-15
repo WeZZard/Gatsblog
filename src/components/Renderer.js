@@ -21,6 +21,7 @@ import CodeBlock from './CodeBlock'
 import InlineCode from './InlineCode'
 import InlineMath from './InlineMath'
 import Math from './Math'
+import Link from './Link'
 import {
     edgesWithGridSystem,
     pToImage,
@@ -95,6 +96,7 @@ export default props => {
             return <div {...props}/>
         },
         sup: Superscript,
+        a: Link,
     };
 
     return <MDXRenderer
