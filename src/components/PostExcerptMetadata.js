@@ -1,7 +1,6 @@
 import React from 'react'
 import assert from 'assert'
 import styles from './PostExcerptMetadata.module.scss'
-const _ = require("lodash");
 
 import MetadataItem from './MetadataItem'
 import CategoryLabel from './CategoryLabel'
@@ -29,9 +28,11 @@ class PostExcerptMetadata extends React.Component {
 
         return <div className={styles.postExcerptMetadata}>
             {filteredLines.map((line, lineNumber) => <div key={`${lineNumber}`} className={styles.postExcerptMetadataLine}>
-                {line.map((component, componentNumber) => <MetadataItem key={`${componentNumber}`}>
-                    {component}
-                </MetadataItem>)}
+                {line.map((component, componentNumber) =>
+                    <MetadataItem key={`${componentNumber}`}>
+                        {component}
+                    </MetadataItem>
+                )}
             </div>)}
         </div>
     }

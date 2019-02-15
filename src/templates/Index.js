@@ -1,10 +1,10 @@
 import React from 'react'
+import styles from './Index.module.scss'
+
 import Main from '../components/Main'
 import ContentTitle from "../components/ContentTitle";
-import Paginator from "../components/Paginator";
-
-import ListLayout from '../components/ListLayout';
 import PostExcerpt from '../components/PostExcerpt';
+import Paginator from "../components/Paginator";
 import { graphql } from 'gatsby';
 
 class Index extends React.Component {
@@ -27,23 +27,20 @@ class Index extends React.Component {
 
         const itemComponents = post
             .map((post, index) =>
-                React.createElement(
-                    PostExcerpt,
-                    {item: post, key: `${index}`}
-                    )
+                <div key={index} className={styles.postExcerpt}>
+                    {React.createElement(PostExcerpt, {item: post})}
+                </div>
             );
-
-        console.log(postNodes);
 
         const header = showsPageTitle
             ? <ContentTitle title={title} subtitle={subtitle}/>
             : null;
 
         const main = <React.Fragment>
-            <ListLayout>
-                {itemComponents}
-            </ListLayout>
-            <Paginator paginationInfo={paginationInfo}/>
+            {itemComponents}
+            <div className={styles.paginator}>
+                <Paginator paginationInfo={paginationInfo}/>
+            </div>
         </React.Fragment>;
 
         return <Main

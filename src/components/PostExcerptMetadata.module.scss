@@ -1,13 +1,18 @@
 @import '../styles/colors';
 
 .postExcerptMetadata {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
 
-}
+    .postExcerptMetadataLine {
+        align-items: baseline;
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 2.1rem;
 
-.postExcerptMetadataLine {
-    margin-bottom: 1.5rem;
-
-    &:last-child {
-        margin-bottom: 0;
+        &:last-child {
+            margin-bottom: 0;
+        }
     }
 }

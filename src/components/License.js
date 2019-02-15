@@ -17,16 +17,16 @@ class License extends React.Component {
 
             const text = License.cc40TextForOptions(options);
 
-            return <div className={styles.license}>
+            return <React.Fragment>
                 <span className={styles.image}>
                     <CC40Image options={optionString}/>
                 </span>
                 <span className={styles.text}>{text}</span>
-            </div>
+            </React.Fragment>
         } else {
-            return <div className={styles.license}>
+            return <React.Fragment>
                 <span className={styles.text}>{license}</span>
-            </div>
+            </React.Fragment>
         }
     }
 

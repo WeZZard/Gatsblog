@@ -40,95 +40,89 @@ class Main extends React.Component {
             : null;
 
         const footerComponent = footer
-            ? <footer className={styles.footer}>{footer}</footer>
+            ? <React.Fragment>
+                <ContentSeparator/>
+                <footer className={styles.footer}>{footer}</footer>
+            </React.Fragment>
             : null;
 
-        return (
-            <div className={styles.app}>
-                <SEO
-                    lang={lang}
-                    title={title}
-                    description={description}
-                    keywords={keywords}
-                />
-                <div className={styles.navigation}>
-                    <div className={styles.navigationBar}>
-                        <NavigationBar slug={slug}/>
-                    </div>
-                    {tableOfContentsComponent}
-                    <div className={styles.navigationOverlay}>
-                        <div className={styles.siteInfo}>
-                            <SiteInfo/>
-                        </div>
-                    </div>
+        return <div className={styles.app}>
+            <SEO
+                lang={lang}
+                title={title}
+                description={description}
+                keywords={keywords}
+            />
+            <div className={styles.navigation}>
+                <SiteTitle/>
+                <div className={styles.navigationBar}>
+                    <NavigationBar slug={slug}/>
                 </div>
-                <div className={styles.primary}>
-                    <div className={styles.content}>
-                        {headerComponent}
-                        {mainComponent}
-                        {footerComponent}
-                    </div>
-                    <ContentSeparator/>
-                    <div className={styles.pageInfo}>
-                        <PageInfo/>
-                    </div>
-                </div>
+                {tableOfContentsComponent}
+                <SiteInfo/>
+                <div className={styles.navigationOverlay}/>
             </div>
-        )
+            <div className={styles.content}>
+                {headerComponent}
+                {mainComponent}
+                {footerComponent}
+                <ContentSeparator/>
+                <footer className={styles.footer}><PageInfo/></footer>
+            </div>
+        </div>
     }
 }
 
-const SiteInfo = () => <StaticQuery
+const SiteTitle = () => <StaticQuery
     query={componentQuery}
-    render={ data => {
-        const {
-            configYaml: {
-                site: {
-                    owner: siteOwner,
-                    slogans,
-                },
-            },
-        } = data;
-
-        return <React.Fragment>
-            {slogans.map((slogan, index) => <span key={index} className={styles.slogan} dangerouslySetInnerHTML= {{ __html: slogan}}/>)}
-            <span key="copyright" className={styles.copyright}>
-                © {new Date().getFullYear()} {siteOwner} All Copyright Reserved.
-            </span>
-        </React.Fragment>
-    }}
+    render={({configYaml: { site: { title }}}) =>
+        <div className={styles.siteTitle}>
+            <label className={styles.siteTitleLabel}>{title}</label>
+        </div>
+    }
 />;
 
-const PageInfo = () => <React.Fragment>
+const SiteInfo = () => <StaticQuery
+    query={componentQuery}
+    render={ ({configYaml: { site: { owner, slogans }}}) =>
+        <div className={styles.siteInfo}>
+            {slogans.map((slogan, index) =>
+                <div key={index} className={styles.siteInfoItem}>
+                    <span className={styles.slogan} dangerouslySetInnerHTML= {{ __html: slogan}}/>
+                </div>
+            )}
+            <div className={styles.siteInfoItem}>
+                <span className={styles.copyright}>
+                    © {new Date().getFullYear()} {owner} All Copyright Reserved.
+                </span>
+            </div>
+        </div>
+    }
+/>;
+
+const PageInfo = () => <div className={styles.pageInfo}>
     <StaticQuery
         query={componentQuery}
-        render={data => {
-            const {
-                configYaml: {
-                    site: {
-                        footerMessages,
-                    },
-                },
-            } = data;
-
-            return footerMessages.map((message, index) => (
-                <span
-                    key={`${index}`}
-                    className={styles.pageInfoItem}
-                    dangerouslySetInnerHTML= {{ __html: message}}
-                />
+        render={({configYaml: { site: { footerMessages }}}) =>
+            footerMessages.map((message, index) => (
+                <div key={`${index}`} className={styles.pageInfoItem}>
+                    <span className={styles.pageInfoContent} dangerouslySetInnerHTML= {{ __html: message}}/>
+                </div>
             ))
-        }}
+        }
     />
-    <span className={styles.pageInfoItem}>
-        Built with <a href="https://www.gatsbyjs.org">Gatsby.js</a>.
-    </span>
-</React.Fragment>;
+    <div className={styles.pageInfoItem}>
+        <span className={styles.pageInfoContent}>
+            Built with <a href="https://www.gatsbyjs.org">Gatsby.js</a>.
+        </span>
+    </div>
+</div>;
 
 const componentQuery = graphql`
     query MainQuery {
         configYaml {
             site {
+                title
                 owner
                 slogans
                 footerMessages

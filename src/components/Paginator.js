@@ -22,17 +22,21 @@ class Paginator extends React.Component {
 
         const previousPage = (pageIndex - 1) >= 0
             ? <div className={styles.previousPageTitle}>
-                <Link to={pageIndex - 1 === 0 ? `${basePath}` : `${basePath}/page-${pageNumber - 1}`}>
-                    <span>{previousPageTitle}</span>
-                </Link>
+                <span>
+                    <Link to={pageIndex - 1 === 0 ? `${basePath}` : `${basePath}/page-${pageNumber - 1}`}>
+                        {previousPageTitle}
+                    </Link>
+                </span>
             </div>
             : null;
 
         const nextPage = (pageIndex + 1) < pagesCount
             ? <div className={styles.nextPageTitle}>
-                <Link to={`${basePath}/page-${pageNumber + 1}`}>
-                    <span>{nextPageTitle}</span>
-                </Link>
+                <span>
+                    <Link to={`${basePath}/page-${pageNumber + 1}`}>
+                        {nextPageTitle}
+                    </Link>
+                </span>
             </div>
             : null;
 

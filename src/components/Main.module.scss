@@ -1,40 +1,122 @@
 @import '../styles/colors';
 
+@mixin container-column-stretch {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin text-navigation {
+    color: $color-ui-nav-headline-normal;
+    text-align: right;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+@mixin text-site-info {
+    color: $color-ui-nav-footnote;
+    text-align: right;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
 .app {
     width: 100%;
 
     .navigation {
-        align-items: stretch;
+        @include container-column-stretch;
+
         background: url('../../assets/images/background-cover.jpg') no-repeat $color-ui-nav-background;
         background-size: cover;
-        display: flex;
-        flex-direction: column;
         height: 100%;
-        padding-bottom: 6.1rem;
         position: fixed;
         top: 0;
         width: 30%;
 
-        .navigationBar {
-            align-items: stretch;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 0;
-            flex-shrink: 0;
-            margin-bottom: 2.8rem;
+        .siteTitle {
+            @include container-column-stretch;
+
+            margin-bottom: 0;
             margin-left: 5.5rem;
             margin-right: 3.4rem;
-            margin-top: 2.6rem;
+            margin-top: 3.4rem;
+
+            .siteTitleLabel {
+                @include text-navigation;
+
+                font-size: 3em;
+                font-weight: 400;
+                line-height: 1.13;
+                margin-bottom: -0.4rem;
+                margin-top: -0.8rem;
+                text-align: right;
+                text-transform: uppercase;
+            }
+        }
+
+        .navigationBar {
+            @include container-column-stretch;
+
+            flex-grow: 0;
+            flex-shrink: 0;
+            margin-bottom: 0;
+            margin-left: 5.5rem;
+            margin-right: 3.4rem;
+            margin-top: 3.4rem;
         }
 
         .tableOfContents {
-            align-items: stretch;
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 6.1rem;
+            @include container-column-stretch;
+
+            margin-bottom: 6.3rem;
             margin-left: 5.5rem;
             margin-right: 3.4rem;
-            margin-top: 2.8rem;
+            margin-top: 3.4rem;
+        }
+
+        .siteInfo {
+            @include container-column-stretch;
+
+            bottom: 0;
+            left: 0;
+            margin-bottom: 3.4rem;
+            margin-left: 5.5rem;
+            margin-right: 3.4rem;
+            position: absolute;
+            right: 0;
+            z-index: -1;
+
+            .siteInfoItem {
+                @include container-column-stretch;
+
+                margin-bottom: 3.4rem;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+
+                .slogan {
+                    @include text-site-info;
+
+                    display: inline-block;
+                    font-size: 3em;
+                    font-weight: 500;
+                    line-height: 1.83;
+                    margin: 0;
+                    margin-bottom: -1.7rem;
+                    margin-top: -1.7rem;
+                    padding: 0;
+                }
+
+                .copyright {
+                    @include text-site-info;
+
+                    display: inline-block;
+                    font-size: 1.1em;
+                    font-weight: 400;
+                    line-height: 1.18;
+                    margin-bottom: -0.3rem;
+                    margin-top: -0.2rem;
+                }
+            }
         }
 
         .navigationOverlay {
@@ -42,8 +124,6 @@
             background-color: transparentize($color-theme, 0.8);
             background-image: linear-gradient(140deg, $color-theme-gradient-end 20%, $color-theme-gradient-end);
             bottom: 0;
-            display: flex;
-            flex-direction: column-reverse;
             height: 100%;
             left: 0;
             position: fixed;
@@ -51,103 +131,74 @@
             top: 0;
             width: 30%;
             z-index: -2;
-
-            .siteInfo {
-                align-items: stretch;
-                color: $color-ui-nav-footnote;
-                display: flex;
-                flex-direction: column;
-                margin-bottom: 3.1rem;
-                margin-left: 5.5rem;
-                margin-right: 3.4rem;
-                text-align: right;
-                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-
-                .copyright {
-                    display: block;
-                    font-size: 1.1em;
-                    font-weight: 400;
-                    line-height: 1.18;
-                    margin-top: 1.5rem;
-                }
-
-                .slogan {
-                    display: block;
-                    font-size: 3em;
-                    font-weight: 500;
-                    line-height: 1.83;
-                    margin: 0;
-                    padding: 0;
-                }
-            }
         }
     }
 
-    .primary {
+    .content {
         align-items: flex-start;
         display: flex;
         flex-direction: column;
-        height: 100vh;
+        flex-shrink: 0;
         justify-content: flex-start;
-        margin-left: 30%;
-        width: calc(70% * 0.618);
+        margin: 5.5rem;
+        margin-left: calc(5.5rem + 30%);
+        min-height: calc(100vh - 11rem);
+        min-width: calc(780px - 11rem);
+        width: calc(70% * 0.618 - 11rem);
 
-        .content {
-            flex-grow: 1;
-
-            .header {
-                width: 100%;
-            }
-
-            .main {
-                display: flex;
-                flex-direction: column;
-                flex-grow: 1;
-                flex-shrink: 0;
-                width: 100%;
-            }
-
-            .footer {
-                width: 100%;
-            }
+        .header {
+            width: 100%;
         }
 
-        .pageInfo {
+        .main {
             display: flex;
             flex-direction: column;
+            flex-grow: 1;
             flex-shrink: 0;
             width: 100%;
+        }
 
-            .pageInfoItem {
-                color: $color-ui-footnote;
-                display: block;
-                font-size: 1.1em;
-                font-weight: 400;
-                line-height: 1.18;
-                margin-left: 5.5rem;
-                margin-right: 5.5rem;
-                margin-bottom: 0.8rem;
+        .footer {
+            width: 100%;
 
-                &:first-child {
-                    margin-top: 5.3rem;
-                }
+            .pageInfo {
+                @include container-column-stretch;
 
-                &:last-child {
-                    margin-bottom: 5.2rem;
-                }
+                flex-shrink: 0;
+                margin-top: 5.5rem;
 
-                a {
+                .pageInfoItem {
+                    @include container-column-stretch;
+
                     color: $color-ui-footnote;
-                    transition: color 0.3s ease-in-out;
+                    margin-bottom: 0.8rem;
 
-                    &:visited {
-                        color: $color-ui-footnote;
+                    &:last-child {
+                        margin-bottom: 0;
                     }
 
-                    &:hover,
-                    &:visited:hover {
-                        color: $color-hover;
+                    .pageInfoContent {
+                        display: inline-block;
+                        font-size: 1.1em;
+                        font-weight: 400;
+                        line-height: 1.18;
+                        margin-bottom: -0.3rem;
+                        margin-top: -0.2rem;
+                    }
+
+                    a {
+                        color: $color-ui-footnote;
                         transition: color 0.3s ease-in-out;
+
+                        &:visited {
+                            color: $color-ui-footnote;
+                        }
+
+                        &:hover,
+                        &:visited:hover {
+                            color: $color-hover;
+                            transition: color 0.3s ease-in-out;
+                        }
                     }
                 }
             }

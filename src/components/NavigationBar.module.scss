@@ -5,99 +5,93 @@
     color: $color-ui-nav-headline-normal;
     display: flex;
     flex-direction: column;
+    text-align: end;
     text-shadow: 0 2px 4px $color-ui-nav-headline-shadow;
     text-transform: uppercase;
-    text-align: end;
 
-    a {
-        text-decoration: none;
-        color: $color-ui-nav-headline-normal;
-        transition: color 0.3s ease-in-out;
+    .navigationList {
+        margin: 0;
+        padding: 0;
+        list-style: none;
 
-        &::after {
-            content: "";
-            display: inline-block;
-            width: 0.3rem;
-            height: 2.1rem;
-            background: $color-ui-nav-headline-normal;
-            margin-left: 2.1rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-            transition: background 0.3s ease-in-out;
-        }
+        .navigationListItem {
+            display: flex;
+            flex-direction: row-reverse;
+            margin-bottom: 3.4rem;
 
-        &:visited {
-            color: $color-ui-nav-headline-normal;
-
-            &::after {
-                background: $color-ui-nav-headline-normal;
+            &:last-child {
+                margin-bottom: 0;
             }
-        }
 
-        &:hover,
-        &:visited:hover {
-            color: $color-hover;
-            transition: color 0.3s ease-in-out;
+            .navigationItem {
+                font-size: 3em;
+                font-weight: 400;
+                line-height: 1.13;
+                margin-bottom: -0.4rem;
+                margin-top: -0.8rem;
 
-            &::after {
-                background: $color-hover;
-                transition: background 0.3s ease-in-out;
-            }
-        }
-    }
-
-    .siteTitle {
-        flex-direction: row-reverse;
-
-        label {
-            font-size: 3em;
-            font-weight: 400;
-            line-height: 1.13;
-        }
-    }
-
-    .navigationContent {
-        ol {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-
-            li {
-                margin-top: 2rem;
-                display: flex;
-                flex-direction: row-reverse;
-            }
-        }
-
-        .navigationItem {
-            font-size: 3em;
-            font-weight: 400;
-            line-height: 1.13;
-        }
-
-        .selected {
-            color: $color-ui-nav-headline-selected;
-
-            a {
-                color: $color-ui-nav-headline-selected;
-
-                &::after {
-                    color: $color-ui-nav-headline-selected;
-                }
-
-                &:visited {
-                    color: $color-ui-nav-headline-selected;
+                a {
+                    text-decoration: none;
+                    color: $color-ui-nav-headline-normal;
+                    transition: color 0.3s ease-in-out;
 
                     &::after {
-                        background: $color-ui-nav-headline-selected;
+                        content: "";
+                        display: inline-block;
+                        width: 0.3rem;
+                        height: 2.1rem;
+                        background: $color-ui-nav-headline-normal;
+                        margin-left: 2.1rem;
+                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+                        transition: background 0.3s ease-in-out;
+                    }
+
+                    &:visited {
+                        color: $color-ui-nav-headline-normal;
+
+                        &::after {
+                            background: $color-ui-nav-headline-normal;
+                        }
+                    }
+
+                    &:hover,
+                    &:visited:hover {
+                        color: $color-hover;
+                        transition: color 0.3s ease-in-out;
+
+                        &::after {
+                            background: $color-hover;
+                            transition: background 0.3s ease-in-out;
+                        }
                     }
                 }
+            }
 
-                &:hover,
-                &:visited:hover {
-                    color: $color-hover;
+            .selected {
+                color: $color-ui-nav-headline-selected;
+
+                a {
+                    color: $color-ui-nav-headline-selected;
 
                     &::after {
-                        background: $color-hover;
+                        color: $color-ui-nav-headline-selected;
+                    }
+
+                    &:visited {
+                        color: $color-ui-nav-headline-selected;
+
+                        &::after {
+                            background: $color-ui-nav-headline-selected;
+                        }
+                    }
+
+                    &:hover,
+                    &:visited:hover {
+                        color: $color-hover;
+
+                        &::after {
+                            background: $color-hover;
+                        }
                     }
                 }
             }

@@ -30,9 +30,6 @@ class NavigationBar extends React.Component {
 
                 const {
                     configYaml: {
-                        site: {
-                            title: siteTitle
-                        },
                         navigation: {
                             createsNavigationItemsForCategories,
                             overwritingCategoryNavigationItems,
@@ -85,7 +82,7 @@ class NavigationBar extends React.Component {
                     const slugRegex = new RegExp(slugPattern);
                     const isSelected = slug && slugRegex.exec(slug);
 
-                    return <li key={navigationItem.slug}>
+                    return <li className={styles.navigationListItem} key={navigationItem.slug}>
                         <NavigationItem
                             navigationItem={navigationItem}
                             isSelected={isSelected}
@@ -93,18 +90,11 @@ class NavigationBar extends React.Component {
                     </li>
                 });
 
-                return (
-                    <nav className={styles.navigationBar}>
-                        <div className={styles.siteTitle}>
-                            <label>{siteTitle}</label>
-                        </div>
-                        <div className={styles.navigationContent}>
-                            <ol>
-                                {components}
-                            </ol>
-                        </div>
-                    </nav>
-                )
+                return <nav className={styles.navigationBar}>
+                    <ol className={styles.navigationList}>
+                        {components}
+                    </ol>
+                </nav>
             }}
         />;
     }
@@ -115,9 +105,6 @@ export default NavigationBar
 const _navigationQuery = graphql`
     query NavigationQuery {
         configYaml {
-            site {
-                title
-            }
             navigation {
                 createsNavigationItemsForCategories
                 overwritingCategoryNavigationItems {

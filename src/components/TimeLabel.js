@@ -22,7 +22,9 @@ class TimeLabel extends React.Component {
         const isoDateTime = dateTime.toISOString();
         const localizedDateTime = dateTime.toLocaleDateString(locale, localizedFormatOption);
 
-        return <time className={styles.time} dateTime={isoDateTime}>{localizedDateTime}</time>;
+        return <time className={styles.time} dateTime={isoDateTime}>
+            {localizedDateTime}
+        </time>;
     }
 }
 

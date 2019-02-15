@@ -23,10 +23,12 @@ class PostExcerpt extends React.Component {
                 </Link>
             </section>
             <section className={styles.content}>
-                <Link
-                    to={item.slug}
-                    dangerouslySetInnerHTML={{ __html: excerpt }}
-                />
+                <p className={styles.paragraph}>
+                    <Link
+                        to={item.slug}
+                        dangerouslySetInnerHTML={{ __html: excerpt }}
+                    />
+                </p>
             </section>
             <section className={styles.footer}>
                 <PostExcerptMetadata post={item}/>

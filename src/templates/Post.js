@@ -1,7 +1,8 @@
 import React from "react"
 import { graphql } from 'gatsby'
 import Main from '../components/Main'
-import PostDocument from '../components/PostDocument'
+import PostBody from '../components/PostBody'
+import PostHeader from '../components/PostHeader'
 import MorePosts from '../components/MorePosts'
 
 class Post extends React.Component {
@@ -27,22 +28,23 @@ class Post extends React.Component {
             },
         } = post;
 
-        const morePostsComponent = (earlierPostExcerpt || laterPostExcerpt)
+        const header = <PostHeader post={post}/>;
+
+        const footer = (earlierPostExcerpt || laterPostExcerpt)
             ? <MorePosts
                 earlierPostExcerpt={earlierPostExcerpt}
                 laterPostExcerpt={laterPostExcerpt}
             />
             : null;
 
-        const main = <React.Fragment>
-            <PostDocument post={post} defaultLicense={defaultLicense}/>
-            {morePostsComponent}
-        </React.Fragment>;
+        const main = <PostBody post={post} defaultLicense={defaultLicense}/>;
 
         return <Main
             title={post.title}
             tableOfContents={tableOfContents}
+            header={header}
             main={main}
+            footer={footer}
         />
     }
 }

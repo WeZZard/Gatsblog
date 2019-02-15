@@ -1,29 +1,34 @@
 @import '../styles/fonts';
 @import '../styles/colors';
 
-.postExcerpt {
-    margin-bottom: 5.1rem;
-    margin-top: 0;
+@mixin container-column-stretch {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+}
 
-    &:last-child {
-        margin-bottom: 0;
-    }
+.postExcerpt {
+    @include container-column-stretch;
+
+    margin: 0;
 
     .header {
+        margin-bottom: 2.1rem;
+
+        @mixin heading {
+            display: inline-block;
+            margin: 0;
+            transition: color 0.3s ease-in-out;
+        }
+
+        @mixin heading-hover {
+            color: $color-hover;
+            transition: color 0.3s ease-in-out;
+        }
+
         a {
             display: inline-block;
             text-decoration: none;
-
-            @mixin heading {
-                display: inline-block;
-                margin: 0;
-                transition: color 0.3s ease-in-out;
-            }
-
-            @mixin heading-hover {
-                color: $color-hover;
-                transition: color 0.3s ease-in-out;
-            }
 
             .title {
                 @include heading;
@@ -32,6 +37,8 @@
                 font-size: 2.4em;
                 font-weight: 500;
                 line-height: 0.875;
+                margin-bottom: -0.2rem;
+                margin-top: -0.2rem;
             }
 
             .subtitle {
@@ -41,7 +48,9 @@
                 font-size: 1.5em;
                 font-weight: 400;
                 line-height: 1.2;
+                margin-bottom: -0.3rem;
                 margin-left: 0.8rem;
+                margin-top: -0.4rem;
                 vertical-align: 0.05rem;
             }
 
@@ -69,31 +78,37 @@
     }
 
     .content {
-        color: $color-content-summary;
-        font-family: $font-text-serif;
-        font-size: 1.7em;
-        line-height: 1.7;
-        margin-top: 1.2rem;
+        margin-bottom: 3.4rem;
 
-        a {
+        .paragraph {
             color: $color-content-summary;
+            font-family: $font-text-serif;
+            font-size: 1.7em;
+            line-height: calc(29 / 17);
             margin: 0;
-            text-decoration: none;
-            transition: color 0.3s ease-in-out;
+            margin-bottom: -1rem;
+            margin-top: -1.2rem;
 
-            &:visited {
+            a {
                 color: $color-content-summary;
-            }
-
-            &:hover,
-            &:visited:hover {
-                color: $color-hover;
+                margin: 0;
+                text-decoration: none;
                 transition: color 0.3s ease-in-out;
+
+                &:visited {
+                    color: $color-content-summary;
+                }
+
+                &:hover,
+                &:visited:hover {
+                    color: $color-hover;
+                    transition: color 0.3s ease-in-out;
+                }
             }
         }
     }
 
     .footer {
-        margin-top: 2.5rem;
+
     }
 }

@@ -1,9 +1,21 @@
 @import '../styles/colors';
 
+@mixin container-row-baseline {
+    align-items: baseline;
+    display: flex;
+    flex-direction: row;
+}
+
 .time {
+    @include container-row-baseline;
+
     color: $color-ui-caption-label;
     font-size: 1.1em;
     font-weight: 500;
-    line-height: 1.18;
+    line-height: calc(13 / 11);
+    margin: 0;
+    margin-bottom: -0.3rem;
+    margin-top: -0.2rem;
+    padding: 0;
     text-transform: uppercase;
 }
