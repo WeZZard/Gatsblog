@@ -18,13 +18,13 @@ class PageHeader extends React.Component {
             ? <div className={styles.subtitle}><h2>{subtitle}</h2></div>
             : null;
 
-        return <header>
+        return <React.Fragment>
             <div className={styles.title}><h1>{title}</h1></div>
             {subtitleComponent}
             <div className={styles.metadata}>
                 <MetadataItem>{createdTimeComponent}</MetadataItem>
             </div>
-        </header>
+        </React.Fragment>
     }
 }
 

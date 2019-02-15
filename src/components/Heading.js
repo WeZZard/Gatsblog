@@ -13,11 +13,10 @@ class Heading extends React.Component {
 
         const name = `${_.kebabCase(children)}`;
         const Component = `h${level}`;
-        const style = styles[`h${level}`];
-        const globalStyle = `body-h${level}`;
-        const className = [globalStyle, style].join(' ');
 
-        return <Component id={name} className={className} children={children}/>
+        return <Component id={name} className={styles.h}>
+            <span className={styles[`h${level}`]} children={children}/>
+        </Component>
     }
 }
 

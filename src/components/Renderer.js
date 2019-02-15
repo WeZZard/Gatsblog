@@ -9,8 +9,7 @@ import TableData from './TableData'
 import Image from './Image'
 import Picture from './Picture'
 import Paragraph from './Paragraph'
-import OrderedList from './OrderedList'
-import UnorderedList from './UnorderedList'
+import List from './List'
 import Blockquote from './Blockquote'
 import SegmentSeparator from './SegmentSeparator'
 import Checkbox from './Checkbox'
@@ -19,11 +18,11 @@ import Footnotes from './Footnotes'
 import Superscript from './Superscript'
 import CodeBlock from './CodeBlock'
 import InlineCode from './InlineCode'
+import MathBlock from './MathBlock'
 import InlineMath from './InlineMath'
-import Math from './Math'
-import Link from './Link'
+import Anchor from './Anchor'
+import PreFormattedBlock from './PreFormattedBlock'
 import {
-    edgesWithGridSystem,
     pToImage,
     pToPicture,
     preToMathBlock,
@@ -35,7 +34,7 @@ export default props => {
 
     const defaultScope = {
         InlineMath,
-        Math,
+        Math: MathBlock,
     };
 
     const defaultComponents = {
@@ -67,18 +66,13 @@ export default props => {
             } else if (preToMathBlock) {
                 return <MathBlock {...mathBlock}/>
             } else {
-                const className = edgesWithGridSystem({
-                    top: 'rect',
-                    bottom: 'rect',
-                });
-                // it's possible to have a pre without a code in it
-                return  <pre className={className} {...props} />
+                return  <PreFormattedBlock {...props} />
             }
         },
         strong: Strong,
         hr: SegmentSeparator,
-        ol: OrderedList,
-        ul: UnorderedList,
+        ol: props => <List type={'orderedList'} {...props}/>,
+        ul: props => <List type={'unorderedList'} {...props}/>,
         table: Table,
         th: TableHeader,
         td: TableData,
@@ -96,7 +90,7 @@ export default props => {
             return <div {...props}/>
         },
         sup: Superscript,
-        a: Link,
+        a: Anchor,
     };
 
     return <MDXRenderer

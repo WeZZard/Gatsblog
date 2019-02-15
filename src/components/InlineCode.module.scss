@@ -5,6 +5,7 @@
     background-color: $color-content-code-block-background;
     border-left: solid 2px $color-content-code-block-indicator;
     border-right: solid 2px $color-content-code-block-indicator;
+    display: inline;
     font-family: $font-text-monospaced;
     font-size: 0.76em;
     font-weight: 400;

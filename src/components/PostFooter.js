@@ -18,12 +18,12 @@ class PostFooter extends React.Component {
             </div>
             : null;
 
-        return <footer>
+        return <React.Fragment>
             {tagsComponent}
             <div className={styles.license}>
                 <License license={license}/>
             </div>
-        </footer>
+        </React.Fragment>
     }
 }
 

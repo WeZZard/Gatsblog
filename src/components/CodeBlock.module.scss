@@ -1,15 +1,22 @@
 @import '../styles/fonts';
 @import '../styles/colors';
 
+.liveCode {
+    margin-bottom: 3.4rem;
+    margin-left: -2.1rem;
+    margin-right: -2.1rem;
+}
+
 .preFormattedCodeBlock {
+    align-items: flex-end;
+    background-color: $color-content-code-block-background;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    align-items: flex-end;
-    padding: 0;
+    margin-bottom: 3.4rem;
     margin-left: -2.1rem;
     margin-right: -2.1rem;
-    background-color: $color-content-code-block-background;
+    padding: 0;
 
     .pathLabel {
         border-bottom: 1px solid $color-content-code-block-indicator;
@@ -32,18 +39,18 @@
     }
 
     @mixin language {
-        display: block;
-        margin-top: 0;
-        margin-left: auto;
-        margin-right: 2.1rem;
-        margin-bottom: 0.6rem;
         border-bottom-left-radius: 0.7rem;
         border-bottom-right-radius: 0.7rem;
-        padding: 0.8rem;
+        display: block;
         font-family: $font-text-monospaced;
         font-size: calc(11em / 17);
         font-weight: 400;
         line-height: 1;
+        margin-bottom: 0.6rem;
+        margin-left: auto;
+        margin-right: 2.1rem;
+        margin-top: 0;
+        padding: 0.8rem;
         text-transform: uppercase;
     }
 
@@ -57,14 +64,14 @@
     @mixin code {
         align-self: flex-start;
         display: flex;
-        padding-bottom: 2.4rem;
-        padding-left: 2.1rem;
-        padding-right: 2.1rem;
-        width: calc(100% - 4.2rem);
         font-family: $font-text-monospaced;
         font-size: calc(13em / 17);
         font-weight: 400;
         line-height: calc(26 / 13);
+        padding-bottom: 2.4rem;
+        padding-left: 2.1rem;
+        padding-right: 2.1rem;
+        width: calc(100% - 4.2rem);
 
         .lineNumberList {
             counter-reset: codeblock;

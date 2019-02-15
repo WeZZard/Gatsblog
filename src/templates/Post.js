@@ -1,10 +1,11 @@
 import React from "react"
+import styles from './Post.module.scss'
 
 import { graphql } from 'gatsby'
 
 import Main from '../components/Main'
 import PostHeader from '../components/PostHeader'
-import MDXBody from '../components/MDXBody'
+import Renderer from "../components/Renderer";
 import PostFooter from '../components/PostFooter'
 import MorePosts from '../components/MorePosts'
 
@@ -19,22 +20,35 @@ class Post extends React.Component {
         } = data;
 
         const {
+            title,
+            subtitle,
+            createdTime,
+            category,
+            tags,
+            license,
             file: {
                 childMdx: {
+                    code,
                     tableOfContents,
                 },
             },
         } = post;
 
         const article = <article>
-            <PostHeader
-                title={post.title}
-                subtitle={post.subtitle}
-                createdTime={post.createdTime}
-                category={post.category}
-            />
-            <MDXBody mdx={post.file} textStyle={'serif'}/>
-            <PostFooter tags={post.tags} license={post.license}/>
+            <header className={styles.header}>
+                <PostHeader
+                    title={title}
+                    subtitle={subtitle}
+                    createdTime={createdTime}
+                    category={category}
+                />
+            </header>
+            <main className={styles.main}>
+                <Renderer textStyle={'serif'}>{code.body}</Renderer>
+            </main>
+            <footer className={styles.footer}>
+                <PostFooter tags={tags} license={license}/>
+            </footer>
         </article>;
 
         const moreItems = (earlierPostExcerpt || laterPostExcerpt)

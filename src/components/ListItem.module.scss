@@ -1,29 +1,72 @@
 @import '../styles/colors';
 @import '../styles/fonts';
 
+@mixin list-item {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    line-height: calc(29 / 17);
+    margin: 0;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
 .orderedListItem {
+    @include list-item;
+
     &::before {
         color: $color-content-list-indicator-dark;
         content: counters(ordered-list, ".") " ";
         counter-increment: ordered-list;
-        display: table-cell;
+        display: inline-block;
         font-family: $font-text-monospaced;
         font-size: 0.88em;
+        margin-bottom: -1rem;
+        margin-top: -1.1rem;
         padding-right: 1.3rem;
     }
 }
 
 .unorderedListItem {
+    @include list-item;
+
     &::before {
         color: $color-content-list-indicator-light;
         content: "\2022";
-        display: table-cell;
+        display: inline-block;
+        margin-bottom: -1rem;
+        margin-top: -1.1rem;
         padding-right: 1.3rem;
     }
 }
 
 .taskListItem {
+    @include list-item;
+
     &::before {
         content: none;
+    }
+}
+
+.contentContainer {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+
+    .paragraphWrapper {
+        align-items: stretch;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        margin-bottom: 3.4rem;
+
+        .paragraph {
+            display: block;
+            margin: 0;
+            margin-bottom: -1rem;
+            margin-top: -1.1rem;
+        }
     }
 }

@@ -1,0 +1,25 @@
+@import '../styles/fonts';
+@import '../styles/colors';
+
+.header {
+    margin-bottom: 5.5rem;
+}
+
+.main {
+    align-items: stretch;
+    color: $color-content-body;
+    display: flex;
+    flex-direction: column;
+    font-family: $font-text-serif;
+    font-size: 1.7em;
+    line-height: 1.7;
+    margin-bottom: 5.5rem;
+
+    > :first-child {
+        margin-top: 0;
+    }
+
+    > :last-child {
+        margin-bottom: 0;
+    }
+}

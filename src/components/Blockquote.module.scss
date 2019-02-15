@@ -2,14 +2,23 @@
 @import '../styles/colors';
 
 .blockquote {
+    border-left: 3px solid $color-content-quote-indicator;
+    color: $color-content-quote;
+    font-style: italic;
+    font-weight: 600;
+    margin-bottom: 3.4rem;
     margin-left: 0;
     margin-right: 0;
     padding: 0;
+    padding-bottom: 2.1rem;
     padding-left: 3.4rem;
     padding-top: 2.1rem;
-    padding-bottom: 2.1rem;
-    border-left: 3px solid $color-content-quote-indicator;
-    font-weight: bold;
-    font-style: italic;
-    color: $color-content-quote;
+
+    > :first-child {
+        margin-top: 0;
+    }
+
+    > :last-child {
+        margin-bottom: 0;
+    }
 }

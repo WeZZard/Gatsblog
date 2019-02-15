@@ -1,7 +1,7 @@
 import React from 'react'
-import styles from './Link.module.scss'
+import styles from './Anchor.module.scss'
 
-export default props => {
+export default (props) => {
     const { className } = props;
     const newProps = {...props};
     delete newProps.className;

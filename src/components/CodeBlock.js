@@ -1,19 +1,13 @@
 import React from 'react';
 import styles from './CodeBlock.module.scss'
-import { edgesWithGridSystem } from '../utils'
 
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 
 export default ({ codeString, language, ...props }) => {
     if (props['react-live']) {
-        const className = edgesWithGridSystem({
-            top: 'rect',
-            bottom: 'rect',
-        });
-
         return (
-            <LiveProvider className={className} code={codeString} noInline={true}>
+            <LiveProvider className={styles.liveCode} code={codeString} noInline={true}>
                 <LiveEditor />
                 <LiveError />
                 <LivePreview />
@@ -37,12 +31,7 @@ export default ({ codeString, language, ...props }) => {
         return <Highlight {...defaultProps} code={codeString} language={language}>
             {
                 ({ style, tokens, getLineProps, getTokenProps }) => {
-                    const className = edgesWithGridSystem({
-                        style: styles.preFormattedCodeBlock,
-                        top: 'rect',
-                        bottom: 'rect',
-                    });
-                    return <pre className={className} style={style}>
+                    return <pre className={styles.preFormattedCodeBlock} style={style}>
                         {pathLabel}
                         {languageLabel}
                         <code className={language ? styles.languageSpecifiedCode : styles.languageUnspecifiedCode}>

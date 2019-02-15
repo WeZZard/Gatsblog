@@ -1,23 +1,39 @@
 import React from "react";
+import styles from './Post.module.scss';
 
 import { graphql } from 'gatsby';
 
 import Main from '../components/Main'
 import PageHeader from '../components/PageHeader';
-import MDXBody from '../components/MDXBody'
+import Renderer from '../components/Renderer';
 
 class Page extends React.Component {
     render() {
         const { data } = this.props;
         const { page } = data;
 
+        const {
+            title,
+            subtitle,
+            createdTime,
+            file: {
+                childMdx: {
+                    code,
+                },
+            },
+        } = page;
+
         const article = <article>
-            <PageHeader
-                title={page.title}
-                subtitle={page.subtitle}
-                createdTime={page.createdTime}
-            />
-            <MDXBody mdx={page.file} textStyle={'sans'}/>
+            <header className={styles.header}>
+                <PageHeader
+                    title={title}
+                    subtitle={subtitle}
+                    createdTime={createdTime}
+                />
+            </header>
+            <main className={styles.main}>
+                <Renderer textStyle={'sans'}>{code.body}</Renderer>
+            </main>
         </article>;
 
         return <Main

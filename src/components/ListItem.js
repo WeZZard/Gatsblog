@@ -1,7 +1,9 @@
 import React from 'react';
 import styles from './ListItem.module.scss'
 
-import Span from './Span'
+import { normalizeChildren, processChildren } from '../utils'
+
+const P = props => <p className={styles.paragraph} {...props} />;
 
 export default props => {
     const { type, children } = props;
@@ -11,49 +13,47 @@ export default props => {
         null,
         rawStringProcessor
     );
-    const className = styles[getClassName(type)];
-    return <li className={className}>{processedChildren}</li>
-}
 
-const getClassName = (type) => {
-    if (type === 'TaskListItem') {
-        return 'taskListItem';
-    }
-    if (type === 'UnorderedListItem') {
-        return 'unorderedListItem';
-    }
-    if (type === 'OrderedListItem') {
-        return 'orderedListItem';
-    }
-    throw `Unexpected type: ${type}`;
-};
+    const reducedChildren = processedChildren.reduce((children, current, currentIndex) => {
+        if (children.length > 0) {
+            const last = children[Math.max(children.length - 1, 0)];
 
-const normalizeChildren = (children) => {
-    if (Array.isArray(children)) {
-        return children;
-    } else {
-        return [children];
-    }
-};
+            const leadingChildren = children.slice(
+                0,
+                Math.max(children.length - 2, 0)
+            );
 
-const processChildren = (children, processors, rawStringProcessor) => {
-    return children.map((child, index) => {
-        if (child.props && child.props.name) {
-            if (processors) {
-                const processor = processors[child.props.name];
-                if (processor) {
-                    return processor(child, index)
-                }
+            if (['span', 'code'].includes(last.type) && ['span', 'code'].includes(current.type)) {
+                return [...leadingChildren, <P>{last}{current}</P>]
+            } else if (last.name === 'p' && ['span', 'code'].includes(current.type)) {
+                return [...leadingChildren, <P>{last.children}{current}</P>]
+            } else if (!['span', 'code'].includes(last.type) && ['span', 'code'].includes(current.type)) {
+                return [...leadingChildren, last, <P>{current}</P>]
+            } else {
+                return [...children, current]
             }
         } else {
-            if (rawStringProcessor) {
-                return rawStringProcessor(child, index)
+            if (['span', 'code'].includes(current.type)) {
+                return [<P>{current}</P>]
+            } else {
+                return [current]
             }
         }
-        return child;
+    }, []);
+
+    const wrappedChildren = reducedChildren.map((child, index) => {
+        if (child.type.toString() === P.toString()) {
+            return <div key={index} className={styles.paragraphWrapper}>{child}</div>
+        } else {
+            return child
+        }
     });
-};
+
+    return <li className={styles[type]}>
+        <div className={styles.contentContainer}>{wrappedChildren}</div>
+    </li>
+}
 
 const rawStringProcessor = (string, index) => {
-    return <Span key={index}>{string}</Span>
+    return <span key={index}>{string}</span>
 };
