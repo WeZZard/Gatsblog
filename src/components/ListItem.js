@@ -3,10 +3,19 @@ import styles from './ListItem.module.scss'
 
 import { normalizeChildren, processChildren } from '../utils'
 
-const P = props => <p className={styles.paragraph} {...props} />;
+const P = ({children}) => <p className={styles.paragraph} {...{name: 'p'}}>
+    {children}
+</p>;
+
+const inlineTags = [
+    'span',
+    'code',
+    'input',
+];
 
 export default props => {
     const { type, children } = props;
+
     const normalizedChildren = normalizeChildren(children);
     const processedChildren = processChildren(
         normalizedChildren,
@@ -14,46 +23,48 @@ export default props => {
         rawStringProcessor
     );
 
-    const reducedChildren = processedChildren.reduce((children, current, currentIndex) => {
+    console.log('processedChildren: ', processedChildren);
+
+    const reducedChildren = processedChildren.reduce((children, current) => {
         if (children.length > 0) {
             const last = children[Math.max(children.length - 1, 0)];
 
-            const leadingChildren = children.slice(
+            const nonInlineChildren = children.slice(
                 0,
-                Math.max(children.length - 2, 0)
+                Math.max(children.length - 1, 0)
             );
 
-            if (['span', 'code'].includes(last.type) && ['span', 'code'].includes(current.type)) {
-                return [...leadingChildren, <P>{last}{current}</P>]
-            } else if (last.name === 'p' && ['span', 'code'].includes(current.type)) {
-                return [...leadingChildren, <P>{last.children}{current}</P>]
-            } else if (!['span', 'code'].includes(last.type) && ['span', 'code'].includes(current.type)) {
-                return [...leadingChildren, last, <P>{current}</P>]
+            if (Array.isArray(last) && inlineTags.includes(current.props.name)) {
+                return [...nonInlineChildren, [...last, current]]
+            } else if (inlineTags.includes(last.props.name) && inlineTags.includes(current.props.name)) {
+                return [...nonInlineChildren, [last, current]]
+            } else if (!inlineTags.includes(last.props.name) && inlineTags.includes(current.props.name)) {
+                return [...children, [current]]
             } else {
                 return [...children, current]
             }
         } else {
-            if (['span', 'code'].includes(current.type)) {
-                return [<P>{current}</P>]
+            if (inlineTags.includes(current.props.name)) {
+                return [[current]]
             } else {
                 return [current]
             }
         }
-    }, []);
-
-    const wrappedChildren = reducedChildren.map((child, index) => {
-        if (child.type.toString() === P.toString()) {
-            return <div key={index} className={styles.paragraphWrapper}>{child}</div>
+    }, []).map((child, index) => {
+        if (Array.isArray(child)) {
+            return <div key={index} className={styles.paragraphWrapper}>
+                <P key={index} children={child}/>
+            </div>
         } else {
-            return child
+            return child;
         }
     });
 
     return <li className={styles[type]}>
-        <div className={styles.contentContainer}>{wrappedChildren}</div>
+        <div className={styles.contentContainer}>{reducedChildren}</div>
     </li>
 }
 
 const rawStringProcessor = (string, index) => {
-    return <span key={index}>{string}</span>
+    return <span key={index} {...{name: 'span'}}>{string}</span>
 };

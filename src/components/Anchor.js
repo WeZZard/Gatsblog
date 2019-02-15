@@ -1,10 +1,4 @@
 import React from 'react'
 import styles from './Anchor.module.scss'
 
-export default (props) => {
-    const { className } = props;
-    const newProps = {...props};
-    delete newProps.className;
-
-    return <a className={[styles.link, className].join(' ')} {...props}/>
-}
+export default (props) => <a className={styles.link} {...props}/>
