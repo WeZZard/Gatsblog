@@ -36,7 +36,8 @@
             margin: 0;
 
             a {
-                display: inline-block;
+                @include container-column-stretch;
+
                 text-decoration: none;
 
                 @mixin heading {
