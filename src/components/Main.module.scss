@@ -23,6 +23,7 @@
 
     .navigation {
         @include container-column-stretch;
+        justify-content: stretch;
 
         background: url('../../assets/images/background-cover.jpg') no-repeat $color-ui-nav-background;
         background-size: cover;
@@ -68,6 +69,7 @@
         .tableOfContents {
             @include container-column-stretch;
 
+            flex-grow: 1;
             margin-bottom: 6.3rem;
             margin-left: 5.5rem;
             margin-right: 3.4rem;

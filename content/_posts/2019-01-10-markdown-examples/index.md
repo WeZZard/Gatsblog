@@ -363,6 +363,7 @@ them. The result looks like ~~this~~. This feature allows you to indicate that
 - [ ] Contact the media
 
 ## Footnotes
+
 ```markdown
 Here's a simple footnote,[^1] and here's a longer one.[^bignote]
 
