@@ -62,9 +62,6 @@ site:
     footerMessages:
         - Freiheit ist Wille, Handeln ist Fähigkeit.
 
-GoogleAnalytics:
-    trackingID: UA-57725504-1
-
 contact:
     - service: Email
       identifier: me@wezzard.com
