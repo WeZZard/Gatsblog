@@ -1,7 +1,7 @@
 @import '../styles/colors';
 @import '../styles/fonts';
 
-.paragraphWrapper {
+.flexWrapper {
     align-items: stretch;
     display: flex;
     flex-direction: column;
@@ -12,11 +12,18 @@
 
     .serif {
         display: block;
+        font-family: $font-text-serif;
+        font-size: 1.7em;
+        line-height: calc(29 / 17);
         margin-bottom: -1rem;
         margin-top: -1.1rem;
     }
 
     .sans {
-
+        font-family: $font-text-sans;
+        font-size: 1.5em;
+        line-height: calc(29 / 15);
+        margin-bottom: -0.9rem;
+        margin-top: -1.2rem;
     }
 }

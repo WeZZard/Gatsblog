@@ -4,7 +4,6 @@ import styles from './MDXHeader.module.scss'
 import MetadataItem from './MetadataItem';
 import TimeLabel from './TimeLabel';
 import CategoryLabel from './CategoryLabel'
-import MDXContext from './MDXContext'
 
 class MDXHeader extends React.Component {
     render() {
@@ -21,21 +20,25 @@ class MDXHeader extends React.Component {
         </MetadataItem>;
 
         const subtitleComponent = subtitle
-            ? <div className={styles.subtitle}><h2>{subtitle}</h2></div>
+            ? <div className={styles.subtitle}>
+                <h2 className={styles[textStyle]}>{subtitle}</h2>
+            </div>
             : null;
 
         const categoryComponent = category
             ? <MetadataItem><CategoryLabel category={category}/></MetadataItem>
             : null;
 
-        return <MDXContext.Provider value={textStyle}>
-            <div className={styles.title}><h1>{title}</h1></div>
+        return <React.Fragment>
+            <div className={styles.title}>
+                <h1 className={styles[textStyle]}>{title}</h1>
+            </div>
             {subtitleComponent}
             <div className={styles.metadata}>
                 {createdTimeComponent}
                 {categoryComponent}
             </div>
-        </MDXContext.Provider>
+        </React.Fragment>
     }
 }
 

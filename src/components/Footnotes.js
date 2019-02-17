@@ -2,7 +2,9 @@ import React from 'react';
 import styles from './Footnotes.module.scss'
 
 import Anchor from './Anchor'
-import { normalizeChildren, processChildren } from '../utils'
+import Paragraph from './Paragraph'
+import MDXContext from './MDXContext'
+import { normalizeChildren, processChildren, rawStringToSpan } from '../utils'
 
 export default props => {
     const { children } = props;
@@ -10,10 +12,26 @@ export default props => {
     const footnotes = children.slice(1);
     return <React.Fragment>
         {separator}
-        <section className={styles.footnotes}>
-            <FootnoteList {...footnotes[0].props}/>
-        </section>
+        <MDXContext.Provider value={'sans'}>
+            <section className={styles.flexWrapper}>
+                {
+                    footnotes.map(footnotesItem =>
+                        <FootnoteList {...footnotesItem.props}/>)
+                }
+            </section>
+        </MDXContext.Provider>
     </React.Fragment>;
+}
+
+class FootnoteList extends React.Component {
+    render() {
+        const { children } = this.props;
+        const listItems = children.map((child, index) =>
+            <FootnoteItem key={index} {...child.props}/>);
+        return <ul className={styles.footnoteList}>
+            {listItems}
+        </ul>;
+    }
 }
 
 class FootnoteItem extends React.Component {
@@ -29,18 +47,6 @@ class FootnoteItem extends React.Component {
             {processedChildren}
         </li>
     }
-}
-
-class FootnoteList extends React.Component {
-    render() {
-        const { children } = this.props;
-        const listItems = children.map((child, index) =>
-            <FootnoteItem key={index} {...child.props}/>);
-        return <ul className={styles.footnoteList}>
-            {listItems}
-        </ul>;
-    }
-
 }
 
 const processFootnoteListItemChildren = (children, footnoteId, processors) => {
@@ -62,22 +68,20 @@ const p = (child, index, footnoteId) => {
     const processedChildren = processChildren(
         normalizedChildren,
         { a },
-        rawString
+        rawStringToSpan
     );
 
     if (index === 0) {
-        const footnoteLabel = <label className={styles.footnoteLabel}>
+        const footnoteLabel = <label className={styles.label}>
             {footnoteId}
         </label>;
 
-        return <p key={index} className={styles.footnoteParagraph}>
+        return <Paragraph key={index}>
             {footnoteLabel}
             {processedChildren}
-        </p>
+        </Paragraph>
     } else {
-        return <p key={index} className={styles.footnoteParagraph}>
-            {processedChildren}
-        </p>
+        return <Paragraph key={index}>{processedChildren}</Paragraph>
     }
 };
 
@@ -92,17 +96,13 @@ const a = (child, index) => {
             href
         } = props;
 
-        return <span key={index} className={styles.footnoteBackReference}>
+        return <span key={index} className={styles.backReference}>
             <Anchor href={href} children={'^'}/>
         </span>
     }
 
-    return <span key={index} className={styles.footnoteSpan}>
+    return <span key={index}>
         <Anchor {...props} children={children}/>
     </span>
-};
-
-const rawString = (child, index) => {
-    return <span key={index} className={styles.footnoteSpan}>{child}</span>
 };
 

@@ -1,8 +1,11 @@
 @import '../styles/fonts';
 @import '../styles/colors';
 
-.footnotes {
+.flexWrapper {
+    align-items: stretch;
     color: $color-content-footer-text;
+    display: flex;
+    flex-direction: column;
     margin: 0;
 
     .footnoteList {
@@ -14,55 +17,44 @@
             align-items: stretch;
             display: flex;
             flex-direction: column;
-            margin-bottom: 3.4rem;
+            margin-bottom: 5.5rem;
 
             &:last-child {
                 margin-bottom: 0;
             }
 
-            .footnoteParagraph {
-                align-items: baseline;
-                color: $color-content-footer-text;
-                display: flex;
-                flex-direction: row;
-                font-size: calc(13em / 15);
-                line-height: call(29 / 13);
-                margin-bottom: 2.1rem;
+            > :first-child {
                 margin-top: 0;
+            }
 
-                &:last-child {
-                    margin-bottom: 0;
-                }
-
-                .footnoteLabel {
-                    font-family: $font-text-monospaced;
-                    font-weight: 400;
-                    margin-bottom: -0.9rem;
-                    margin-right: 0.8rem;
-                    margin-top: -0.8rem;
-
-                    &::before {
-                        content: '[';
-                    }
-
-                    &::after {
-                        content: ']';
-                    }
-                }
-
-                .footnoteSpan {
-                    font-family: $font-text-sans;
-                    margin-bottom: -0.9rem;
-                    margin-top: -0.8rem;
-                }
-
-                .footnoteBackReference {
-                    font-family: $font-text-monospaced;
-                    margin-bottom: -0.9rem;
-                    margin-left: 0.5rem;
-                    margin-top: -0.8rem;
-                }
+            > :last-child {
+                margin-bottom: 0;
             }
         }
     }
+}
+
+.label {
+    font-family: $font-text-monospaced;
+    font-size: (15em / 15);
+    font-weight: 400;
+    margin-bottom: -1.1rem;
+    margin-right: 0.8rem;
+    margin-top: -1.2rem;
+
+    &::before {
+        content: '[';
+    }
+
+    &::after {
+        content: ']';
+    }
+}
+
+.backReference {
+    font-family: $font-text-monospaced;
+    font-size: (15em / 15);
+    margin-bottom: -1.1rem;
+    margin-left: 0.5rem;
+    margin-top: -1.2rem;
 }

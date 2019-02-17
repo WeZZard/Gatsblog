@@ -1,34 +1,31 @@
 import React from 'react';
 import styles from './Paragraph.module.scss'
 
-import Span from './Span'
+import MDXContext from './MDXContext'
 
-import { normalizeChildren, processChildren } from '../utils'
+import { normalizeChildren, processChildren, rawStringToSpan } from '../utils'
 
 export default props => {
-    const {
-        textStyle = 'serif',
-        children,
-    } = props;
+    return <MDXContext.Consumer>
+        {(textStyle) => {
+            const { children } = props;
 
-    const standardProps = {
-        ...props
-    };
-    delete standardProps.textStyle;
-    delete standardProps.children;
+            const standardProps = {
+                ...props
+            };
+            delete standardProps.textStyle;
+            delete standardProps.children;
 
-    const normalizedChildren = normalizeChildren(children);
-    const processedChildren = processChildren(
-        normalizedChildren,
-        null,
-        rawString
-    );
+            const normalizedChildren = normalizeChildren(children);
+            const processedChildren = processChildren(
+                normalizedChildren,
+                null,
+                rawStringToSpan
+            );
 
-    return <div className={styles.paragraphWrapper} {...standardProps}>
-        <p className={styles[textStyle]}>{processedChildren}</p>
-    </div>
+            return <div className={styles.flexWrapper} {...standardProps}>
+                <p className={styles[textStyle]}>{processedChildren}</p>
+            </div>
+        }}
+    </MDXContext.Consumer>;
 }
-
-const rawString = (child, index) => {
-    return <Span key={index}>{child}</Span>
-};

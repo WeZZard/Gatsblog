@@ -13,15 +13,27 @@
     flex-direction: row;
 }
 
+@mixin heading {
+    margin: 0;
+    margin-bottom: 3.4rem;
+}
+
+@mixin heading-1 {
+    color: $color-content-headline-primary;
+}
+
+@mixin heading-2 {
+    color: $color-content-headline-secondary;
+}
+
 .title {
     @include container-column-baseline;
+    @include heading;
 
-    margin: 0;
-
-    h1 {
+    .serif {
         @include container-column-baseline;
+        @include heading-1;
 
-        color: $color-content-headline-primary;
         font-family: $font-text-serif;
         font-size: 4.4em;
         font-weight: 300;
@@ -31,26 +43,52 @@
         margin-right: 0;
         margin-top: -0.7rem;
     }
+
+    .sans {
+        @include container-column-baseline;
+        @include heading-1;
+
+        font-family: $font-text-sans;
+        font-size: 3.9em;
+        font-weight: 300;
+        line-height: calc(48 / 39);
+        margin-bottom: -1rem;
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: -1.7rem;
+    }
 }
 
 .subtitle {
     @include container-column-baseline;
+    @include heading;
 
-    margin: 0;
-    margin-top: 3.4rem;
-
-    h2 {
+    .serif {
         @include container-column-baseline;
+        @include heading-2;
 
-        color: $color-content-headline-secondary;
         font-family: $font-text-serif;
-        font-size: 2.8em;
+        font-size: 3.2em;
         font-weight: 300;
-        line-height: calc(41 / 28);
+        line-height: calc(32 / 24);
         margin-bottom: -1.3rem;
         margin-left: 0;
         margin-right: 0;
         margin-top: -1.5rem;
+    }
+
+    .sans {
+        @include container-column-baseline;
+        @include heading-2;
+
+        font-family: $font-text-sans;
+        font-size: 2.8em;
+        font-weight: 300;
+        line-height: calc(41 / 28);
+        margin-bottom: -0.7rem;
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: -1.2rem;
     }
 }
 
@@ -58,5 +96,5 @@
     @include container-row-baseline;
 
     margin: 0;
-    margin-top: 5.5rem;
+    margin-top: 2.1rem;
 }

@@ -1,7 +1,7 @@
 export default (children, processors, rawStringProcessor) => {
     return children.map((child, index) => {
-        if (child.props && child.props.name) {
-            if (processors) {
+        if (child.props) {
+            if (processors && child.props.name) {
                 const processor = processors[child.props.name];
                 if (processor) {
                     return processor(child, index)

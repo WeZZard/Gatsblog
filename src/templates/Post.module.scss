@@ -2,6 +2,9 @@
 @import '../styles/colors';
 
 .header {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
     margin-bottom: 5.5rem;
 }
 
@@ -10,9 +13,6 @@
     color: $color-content-body;
     display: flex;
     flex-direction: column;
-    font-family: $font-text-serif;
-    font-size: 1.7em;
-    line-height: 1.7;
     margin-bottom: 5.5rem;
 
     > :first-child {

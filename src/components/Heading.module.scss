@@ -19,7 +19,7 @@
         @include heading;
 
         font-family: $font-text-sans;
-        font-size: calc(3.2em * 10 / 17);
+        font-size: 3.2em;
         font-weight: 400;
         line-height: calc(42 / 32);
         margin-bottom: -1rem;
@@ -30,7 +30,7 @@
         @include heading;
 
         font-family: $font-text-sans;
-        font-size: calc(2.6em * 10 / 17);
+        font-size: 2.6em;
         font-weight: 500;
         line-height: calc(37 / 26);
         margin-bottom: -0.9rem;
@@ -41,7 +41,7 @@
         @include heading;
 
         font-family: $font-text-sans;
-        font-size: calc(2.1em * 10 / 17);
+        font-size: 2.1em;
         font-weight: 600;
         line-height: calc(34 / 21);
         margin-bottom: -1rem;
@@ -52,7 +52,7 @@
         @include heading;
 
         font-family: $font-text-sans;
-        font-size: calc(1.9em * 10 / 17);
+        font-size: 1.9em;
         font-weight: 600;
         line-height: calc(32 / 19);
         margin-bottom: -0.9rem;
@@ -63,7 +63,7 @@
         @include heading;
 
         font-family: $font-text-sans;
-        font-size: calc(1.7em * 10 / 17);
+        font-size: 1.7em;
         font-weight: 700;
         line-height: calc(31 / 17);
         margin-bottom: -0.9rem;
@@ -74,7 +74,7 @@
         @include heading;
 
         font-family: $font-text-sans;
-        font-size: calc(1.5em * 10 / 17);
+        font-size: 1.5em;
         font-weight: 800;
         line-height: calc(30 / 15);
         margin-bottom: -1rem;
