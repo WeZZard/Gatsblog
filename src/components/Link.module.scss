@@ -1,0 +1,201 @@
+@import '../styles/colors';
+@import '../styles/fonts';
+
+@mixin anchor {
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+
+    &:hover,
+    &:visited:hover {
+        color: $color-hover;
+        transition: color 0.3s ease-in-out;
+    }
+}
+
+.primary {
+    @include anchor;
+
+    color: $color-ui-caption-primary;
+
+    &:visited {
+        color: $color-ui-caption-primary;
+    }
+}
+
+.secondary {
+    @include anchor;
+
+    color: $color-ui-caption-secondary;
+
+    &:visited {
+        color: $color-ui-caption-secondary;
+    }
+}
+
+.summary {
+    @include anchor;
+
+    color: $color-content-summary;
+
+    &:visited {
+        color: $color-content-summary;
+    }
+}
+
+.header {
+    display: inline-block;
+    text-decoration: none;
+
+    @mixin heading-hover {
+        color: $color-hover;
+        transition: color 0.3s ease-in-out;
+    }
+
+    @mixin heading {
+        display: inline-block;
+        margin: 0;
+        transition: color 0.3s ease-in-out;
+    }
+
+    @mixin hover {
+        h1 {
+            @include heading-hover;
+        }
+
+        h2 {
+            @include heading-hover;
+        }
+    }
+
+    h1 {
+        @include heading;
+
+        color: $color-ui-main-headline-primary;
+    }
+
+    h2 {
+        @include heading;
+
+        color: $color-ui-main-headline-secondary;
+    }
+
+    &:hover {
+        @include hover;
+    }
+
+    &:visited {
+        h1 {
+            color: $color-ui-main-headline-primary;
+        }
+
+        h2 {
+            color: $color-ui-main-headline-secondary;
+        }
+    }
+
+    &:visited:hover {
+        @include hover;
+    }
+}
+
+@mixin navigation {
+    color: $color-ui-nav-headline-normal;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+
+    &::after {
+        background: $color-ui-nav-headline-normal;
+        display: inline-block;
+        transition: background 0.3s ease-in-out;
+    }
+
+    &:hover,
+    &:visited:hover {
+        color: $color-hover;
+        transition: color 0.3s ease-in-out;
+
+        &::after {
+            background: $color-hover;
+            transition: background 0.3s ease-in-out;
+        }
+    }
+
+    &:visited {
+        color: $color-ui-nav-headline-normal;
+
+        &::after {
+            background: $color-ui-nav-headline-normal;
+        }
+    }
+}
+
+.navigationNormal {
+    @include navigation;
+}
+
+.navigationSelected {
+    @include navigation;
+
+    color: $color-ui-nav-headline-selected;
+
+    &::after {
+        color: $color-ui-nav-headline-selected;
+    }
+
+    &:visited {
+        color: $color-ui-nav-headline-selected;
+
+        &::after {
+            background: $color-ui-nav-headline-selected;
+        }
+    }
+
+    &:hover,
+    &:visited:hover {
+        color: $color-hover;
+
+        &::after {
+            background: $color-hover;
+        }
+    }
+}
+
+.toc {
+    color: $color-ui-nav-headline-normal;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+
+    &::after {
+        color: $color-ui-nav-headline-normal;
+        display: inline-block;
+        transition: color 0.3s ease-in-out;
+    }
+
+    &:hover {
+        color: $color-hover;
+        transition: color 0.3s ease-in-out;
+
+        &::after {
+            color: $color-hover;
+            transition: color 0.3s ease-in-out;
+        }
+    }
+
+    &:visited {
+        color: $color-ui-nav-headline-normal;
+
+        &::after {
+            color: $color-ui-nav-headline-normal;
+        }
+    }
+
+    &:visited:hover {
+        color: $color-hover;
+        transition: color 0.3s ease-in-out;
+
+        &::after {
+            color: $color-hover;
+            transition: color 0.3s ease-in-out;
+        }
+    }
+}

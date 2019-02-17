@@ -10,9 +10,9 @@
     color: $color-ui-caption-label;
     font-size: 1.1em;
     font-weight: 500;
-    line-height: calc(13 / 11);
-    margin-bottom: -0.3rem;
-    margin-top: -0.2rem;
+    line-height: 1;
+    margin-bottom: -0.2rem;
+    margin-top: -0.1rem;
     text-transform: uppercase;
 }
 
@@ -33,6 +33,7 @@
             margin-left: 0.5rem;
             margin-right: 0.5rem;
             width: 0.1rem;
+            vertical-align: baseline;
         }
     }
 

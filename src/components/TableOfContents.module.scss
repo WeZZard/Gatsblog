@@ -68,33 +68,18 @@
                 text-transform: uppercase;
 
                 .content {
-                    a {
-                        color: $color-ui-nav-headline-normal;
-                        font-family: $font-text-monospaced;
-                        font-size: 1.1em;
-                        font-weight: 400;
-                        line-height: 1.182;
+                    font-family: $font-text-monospaced;
+                    font-size: 1.1em;
+                    font-weight: 400;
+                    line-height: 1.182;
+                    margin-bottom: -0.3rem;
+                    margin-top: -0.2rem;
+
+                    a::after {
+                        content: counters(ordered-list, ".") " ";
                         margin-bottom: -0.3rem;
+                        margin-left: 1.3rem;
                         margin-top: -0.2rem;
-                        text-decoration: none;
-                        transition: color 0.3s ease-in-out;
-
-                        &:visited {
-                            color: $color-ui-nav-headline-normal;
-                        }
-
-                        &:hover,
-                        &:visited:hover {
-                            color: $color-hover;
-                            transition: color 0.3s ease-in-out;
-                        }
-
-                        &::after {
-                            content: counters(ordered-list, ".") " ";
-                            margin-bottom: -0.3rem;
-                            margin-left: 1.3rem;
-                            margin-top: -0.2rem;
-                        }
                     }
                 }
 

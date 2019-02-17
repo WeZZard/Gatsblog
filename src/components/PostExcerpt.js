@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './PostExcerpt.module.scss'
 
 import PostExcerptMetadata from './PostExcerptMetadata'
-import { Link } from 'gatsby'
+import Link from './Link'
 
 export default ({ item }) => {
     const subtitleComponent =  item.subtitle !== ""
@@ -14,7 +14,7 @@ export default ({ item }) => {
 
     return <div className={styles.flexWrapper}>
         <section className={styles.header}>
-            <Link to={item.slug}>
+            <Link kind={'header'} to={item.slug}>
                 <h1 className={styles.title}>{item.title}</h1>
                 {subtitleComponent}
             </Link>
@@ -22,6 +22,7 @@ export default ({ item }) => {
         <section className={styles.content}>
             <p className={styles.paragraph}>
                 <Link
+                    kind={'summary'}
                     to={item.slug}
                     dangerouslySetInnerHTML={{ __html: excerpt }}
                 />

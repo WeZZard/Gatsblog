@@ -1,4 +1,5 @@
 @import '../styles/colors';
+@import '../styles/fonts';
 
 .flexWrapper {
     align-items: baseline;
@@ -13,13 +14,14 @@
         &::after {
             color: $color-ui-caption-separator;
             content: '•';
+            font-family: $font-text-monospaced;
             font-size: 1.1em;
             font-weight: 500;
-            line-height: calc(13 / 11);
-            margin-bottom: -0.3rem;
+            line-height: 1;
+            margin-bottom: -0.2rem;
             margin-left: 0.8rem;
             margin-right: 0.8rem;
-            margin-top: -0.2rem;
+            margin-top: -0.1rem;
         }
 
         &:only-child {
@@ -36,5 +38,4 @@
             }
         }
     }
-
 }

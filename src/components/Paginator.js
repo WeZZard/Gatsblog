@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'gatsby'
+import Link from './Link'
 import styles from './Paginator.module.scss'
 
 class Paginator extends React.Component {
@@ -23,7 +23,7 @@ class Paginator extends React.Component {
         const previousPage = (pageIndex - 1) >= 0
             ? <div className={styles.previousPageTitle}>
                 <span>
-                    <Link to={pageIndex - 1 === 0 ? `${basePath}` : `${basePath}/page-${pageNumber - 1}`}>
+                    <Link kind={'primary'} to={pageIndex - 1 === 0 ? `${basePath}` : `${basePath}/page-${pageNumber - 1}`}>
                         {previousPageTitle}
                     </Link>
                 </span>
@@ -33,7 +33,7 @@ class Paginator extends React.Component {
         const nextPage = (pageIndex + 1) < pagesCount
             ? <div className={styles.nextPageTitle}>
                 <span>
-                    <Link to={`${basePath}/page-${pageNumber + 1}`}>
+                    <Link kind={'primary'} to={`${basePath}/page-${pageNumber + 1}`}>
                         {nextPageTitle}
                     </Link>
                 </span>

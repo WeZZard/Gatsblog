@@ -10,9 +10,9 @@
     text-transform: uppercase;
 
     .navigationList {
+        list-style: none;
         margin: 0;
         padding: 0;
-        list-style: none;
 
         .navigationListItem {
             display: flex;
@@ -30,69 +30,12 @@
                 margin-bottom: -0.4rem;
                 margin-top: -0.8rem;
 
-                a {
-                    text-decoration: none;
-                    color: $color-ui-nav-headline-normal;
-                    transition: color 0.3s ease-in-out;
-
-                    &::after {
-                        content: "";
-                        display: inline-block;
-                        width: 0.3rem;
-                        height: 2.1rem;
-                        background: $color-ui-nav-headline-normal;
-                        margin-left: 2.1rem;
-                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-                        transition: background 0.3s ease-in-out;
-                    }
-
-                    &:visited {
-                        color: $color-ui-nav-headline-normal;
-
-                        &::after {
-                            background: $color-ui-nav-headline-normal;
-                        }
-                    }
-
-                    &:hover,
-                    &:visited:hover {
-                        color: $color-hover;
-                        transition: color 0.3s ease-in-out;
-
-                        &::after {
-                            background: $color-hover;
-                            transition: background 0.3s ease-in-out;
-                        }
-                    }
-                }
-            }
-
-            .selected {
-                color: $color-ui-nav-headline-selected;
-
-                a {
-                    color: $color-ui-nav-headline-selected;
-
-                    &::after {
-                        color: $color-ui-nav-headline-selected;
-                    }
-
-                    &:visited {
-                        color: $color-ui-nav-headline-selected;
-
-                        &::after {
-                            background: $color-ui-nav-headline-selected;
-                        }
-                    }
-
-                    &:hover,
-                    &:visited:hover {
-                        color: $color-hover;
-
-                        &::after {
-                            background: $color-hover;
-                        }
-                    }
+                a::after {
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+                    content: "";
+                    height: 2.1rem;
+                    margin-left: 2.1rem;
+                    width: 0.3rem;
                 }
             }
         }

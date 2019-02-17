@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash'
 import styles from './TaxonomySummary.module.scss'
 
-import { Link } from 'gatsby'
+import Link from './Link'
 
 export default ({ type, taxonomy, posts }) => {
     const baseSlug = getBaseSlug(type);
@@ -30,7 +30,7 @@ export default ({ type, taxonomy, posts }) => {
         </div>
         <div className={styles.moreFlexWrapper}>
             <span className={styles.more}>
-                <Link to={slug}>More ...</Link>
+                <Link kind={'primary'} to={slug}>More ...</Link>
             </span>
         </div>
     </React.Fragment>

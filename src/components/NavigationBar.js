@@ -1,6 +1,8 @@
 import React from 'react'
-import { StaticQuery, graphql, Link } from 'gatsby'
 import styles from './NavigationBar.module.scss'
+
+import { StaticQuery, graphql } from 'gatsby'
+import Link from './Link'
 
 class NavigationItem extends React.Component {
     render() {
@@ -12,7 +14,11 @@ class NavigationItem extends React.Component {
             ? [styles.navigationItem, styles.selected].join(' ')
             : styles.navigationItem;
 
-        return <span className={className}><Link to={slug}>{name}</Link></span>
+        const kind = isSelected ? 'navigationSelected' : 'navigationNormal';
+
+        return <span className={className}>
+            <Link kind={kind} to={slug}>{name}</Link>
+        </span>
     }
 }
 

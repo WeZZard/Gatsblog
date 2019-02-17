@@ -2,7 +2,7 @@ import React from "react"
 import styles from './MorePostItem.module.scss'
 
 import PostExcerptMetadata from './PostExcerptMetadata'
-import { Link } from 'gatsby';
+import Link from './Link'
 
 export default ({ info }) => {
     const { title, item } = info;
@@ -22,7 +22,7 @@ export default ({ info }) => {
         </div>
         <div className={styles.postExcerpt}>
             <section className={styles.header}>
-                <Link to={item.slug}>
+                <Link kind={'header'} to={item.slug}>
                     <div className={styles.title}>
                         <h1>{item.title}</h1>
                     </div>
@@ -32,6 +32,7 @@ export default ({ info }) => {
             <section className={styles.content}>
                 <p className={styles.paragraph}>
                     <Link
+                        kind={'summary'}
                         to={item.slug}
                         dangerouslySetInnerHTML={{ __html: excerpt }}
                     />

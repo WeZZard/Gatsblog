@@ -35,85 +35,40 @@
         .header {
             margin: 0;
 
-            a {
+            .title {
                 @include container-column-stretch;
 
-                text-decoration: none;
+                color: $color-ui-main-headline-primary;
 
-                @mixin heading {
+                h1 {
                     display: block;
-                    margin: 0;
-                    transition: color 0.3s ease-in-out;
+                    font-size: 2.4em;
+                    font-weight: 500;
+                    line-height: calc(29 / 24);
+                    margin-bottom: -0.6rem;
+                    margin-top: -0.6rem;
                 }
+            }
 
-                @mixin heading-hover {
-                    color: $color-hover;
-                    transition: color 0.3s ease-in-out;
-                }
+            .subtitle {
+                @include container-column-stretch;
 
-                .title {
-                    margin: 0;
+                color: $color-ui-main-headline-secondary;
+                margin-top: 2.1rem;
 
-                    h1 {
-                        @include heading;
-
-                        color: $color-ui-main-headline-primary;
-                        font-size: 2.4em;
-                        font-weight: 500;
-                        line-height: calc(29 / 24);
-                        margin-bottom: -0.6rem;
-                        margin-top: -0.6rem;
-                    }
-                }
-
-                .subtitle {
-                    margin-top: 3.4rem;
-
-                    h2 {
-                        @include heading;
-
-                        color: $color-ui-main-headline-secondary;
-                        font-size: 1.5em;
-                        font-weight: 400;
-                        line-height: calc(18 / 15);
-                        margin-bottom: -0.4rem;
-                        margin-top: -0.6rem;
-                    }
-                }
-
-                &:hover,
-                &:visited:hover {
-                    .title {
-                        h1 {
-                            @include heading-hover;
-                        }
-                    }
-
-                    .subtitle {
-                        h2 {
-                            @include heading-hover;
-                        }
-                    }
-                }
-
-                &:visited {
-                    .title {
-                        h1 {
-                            color: $color-ui-main-headline-primary;
-                        }
-                    }
-
-                    .subtitle {
-                        h2 {
-                            color: $color-ui-main-headline-secondary;
-                        }
-                    }
+                h2 {
+                    display: block;
+                    font-size: 1.5em;
+                    font-weight: 400;
+                    line-height: calc(18 / 15);
+                    margin-bottom: -0.4rem;
+                    margin-top: -0.6rem;
                 }
             }
         }
 
         .content {
-            margin-top: 2.1rem;
+            margin-top: 3.4rem;
 
             .paragraph {
                 color: $color-content-summary;
@@ -123,23 +78,6 @@
                 margin: 0;
                 margin-bottom: -1rem;
                 margin-top: -1.2rem;
-
-                a {
-                    color: $color-content-summary;
-                    margin: 0;
-                    text-decoration: none;
-                    transition: color 0.3s ease-in-out;
-
-                    &:visited {
-                        color: $color-content-summary;
-                    }
-
-                    &:hover,
-                    &:visited:hover {
-                        color: $color-hover;
-                        transition: color 0.3s ease-in-out;
-                    }
-                }
             }
         }
 
