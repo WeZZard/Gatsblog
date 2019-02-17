@@ -1,0 +1,156 @@
+@import '../styles/colors';
+@import '../styles/fonts';
+
+$cubic: cubic-bezier(0.4, 0.01, 0.165, 0.99);
+$max-menu-item-count: 100;
+
+.menu {
+    background-color: transparentize(white, 0.3);
+    display: block;
+    height: 44px;
+    justify-content: stretch;
+    left: 0;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    transition: all 0.5s ease-out, background 1s ease-out;
+    transition-delay: 0.2s;
+    pointer-events: none;
+    width: 100%;
+    z-index: 999;
+
+    @media (min-width: 1440px) {
+        visibility: hidden;
+    }
+
+    .burgerContainer {
+        cursor: pointer;
+        display: inline-block;
+        height: 44px;
+        margin-left: 0.7rem;
+        margin-right: 0.7rem;
+        position: relative;
+        -webkit-tap-highlight-color: transparent;
+        transform: rotate(0deg);
+        transition: all 0.3s $cubic;
+        user-select: none;
+        width: 44px;
+        z-index: 999;
+
+        .burger {
+            display: block;
+            height: 8px;
+            margin: -4.5px auto 0;
+            position: relative;
+            top: 50%;
+            width: 17px;
+
+            @mixin bar {
+                background: $_gray-21;
+                display: block;
+                height: 1px;
+                position: relative;
+                transition: all 0.3s $cubic;
+                transition-delay: 0s;
+                width: 100%;
+            }
+
+            .topBar {
+                @include bar;
+
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            .btmBar {
+                @include bar;
+
+                transform: translateY(6px) rotate(0deg);
+            }
+        }
+    }
+
+    .list {
+        display: block;
+        list-style: none;
+        margin-left: 2.1rem;
+        margin-right: 2.1rem;
+        padding: 0;
+        position: relative;
+        z-index: 100;
+
+        .listItem {
+            border-bottom: 1px solid $_gray-89;
+            margin-top: 5px;
+            opacity: 0;
+            transform: scale(1.15) translateY(-30px);
+            transition: transform 0.5s $cubic, opacity 0.6s $cubic;
+
+            @for $i from 1 through $max-menu-item-count {
+                &:nth-child(#{$i}) {
+                    transition-delay: #{0.56 - ($i * 0.07)}s;
+                }
+            }
+
+            a {
+                color: $_gray-21;
+                display: block;
+                font-family: $font-text-sans;
+                font-size: 22px;
+                font-weight: 200;
+                line-height: 2.35;
+                position: relative;
+                text-decoration: none;
+                width: 100%;
+            }
+        }
+    }
+
+    &.open {
+        height: 100%;
+        transition: all 0.3s ease-in, background 0.5s ease-in;
+        transition-delay: 0.25s;
+
+        .burgerContainer {
+            transform: rotate(90deg);
+
+            .burger {
+                @mixin bar {
+                    transition: all 0.4s $cubic;
+                    transition-delay: 0.2s;
+                }
+
+                .topBar {
+                    @include bar;
+
+                    transform: translateY(4px) rotate(45deg);
+                }
+                .btmBar {
+                    @include bar;
+
+                    transform: translateY(3px) rotate(-45deg);
+                }
+            }
+        }
+
+        .list {
+            .listItem {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+
+                @for $i from 1 through $max-menu-item-count {
+                    &:nth-child(#{$i}) {
+                        transition-delay: #{0.07 * $i+0.2}s;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@supports ((-webkit-backdrop-filter: blur(1.8em)) or (backdrop-filter: blur(2em))) {
+    .menu {
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        backdrop-filter: saturate(180%) blur(20px);
+        background-color: transparentize(white, 0.3);
+    }
+}

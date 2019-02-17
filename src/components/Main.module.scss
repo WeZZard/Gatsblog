@@ -6,6 +6,12 @@
     flex-direction: column;
 }
 
+@mixin container-row-stretch {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+}
+
 @mixin text-navigation {
     color: $color-ui-nav-headline-normal;
     text-align: right;
@@ -21,10 +27,6 @@
 .app {
     width: 100%;
 
-    @media (max-width: 1440px) {
-
-    }
-
     .navigation {
         @include container-column-stretch;
 
@@ -35,6 +37,10 @@
         position: fixed;
         top: 0;
         width: 30%;
+
+        @media (max-width: 1440px) {
+            visibility: hidden;
+        }
 
         .siteTitle {
             @include container-column-stretch;
@@ -140,10 +146,6 @@
             width: 30%;
             z-index: -2;
         }
-
-        @media (max-width: 1440px) {
-            visibility: hidden;
-        }
     }
 
     .content {
@@ -160,7 +162,7 @@
 
         @media (max-width: 1440px) {
             margin: 2.1rem;
-            margin-top: 5.5rem;
+            margin-top: calc(2.1rem + 44px);
             margin-bottom: 5.5rem;
             min-width: auto;
             width: calc(100% - 2.1rem * 2);

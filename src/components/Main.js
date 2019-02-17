@@ -3,6 +3,7 @@ import styles from './Main.module.scss'
 
 import SEO from './SEO'
 import GoogleAnalytics from './GoogleAnalytics'
+import Menu from './Menu'
 import NavigationBar from './NavigationBar'
 import TableOfContents from './TableOfContents'
 import ContentSeparator from './ContentSeparator'
@@ -110,6 +111,7 @@ export default (
                 description={description}
                 keywords={keywords}
             />
+            <Menu/>
             <div className={styles.navigation}>
                 <div className={styles.siteTitle}>
                     <label className={styles.siteTitleLabel}>{siteTitle}</label>
