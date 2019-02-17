@@ -2,6 +2,7 @@ import React from 'react'
 import styles from './Main.module.scss'
 
 import SEO from './SEO'
+import GoogleAnalytics from './GoogleAnalytics'
 import NavigationBar from './NavigationBar'
 import TableOfContents from './TableOfContents'
 import ContentSeparator from './ContentSeparator'
@@ -102,6 +103,7 @@ export default (
             );
 
         return <div className={styles.app}>
+            <GoogleAnalytics/>
             <SEO
                 lang={lang}
                 title={title}
