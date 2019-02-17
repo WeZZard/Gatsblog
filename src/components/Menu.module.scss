@@ -15,7 +15,6 @@ $max-menu-item-count: 100;
     top: 0;
     transition: all 0.5s ease-out, background 1s ease-out;
     transition-delay: 0.2s;
-    pointer-events: none;
     width: 100%;
     z-index: 999;
 
@@ -144,6 +143,11 @@ $max-menu-item-count: 100;
                 }
             }
         }
+    }
+
+    &.bordered {
+        border-bottom: 0.5px solid $_gray-89;
+        transition: all 0.1s ease-in;
     }
 }
 

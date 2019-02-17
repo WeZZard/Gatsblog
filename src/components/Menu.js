@@ -5,23 +5,47 @@ class Menu extends React.Component {
     constructor(props) {
         super(props);
         this.toggle= this.toggle.bind(this);
+        this.handleScroll= this.handleScroll.bind(this);
         this.state = {
             open: false,
+            pageYOffset: 0,
         };
     }
 
     toggle() {
-        console.log('hehe');
-        const currentState = this.state.open;
-        this.setState({ open: !currentState });
+        const isOpen = this.state.open;
+        const pageYOffset = this.state.pageYOffset;
+        this.setState({ open: !isOpen, pageYOffset });
     };
 
-    render(props) {
+    componentDidMount() {
+        window.addEventListener('scroll', this.handleScroll, { passive: true })
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll)
+    }
+
+    handleScroll(event) {
         const isOpen = this.state.open;
-        const className = isOpen
-            ? [styles.menu, styles.open].join(' ')
-            : styles.menu;
-        return <nav className={className}>
+        this.setState({ open: isOpen, pageYOffset: window.pageYOffset });
+    }
+
+    render(props) {
+        const { open: isOpen, pageYOffset } = this.state;
+
+        let menuClassNames = [styles.menu];
+
+        if (isOpen) {
+            menuClassNames.push(styles.open);
+        } else {
+            if (pageYOffset > 0) {
+                menuClassNames.push(styles.bordered);
+            }
+        }
+
+        const menuClassName = menuClassNames.join(' ');
+        return <nav className={menuClassName}>
             <div className={styles.burgerContainer}>
                 <div className={styles.burger} onClick={this.toggle}>
                     <div className={styles.topBar}/>
