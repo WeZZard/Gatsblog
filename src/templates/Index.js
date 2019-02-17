@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './Index.module.scss'
 
 import Main from '../components/Main'
-import ContentTitle from "../components/ContentTitle";
+import PageTitle from "../components/PageTitle";
 import PostExcerpt from '../components/PostExcerpt';
 import Paginator from "../components/Paginator";
 
@@ -12,7 +12,6 @@ class Index extends React.Component {
     render() {
         const { data, pageContext } = this.props;
         const {
-            items,
             slug,
             paginationInfo,
             title,
@@ -30,7 +29,7 @@ class Index extends React.Component {
             .sort((p1, p2) => p1.createdTime < p2.createdTime);
 
         const header = showsPageTitle
-            ? <header><ContentTitle title={title} subtitle={subtitle}/></header>
+            ? <header><PageTitle title={title} subtitle={subtitle}/></header>
             : null;
 
         const contents = <React.Fragment>

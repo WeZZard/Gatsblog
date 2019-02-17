@@ -4,7 +4,7 @@ import styles from './Post.module.scss'
 import { graphql } from 'gatsby'
 
 import Main from '../components/Main'
-import MDXTitle from '../components/MDXTitle'
+import PageTitle from '../components/PageTitle'
 import MDXMetadata from '../components/MDXMetadata'
 import MDXBody from "../components/MDXBody";
 import PostFooter from '../components/PostFooter'
@@ -37,7 +37,7 @@ class Post extends React.Component {
 
         const article = <article>
             <header className={styles.header}>
-                <MDXTitle
+                <PageTitle
                     textStyle={'serif'}
                     title={title}
                     subtitle={subtitle}

@@ -1,17 +1,18 @@
 import React from 'react'
-import styles from './Categories.module.scss';
+import styles from './Taxonomies.module.scss';
 
 import Main from '../components/Main'
-import ContentTitle from "../components/ContentTitle";
+import PageTitle from "../components/PageTitle";
 import Paginator from "../components/Paginator";
-import CategorySummary from '../components/CategorySummary';
+import TaxonomySummary from '../components/TaxonomySummary';
 
 import { graphql } from 'gatsby';
 
-class Categories extends React.Component {
+class Taxonomies extends React.Component {
     render() {
         const { data, pageContext } = this.props;
         const {
+            type,
             slug,
             taxonomies,
             paginationInfo,
@@ -22,26 +23,24 @@ class Categories extends React.Component {
             keywords
         } = pageContext;
 
-        const {
-            allPost: {
-                edges: postNodes
-            }
-        } = data;
+        const postNodes = getPostNodes(type, data);
 
         const posts = postNodes.map(postNode => postNode.node);
 
         const header = showsPageTitle
-            ? <header><ContentTitle title={title} subtitle={subtitle}/></header>
+            ? <header className={styles.header}>
+                <PageTitle title={title} subtitle={subtitle}/>
+            </header>
             : null;
 
         const components = taxonomies
             .sort((t1, t2) => t1 > t2)
-            .map((category, index) =>
-                <div key={index} className={styles.categorySummary}>
+            .map((taxonomy, index) =>
+                <div key={index} className={styles.taxonomySummary}>
                     {
                         React.createElement(
-                            CategorySummary,
-                            { category, baseSlug: slug, posts }
+                            TaxonomySummary,
+                            { type, taxonomy, posts }
                         )
                     }
                 </div>
@@ -65,11 +64,31 @@ class Categories extends React.Component {
     }
 }
 
-export default Categories
+export default Taxonomies
+
+const getPostNodes = (type, data) => {
+    const {
+        category: {
+            edges: postNodesForCategory
+        },
+        tags: {
+            edges: postNodesForTags
+        }
+    } = data;
+
+    switch (type) {
+        case 'category':
+            return postNodesForCategory;
+        case 'tag':
+            return postNodesForTags;
+        default:
+            throw `Unexpected taxonomy type: ${type}`;
+    }
+};
 
 export const pageQuery = graphql`
-    query CategoriesQuery($taxonomies: [String!]!) {
-        allPost(filter: {category: {in: $taxonomies}}) {
+    query TaxonomiesQuery($taxonomies: [String!]!) {
+        category: allPost(filter: {category: {in: $taxonomies}}) {
             edges {
                 node {
                     slug
@@ -78,6 +97,18 @@ export const pageQuery = graphql`
                     isPublished
                     createdTime
                     category
+                }
+            }
+        }
+        tags: allPost(filter: {tags: {in: $taxonomies}}) {
+            edges {
+                node {
+                    slug
+                    title
+                    subtitle
+                    isPublished
+                    createdTime
+                    tags
                 }
             }
         }

@@ -23,7 +23,7 @@ module.exports = async (args) => {
 
         locales.forEach((locale) => {
             createTaxonomyIndexPages({
-                template: meta.name,
+                type: 'tag',
                 createPage : createPage,
                 siteKeywords,
                 siteDescription,

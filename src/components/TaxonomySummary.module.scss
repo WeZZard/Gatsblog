@@ -1,0 +1,123 @@
+@import '../styles/colors';
+@import '../styles/fonts';
+
+.taxonomyNameFlexWrapper {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+
+    .taxonomyName {
+        color: $color-content-heading;
+        font-family: $font-text-sans;
+        font-size: 1.7em;
+        line-height: calc(20 / 17);
+        margin-bottom: -0.4rem;
+        margin-top: -0.7rem;
+
+        &::before {
+            color: $color-content-list-indicator-dark;
+            content: '[ ';
+        }
+
+        &::after {
+            color: $color-content-list-indicator-dark;
+            content: ' ]';
+        }
+    }
+}
+
+.postListFlexWrapper {
+    .postList {
+        list-style: none;
+        margin-bottom: 0;
+        margin-top: 3.4rem;
+        padding: 0;
+
+        .postItem {
+            align-items: stretch;
+            display: flex;
+            flex-direction: row;
+            margin: 0;
+            margin-bottom: 3.4rem;
+
+            .postTitleFlexWrapper {
+                align-items: baseline;
+                display: flex;
+                flex-direction: column;
+
+                .postTitle {
+                    font-family: $font-text-sans;
+                    font-size: 1.5em;
+                    font-weight: 200;
+                    line-height: calc(28 / 15);
+                    margin-bottom: -0.9rem;
+                    margin-left: 0;
+                    margin-right: 0;
+                    margin-top: -0.9rem;
+
+                    a {
+                        color: $color-content-summary;
+                        margin: 0;
+                        text-decoration: none;
+                        transition: color 0.3s ease-in-out;
+
+                        &:visited {
+                            color: $color-content-summary;
+                        }
+
+                        &:hover,
+                        &:visited:hover {
+                            color: $color-hover;
+                            transition: color 0.3s ease-in-out;
+                        }
+                    }
+                }
+            }
+
+            &::before {
+                color: $color-content-list-indicator-dark;
+                content: "\2022";
+                font-family: $font-text-sans;
+                font-size: 1.5em;
+                font-weight: 200;
+                line-height: calc(28 / 15);
+                margin-bottom: -0.9rem;
+                margin-left: 0;
+                margin-right: 0;
+                margin-top: -0.9rem;
+                padding-left: 0.5rem;
+                padding-right: 0.8rem;
+            }
+        }
+    }
+}
+
+.moreFlexWrapper {
+    align-items: baseline;
+    display: flex;
+    flex-direction: column;
+
+    .more {
+        font-size: 1.1em;
+        font-weight: 400;
+        margin-bottom: -0.3rem;
+        margin-top: -0.2rem;
+        text-transform: uppercase;
+
+        a {
+            color: $color-ui-caption-primary;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+
+            &:visited {
+                color: $color-ui-caption-primary;
+            }
+
+            &:hover,
+            &:visited:hover {
+                color: $color-hover;
+                transition: color 0.3s ease-in-out;
+            }
+        }
+    }
+}

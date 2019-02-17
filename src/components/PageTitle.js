@@ -1,10 +1,10 @@
 import React from 'react'
-import styles from './MDXTitle.module.scss'
+import styles from './PageTitle.module.scss'
 
-class MDXTitle extends React.Component {
+class PageTitle extends React.Component {
     render() {
         const {
-            textStyle,
+            textStyle='sans',
             title,
             subtitle,
         } = this.props;
@@ -24,4 +24,4 @@ class MDXTitle extends React.Component {
     }
 }
 
-export default MDXTitle
+export default PageTitle

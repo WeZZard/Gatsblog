@@ -21,18 +21,15 @@ module.exports = async (args) => {
     if (config.isEnabled) {
         const itemsPerPage = await itemsPerPageForIndexPageName(meta.name, graphql);
 
-        const taxonomies = categories.map(category => category.name)
-            .sort((c1, c2) => c1 > c2);
-
         locales.forEach((locale) => {
             createTaxonomyIndexPages({
-                template: meta.name,
+                type: 'category',
                 createPage : createPage,
                 siteKeywords,
                 siteDescription,
                 locale: locale,
                 componentName : meta.componentName,
-                taxonomies,
+                taxonomies: categories.map(c => c.name).sort((c1, c2) => c1 > c2),
                 itemsPerPage,
                 createPageTitle: meta.getPageTitle,
                 createPagePath: meta.getPagePath,

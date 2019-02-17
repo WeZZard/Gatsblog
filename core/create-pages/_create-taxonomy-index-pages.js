@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = (args) => {
     const {
-        template,
+        type,
         createPage,
         siteKeywords,
         siteDescription,
@@ -37,12 +37,13 @@ module.exports = (args) => {
 
         console.log(`create index page at: ${pagePath}`);
 
-        const templatePath = `src/templates/${template}.js`;
+        const templatePath = `src/templates/Taxonomies.js`;
 
         createPage({
             path: pagePath,
             component: path.resolve(templatePath),
             context: {
+                type,
                 slug: pagePath,
                 locale,
                 componentName,
