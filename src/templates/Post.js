@@ -4,7 +4,8 @@ import styles from './Post.module.scss'
 import { graphql } from 'gatsby'
 
 import Main from '../components/Main'
-import MDXHeader from '../components/MDXHeader'
+import MDXTitle from '../components/MDXTitle'
+import MDXMetadata from '../components/MDXMetadata'
 import MDXBody from "../components/MDXBody";
 import PostFooter from '../components/PostFooter'
 import MorePosts from '../components/MorePosts'
@@ -36,13 +37,17 @@ class Post extends React.Component {
 
         const article = <article>
             <header className={styles.header}>
-                <MDXHeader
+                <MDXTitle
                     textStyle={'serif'}
                     title={title}
                     subtitle={subtitle}
-                    createdTime={createdTime}
-                    category={category}
                 />
+                <aside className={styles.metadata}>
+                    <MDXMetadata items={[
+                        {name: 'time', data: createdTime},
+                        {name: 'category', data: category},
+                    ]} />
+                </aside>
             </header>
             <main className={styles.main}>
                 <MDXBody textStyle={'serif'} code={code}/>

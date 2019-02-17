@@ -1,0 +1,40 @@
+@import '../styles/colors';
+
+.flexWrapper {
+    align-items: baseline;
+    display: flex;
+    flex-direction: row;
+
+    .item {
+        align-items: baseline;
+        display: flex;
+        flex-direction: row;
+
+        &::after {
+            color: $color-ui-caption-separator;
+            content: '•';
+            font-size: 1.1em;
+            font-weight: 500;
+            line-height: calc(13 / 11);
+            margin-bottom: -0.3rem;
+            margin-left: 0.8rem;
+            margin-right: 0.8rem;
+            margin-top: -0.2rem;
+        }
+
+        &:only-child {
+            &::after {
+                content: none;
+                margin: 0;
+            }
+        }
+
+        &:last-child {
+            &::after {
+                content: none;
+                margin: 0;
+            }
+        }
+    }
+
+}

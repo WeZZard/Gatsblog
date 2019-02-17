@@ -1,30 +1,24 @@
 import React from 'react'
 import styles from './PostFooter.module.scss'
 
-import MetadataItem from './MetadataItem';
-import TagsLabel from './TagsLabel'
+import MDXMetadata from './MDXMetadata';
 import License from './License';
 
-class PostFooter extends React.Component {
-    render() {
-        const {
-            tags,
-            license,
-        } = this.props;
+export default ({
+    tags,
+    license,
+    }) => {
 
-        const tagsComponent = tags.length > 0
-            ? <div className={styles.tags}>
-                <MetadataItem><TagsLabel tags={tags}/></MetadataItem>
-            </div>
-            : null;
+    const tagsComponent = tags.length > 0
+        ? <div className={styles.tags}>
+            <MDXMetadata items={[{ name: 'tags', data: tags }]}/>
+        </div>
+        : null;
 
-        return <React.Fragment>
-            {tagsComponent}
-            <div className={styles.license}>
-                <License license={license}/>
-            </div>
-        </React.Fragment>
-    }
+    return <React.Fragment>
+        {tagsComponent}
+        <div className={styles.license}>
+            <License license={license}/>
+        </div>
+    </React.Fragment>;
 }
-
-export default PostFooter

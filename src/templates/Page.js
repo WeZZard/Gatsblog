@@ -4,7 +4,7 @@ import styles from './Post.module.scss';
 import { graphql } from 'gatsby';
 
 import Main from '../components/Main'
-import MDXHeader from '../components/MDXHeader';
+import MDXTitle from '../components/MDXTitle';
 import MDXBody from "../components/MDXBody";
 
 class Page extends React.Component {
@@ -25,11 +25,10 @@ class Page extends React.Component {
 
         const article = <article>
             <header className={styles.header}>
-                <MDXHeader
+                <MDXTitle
                     textStyle={'sans'}
                     title={title}
                     subtitle={subtitle}
-                    createdTime={createdTime}
                 />
             </header>
             <main className={styles.main}>

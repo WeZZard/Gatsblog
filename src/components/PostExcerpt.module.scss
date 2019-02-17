@@ -7,12 +7,14 @@
     flex-direction: column;
 }
 
-.postExcerpt {
+.flexWrapper {
     @include container-column-stretch;
 
     margin: 0;
 
     .header {
+        @include container-column-stretch;
+
         margin-bottom: 2.1rem;
 
         @mixin heading {
@@ -78,6 +80,8 @@
     }
 
     .content {
+        @include container-column-stretch;
+
         margin-bottom: 3.4rem;
 
         .paragraph {
@@ -109,6 +113,17 @@
     }
 
     .footer {
+        @include container-column-stretch;
 
+        .metadataLine {
+            align-items: baseline;
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 2.1rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
     }
 }

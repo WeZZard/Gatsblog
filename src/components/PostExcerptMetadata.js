@@ -2,40 +2,30 @@ import React from 'react'
 import assert from 'assert'
 import styles from './PostExcerptMetadata.module.scss'
 
-import MetadataItem from './MetadataItem'
-import CategoryLabel from './CategoryLabel'
-import TagsLabel from './TagsLabel'
-import TimeLabel from './TimeLabel'
+import MDXMetadata from './MDXMetadata'
 
-class PostExcerptMetadata extends React.Component {
-    render() {
-        const { post } = this.props;
+export default ({ post }) => {
+    const createdTime = {name: 'time', data: post.createdTime};
 
-        const createdTimeComponent = <TimeLabel dateTime={post.createdTime}/>;
+    const category = post.category ? {name: 'category', data: post.category} : null;
 
-        const categoryComponent = <CategoryLabel category={post.category}/>;
+    const tags = post.tags.length > 0 ? {name: 'tags', data: post.tags}: null;
 
-        const tags = post.tags;
-        const tagsComponent = tags.length > 0 ? <TagsLabel tags={tags}/> : null;
+    const lines = [[createdTime, category], [tags]];
 
-        const lines = [[createdTimeComponent, categoryComponent], [tagsComponent]];
+    const filteredLines = lines.filter((line) => {
+        assert(Array.isArray(line));
+        const filteredLine = line.filter(item => item);
+        return filteredLine.length
+    });
 
-        const filteredLines = lines.filter((line) => {
-            assert(Array.isArray(line));
-            const filteredLine = line.filter(component => component);
-            return filteredLine.length
-        });
-
-        return <div className={styles.postExcerptMetadata}>
-            {filteredLines.map((line, lineNumber) => <div key={`${lineNumber}`} className={styles.postExcerptMetadataLine}>
-                {line.map((component, componentNumber) =>
-                    <MetadataItem key={`${componentNumber}`}>
-                        {component}
-                    </MetadataItem>
-                )}
-            </div>)}
-        </div>
-    }
+    return <React.Fragment>
+        {
+            filteredLines.map((items, lineNumber) =>
+                <div className={styles.line} key={lineNumber}>
+                    <MDXMetadata items={items}/>
+                </div>
+            )
+        }
+    </React.Fragment>
 }
-
-export default PostExcerptMetadata
