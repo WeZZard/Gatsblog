@@ -4,8 +4,8 @@ import styles from './Post.module.scss'
 import { graphql } from 'gatsby'
 
 import Main from '../components/Main'
-import PostHeader from '../components/PostHeader'
-import Renderer from "../components/Renderer";
+import MDXHeader from '../components/MDXHeader'
+import MDXBody from "../components/MDXBody";
 import PostFooter from '../components/PostFooter'
 import MorePosts from '../components/MorePosts'
 
@@ -36,7 +36,8 @@ class Post extends React.Component {
 
         const article = <article>
             <header className={styles.header}>
-                <PostHeader
+                <MDXHeader
+                    textStyle={'serif'}
                     title={title}
                     subtitle={subtitle}
                     createdTime={createdTime}
@@ -44,7 +45,7 @@ class Post extends React.Component {
                 />
             </header>
             <main className={styles.main}>
-                <Renderer textStyle={'serif'}>{code.body}</Renderer>
+                <MDXBody textStyle={'serif'} code={code}/>
             </main>
             <footer className={styles.footer}>
                 <PostFooter tags={tags} license={license}/>
@@ -58,15 +59,10 @@ class Post extends React.Component {
             />
             : null;
 
-        const contents = [
-            article,
-            moreItems,
-        ];
-
         return <Main
             title={post.title}
             tableOfContents={tableOfContents}
-            contents={contents}
+            sections={[article, moreItems]}
         />
     }
 }

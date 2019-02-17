@@ -31,7 +31,7 @@ class Categories extends React.Component {
         const posts = postNodes.map(postNode => postNode.node);
 
         const header = showsPageTitle
-            ? <ContentTitle title={title} subtitle={subtitle}/>
+            ? <header><ContentTitle title={title} subtitle={subtitle}/></header>
             : null;
 
         const components = taxonomies
@@ -47,9 +47,9 @@ class Categories extends React.Component {
                 </div>
             );
 
-        const content = <React.Fragment>
+        const contents = <React.Fragment>
             {header}
-            {components}
+            <main>{components}</main>
             <div className={styles.paginator}>
                 <Paginator paginationInfo={paginationInfo}/>
             </div>
@@ -60,7 +60,7 @@ class Categories extends React.Component {
             title={title}
             description={description}
             keywords={keywords}
-            contents={[content]}
+            sections={contents}
         />
     }
 }

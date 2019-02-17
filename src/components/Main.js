@@ -6,6 +6,7 @@ import NavigationBar from './NavigationBar'
 import TableOfContents from './TableOfContents'
 import ContentSeparator from './ContentSeparator'
 import { StaticQuery, graphql } from "gatsby"
+import { normalizeChildren } from '../utils';
 
 const SiteInfo = ({siteOwner, slogans}) => <div className={styles.siteInfo}>
     {slogans.map((slogan, index) =>
@@ -54,27 +55,29 @@ const componentQuery = graphql`
     }
 `;
 
-export default (props) => <StaticQuery
+export default (
+    {
+        slug,
+        lang,
+        title,
+        description,
+        keywords,
+        tableOfContents,
+        sections,
+    }
+    ) => <StaticQuery
     query={componentQuery}
-    render={ data => {
-        const {
-            slug,
-            lang,
-            title,
-            description,
-            keywords,
-            tableOfContents,
-            contents,
-        } = props;
-
-        const { config: {
-            site: {
-                title: siteTitle,
-                owner: siteOwner,
-                slogans,
-                footerMessages
+    render={(
+        {
+            config: {
+                site: {
+                    title: siteTitle,
+                    owner: siteOwner,
+                    slogans,
+                    footerMessages
+                }
             }
-        }} = data;
+        }) => {
 
         const hasTableOfContents = tableOfContents
             && tableOfContents.items
@@ -86,9 +89,11 @@ export default (props) => <StaticQuery
             </div>
             : null;
 
-        const numberOfContents = contents.length;
+        const normalizedSections = normalizeChildren(sections);
 
-        const children = contents
+        const numberOfContents = normalizedSections.length;
+
+        const children = normalizedSections
             .map((content, index) =>
                 <React.Fragment key={index}>
                     {content}

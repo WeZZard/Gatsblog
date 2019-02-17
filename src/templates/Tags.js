@@ -48,12 +48,12 @@ class Tags extends React.Component {
             );
 
         const header = showsPageTitle
-            ? <ContentTitle title={title} subtitle={subtitle}/>
+            ? <header><ContentTitle title={title} subtitle={subtitle}/></header>
             : null;
 
-        const content = <React.Fragment>
+        const contents = <React.Fragment>
             {header}
-            {components}
+            <main>{components}</main>
             <div className={styles.paginator}>
                 <Paginator paginationInfo={paginationInfo}/>
             </div>
@@ -64,7 +64,7 @@ class Tags extends React.Component {
             title={title}
             description={description}
             keywords={keywords}
-            contents={[content]}
+            contents={[contents]}
         />
     }
 }

@@ -4,8 +4,8 @@ import styles from './Post.module.scss';
 import { graphql } from 'gatsby';
 
 import Main from '../components/Main'
-import PageHeader from '../components/PageHeader';
-import Renderer from '../components/Renderer';
+import MDXHeader from '../components/MDXHeader';
+import MDXBody from "../components/MDXBody";
 
 class Page extends React.Component {
     render() {
@@ -25,21 +25,19 @@ class Page extends React.Component {
 
         const article = <article>
             <header className={styles.header}>
-                <PageHeader
+                <MDXHeader
+                    textStyle={'sans'}
                     title={title}
                     subtitle={subtitle}
                     createdTime={createdTime}
                 />
             </header>
             <main className={styles.main}>
-                <Renderer textStyle={'sans'}>{code.body}</Renderer>
+                <MDXBody textStyle={'sans'} code={code}/>
             </main>
         </article>;
 
-        return <Main
-            title={page.title}
-            contents={[article]}
-        />
+        return <Main title={page.title} sections={article}/>
     }
 }
 

@@ -1,36 +1,42 @@
 import React from 'react'
-import styles from './PostHeader.module.scss'
+import styles from './MDXHeader.module.scss'
 
 import MetadataItem from './MetadataItem';
 import TimeLabel from './TimeLabel';
 import CategoryLabel from './CategoryLabel'
+import MDXContext from './MDXContext'
 
-class PostHeader extends React.Component {
+class MDXHeader extends React.Component {
     render() {
         const {
+            textStyle,
             title,
             subtitle,
             createdTime,
             category,
         } = this.props;
 
-        const createdTimeComponent = <TimeLabel dateTime={createdTime}/>;
-
-        const categoryComponent = <CategoryLabel category={category}/>;
+        const createdTimeComponent = <MetadataItem>
+            <TimeLabel dateTime={createdTime}/>
+        </MetadataItem>;
 
         const subtitleComponent = subtitle
             ? <div className={styles.subtitle}><h2>{subtitle}</h2></div>
             : null;
 
-        return <React.Fragment>
+        const categoryComponent = category
+            ? <MetadataItem><CategoryLabel category={category}/></MetadataItem>
+            : null;
+
+        return <MDXContext.Provider value={textStyle}>
             <div className={styles.title}><h1>{title}</h1></div>
             {subtitleComponent}
             <div className={styles.metadata}>
-                <MetadataItem>{createdTimeComponent}</MetadataItem>
-                <MetadataItem>{categoryComponent}</MetadataItem>
+                {createdTimeComponent}
+                {categoryComponent}
             </div>
-        </React.Fragment>
+        </MDXContext.Provider>
     }
 }
 
-export default PostHeader
+export default MDXHeader
