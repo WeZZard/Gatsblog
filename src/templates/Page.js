@@ -14,6 +14,7 @@ class Page extends React.Component {
         const { page } = data;
 
         const {
+            slug,
             title,
             subtitle,
             createdTime,
@@ -42,7 +43,11 @@ class Page extends React.Component {
             </main>
         </article>;
 
-        return <Main title={page.title} sections={article}/>
+        return <Main
+            slug={slug}
+            title={page.title}
+            sections={article}
+        />
     }
 }
 
