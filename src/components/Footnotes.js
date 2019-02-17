@@ -15,8 +15,8 @@ export default props => {
         <MDXContext.Provider value={'sans'}>
             <section className={styles.flexWrapper}>
                 {
-                    footnotes.map(footnotesItem =>
-                        <FootnoteList {...footnotesItem.props}/>)
+                    footnotes.map((footnotesItem, index) =>
+                        <FootnoteList key={index} {...footnotesItem.props}/>)
                 }
             </section>
         </MDXContext.Provider>
