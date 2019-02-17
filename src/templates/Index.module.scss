@@ -1,14 +1,27 @@
-@mixin index-item {
+@mixin container {
     align-items: stretch;
     display: flex;
     flex-direction: column;
-    margin-bottom: 5.5rem;
 }
 
-.postExcerpt {
-    @include index-item;
+.header {
+    @include container;
+
+    margin-bottom: 2.1rem;
+}
+
+.main {
+    @include container;
+
+    .postExcerpt {
+        @include container;
+
+        margin-bottom: 5.5rem;
+    }
 }
 
 .paginator {
-    @include index-item;
+    @include container;
+
+    margin-bottom: 5.5rem;
 }

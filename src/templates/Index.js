@@ -29,12 +29,14 @@ class Index extends React.Component {
             .sort((p1, p2) => p1.createdTime < p2.createdTime);
 
         const header = showsPageTitle
-            ? <header><PageTitle title={title} subtitle={subtitle}/></header>
+            ? <header className={styles.header}>
+                <PageTitle title={title} subtitle={subtitle}/>
+            </header>
             : null;
 
         const contents = <React.Fragment>
             {header}
-            <main>
+            <main className={styles.main}>
                 {post.map((post, index) =>
                     <div key={index} className={styles.postExcerpt}>
                         {React.createElement(PostExcerpt, {item: post})}
