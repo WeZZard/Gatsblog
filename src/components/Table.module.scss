@@ -1,7 +1,7 @@
 @import '../styles/colors';
 @import '../styles/fonts';
 
-.wrapper {
+@mixin wrapper-common {
     align-items: stretch;
     display: flex;
     flex-direction: column;
@@ -10,33 +10,41 @@
     -ms-overflow-style: none;
     overflow-x: scroll;
     width: auto;
+}
+
+.wrapper {
+    @include wrapper-common;
 
     @media (max-width: 1440px) {
         margin-left: -2.1rem;
         margin-right: -2.1rem;
     }
+}
 
-    .table {
-        border-collapse: collapse;
-        margin-left: auto;
-        margin-right: auto;
-        width: 100%;
+.blockquoteWrapper {
+    @include wrapper-common;
+}
 
-        thead {
-            border-bottom: 3px solid $color-content-table-separator;
-            border-top: 3px solid $color-content-table-separator;
-            color: $color-content-heading;
-            font-weight: 600;
-        }
+.table {
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
 
-        tbody {
-            border-bottom: 3px solid $color-content-table-separator;
-            color: $color-content-body;
-            font-weight: 300;
-        }
+    thead {
+        border-bottom: 3px solid $color-content-table-separator;
+        border-top: 3px solid $color-content-table-separator;
+        color: $color-content-heading;
+        font-weight: 600;
+    }
 
-        tr {
-            border-bottom: 1px solid $color-content-table-separator;
-        }
+    tbody {
+        border-bottom: 3px solid $color-content-table-separator;
+        color: $color-content-body;
+        font-weight: 300;
+    }
+
+    tr {
+        border-bottom: 1px solid $color-content-table-separator;
     }
 }

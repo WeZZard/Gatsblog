@@ -79,7 +79,7 @@
 
         .lineNumberList {
             counter-reset: codeblock;
-            display: inline-block;
+            display: block;
             margin: 0;
 
             .lineNumber {
@@ -103,7 +103,7 @@
 
         .codeContent {
             color: $color-content-body;
-            display: inline-block;
+            display: block;
             margin: 0;
             -ms-overflow-style: none;
             overflow-x: scroll;

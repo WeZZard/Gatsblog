@@ -1,4 +1,8 @@
 import React from 'react'
 import styles from './Blockquote.module.scss'
 
-export default props => <blockquote className={styles.blockquote} {...props}/>
+import BlockquoteContext from './BlockquoteContext'
+
+export default props => <BlockquoteContext.Provider value={true}>
+    <blockquote className={styles.blockquote} {...props}/>
+</BlockquoteContext.Provider>
