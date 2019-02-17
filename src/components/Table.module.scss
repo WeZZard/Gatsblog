@@ -2,10 +2,19 @@
 @import '../styles/fonts';
 
 .wrapper {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    margin-bottom: 3.4rem;
     -ms-overflow-style: none;
     overflow-x: scroll;
-    width: 100%;
-    margin-bottom: 3.4rem;
+    width: auto;
+
+    @media (max-width: 1440px) {
+        margin-left: -2.1rem;
+        margin-right: -2.1rem;
+    }
 
     .table {
         border-collapse: collapse;
@@ -30,5 +39,4 @@
             border-bottom: 1px solid $color-content-table-separator;
         }
     }
-
 }
