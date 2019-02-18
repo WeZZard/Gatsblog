@@ -22,6 +22,8 @@ class TableOfContents extends React.Component {
             isOpen
         } = this.props;
 
+        assert(headings.length > 0);
+
         const items = [];
 
         const indicesStack = [0];
@@ -60,7 +62,7 @@ class TableOfContents extends React.Component {
                 } else {
                     return { flag: true, index: curr.indices[0] }
                 }
-            }, {flag: false, index: null}).flag)
+            }, {flag: true, index: null}).flag && items.length > 1)
         {
             items.forEach(each => each.indices.shift());
         }

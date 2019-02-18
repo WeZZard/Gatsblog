@@ -64,7 +64,7 @@ class Navigation extends React.Component {
 
         const navigationClassName = navigationClassNames.join(' ');
 
-        const hasTableOfContents = headings && headings.length > 0;
+        const hasTableOfContents = headings && headings.length > 0 || false;
 
         const tableOfContentsComponent = hasTableOfContents
             ? <div className={styles.tableOfContents}>
