@@ -113,7 +113,7 @@ module.exports = {
                 domain: "wezzard.com",
                 token: process.env.WEBMENTIONS_TOKEN
             }
-        }
+        },
         {
             resolve: `gatsby-plugin-feed`,
             options: {
