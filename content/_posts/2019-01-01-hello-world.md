@@ -1,5 +1,6 @@
 ---
 title: Hello, World!
+category: Diary
 ---
 
 Hello, world!
