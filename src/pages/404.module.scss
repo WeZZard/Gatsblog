@@ -8,8 +8,8 @@
         align-items: center;
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
         height: calc((100% - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * 0.618);
+        justify-content: space-around;
         position: absolute;
         width: 100%;
 
