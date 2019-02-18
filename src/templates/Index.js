@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './Index.module.scss'
 
 import Main from '../components/Main'
-import PageTitle from "../components/PageTitle";
+import Title from "../components/Title";
 import PostExcerpt from '../components/PostExcerpt';
 import Paginator from "../components/Paginator";
 
@@ -30,11 +30,11 @@ class Index extends React.Component {
 
         const header = showsPageTitle
             ? <header className={styles.header}>
-                <PageTitle title={title} subtitle={subtitle}/>
+                <Title title={title} subtitle={subtitle}/>
             </header>
             : null;
 
-        const contents = <React.Fragment>
+        const contents = <div className={styles.index}>
             {header}
             <main className={styles.main}>
                 {post.map((post, index) =>
@@ -46,7 +46,7 @@ class Index extends React.Component {
             <div className={styles.paginator}>
                 <Paginator paginationInfo={paginationInfo}/>
             </div>
-        </React.Fragment>;
+        </div>;
 
         return <Main
             slug={slug}

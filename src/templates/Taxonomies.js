@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './Taxonomies.module.scss';
 
 import Main from '../components/Main'
-import PageTitle from "../components/PageTitle";
+import Title from "../components/Title";
 import Paginator from "../components/Paginator";
 import TaxonomySummary from '../components/TaxonomySummary';
 
@@ -29,7 +29,7 @@ class Taxonomies extends React.Component {
 
         const header = showsPageTitle
             ? <header className={styles.header}>
-                <PageTitle title={title} subtitle={subtitle}/>
+                <Title title={title} subtitle={subtitle}/>
             </header>
             : null;
 
@@ -46,13 +46,13 @@ class Taxonomies extends React.Component {
                 </div>
             );
 
-        const contents = <React.Fragment>
+        const contents = <div className={styles.index}>
             {header}
             <main>{components}</main>
             <div className={styles.paginator}>
                 <Paginator paginationInfo={paginationInfo}/>
             </div>
-        </React.Fragment>;
+        </div>;
 
         return <Main
             slug={slug}

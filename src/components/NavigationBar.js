@@ -88,7 +88,10 @@ class NavigationBar extends React.Component {
                     const slugRegex = new RegExp(slugPattern);
                     const isSelected = slug && slugRegex.exec(slug);
 
-                    return <li className={styles.navigationListItem} key={navigationItem.slug}>
+                    return <li
+                        className={styles.navigationListItem}
+                        key={navigationItem.slug}
+                    >
                         <NavigationItem
                             navigationItem={navigationItem}
                             isSelected={isSelected}
@@ -109,7 +112,7 @@ class NavigationBar extends React.Component {
 export default NavigationBar
 
 const _navigationQuery = graphql`
-    query NavigationQuery {
+    query NavigationBarQuery {
         configYaml {
             navigation {
                 createsNavigationItemsForCategories

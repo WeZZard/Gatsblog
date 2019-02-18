@@ -1,0 +1,101 @@
+@import '../styles/colors';
+@import '../styles/animations';
+
+.button {
+    display: none;
+}
+
+@media (max-width: 1440px) {
+    .button {
+        cursor: pointer;
+        display: inline-block;
+        height: 44px;
+        margin-left: 2.1rem;
+        margin-right: -1.5rem;
+        position: relative;
+        -webkit-tap-highlight-color: transparent;
+        user-select: none;
+        width: 44px;
+
+        @mixin arrow-line {
+            background: $_gray-21;
+            display: block;
+            height: 1px;
+            position: relative;
+            transition: all 0.3s $cubic;
+            width: 100%;
+        }
+
+        .leftArrow {
+            display: block;
+            height: 44px;
+            left: 12px;
+            margin: 0;
+            overflow: hidden;
+            position: absolute;
+            transition: all 0.3s $cubic;
+            width: 17px;
+
+            .topLine {
+                @include arrow-line;
+
+                transform: translateX(-9.3px) translateY(22px) rotate(30deg);
+            }
+
+            .bottomLine {
+                @include arrow-line;
+
+                transform: translateX(-9.3px) translateY(22px) rotate(150deg);
+            }
+        }
+
+        .rightArrow {
+            display: block;
+            height: 44px;
+            margin: 0;
+            overflow: hidden;
+            position: absolute;
+            right: 12px;
+            transition: all 0.3s $cubic;
+            width: 17px;
+
+            .topLine {
+                @include arrow-line;
+
+                transform: translateX(9.3px) translateY(22px) rotate(-30deg);
+            }
+
+            .bottomLine {
+                @include arrow-line;
+
+                transform: translateX(9.3px) translateY(22px) rotate(-150deg);
+            }
+        }
+
+        &.open {
+            .leftArrow {
+                left: 22px;
+
+                .topLine {
+                    transform: translateX(-8.75px) translateY(22px) rotate(45deg);
+                }
+
+                .bottomLine {
+                    transform: translateX(-8.75px) translateY(22px) rotate(135deg);
+                }
+            }
+
+            .rightArrow {
+                right: 22px;
+
+                .topLine {
+                    transform: translateX(8.75px) translateY(22px) rotate(-45deg);
+                }
+
+                .bottomLine {
+                    transform: translateX(8.75px) translateY(22px) rotate(-135deg);
+                }
+            }
+        }
+    }
+}

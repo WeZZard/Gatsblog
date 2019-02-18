@@ -1,0 +1,50 @@
+@import '../styles/colors';
+
+@mixin container-column-stretch {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+}
+
+.pageInfo {
+    @include container-column-stretch;
+
+    flex-shrink: 0;
+    padding-top: 5.5rem;
+    padding-bottom: 5.5rem;
+
+    .pageInfoItem {
+        @include container-column-stretch;
+
+        color: $color-ui-footnote;
+        margin-bottom: 0.8rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        .pageInfoContent {
+            display: inline;
+            font-size: 1.1em;
+            font-weight: 400;
+            line-height: 1.18;
+            margin-bottom: -0.3rem;
+            margin-top: -0.2rem;
+        }
+
+        a {
+            color: $color-ui-footnote;
+            transition: color 0.3s ease-in-out;
+
+            &:visited {
+                color: $color-ui-footnote;
+            }
+
+            &:hover,
+            &:visited:hover {
+                color: $color-hover;
+                transition: color 0.3s ease-in-out;
+            }
+        }
+    }
+}

@@ -1,10 +1,10 @@
 import React from "react";
-import styles from './Post.module.scss';
+import styles from './Page.module.scss';
 
 import { graphql } from 'gatsby';
 
 import Main from '../components/Main'
-import PageTitle from '../components/PageTitle';
+import Title from '../components/Title';
 import MDXMetadata from '../components/MDXMetadata'
 import MDXBody from "../components/MDXBody";
 
@@ -25,9 +25,9 @@ class Page extends React.Component {
             },
         } = page;
 
-        const article = <article>
+        const article = <article className={styles.page}>
             <header className={styles.header}>
-                <PageTitle
+                <Title
                     textStyle={'sans'}
                     title={title}
                     subtitle={subtitle}

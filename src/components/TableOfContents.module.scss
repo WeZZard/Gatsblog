@@ -1,15 +1,26 @@
 @import '../styles/colors';
 @import '../styles/fonts';
+@import '../styles/animations';
 
-@mixin container-column-stretch {
-    align-items: flex-end;
+@mixin container-column {
+    align-items: stretch;
     display: flex;
     flex-direction: column;
+
+    @media (max-width: 1440px) {
+        align-items: stretch;
+    }
+}
+
+@mixin horizontal-margin {
+    margin-left: calc(2.1rem + env(safe-area-inset-left));
+    margin-right: calc(2.1rem + env(safe-area-inset-right));
 }
 
 .tableOfContents {
-    @include container-column-stretch;
+    @include container-column;
 
+    background-color: $_black;
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     backdrop-filter: saturate(180%) blur(20px);
     flex-grow: 1;
@@ -17,12 +28,28 @@
     padding: 2.1rem;
     width: calc(100% - 4.2rem);
 
+    @media (max-width: 1440px) {
+        background-color: transparent;
+        margin-bottom: calc(2.1rem + env(safe-area-inset-bottom));
+        padding: 0;
+        width: auto;
+    }
+
     .header {
-        align-items: baseline;
+        align-items: flex-end;
         display: flex;
         flex-direction: column;
         flex-shrink: 0;
         margin-bottom: 2.1rem;
+
+        @media (max-width: 1440px) {
+            @include horizontal-margin;
+
+            align-items: center;
+            flex-direction: row;
+            height: 44px;
+            margin-bottom: 0;
+        }
 
         .title {
             color: $color-ui-nav-headline-normal;
@@ -35,20 +62,38 @@
             margin-top: -0.4rem;
             padding: 0;
             text-transform: uppercase;
+
+            @media (max-width: 1440px) {
+                color: $_gray-55;
+                font-size: 1.5em;
+                margin-bottom: 0;
+                margin-top: 0;
+                opacity: 0;
+                transform: scale(1.15) translateY(-30px);
+                transition: transform 0.5s $cubic, opacity 0.6s $cubic;
+            }
         }
     }
 
     .body {
-        @include container-column-stretch;
+        @include container-column;
 
         -ms-overflow-style: none;
         overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 0.3rem;
+        padding-top: 0.2rem;
+
+        @media (max-width: 1440px) {
+            padding-bottom: 0.9rem;
+            padding-top: 1.2rem;
+        }
 
         .list {
-            @include container-column-stretch;
-
-            counter-reset: ordered-list;
-            flex-shrink: 0;
+            align-items: stretch;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 1;
             list-style: none;
             margin: 0;
             margin-top: 2.1rem;
@@ -59,27 +104,62 @@
             }
 
             .item {
-                @include container-column-stretch;
+                @include container-column;
 
                 counter-increment: ordered-list;
                 flex-shrink: 0;
                 margin-bottom: 2.1rem;
                 padding: 0;
-                text-transform: uppercase;
+
+                @media (max-width: 1440px) {
+                    opacity: 0;
+                    transform: scale(1.15) translateY(-30px);
+                    transition: transform 0.5s $cubic, opacity 0.6s $cubic;
+                }
 
                 .content {
-                    font-family: $font-text-monospaced;
-                    font-size: 1.1em;
-                    font-weight: 400;
-                    line-height: 1.182;
-                    margin-bottom: -0.3rem;
-                    margin-top: -0.2rem;
+                    align-items: baseline;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    line-height: calc(13 / 11);
 
-                    a::after {
-                        content: counters(ordered-list, ".") " ";
+                    @media (max-width: 1440px) {
+                        @include horizontal-margin;
+                    }
+
+                    .title {
+                        font-family: $font-text-monospaced;
+                        font-size: 1.1em;
+                        font-weight: 400;
                         margin-bottom: -0.3rem;
-                        margin-left: 1.3rem;
                         margin-top: -0.2rem;
+                        text-transform: uppercase;
+
+                        @media (max-width: 1440px) {
+                            font-family: $font-text-sans;
+                            font-size: 1.5em;
+                            line-height: calc(29 / 15);
+                            margin-bottom: -0.9rem;
+                            margin-top: -1.2rem;
+                            text-transform: none;
+                        }
+                    }
+
+                    .index {
+                        font-family: $font-text-monospaced;
+                        font-size: 1.1em;
+                        font-weight: 400;
+                        margin-bottom: -0.3rem;
+                        margin-top: -0.2rem;
+
+                        @media (max-width: 1440px) {
+                            font-family: $font-text-monospaced;
+                            font-size: 1.4em;
+                            font-weight: 400;
+                            margin-bottom: -1.1rem;
+                            margin-top: -1.2rem;
+                        }
                     }
                 }
 
@@ -89,16 +169,40 @@
             }
         }
     }
-}
 
-.backdrop {
-    background-color: $_black;
+    &.open {
+        .header {
+            .title {
+                @media (max-width: 1440px) {
+                    opacity: 1;
+                    transform: scale(1) translateY(0);
+                }
+            }
+        }
+
+        .body {
+            .list {
+                .item {
+                    @media (max-width: 1440px) {
+                        opacity: 1;
+                        transform: scale(1) translateY(0);
+                    }
+                }
+            }
+        }
+    }
 }
 
 @supports ((-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
-    .backdrop {
-        -webkit-backdrop-filter:saturate(180%) blur(20px);
+    .tableOfContents {
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
         backdrop-filter: saturate(180%) blur(20px);
         background-color: transparentize($_black, 0.5);
+
+        @media (max-width: 1440px) {
+            -webkit-backdrop-filter: none;
+            backdrop-filter: none;
+            background-color: transparent;
+        }
     }
 }

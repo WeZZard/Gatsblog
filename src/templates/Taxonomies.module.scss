@@ -1,21 +1,34 @@
-.header {
-    align-items: stretch;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 2.1rem;
-}
-
 @mixin index-item {
     align-items: stretch;
     display: flex;
     flex-direction: column;
-    margin-bottom: 5.5rem;
 }
 
-.taxonomySummary {
+.index {
     @include index-item;
-}
 
-.paginator {
-    @include index-item;
+    margin-top: 5.5rem;
+
+    @media (max-width: 1440px) {
+        margin-top: 2.1rem;
+    }
+
+    .header {
+        @include index-item;
+
+        margin-bottom: 2.1rem;
+    }
+
+    .taxonomySummary {
+        @include index-item;
+
+        margin-bottom: 5.5rem;
+    }
+
+    .paginator {
+        @include index-item;
+
+        margin-bottom: 5.5rem;
+    }
+
 }

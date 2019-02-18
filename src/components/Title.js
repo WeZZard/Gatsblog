@@ -1,7 +1,7 @@
 import React from 'react'
-import styles from './PageTitle.module.scss'
+import styles from './Title.module.scss'
 
-class PageTitle extends React.Component {
+class Title extends React.Component {
     render() {
         const {
             textStyle='sans',
@@ -24,4 +24,4 @@ class PageTitle extends React.Component {
     }
 }
 
-export default PageTitle
+export default Title

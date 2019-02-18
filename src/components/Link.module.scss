@@ -124,6 +124,14 @@
             background: $color-ui-nav-headline-normal;
         }
     }
+
+    @media (max-width: 1440px) {
+        color: $_gray-21;
+
+        &:visited {
+            color: $_gray-21;
+        }
+    }
 }
 
 .navigationNormal {
@@ -147,51 +155,64 @@
         }
     }
 
-    &:hover,
-    &:visited:hover {
-        color: $color-hover;
+    @media (max-width: 1440px) {
+        color: $_gray-34;
 
-        &::after {
-            background: $color-hover;
+        &:visited {
+            color: $_gray-55;
         }
     }
 }
 
 .toc {
-    color: $color-ui-nav-headline-normal;
     text-decoration: none;
-    transition: color 0.3s ease-in-out;
 
-    &::after {
+    span {
         color: $color-ui-nav-headline-normal;
         transition: color 0.3s ease-in-out;
     }
 
     &:hover {
-        color: $color-hover;
-        transition: color 0.3s ease-in-out;
-
-        &::after {
+        span {
             color: $color-hover;
             transition: color 0.3s ease-in-out;
         }
     }
 
     &:visited {
-        color: $color-ui-nav-headline-normal;
-
-        &::after {
+        span {
             color: $color-ui-nav-headline-normal;
         }
     }
 
     &:visited:hover {
-        color: $color-hover;
-        transition: color 0.3s ease-in-out;
-
-        &::after {
+        span {
             color: $color-hover;
             transition: color 0.3s ease-in-out;
+        }
+    }
+
+    @media (max-width: 1440px) {
+        span {
+            color: $_gray-21;
+        }
+
+        &:hover {
+            span {
+                color: $color-hover;
+            }
+        }
+
+        &:visited {
+            span {
+                color: $_gray-21;
+            }
+        }
+
+        &:visited:hover {
+            span {
+                color: $color-hover;
+            }
         }
     }
 }

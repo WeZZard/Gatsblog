@@ -4,24 +4,33 @@
     flex-direction: column;
 }
 
-.header {
+.index {
     @include container;
 
-    margin-bottom: 2.1rem;
-}
+    margin-top: 5.5rem;
 
-.main {
-    @include container;
+    @media (max-width: 1440px) {
+        margin-top: 2.1rem;
+    }
 
-    .postExcerpt {
+    .header {
+        @include container;
+    }
+
+    .main {
+        @include container;
+
+        .postExcerpt {
+            @include container;
+
+            margin-bottom: 5.5rem;
+        }
+    }
+
+    .paginator {
         @include container;
 
         margin-bottom: 5.5rem;
     }
-}
 
-.paginator {
-    @include container;
-
-    margin-bottom: 5.5rem;
 }

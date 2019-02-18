@@ -1,10 +1,21 @@
 import React from 'react'
 import styles from './Link.module.scss'
 
-export default ({ kind, to: href, children, dangerouslySetInnerHTML }) =>
-    <a
-        className={styles[kind]}
+export default (props) => {
+    const {
+        kind,
+        to: href,
+        className,
+    } = props;
+
+    const newProps = {...props};
+    delete newProps.kind;
+    delete newProps.to;
+    delete newProps.className;
+
+    return <a
+        className={[styles[kind], className].join(' ')}
         href={href}
-        children={children}
-        dangerouslySetInnerHTML={dangerouslySetInnerHTML}
+        {...newProps}
     />
+}

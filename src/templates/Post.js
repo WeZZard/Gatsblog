@@ -4,7 +4,7 @@ import styles from './Post.module.scss'
 import { graphql } from 'gatsby'
 
 import Main from '../components/Main'
-import PageTitle from '../components/PageTitle'
+import Title from '../components/Title'
 import MDXMetadata from '../components/MDXMetadata'
 import MDXBody from "../components/MDXBody";
 import PostFooter from '../components/PostFooter'
@@ -30,14 +30,14 @@ class Post extends React.Component {
             file: {
                 childMdx: {
                     code,
-                    tableOfContents,
+                    headings,
                 },
             },
         } = post;
 
-        const article = <article>
+        const article = <article className={styles.post}>
             <header className={styles.header}>
-                <PageTitle
+                <Title
                     textStyle={'serif'}
                     title={title}
                     subtitle={subtitle}
@@ -66,7 +66,7 @@ class Post extends React.Component {
 
         return <Main
             title={post.title}
-            tableOfContents={tableOfContents}
+            headings={headings}
             sections={[article, moreItems]}
         />
     }
@@ -96,7 +96,10 @@ export const pageQuery = graphql`
                         body
                         scope
                     }
-                    tableOfContents
+                    headings {
+                        value
+                        depth
+                    }
                 }
             }
         }

@@ -1,10 +1,16 @@
 @import '../styles/colors';
 
 .contentSeparator {
+    align-items: center;
     border: 0;
     border-top: 1px solid $_gray-89;
     display: flex;
+    flex-direction: row;
     margin: 0;
     padding: 0;
-    width: 100%;
+
+    @media (max-width: 1440px) {
+        margin-left: calc(-2.1rem - env(safe-area-inset-left));
+        margin-right: calc(-2.1rem - env(safe-area-inset-right));
+    }
 }
