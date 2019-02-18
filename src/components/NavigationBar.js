@@ -4,23 +4,19 @@ import styles from './NavigationBar.module.scss'
 import { StaticQuery, graphql } from 'gatsby'
 import Link from './Link'
 
-class NavigationItem extends React.Component {
-    render() {
-        const { navigationItem, isSelected } = this.props;
+const NavigationItem = ({ navigationItem, isSelected }) => {
+    const { name, slug } = navigationItem;
 
-        const { name, slug } = navigationItem;
+    const className = isSelected
+        ? [styles.navigationItem, styles.selected].join(' ')
+        : styles.navigationItem;
 
-        const className = isSelected
-            ? [styles.navigationItem, styles.selected].join(' ')
-            : styles.navigationItem;
+    const kind = isSelected ? 'navigationSelected' : 'navigationNormal';
 
-        const kind = isSelected ? 'navigationSelected' : 'navigationNormal';
-
-        return <span className={className}>
-            <Link kind={kind} to={slug}>{name}</Link>
-        </span>
-    }
-}
+    return <span className={className}>
+        <Link kind={kind} to={slug}>{name}</Link>
+    </span>
+};
 
 class NavigationBar extends React.Component {
     render() {
@@ -74,7 +70,13 @@ class NavigationBar extends React.Component {
                 const userNavigationItems = [
                     ...overwrittenCategoryNavigationItems,
                     ...customNavigationItems,
-                ].sort((a, b) => a.weight < b.weight).reverse();
+                ].sort((a, b) => {
+                    if (a.weight === b.weight) {
+                        return a < b
+                    } else {
+                        return a.weight > b.weight
+                    }
+                });
 
                 const navigationItems = [
                     ...systemNavigationItems,

@@ -80,7 +80,7 @@ navigation:
     customNavigationItems:
         - name: Profile
           slug: /profile
-          weight: 0
+          weight: 1
 
         - name: Feed
           slug: /feed
