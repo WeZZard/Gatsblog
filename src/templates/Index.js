@@ -25,8 +25,8 @@ class Index extends React.Component {
 
         const { edges: postNodes } = allPost || { edges: [] };
 
-        const post = postNodes.map(postNode => postNode.node)
-            .sort((p1, p2) => p1.createdTime < p2.createdTime);
+        const posts = postNodes.map(postNode => postNode.node);
+        posts.sort((p1, p2) => p1.createdTime < p2.createdTime);
 
         const header = showsPageTitle
             ? <header className={styles.header}>
@@ -37,7 +37,7 @@ class Index extends React.Component {
         const contents = <div className={styles.index}>
             {header}
             <main className={styles.main}>
-                {post.map((post, index) =>
+                {posts.map((post, index) =>
                     <div key={index} className={styles.postExcerpt}>
                         {React.createElement(PostExcerpt, {item: post})}
                     </div>

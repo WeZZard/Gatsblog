@@ -39,12 +39,12 @@ export default ({ type, taxonomy, posts }) => {
 const getRelatedPosts = (type, posts, taxonomy, limit=5) => {
     switch (type) {
         case 'tag':
-            return posts.sort((p1, p2) => p1.createdTime > p2.createdTime)
-                .filter(post => post.tags.includes(taxonomy))
+            posts.sort((p1, p2) => p1.createdTime > p2.createdTime);
+            return posts.filter(post => post.tags.includes(taxonomy))
                 .slice(0, limit);
         case 'category':
-            return posts.sort((p1, p2) => p1.createdTime > p2.createdTime)
-                .filter(post => post.category === taxonomy)
+            posts.sort((p1, p2) => p1.createdTime > p2.createdTime);
+            return posts.filter(post => post.category === taxonomy)
                 .slice(0, limit);
         default:
             throw `Unexpected taxonomy type: ${type}.`
