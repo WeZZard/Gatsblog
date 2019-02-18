@@ -23,6 +23,8 @@ class Taxonomies extends React.Component {
             keywords
         } = pageContext;
 
+        console.log('taxonomies: ', taxonomies, ' - ', type);
+
         const postNodes = getPostNodes(type, data);
 
         const posts = postNodes.map(postNode => postNode.node);
@@ -68,19 +70,18 @@ class Taxonomies extends React.Component {
 export default Taxonomies
 
 const getPostNodes = (type, data) => {
-    const {
-        category: {
-            edges: postNodesForCategory
-        },
-        tags: {
-            edges: postNodesForTags
-        }
-    } = data;
-
     switch (type) {
         case 'category':
+            const { category } = data;
+            const {
+                edges: postNodesForCategory
+            } = category || { edges: [] };
             return postNodesForCategory;
         case 'tag':
+            const { tags } = data;
+            const {
+                edges: postNodesForTags
+            } = tags || { edges: [] };
             return postNodesForTags;
         default:
             throw `Unexpected taxonomy type: ${type}`;

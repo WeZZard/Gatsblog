@@ -33,8 +33,6 @@ module.exports = (args) => {
                             isPublished: metadata.isPublished,
                             createdTime: metadata.createdTime,
                             lastModifiedTime: metadata.lastModifiedTime,
-                            tags: metadata.tags,
-                            category: metadata.category,
                             slug: metadata.slug,
                             lang: metadata.lang,
                             isLocalized: metadata.isLocalized,

@@ -11,13 +11,7 @@ module.exports = async (args) => {
 
     const { createNode } = actions;
 
-    const {
-        data: {
-            allPost: {
-                edges: posts,
-            },
-        },
-    } = await graphql(`
+    const result = await graphql(`
         {
             allPost {
                 edges {
@@ -28,6 +22,18 @@ module.exports = async (args) => {
             }
         }
     `);
+
+    if (result.errors) {
+        return [];
+    }
+
+    const {
+        data: {
+            allPost: {
+                edges: posts,
+            },
+        },
+    } = result;
 
     const tags = (posts || [])
         .map(post => post.node.tags)
