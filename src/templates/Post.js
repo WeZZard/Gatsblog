@@ -67,7 +67,7 @@ class Post extends React.Component {
         return <Main
             title={post.title}
             headings={headings}
-            sections={[article, moreItems]}
+            sections={[article, moreItems].filter(_ => _)}
         />
     }
 }
