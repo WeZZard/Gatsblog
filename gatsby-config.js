@@ -131,7 +131,7 @@ module.exports = {
                                 site_url: safeSiteUrl,
                                 feed_url: safeSiteUrl + '/rss.xml',
                                 copyright: site.owner,
-                                title: `${site.title} (Original)`,
+                                title: site.title,
                                 description: site.description,
                                 ...rest,
                             }
