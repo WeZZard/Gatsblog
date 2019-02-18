@@ -31,7 +31,7 @@ class NavigationBar extends React.Component {
                 ];
 
                 const {
-                    configYaml: {
+                    config: {
                         navigation: {
                             createsNavigationItemsForCategories,
                             overwritingCategoryNavigationItems,
@@ -70,11 +70,13 @@ class NavigationBar extends React.Component {
                 const userNavigationItems = [
                     ...overwrittenCategoryNavigationItems,
                     ...customNavigationItems,
-                ].sort((a, b) => {
+                ];
+
+                userNavigationItems.sort((a, b) => {
                     if (a.weight === b.weight) {
-                        return a < b
+                        return a > b
                     } else {
-                        return a.weight > b.weight
+                        return a.weight < b.weight
                     }
                 });
 
@@ -115,7 +117,7 @@ export default NavigationBar
 
 const _navigationQuery = graphql`
     query NavigationBarQuery {
-        configYaml {
+        config: configYaml {
             navigation {
                 createsNavigationItemsForCategories
                 overwritingCategoryNavigationItems {

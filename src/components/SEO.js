@@ -18,7 +18,7 @@ const SEO = (
             render={data => {
 
                 const {
-                    configYaml: {
+                    config: {
                         site: {
                             title: siteTitle,
                             description: siteDescription,
@@ -106,7 +106,7 @@ export default SEO
 
 const siteSEOQuery = graphql`
     query SiteSEOQuery {
-        configYaml {
+        config: configYaml {
             site {
                 title
                 description

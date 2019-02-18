@@ -7,7 +7,7 @@ class NotFoundPage extends React.Component {
     render() {
         const { data } = this.props;
         const {
-            configYaml: {
+            config : {
                 site: { siteTitle },
             },
         } = data;
@@ -29,7 +29,7 @@ export default NotFoundPage;
 
 export const pageQuery = graphql`
     query {
-        configYaml {
+        config: configYaml {
             site {
                 title
             }
