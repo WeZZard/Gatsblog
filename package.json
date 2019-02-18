@@ -23,6 +23,7 @@
     "gatsby-plugin-sass": "^2.0.10",
     "gatsby-plugin-sharp": "^2.0.20",
     "gatsby-plugin-web-font-loader": "^1.0.4",
+    "gatsby-plugin-webmention": "0.0.9",
     "gatsby-remark-primitive-images": "file:plugins/gatsby-remark-primitive-images",
     "gatsby-source-filesystem": "^2.0.20",
     "gatsby-transformer-sharp": "^2.1.13",

@@ -101,6 +101,20 @@ module.exports = {
             },
         },
         {
+            resolve: `gatsby-plugin-webmention`,
+            options: {
+                username: undefined, // webmention.io username
+                identity: {
+                    github: "WeZZard",
+                },
+                mentions: true,
+                pingbacks: false,
+                forwardPingbacksAsWebmentions: "https://example.com/endpoint",
+                domain: "wezzard.com",
+                token: process.env.WEBMENTIONS_TOKEN
+            }
+        }
+        {
             resolve: `gatsby-plugin-feed`,
             options: {
                 query: `
