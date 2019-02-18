@@ -48,7 +48,7 @@ class Navigation extends React.Component {
     }
 
     render() {
-        const {slug, headings} = this.props;
+        const { slug, headings, errorCode } = this.props;
 
         const { isTocOpen, pageYOffset } = this.state;
 
@@ -60,6 +60,10 @@ class Navigation extends React.Component {
             if (pageYOffset > 0) {
                 navigationClassNames.push(styles.bordered);
             }
+        }
+
+        if (errorCode === 404) {
+            navigationClassNames.push(styles.errorCode404);
         }
 
         const navigationClassName = navigationClassNames.join(' ');
@@ -104,6 +108,7 @@ class Navigation extends React.Component {
 Navigation.propTypes = {
     slug: PropTypes.string,
     tableOfContents: PropTypes.object,
+    errorCode: PropTypes.number,
 };
 
 export default Navigation

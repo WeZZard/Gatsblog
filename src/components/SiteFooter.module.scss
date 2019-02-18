@@ -98,4 +98,17 @@
         top: 0;
         z-index: -2;
     }
+
+    &.errorCode404 {
+        background-position: center;
+        background-size: cover;
+        width: 100%;
+
+        @media (max-width: 1440px) {
+            background-size: cover;
+            flex-grow: 1;
+            height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 44px);
+            margin-top: 44px;
+        }
+    }
 }

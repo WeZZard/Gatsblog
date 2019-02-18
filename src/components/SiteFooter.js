@@ -17,7 +17,17 @@ class SiteFooter extends React.Component {
                     }
                 }) =>
             {
-                return <div className={styles.siteFooter}>
+                const { errorCode } = this.props;
+
+                const siteFooterClassNames = [styles.siteFooter];
+
+                if (errorCode === 404) {
+                    siteFooterClassNames.push(styles.errorCode404);
+                }
+
+                const siteFooterClassName = siteFooterClassNames.join(' ');
+
+                return <div className={siteFooterClassName}>
                     <div className={styles.siteInfo}>
                         {slogans.map((slogan, index) =>
                                 <div key={index} className={styles.siteInfoItem}>

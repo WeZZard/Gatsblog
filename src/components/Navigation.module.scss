@@ -148,6 +148,10 @@
             transition: all 0.1s ease-in;
         }
     }
+
+    &.errorCode404 {
+        width: 100%;
+    }
 }
 
 @supports ((-webkit-backdrop-filter: blur(1.8em)) or (backdrop-filter: blur(2em))) {
