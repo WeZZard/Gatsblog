@@ -13,8 +13,18 @@ export default ({ info }) => {
         </div>
         : null;
 
-    const excerpt = item.file.childMdx.excerpt
-        || '<em>The content is intentionally left blank.</em>';
+    const excerpt = item.file.childMdx.excerpt;
+
+    const content = excerpt ? <section className={styles.content}>
+            <p className={styles.paragraph}>
+                <Link
+                    kind={'summary'}
+                    to={item.slug}
+                    dangerouslySetInnerHTML={{ __html: excerpt }}
+                />
+            </p>
+        </section>
+        : null;
 
     return <div className={styles.flexWrapper}>
         <div className={styles.caption}>
@@ -29,15 +39,7 @@ export default ({ info }) => {
                     {subtitleComponent}
                 </Link>
             </section>
-            <section className={styles.content}>
-                <p className={styles.paragraph}>
-                    <Link
-                        kind={'summary'}
-                        to={item.slug}
-                        dangerouslySetInnerHTML={{ __html: excerpt }}
-                    />
-                </p>
-            </section>
+            {content}
             <section className={styles.footer}>
                 <PostExcerptMetadata post={item}/>
             </section>
