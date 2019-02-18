@@ -80,10 +80,6 @@ navigation:
     customNavigationItems:
         - name: Profile
           slug: /profile
-          weight: 1
-
-        - name: Feed
-          slug: /feed
           weight: 0
 
 # The pagination config for index pages.
