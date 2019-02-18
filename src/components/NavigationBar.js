@@ -74,7 +74,7 @@ class NavigationBar extends React.Component {
                 const userNavigationItems = [
                     ...overwrittenCategoryNavigationItems,
                     ...customNavigationItems,
-                ].sort((a, b) => a.weight >= b.weight);
+                ].sort((a, b) => a.weight < b.weight).reverse();
 
                 const navigationItems = [
                     ...systemNavigationItems,
