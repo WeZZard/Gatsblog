@@ -36,7 +36,7 @@ export default ({textStyle, code}) => <MDXContext.Provider value={textStyle}>
 
 const scope = {
     InlineMath,
-    Math: MathBlock,
+    MathBlock,
 };
 
 const components = {
@@ -60,6 +60,7 @@ const components = {
     },
     inlineCode: InlineCode,
     pre: props => {
+        console.log(props);
         const codeBlock = preToCodeBlock(props);
         const mathBlock = preToMathBlock(props);
         // if there's a codeString and some props, we passed the test

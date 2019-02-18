@@ -4,10 +4,9 @@ export default (args) => {
         args.children &&
         // MDXTag props
         args.children.props &&
-        // if MDXTag is going to render a <code>
-        args.children.props.name === "Math"
+        // if MDXTag is going to render a <MathBlock>
+        args.children.props.name === "MathBlock"
     ) {
-        // we have a <pre><Math> situation
         return args.children.props;
     }
 };

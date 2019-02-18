@@ -8,7 +8,7 @@ const wrapMdxTags = (markdownAST) => {
 
     visit(markdownAST, `math`, node => {
         node.type = `html`;
-        node.value = `<Math>{"${node.value}"}</Math>`
+        node.value = `<MathBlock>{"${node.value}"}</MathBlock>`
     })
 };
 
