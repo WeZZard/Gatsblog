@@ -20,16 +20,16 @@ export default ({license}) => <StaticQuery
 
             const text = cc40TextForOptions(options);
 
-            return <React.Fragment>
+            return <div className={styles.license}>
                 <span className={styles.image}>
                     <CC40Image options={optionString}/>
                 </span>
                 <span className={styles.text}>{text}</span>
-            </React.Fragment>
+            </div>
         } else {
-            return <React.Fragment>
+            return <div>
                 <span className={styles.text}>{finalLicense}</span>
-            </React.Fragment>
+            </div>
         }
     }}
 />
