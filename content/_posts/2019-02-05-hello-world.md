@@ -6,7 +6,7 @@ category: Publication
 Hello, world!
 
 I haven't been writing blog posts for a long time. The reason why I had given
-up blogging is that currently there is not a blog system fulfill all my needs. I
+up blogging is that currently there are no blog systems fulfill all my needs. I
 tried to get used to Medium. I love its reply system -- which guides people to 
 write a new post instead of a simple comment -- actually this was what the world
 of blog used to be, but the render effects of code blocks sucks. Moreover, I'm a
@@ -18,15 +18,15 @@ quality on Medium, finally I decided to implement my own.
 
 ## Jekyll and Abandoned
 
-Firstly, I chose Jekyll. But soon, I abandoned. Frankly, I don't like Ruby.
-I'm a Chinese grew up in Mainland China. For one of the core concepts of
-Simplified Chinese and Ruby is both "simplify for simplification", and such a
-kind of simplification rule produces many irregular cases which increases brain
-burden after all, thus I don't like both. Ruby's grammar is highly irregular
-which is just like the strokes of characters is more irregular in Simplified
-Chinese than what they were in Traditional Chinese. You write less on the
-surface, but remember more and take more time to understand what you written
-under the surface.
+Firstly, I chose Jekyll. But soon, I abandoned. Frankly, I don't like Ruby,
+which is the language implements Jekyll. I'm a Chinese grew up in Mainland
+China. For one of the core concepts of Simplified Chinese and Ruby is both
+"simplify for simplification", and such a kind of simplification rule produces
+many irregular cases which increases brain burden after all, thus I don't like
+both. Ruby's grammar is highly irregular which is just like the strokes of
+characters is more irregular in Simplified Chinese than what they were in
+Traditional Chinese. You write less on the surface, but remember more and take
+more time to understand what you written under the surface.
 
 There are more historical details I can tell in between China and Japan about
 how simplification "took over" two countries, which one is the "motherland" of 
@@ -53,7 +53,7 @@ to the form of characters. About ten years after the foundation of the People's
 Republic of China, the central government announced to gradually replace the use
 of Traditional Chinese with Simplified Chinese.
 
-Well, the reason why I had abandoned Jekyll is not as complicated as the
+Well, but the reason why I had abandoned Jekyll is not as complicated as the
 historical details I mentioned above. Just like other blog systems that I have
 used before, Jekyll doesn't fulfill all my needs. The user defined excerpt
 markup is awesome, but I also want shortcodes in WordPress. I had to write
