@@ -1,5 +1,6 @@
 @import '../styles/colors';
 @import '../styles/fonts';
+@import '../styles/responsive';
 
 @mixin anchor {
     text-decoration: none;
@@ -125,7 +126,7 @@
         }
     }
 
-    @media (max-width: 1440px) {
+    @media (max-width: $mobile-max) {
         color: $_gray-21;
 
         &:visited {
@@ -155,7 +156,7 @@
         }
     }
 
-    @media (max-width: 1440px) {
+    @media (max-width: $mobile-max) {
         color: $_gray-34;
 
         &:visited {
@@ -192,7 +193,7 @@
         }
     }
 
-    @media (max-width: 1440px) {
+    @media (max-width: $mobile-max) {
         span {
             color: $_gray-21;
         }

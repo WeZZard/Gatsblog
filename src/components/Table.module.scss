@@ -1,5 +1,6 @@
 @import '../styles/colors';
 @import '../styles/fonts';
+@import '../styles/responsive';
 
 @mixin wrapper-common {
     align-items: stretch;
@@ -15,7 +16,7 @@
 .wrapper {
     @include wrapper-common;
 
-    @media (max-width: 1440px) {
+    @media (max-width: $mobile-max) {
         margin-left: -2.1rem;
         margin-right: -2.1rem;
     }

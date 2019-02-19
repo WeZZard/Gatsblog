@@ -1,11 +1,12 @@
 @import '../styles/colors';
 @import '../styles/animations';
+@import '../styles/responsive';
 
 .button {
     display: none;
 }
 
-@media (max-width: 1440px) {
+@media (max-width: $mobile-max) {
     .button {
         cursor: pointer;
         display: inline-block;

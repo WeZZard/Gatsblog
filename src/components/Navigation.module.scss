@@ -1,5 +1,6 @@
 @import '../styles/colors';
 @import '../styles/animations';
+@import '../styles/responsive';
 
 @mixin container-column-stretch {
     align-items: stretch;
@@ -27,7 +28,7 @@
     top: 0;
     width: 30%;
 
-    @media (max-width: 1440px) {
+    @media (max-width: $mobile-max) {
         background-color: transparentize(white, 0.7);
         height: 44px;
         overflow: hidden;
@@ -43,7 +44,7 @@
         flex-grow: 0;
         flex-shrink: 0;
         margin-bottom: 0;
-        margin-left: 5.5rem;
+        margin-left: 3.4rem;
         margin-right: 3.4rem;
         margin-top: 3.4rem;
 
@@ -60,7 +61,7 @@
             text-transform: uppercase;
         }
 
-        @media (max-width: 1440px) {
+        @media (max-width: $mobile-max) {
             display: none;
         }
     }
@@ -71,11 +72,11 @@
         flex-grow: 0;
         flex-shrink: 0;
         margin-bottom: 0;
-        margin-left: 5.5rem;
+        margin-left: 3.4rem;
         margin-right: 3.4rem;
         margin-top: 3.4rem;
 
-        @media (max-width: 1440px) {
+        @media (max-width: $mobile-max) {
             @include container-row-center;
 
             height: 44px;
@@ -88,7 +89,7 @@
         .navigationBar {
             @include container-column-stretch;
 
-            @media (max-width: 1440px) {
+            @media (max-width: $mobile-max) {
                 @include container-row-center;
 
                 flex-grow: 1;
@@ -105,15 +106,21 @@
     }
 
     .tableOfContents {
-        @include container-column-stretch;
-
+        align-items: stretch;
+        display: flex;
+        flex-direction: row;
         flex-grow: 1;
+        justify-content: flex-end;
         margin-bottom: 6.3rem;
-        margin-left: 5.5rem;
+        margin-left: 3.4rem;
         margin-right: 3.4rem;
         margin-top: 3.4rem;
 
-        @media (max-width: 1440px) {
+        @media (max-width: $small-screen-max) {
+            margin-left: 0;
+        }
+
+        @media (max-width: $mobile-max) {
             flex-grow: 1;
             margin: 0;
             margin-top: calc(-44px);
@@ -123,7 +130,7 @@
     }
 
     &.tocOpen {
-        @media (max-width: 1440px) {
+        @media (max-width: $mobile-max) {
             height: 100%;
             transition: all 0.3s ease-in, background 0.5s ease-in;
         }
@@ -143,7 +150,7 @@
     }
 
     &.bordered {
-        @media (max-width: 1440px) {
+        @media (max-width: $mobile-max) {
             border-bottom: 0.5px solid transparentize(black, 0.9);
             transition: all 0.1s ease-in;
         }
@@ -156,7 +163,7 @@
 
 @supports ((-webkit-backdrop-filter: blur(1.8em)) or (backdrop-filter: blur(2em))) {
     .navigation {
-        @media (max-width: 1440px) {
+        @media (max-width: $mobile-max) {
             -webkit-backdrop-filter: saturate(180%) blur(20px);
             backdrop-filter: saturate(180%) blur(20px);
             background-color: transparentize(white, 0.7);

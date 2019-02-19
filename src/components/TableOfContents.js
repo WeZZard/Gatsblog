@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import Link from './Link'
 
 const Item = styled.li`
-    @media (max-width: 1440px) {
+    @media (max-width: 1280px) {
         transition-delay: ${({isOpen, index, count}) => 
             isOpen ? 0.56 - index * (0.56 / count) : 0.56 + index * (0.2 / count)
         }s;

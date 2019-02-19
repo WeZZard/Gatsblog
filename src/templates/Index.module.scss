@@ -1,3 +1,5 @@
+@import '../styles/responsive';
+
 @mixin container {
     align-items: stretch;
     display: flex;
@@ -10,7 +12,7 @@
     flex-grow: 1;
     margin-top: 5.5rem;
 
-    @media (max-width: 1440px) {
+    @media (max-width: $mobile-max) {
         margin-top: 2.1rem;
     }
 

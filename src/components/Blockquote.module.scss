@@ -1,5 +1,6 @@
 @import '../styles/fonts';
 @import '../styles/colors';
+@import '../styles/responsive';
 
 .blockquote {
     border-left: 3px solid $color-content-quote-indicator;
@@ -15,7 +16,7 @@
     padding-left: 3.4rem;
     padding-top: 2.1rem;
 
-    @media (max-width: 1440px) {
+    @media (max-width: $mobile-max) {
         padding-left: 2.1rem;
     }
 

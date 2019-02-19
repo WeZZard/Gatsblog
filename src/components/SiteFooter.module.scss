@@ -1,4 +1,5 @@
 @import '../styles/colors';
+@import '../styles/responsive';
 
 @mixin container-column-stretch {
     align-items: stretch;
@@ -11,7 +12,7 @@
     text-align: right;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 
-    @media (max-width: 1440px) {
+    @media (max-width: $mobile-max) {
         text-align: center;
     }
 }
@@ -28,7 +29,7 @@
     width: 30%;
     z-index: -1;
 
-    @media (max-width: 1440px) {
+    @media (max-width: $mobile-max) {
         background-position: center;
         height: auto;
         position: relative;
@@ -46,7 +47,7 @@
         margin-top: 3.4rem;
         z-index: -1;
 
-        @media (max-width: 1440px) {
+        @media (max-width: $mobile-max) {
             margin-bottom: calc(5.5rem + env(safe-area-inset-bottom));
             margin-left: 3.4rem;
             margin-top: 5.5rem;
@@ -67,10 +68,10 @@
                 display: inline;
                 font-size: 3em;
                 font-weight: 500;
-                line-height: 1.83;
+                line-height: calc(42 / 30);
                 margin: 0;
-                margin-bottom: -1.7rem;
-                margin-top: -1.7rem;
+                margin-bottom: -1.1rem;
+                margin-top: -1rem;
                 padding: 0;
             }
 
@@ -104,7 +105,7 @@
         background-size: cover;
         width: 100%;
 
-        @media (max-width: 1440px) {
+        @media (max-width: $mobile-max) {
             background-size: cover;
             flex-grow: 1;
             height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 44px);

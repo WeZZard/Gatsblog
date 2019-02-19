@@ -1,5 +1,6 @@
 @import '../styles/colors';
 @import '../styles/fonts';
+@import '../styles/responsive';
 
 .main {
     width: 100%;
@@ -13,7 +14,7 @@
         position: absolute;
         width: 100%;
 
-        @media (max-width: 1440px) {
+        @media (max-width: $mobile-max) {
             justify-content: space-around;
             top: 44px;
         }
@@ -30,7 +31,7 @@
             text-transform: uppercase;
             z-index: 500;
 
-            @media (max-width: 1440px) {
+            @media (max-width: $mobile-max) {
                 margin-top: 2.1rem;
                 padding: 2.1rem;
             }

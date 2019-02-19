@@ -1,13 +1,14 @@
 @import '../styles/colors';
 @import '../styles/fonts';
 @import '../styles/animations';
+@import '../styles/responsive';
 
 @mixin container-column {
     align-items: stretch;
     display: flex;
     flex-direction: column;
 
-    @media (max-width: 1440px) {
+    @media (max-width: $mobile-max) {
         align-items: stretch;
     }
 }
@@ -25,12 +26,18 @@
     backdrop-filter: saturate(180%) blur(20px);
     flex-grow: 1;
     flex-shrink: 1;
+    max-width: 396px;
     padding: 2.1rem;
     width: calc(100% - 4.2rem);
 
-    @media (max-width: 1440px) {
+    @media (max-width: $small-screen-max) {
+        max-width: none;
+    }
+
+    @media (max-width: $mobile-max) {
         background-color: transparent;
         margin-bottom: calc(2.1rem + env(safe-area-inset-bottom));
+        max-width: none;
         padding: 0;
         width: auto;
     }
@@ -42,7 +49,7 @@
         flex-shrink: 0;
         margin-bottom: 2.1rem;
 
-        @media (max-width: 1440px) {
+        @media (max-width: $mobile-max) {
             @include horizontal-margin;
 
             align-items: center;
@@ -63,7 +70,7 @@
             padding: 0;
             text-transform: uppercase;
 
-            @media (max-width: 1440px) {
+            @media (max-width: $mobile-max) {
                 color: $_gray-55;
                 font-size: 1.5em;
                 margin-bottom: 0;
@@ -84,7 +91,7 @@
         padding-bottom: 0.3rem;
         padding-top: 0.2rem;
 
-        @media (max-width: 1440px) {
+        @media (max-width: $mobile-max) {
             padding-bottom: 0.9rem;
             padding-top: 1.2rem;
         }
@@ -111,7 +118,7 @@
                 margin-bottom: 2.1rem;
                 padding: 0;
 
-                @media (max-width: 1440px) {
+                @media (max-width: $mobile-max) {
                     opacity: 0;
                     transform: scale(1.15) translateY(-30px);
                     transition: transform 0.5s $cubic, opacity 0.6s $cubic;
@@ -124,7 +131,7 @@
                     justify-content: space-between;
                     line-height: calc(13 / 11);
 
-                    @media (max-width: 1440px) {
+                    @media (max-width: $mobile-max) {
                         @include horizontal-margin;
                     }
 
@@ -136,7 +143,7 @@
                         margin-top: -0.2rem;
                         text-transform: uppercase;
 
-                        @media (max-width: 1440px) {
+                        @media (max-width: $mobile-max) {
                             font-family: $font-text-sans;
                             font-size: 1.5em;
                             line-height: calc(29 / 15);
@@ -153,7 +160,7 @@
                         margin-bottom: -0.3rem;
                         margin-top: -0.2rem;
 
-                        @media (max-width: 1440px) {
+                        @media (max-width: $mobile-max) {
                             font-family: $font-text-monospaced;
                             font-size: 1.4em;
                             font-weight: 400;
@@ -173,7 +180,7 @@
     &.open {
         .header {
             .title {
-                @media (max-width: 1440px) {
+                @media (max-width: $mobile-max) {
                     opacity: 1;
                     transform: scale(1) translateY(0);
                 }
@@ -183,7 +190,7 @@
         .body {
             .list {
                 .item {
-                    @media (max-width: 1440px) {
+                    @media (max-width: $mobile-max) {
                         opacity: 1;
                         transform: scale(1) translateY(0);
                     }
@@ -199,7 +206,7 @@
         backdrop-filter: saturate(180%) blur(20px);
         background-color: transparentize($_black, 0.5);
 
-        @media (max-width: 1440px) {
+        @media (max-width: $mobile-max) {
             -webkit-backdrop-filter: none;
             backdrop-filter: none;
             background-color: transparent;
