@@ -103,7 +103,7 @@ module.exports = {
         {
             resolve: `gatsby-plugin-webmention`,
             options: {
-                username: undefined, // webmention.io username
+                username: 'wezzard.com', // webmention.io username
                 identity: {
                     github: "WeZZard",
                 },
