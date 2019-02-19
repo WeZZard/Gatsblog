@@ -6,16 +6,6 @@ const remarkMath = require(`remark-math`);
 const mdxBackSlashSafeGuarder = require('./core/remark/mdx-backslash-safe-guarder');
 const kaTexMdxTag = require(`./core/remark/katex-mdx-tag`);
 
-function guardBackslashesForMdx() {
-    const nodeTypes = ['text', 'code', 'inlineCode', 'math', 'inlineMath'];
-    return tree =>
-        visit(tree, nodeTypes, node => {
-            if (/\\/.test(node.value)) {
-                node.value = node.value.replace(/\\/g, '\\\\');
-            }
-        });
-}
-
 module.exports = {
     plugins: [
         {
