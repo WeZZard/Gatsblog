@@ -8,13 +8,15 @@ const inlineTags = [
     'span',
     'code',
     'input',
+    'a',
 ];
 
 const isInlineElement = (child) => {
     if (typeof child === 'string') {
         return true;
     } else {
-        return child.props
+        return child
+            && child.props
             && child.props.name
             && inlineTags.includes(child.props.name);
     }
@@ -24,28 +26,28 @@ export default (props) => {
     const { children } = props;
     const normalizedChildren = normalizeChildren(children);
 
-    const reducedChildren = normalizedChildren.reduce((children, current) => {
-        if (children.length > 0) {
-            const last = children[Math.max(children.length - 1, 0)];
+    const reducedChildren = normalizedChildren.reduce((reducedChildren, current) => {
+        if (reducedChildren.length > 0) {
+            const last = reducedChildren[Math.max(reducedChildren.length - 1, 0)];
 
-            const nonInlineChildren = children.slice(
+            const nonInlineChildren = reducedChildren.slice(
                 0,
-                Math.max(children.length - 1, 0)
+                Math.max(reducedChildren.length - 1, 0)
             );
 
             if (Array.isArray(last)) {
                 if (isInlineElement(current)) {
                     return [...nonInlineChildren, [...last, current]]
                 } else {
-                    return [...children, current]
+                    return [...reducedChildren, current]
                 }
             } else {
                 if (isInlineElement(last) && isInlineElement(current)) {
                     return [...nonInlineChildren, [last, current]]
                 } else if (!isInlineElement(last) && isInlineElement(current)) {
-                    return [...children, [current]]
+                    return [...reducedChildren, [current]]
                 } else {
-                    return [...children, current]
+                    return [...reducedChildren, current]
                 }
             }
         } else {

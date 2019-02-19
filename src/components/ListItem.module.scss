@@ -8,6 +8,10 @@
     line-height: calc(29 / 17);
     margin: 0;
     margin-bottom: 3.4rem;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 .listItem .listItem {

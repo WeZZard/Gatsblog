@@ -26,14 +26,14 @@ class TableOfContents extends React.Component {
 
         const items = [];
 
-        const indicesStack = [0];
+        const indicesStack = [1];
 
         function fillStackGap(depth) {
             while (indicesStack.length < depth) {
                 indicesStack.push(0)
             }
             for (let i = depth; i < indicesStack.length; i ++) {
-                indicesStack[i] = 0;
+                indicesStack[i] = 1;
             }
         }
 
@@ -55,14 +55,17 @@ class TableOfContents extends React.Component {
             items.push({title: value, indices});
         });
 
-        while (items.reduce((prev, curr) => {
-                if (prev && prev.index) {
-                    const { flag, index } = prev;
-                    return { flag: flag && (index === curr.indices[0]), index: curr }
+        while (items.reduce((previous, currrent) => {
+                if (previous && previous.index !== null) {
+                    const { shouldShift: flag, index } = previous;
+                    const canShift = currrent.indices.length > 1;
+                    const isSameIndex = index === currrent.indices[0];
+                    const shouldShift = flag && isSameIndex && canShift;
+                    return { shouldShift, index: currrent.indices[0] }
                 } else {
-                    return { flag: true, index: curr.indices[0] }
+                    return { shouldShift: true, index: currrent.indices[0] }
                 }
-            }, {flag: true, index: null}).flag && items.length > 1)
+            }, {shouldShift: true, index: null}).shouldShift && items.length > 1)
         {
             items.forEach(each => each.indices.shift());
         }

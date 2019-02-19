@@ -7,14 +7,17 @@
 }
 
 .pageInfo {
-    @include container-column-stretch;
-
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
     flex-shrink: 0;
     padding-top: 5.5rem;
     padding-bottom: 5.5rem;
 
     .pageInfoItem {
-        @include container-column-stretch;
+        align-items: baseline;
+        display: flex;
+        flex-direction: row;
 
         color: $color-ui-footnote;
         margin-bottom: 0.8rem;
