@@ -132,7 +132,7 @@ class Navigation extends React.Component {
         }) => {
           return (
             <div className={navigationClassName}>
-              <div className={styles.menu}>
+              <div className={styles.header}>
                 {tocButton}
                 <div className={styles.siteTitle}>
                   <SiteTitle title={title} />

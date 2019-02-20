@@ -38,7 +38,7 @@
     z-index: 999;
   }
 
-  .menu {
+  .header {
     align-items: stretch;
     display: flex;
     flex-direction: column;
@@ -126,6 +126,7 @@
     @include container-row-stretch;
 
     flex-grow: 1;
+    flex-shrink: 1;
     justify-content: flex-end;
     margin-bottom: 6.3rem;
     margin-left: 3.4rem;
@@ -163,7 +164,7 @@
   }
 
   &.isNavButtonSelected {
-    .menu {
+    .header {
       .tocButton {
         opacity: 0;
         transform: translateX(44px);
@@ -187,7 +188,7 @@
   }
 
   &.isTocButtonSelected {
-    .menu {
+    .header {
       .navButton {
         opacity: 0;
         transform: translateX(-44px);

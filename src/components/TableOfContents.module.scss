@@ -94,8 +94,8 @@
     padding-top: 0.2rem;
 
     @media (max-width: $mobile-max) {
-      padding-bottom: 0.9rem;
-      padding-top: 1.2rem;
+      padding-top: 2.1rem;
+      padding-bottom: 2.1rem;
     }
 
     .sectionList {
@@ -125,6 +125,7 @@
           opacity: 0;
           transform: scale(1.15) translateY(-30px);
           transition: transform 0.5s $cubic, opacity 0.6s $cubic;
+          margin-bottom: 3.4rem;
         }
 
         .content {
@@ -139,7 +140,7 @@
           }
 
           .sectionName {
-            font-family: $font-text-monospaced;
+            font-family: $font-text-sans;
             font-size: 1.1em;
             font-weight: 400;
             margin-bottom: -0.3rem;
@@ -165,9 +166,9 @@
 
             @media (max-width: $mobile-max) {
               font-family: $font-text-monospaced;
-              font-size: 1.4em;
-              font-weight: 400;
-              margin-bottom: -1.1rem;
+              font-size: 1.5em;
+              line-height: calc(29 / 15);
+              margin-bottom: -0.9rem;
               margin-top: -1.2rem;
             }
           }

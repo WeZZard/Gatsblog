@@ -37,6 +37,7 @@ module.exports = {
         name: `Config`,
       },
     },
+    `gatsby-plugin-catch-links`,
     {
       resolve: `gatsby-mdx`,
       options: {

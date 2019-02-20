@@ -75,7 +75,12 @@
 
         @media (max-width: $mobile-max) {
           flex-grow: 1;
+          font-family: $font-text-sans;
+          font-size: 1.5em;
           font-weight: 200;
+          line-height: calc(29 / 15);
+          margin-bottom: -0.9rem;
+          margin-top: -1.2rem;
           text-shadow: none;
         }
 
