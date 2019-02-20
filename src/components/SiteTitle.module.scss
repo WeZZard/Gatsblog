@@ -2,24 +2,24 @@
 @import '../styles/responsive';
 
 .siteTitle {
-    color: $color-ui-nav-headline-normal;
-    font-size: 3em;
-    font-weight: 400;
-    flex-grow: 1;
-    line-height: 1.13;
-    margin-bottom: -0.4rem;
-    margin-top: -0.8rem;
-    text-align: right;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    text-transform: uppercase;
+  color: $color-ui-nav-headline-normal;
+  font-size: 3em;
+  font-weight: 400;
+  flex-grow: 1;
+  line-height: 1.13;
+  margin-bottom: -0.4rem;
+  margin-top: -0.8rem;
+  text-align: right;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
 
-    @media (max-width: $mobile-max) {
-        color: $_gray-21;
+  @media (max-width: $mobile-max) {
+    color: $_gray-21;
 
-        font-size: 1.5em;
-        line-height: calc(29 / 15);
-        margin-bottom: -0.9rem;
-        margin-top: -0.9rem;
-        text-shadow: none;
-    }
+    font-size: 1.5em;
+    line-height: calc(29 / 15);
+    margin-bottom: -0.9rem;
+    margin-top: -0.9rem;
+    text-shadow: none;
+  }
 }
