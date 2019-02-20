@@ -60,7 +60,9 @@ module.exports = function(args) {
 
     metadata.isIndex = relativePathMetadata.isIndex;
 
-    metadata.isPublished = node.frontmatter.isPublished || true;
+    metadata.isPublished =
+      node.frontmatter.isPublished === undefined ||
+      node.frontmatter.isPublished === 'true';
 
     metadata.documentIdentifier = relativePathMetadata.documentIdentifier;
 

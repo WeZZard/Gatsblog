@@ -12,7 +12,7 @@ module.exports = args => {
 
     const metadata = new MDXMetadata(args);
 
-    if (isPreviewEnabled || metadata.isPublished) {
+    if (isPreviewEnabled || (!isPreviewEnabled && metadata.isPublished)) {
       switch (metadata.documentType) {
         case 'Post':
           createNodeForPost({
