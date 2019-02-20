@@ -33,7 +33,7 @@ const MDXMetadata = ({ items }) => {
 };
 
 MDXMetadata.propTypes = {
-  items: PropTypes.object.isRequired,
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default MDXMetadata;

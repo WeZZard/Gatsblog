@@ -77,7 +77,7 @@ const CC40Image = ({ options }) => (
 );
 
 CC40Image.propTypes = {
-  options: PropTypes.object.isRequired,
+  options: PropTypes.string.isRequired,
 };
 
 export default CC40Image;

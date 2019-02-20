@@ -4,13 +4,22 @@ import styles from './NavigationBar.module.scss';
 
 import { StaticQuery, graphql } from 'gatsby';
 import Link from './Link';
+import styled from 'styled-components';
+
+const Item = styled.li`
+  @media (max-width: 1280px) {
+    transition-delay: ${({ isOpen, index, count }) =>
+      isOpen ? 0.56 - index * (0.56 / count) : 0.2 + index * (0.56 / count)}s;
+    }
+  }
+`;
 
 const NavigationItem = ({ navigationItem, isSelected }) => {
   const { name, slug } = navigationItem;
 
   const className = isSelected
-    ? [styles.navigationItem, styles.selected].join(' ')
-    : styles.navigationItem;
+    ? [styles.navigationItemContents, styles.selected].join(' ')
+    : styles.navigationItemContents;
 
   const kind = isSelected ? 'navigationSelected' : 'navigationNormal';
 
@@ -30,7 +39,7 @@ NavigationItem.propTypes = {
 
 class NavigationBar extends React.Component {
   render() {
-    const { slug } = this.props;
+    const { isOpen, slug } = this.props;
 
     return (
       <StaticQuery
@@ -118,24 +127,33 @@ class NavigationBar extends React.Component {
                     navigationItem.slug
                   }/page-\\d+))$`;
             const slugRegex = new RegExp(slugPattern);
-            const isSelected = slug && slugRegex.exec(slug);
+            const isSelected = slug && slugRegex.exec(slug) !== null;
 
             return (
-              <li
-                className={styles.navigationListItem}
+              <Item
+                className={styles.item}
                 key={navigationItem.slug}
+                isOpen={isOpen}
               >
                 <NavigationItem
                   navigationItem={navigationItem}
                   isSelected={isSelected}
                 />
-              </li>
+              </Item>
             );
           });
 
+          const wrapperClassNames = [styles.flexWrapper];
+
+          if (isOpen) {
+            wrapperClassNames.push(styles.open);
+          }
+
+          const wrapperClassName = wrapperClassNames.join(' ');
+
           return (
-            <nav className={styles.navigationBar}>
-              <ol className={styles.navigationList}>{components}</ol>
+            <nav className={wrapperClassName}>
+              <ol className={styles.list}>{components}</ol>
             </nav>
           );
         }}
@@ -145,6 +163,7 @@ class NavigationBar extends React.Component {
 }
 
 NavigationBar.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
   slug: PropTypes.string,
 };
 

@@ -1,52 +1,72 @@
 @import '../styles/fonts';
 @import '../styles/colors';
+@import '../styles/animations';
 @import '../styles/responsive';
 
-.navigationBar {
-  color: $color-ui-nav-headline-normal;
+@mixin container-column {
+  align-items: stretch;
   display: flex;
   flex-direction: column;
-  text-align: right;
+
+  @media (max-width: $mobile-max) {
+    align-items: stretch;
+  }
+}
+
+.flexWrapper {
+  @include container-column;
+
+  color: $color-ui-nav-headline-normal;
+  flex-grow: 1;
+  flex-shrink: 0;
   text-transform: uppercase;
 
   @media (max-width: $mobile-max) {
     flex-direction: row;
+    flex-grow: 1;
     text-align: left;
   }
 
-  .navigationList {
-    align-items: stretch;
-    display: flex;
-    flex-direction: column;
+  .list {
+    @include container-column;
+
+    flex-grow: 1;
     list-style: none;
     margin: 0;
     padding: 0;
 
     @media (max-width: $mobile-max) {
-      align-items: baseline;
-      flex-direction: row;
+
     }
 
-    .navigationListItem {
+    .item {
       display: flex;
-      flex-direction: row-reverse;
+      flex-direction: row;
+      justify-content: flex-end;
       margin-bottom: 3.4rem;
 
       @media (max-width: $mobile-max) {
-        flex-direction: row;
-        margin-bottom: 0;
-        margin-right: 1.3rem;
-
-        &:last-child {
-          margin-bottom: 0;
-        }
+        border-bottom: solid 1px $_gray-21;
+        justify-content: flex-start;
+        margin: 0;
+        margin-left: calc(2.1em + env(safe-area-inset-left));
+        margin-right: calc(2.1em + env(safe-area-inset-right));
+        opacity: 0;
+        padding-bottom: 2.1rem;
+        padding-top: 2.1rem;
+        transform: scale(1.15) translateY(-30px);
+        transition: transform 0.5s $cubic, opacity 0.6s $cubic;
       }
 
       &:last-child {
         margin-bottom: 0;
+
+        @media (max-width: $mobile-max) {
+          margin-bottom: 2.1rem;
+        }
       }
 
-      .navigationItem {
+      .navigationItemContents {
         align-items: baseline;
         display: flex;
         flex-direction: row;
@@ -57,6 +77,18 @@
         margin-top: -0.8rem;
         text-shadow: 0 2px 4px $color-ui-nav-headline-shadow;
 
+        @media (max-width: $mobile-max) {
+          flex-grow: 1;
+          font-weight: 200;
+          text-shadow: none;
+        }
+
+        a {
+          @media (max-width: $mobile-max) {
+            flex-grow: 1;
+          }
+        }
+
         a::after {
           display: inline-block;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
@@ -64,18 +96,21 @@
           height: 2.1rem;
           margin-left: 2.1rem;
           width: 0.3rem;
-        }
 
-        @media (max-width: $mobile-max) {
-          font-size: 1.5em;
-          line-height: 1;
-          margin-bottom: 0;
-          margin-top: 0;
-          text-shadow: none;
-
-          a::after {
+          @media (max-width: $mobile-max) {
             content: none;
           }
+        }
+      }
+    }
+  }
+
+  &.open {
+    .list {
+      .item {
+        @media (max-width: $mobile-max) {
+          opacity: 1;
+          transform: scale(1) translateY(0);
         }
       }
     }

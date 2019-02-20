@@ -31,5 +31,5 @@ Taxonomy.propTypes = {
   className: PropTypes.string,
   kind: PropTypes.string,
   name: PropTypes.string,
-  taxonomies: PropTypes.arrayOf(PropTypes.string),
+  taxonomies: PropTypes.arrayOf(PropTypes.object),
 };

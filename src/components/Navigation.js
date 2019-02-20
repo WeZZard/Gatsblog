@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Navigation.module.scss';
+import MediaQuery from 'react-responsive';
 
 import TableOfContents from './TableOfContents';
 import NavigationBar from './NavigationBar';
 import TocButton from './TocButton';
+import NavButton from './NavButton';
+import SiteTitle from './SiteTitle';
 
 import { graphql, StaticQuery } from 'gatsby';
 
@@ -12,18 +15,14 @@ class Navigation extends React.Component {
   constructor(props) {
     super(props);
     this.toggleToc = this.toggleToc.bind(this);
+    this.toggleNav = this.toggleNav.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
-    this.tocItemOnClick = this.tocItemOnClick.bind(this);
+    this.navItemOnClick = this.navItemOnClick.bind(this);
     this.state = {
-      isTocOpen: false,
+      isTocSelected: false,
+      isNavSelected: false,
       pageYOffset: 0,
     };
-  }
-
-  toggleToc() {
-    const isTocOpen = this.state.isTocOpen;
-    const pageYOffset = this.state.pageYOffset;
-    this.setState({ isTocOpen: !isTocOpen, pageYOffset });
   }
 
   componentDidMount() {
@@ -34,32 +33,57 @@ class Navigation extends React.Component {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
+  toggleNav() {
+    const isNavSelected = this.state.isNavSelected;
+    this.setState({
+      ...this.state,
+      isNavSelected: !isNavSelected,
+    });
+  }
+
+  toggleToc() {
+    const isTocSelected = this.state.isTocSelected;
+    this.setState({
+      ...this.state,
+      isTocSelected: !isTocSelected,
+    });
+  }
+
   handleScroll() {
-    const isTocOpen = this.state.isTocOpen;
-    const newState = { isTocOpen, pageYOffset: window.pageYOffset };
+    const isTocSelected = this.state.isTocSelected;
+    const newState = { isTocSelected, pageYOffset: window.pageYOffset };
     this.setState(newState);
   }
 
-  tocItemOnClick() {
-    const isTocOpen = this.state.isTocOpen;
-    const pageYOffset = this.state.pageYOffset;
-    const newState = { isTocOpen: !isTocOpen, pageYOffset };
-    this.setState(newState);
+  navItemOnClick() {
+    this.setState({
+      ...this.state,
+      isTocSelected: false,
+      isNavSelected: false,
+    });
   }
 
   render() {
     const { slug, headings, errorCode } = this.props;
 
-    const { isTocOpen, pageYOffset } = this.state;
+    const { isTocSelected, isNavSelected, pageYOffset } = this.state;
 
-    let navigationClassNames = [styles.navigation];
+    let navigationClassNames = [styles.flexWrapper];
 
-    if (isTocOpen) {
-      navigationClassNames.push(styles.tocOpen);
-    } else {
-      if (pageYOffset > 0) {
-        navigationClassNames.push(styles.bordered);
-      }
+    if (isTocSelected || isNavSelected) {
+      navigationClassNames.push(styles.isButtonSelected);
+    }
+
+    if (isTocSelected) {
+      navigationClassNames.push(styles.isTocButtonSelected);
+    }
+
+    if (isNavSelected) {
+      navigationClassNames.push(styles.isNavButtonSelected);
+    }
+
+    if (pageYOffset > 0) {
+      navigationClassNames.push(styles.bordered);
     }
 
     if (errorCode === 404) {
@@ -74,15 +98,29 @@ class Navigation extends React.Component {
       <div className={styles.tableOfContents}>
         <TableOfContents
           headings={headings}
-          tocItemOnClick={this.tocItemOnClick}
-          isOpen={isTocOpen}
+          tocItemOnClick={this.navItemOnClick}
+          isOpen={isTocSelected}
         />
       </div>
     ) : null;
 
-    const tocButton = hasTableOfContents ? (
-      <TocButton onClick={this.toggleToc} isOpen={isTocOpen} />
-    ) : null;
+    const tocButton = (
+      <MediaQuery query="(max-width: 960px)">
+        <div className={styles.navButton}>
+          <NavButton onClick={this.toggleNav} isSelected={isNavSelected} />
+        </div>
+      </MediaQuery>
+    );
+
+    const navButton = (
+      <MediaQuery query="(max-width: 960px)">
+        <div className={styles.tocButton}>
+          {hasTableOfContents ? (
+            <TocButton onClick={this.toggleToc} isSelected={isTocSelected} />
+          ) : null}
+        </div>
+      </MediaQuery>
+    );
 
     return (
       <StaticQuery
@@ -94,14 +132,15 @@ class Navigation extends React.Component {
         }) => {
           return (
             <div className={navigationClassName}>
-              <div className={styles.siteTitle}>
-                <label className={styles.siteTitleLabel}>{title}</label>
-              </div>
-              <div className={styles.navigationBarWrapper}>
-                <div className={styles.navigationBar}>
-                  <NavigationBar slug={slug} />
-                </div>
+              <div className={styles.menu}>
                 {tocButton}
+                <div className={styles.siteTitle}>
+                  <SiteTitle title={title} />
+                </div>
+                {navButton}
+              </div>
+              <div className={styles.navigation}>
+                <NavigationBar isOpen={isNavSelected} slug={slug} />
               </div>
               {tableOfContentsComponent}
             </div>

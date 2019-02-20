@@ -11,8 +11,6 @@
     cursor: pointer;
     display: inline-block;
     height: 44px;
-    margin-left: 2.1rem;
-    margin-right: -1.5rem;
     position: relative;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
@@ -73,16 +71,16 @@
       }
     }
 
-    &.open {
+    &.selected {
       .leftArrow {
         left: 22px;
 
         .topLine {
-          transform: translateX(-8.75px) translateY(22px) rotate(45deg);
+          transform: translateX(-9px) translateY(22px) rotate(45deg);
         }
 
         .bottomLine {
-          transform: translateX(-8.75px) translateY(22px) rotate(135deg);
+          transform: translateX(-9px) translateY(22px) rotate(135deg);
         }
       }
 
@@ -90,11 +88,11 @@
         right: 22px;
 
         .topLine {
-          transform: translateX(8.75px) translateY(22px) rotate(-45deg);
+          transform: translateX(9px) translateY(22px) rotate(-45deg);
         }
 
         .bottomLine {
-          transform: translateX(8.75px) translateY(22px) rotate(-135deg);
+          transform: translateX(9px) translateY(22px) rotate(-135deg);
         }
       }
     }

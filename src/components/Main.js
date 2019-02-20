@@ -37,10 +37,10 @@ const Main = ({
 
 Main.propTypes = {
   description: PropTypes.string,
-  headings: PropTypes.object,
+  headings: PropTypes.arrayOf(PropTypes.object),
   keywords: PropTypes.arrayOf(PropTypes.string),
   lang: PropTypes.string,
-  sections: PropTypes.arrayOf(PropTypes.node),
+  sections: PropTypes.any,
   slug: PropTypes.string,
   title: PropTypes.string,
 };

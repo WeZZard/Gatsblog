@@ -10,7 +10,7 @@ import Link from './Link';
 const Item = styled.li`
   @media (max-width: 1280px) {
     transition-delay: ${({ isOpen, index, count }) =>
-      isOpen ? 0.56 - index * (0.56 / count) : 0.56 + index * (0.2 / count)}s;
+      isOpen ? 0.56 - index * (0.56 / count) : 0.2 + index * (0.56 / count)}s;
   }
 `;
 
@@ -123,9 +123,9 @@ class TableOfContents extends React.Component {
 }
 
 TableOfContents.propTypes = {
-  headings: PropTypes.object.isRequired,
-  isOpen: PropTypes.func.isRequired,
-  tocItemOnClick: PropTypes.bool.isRequired,
+  headings: PropTypes.arrayOf(PropTypes.object).isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  tocItemOnClick: PropTypes.func.isRequired,
 };
 
 export default TableOfContents;

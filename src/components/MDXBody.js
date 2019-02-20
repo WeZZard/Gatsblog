@@ -90,7 +90,7 @@ const input = props => {
 };
 input.displayName = 'input';
 input.propTypes = {
-  type: PropTypes.object,
+  type: PropTypes.string,
 };
 
 const div = props => {
@@ -101,7 +101,7 @@ const div = props => {
 };
 input.displayName = 'div';
 div.propTypes = {
-  className: PropTypes.object,
+  className: PropTypes.string,
 };
 
 const components = {
@@ -138,7 +138,7 @@ const MDXBody = ({ textStyle, code }) => (
 );
 
 MDXBody.propTypes = {
-  code: PropTypes.string.isRequired,
+  code: PropTypes.object.isRequired,
   textStyle: PropTypes.string.isRequired,
 };
 

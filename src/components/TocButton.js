@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './TocButton.module.scss';
 
-const TocButton = ({ onClick, isOpen }) => (
+const TocButton = ({ onClick, isSelected }) => (
   <div
-    className={[styles.button, isOpen ? styles.open : null]
+    className={[styles.button, isSelected ? styles.selected : null]
       .filter(_ => _)
       .join(' ')}
     onClick={onClick}
@@ -21,8 +21,8 @@ const TocButton = ({ onClick, isOpen }) => (
 );
 
 TocButton.propTypes = {
-  onClick: PropTypes.function,
-  isOpen: PropTypes.bool,
+  onClick: PropTypes.func,
+  isSelected: PropTypes.bool,
 };
 
 TocButton.displayName = 'TocButton';

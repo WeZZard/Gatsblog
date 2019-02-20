@@ -33,7 +33,7 @@ const Contents = ({ sections }) => {
 };
 
 Contents.propTypes = {
-  sections: PropTypes.arrayOf(PropTypes.node),
+  sections: PropTypes.any,
 };
 
 export default Contents;

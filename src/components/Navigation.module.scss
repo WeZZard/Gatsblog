@@ -20,7 +20,7 @@
   flex-direction: row;
 }
 
-.navigation {
+.flexWrapper {
   @include container-column-stretch;
 
   height: 100%;
@@ -33,42 +33,15 @@
     height: 44px;
     overflow: hidden;
     transition: all 0.3s ease-in, background 0.5s ease-in;
-    width: 100%;
-    z-index: 999;
+    width: 100vw;
     padding-top: env(safe-area-inset-top);
+    z-index: 999;
   }
 
-  .siteTitle {
-    @include container-column-stretch;
-
-    flex-grow: 0;
-    flex-shrink: 0;
-    margin-bottom: 0;
-    margin-left: 3.4rem;
-    margin-right: 3.4rem;
-    margin-top: 3.4rem;
-
-    .siteTitleLabel {
-      color: $color-ui-nav-headline-normal;
-
-      font-size: 3em;
-      font-weight: 400;
-      line-height: 1.13;
-      margin-bottom: -0.4rem;
-      margin-top: -0.8rem;
-      text-align: right;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-      text-transform: uppercase;
-    }
-
-    @media (max-width: $mobile-max) {
-      display: none;
-    }
-  }
-
-  .navigationBarWrapper {
-    @include container-column-stretch;
-
+  .menu {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
     flex-grow: 0;
     flex-shrink: 0;
     margin-bottom: 0;
@@ -77,42 +50,81 @@
     margin-top: 3.4rem;
 
     @media (max-width: $mobile-max) {
-      @include container-row-center;
-
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
       height: 44px;
+      max-width: 100vw;
       margin: 0;
       margin-left: calc(2.1rem + env(safe-area-inset-left));
       margin-right: calc(2.1rem + env(safe-area-inset-right));
-      z-index: 999;
     }
 
-    .navigationBar {
-      @include container-column-stretch;
+    .navButton {
+      display: none;
+      width: 44px;
+      height: 44px;
 
       @media (max-width: $mobile-max) {
-        @include container-row-center;
+        display: flex;
+        margin-left: -1.5rem;
+        margin-right: 2.1rem;
+        transition: all 0.3s ease-in;
+        z-index: 999;
+      }
+    }
 
-        flex-grow: 1;
-        height: 44px;
-        max-width: calc(100% - 2.1em * 2);
-        opacity: 1;
-        -ms-overflow-style: none;
-        overflow-x: scroll;
-        -webkit-overflow-scrolling: touch;
-        transform: scale(1) translateY(0);
-        transition: transform 0.5s $cubic, opacity 0.6s $cubic;
+    .siteTitle {
+      display: flex;
 
-        ::-webkit-scrollbar {
-          display: none;
-        }
+      @media (max-width: $mobile-max) {
+        transition: all 0.3s ease-in;
+      }
+    }
+
+    .tocButton {
+      display: none;
+      width: 44px;
+      height: 44px;
+
+      @media (max-width: $mobile-max) {
+        display: flex;
+        margin-left: 2.1rem;
+        margin-right: -1.5rem;
+        transition: all 0.3s ease-in;
+        z-index: 999;
       }
     }
   }
 
+  .navigation {
+    @include container-row-stretch;
+
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-bottom: 0;
+    margin-left: 3.4rem;
+    margin-right: 3.4rem;
+    margin-top: 3.4rem;
+
+    @media (max-width: $mobile-max) {
+      margin: 0;
+      margin-top: 44px;
+      opacity: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      transition: all 0.3s ease-in;
+    }
+  }
+
   .tableOfContents {
-    align-items: stretch;
-    display: flex;
-    flex-direction: row;
+    @include container-row-stretch;
+
     flex-grow: 1;
     justify-content: flex-end;
     margin-bottom: 6.3rem;
@@ -125,31 +137,76 @@
     }
 
     @media (max-width: $mobile-max) {
-      flex-grow: 1;
       margin: 0;
-      margin-top: calc(-44px);
       opacity: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
       transition: all 0.3s ease-in;
     }
   }
 
-  &.tocOpen {
+  &.isButtonSelected {
     @media (max-width: $mobile-max) {
-      height: 100%;
+      height: 100vh;
       transition: all 0.3s ease-in, background 0.5s ease-in;
     }
 
-    .navigationBarWrapper {
-      .navigationBar {
+    .siteTitle {
+      opacity: 0;
+      transform: scale(1.15) translateY(-30px);
+      transition: transform 0.5s $cubic, opacity 0.6s $cubic;
+    }
+  }
+
+  &.isNavButtonSelected {
+    .menu {
+      .tocButton {
         opacity: 0;
-        transform: scale(1.15) translateY(-30px);
-        transition: transform 0.5s $cubic, opacity 0.6s $cubic;
+        transform: translateX(44px);
+        transition: all 0.3s ease-in;
       }
     }
 
     .tableOfContents {
+      display: none;
+      opacity: 0;
+      transition: all 0.3s ease-in;
+      pointer-events: none;
+    }
+
+    .navigation {
+      display: flex;
       opacity: 1;
       transition: all 0.3s ease-in;
+      pointer-events: auto;
+    }
+  }
+
+  &.isTocButtonSelected {
+    .menu {
+      .navButton {
+        opacity: 0;
+        transform: translateX(-44px);
+        transition: all 0.3s ease-in;
+      }
+    }
+
+    .tableOfContents {
+      display: flex;
+      opacity: 1;
+      transition: all 0.3s ease-in;
+      pointer-events: auto;
+    }
+
+    .navigation {
+      display: none;
+      opacity: 0;
+      transition: all 0.3s ease-in;
+      pointer-events: none;
     }
   }
 
@@ -168,7 +225,7 @@
 @supports (
   (-webkit-backdrop-filter: blur(1.8em)) or (backdrop-filter: blur(2em))
 ) {
-  .navigation {
+  .flexWrapper {
     @media (max-width: $mobile-max) {
       -webkit-backdrop-filter: saturate(180%) blur(20px);
       backdrop-filter: saturate(180%) blur(20px);
