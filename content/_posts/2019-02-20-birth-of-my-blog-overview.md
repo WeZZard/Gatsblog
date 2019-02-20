@@ -15,4 +15,8 @@ industrial design background, into modern frontend tech stack.
 
 # How Does This Blog Work
 
-## Test
+## Statically Deployed
+
+## Live Preview
+
+## Rhythmic Design

@@ -20,16 +20,14 @@ class TableOfContents extends React.Component {
 
     const items = [];
 
-    const initialIndex = headings.length > 0 ? headings[0].depth - 1 : 0;
-
-    const indicesStack = [initialIndex];
+    const indicesStack = [];
 
     function fillStackGap(depth) {
       while (indicesStack.length < depth) {
-        indicesStack.push(0);
+        indicesStack.push(1);
       }
       for (let i = depth; i < indicesStack.length; i++) {
-        indicesStack[i] = 0;
+        indicesStack[i] = 1;
       }
     }
 
@@ -43,12 +41,21 @@ class TableOfContents extends React.Component {
       return indicesStack.slice(0, depth);
     }
 
+    let previousDepth = 0;
+
     headings.forEach(item => {
       const { value, depth } = item;
+
       fillStackGap(depth);
-      increaseStack(depth);
+
+      if (previousDepth === depth || depth + 1 <= previousDepth) {
+        increaseStack(depth);
+      }
+
       const indices = snapshotStack(depth);
       items.push({ title: value, indices });
+
+      previousDepth = depth;
     });
 
     while (
