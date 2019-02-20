@@ -3,35 +3,34 @@
 @import '../styles/responsive';
 
 .license {
-    align-items: center;
-    display: flex;
-    flex-direction: row;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+
+  @media (max-width: $mobile-max) {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .image {
+    margin-right: 1.3rem;
 
     @media (max-width: $mobile-max) {
-        align-items: flex-start;
-        flex-direction: column;
+      order: 1;
     }
+  }
 
-    .image {
-        margin-right: 1.3rem;
+  .text {
+    color: $color-content-footer-text;
+    font-family: $font-text-monospaced;
+    font-size: 1.1em;
+    font-weight: 400;
+    line-height: 1.18;
+    text-transform: uppercase;
 
-        @media (max-width: $mobile-max) {
-            order: 1;
-        }
+    @media (max-width: $mobile-max) {
+      margin-bottom: 2.1rem;
+      order: 0;
     }
-
-    .text {
-        color: $color-content-footer-text;
-        font-family: $font-text-monospaced;
-        font-size: 1.1em;
-        font-weight: 400;
-        line-height: 1.18;
-        text-transform: uppercase;
-
-        @media (max-width: $mobile-max) {
-            margin-bottom: 2.1rem;
-            order: 0;
-        }
-    }
-
+  }
 }

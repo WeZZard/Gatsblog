@@ -1,17 +1,17 @@
 @mixin container-row {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .tags {
-    @include container-row;
+  @include container-row;
 
-    align-items: baseline;
-    margin-bottom: 5.5rem;
+  align-items: baseline;
+  margin-bottom: 5.5rem;
 }
 
 .license {
-    @include container-row;
+  @include container-row;
 
-    align-items: center;
+  align-items: center;
 }

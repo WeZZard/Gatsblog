@@ -1,63 +1,63 @@
 @import '../styles/colors';
 
 @mixin container-row-baseline {
-    align-items: baseline;
-    display: flex;
-    flex-direction: row;
+  align-items: baseline;
+  display: flex;
+  flex-direction: row;
 }
 
 @mixin text {
-    color: $color-ui-caption-label;
-    font-size: 1.1em;
-    font-weight: 500;
-    line-height: 1;
-    margin-bottom: -0.2rem;
-    margin-top: -0.1rem;
-    text-transform: uppercase;
+  color: $color-ui-caption-label;
+  font-size: 1.1em;
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: -0.2rem;
+  margin-top: -0.1rem;
+  text-transform: uppercase;
 }
 
 .taxonomy {
+  @include container-row-baseline;
+
+  .taxonomyName {
     @include container-row-baseline;
 
-    .taxonomyName {
-        @include container-row-baseline;
-
-        .taxonomyNameContent {
-            @include text;
-        }
-
-        &::after {
-            background: $color-ui-caption-separator;
-            content: "";
-            height: 0.8rem;
-            margin-left: 0.5rem;
-            margin-right: 0.5rem;
-            width: 0.1rem;
-            vertical-align: baseline;
-        }
+    .taxonomyNameContent {
+      @include text;
     }
 
-    .taxonomyItemList {
-        @include container-row-baseline;
-
-        list-style: none;
-        margin: 0;
-        padding: 0;
-
-        .taxonomyItem {
-            @include container-row-baseline;
-
-            margin: 0;
-            margin-right: 0.8rem;
-            padding: 0;
-
-            &:last-child {
-                margin-right: 0;
-            }
-
-            .taxonomyItemContent {
-                @include text;
-            }
-        }
+    &::after {
+      background: $color-ui-caption-separator;
+      content: '';
+      height: 0.8rem;
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
+      width: 0.1rem;
+      vertical-align: baseline;
     }
+  }
+
+  .taxonomyItemList {
+    @include container-row-baseline;
+
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    .taxonomyItem {
+      @include container-row-baseline;
+
+      margin: 0;
+      margin-right: 0.8rem;
+      padding: 0;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      .taxonomyItemContent {
+        @include text;
+      }
+    }
+  }
 }

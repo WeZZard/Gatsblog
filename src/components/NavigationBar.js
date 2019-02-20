@@ -1,144 +1,169 @@
-import React from 'react'
-import styles from './NavigationBar.module.scss'
+import React from 'react';
+import styles from './NavigationBar.module.scss';
 
-import { StaticQuery, graphql } from 'gatsby'
-import Link from './Link'
+import { StaticQuery, graphql } from 'gatsby';
+import Link from './Link';
 
 const NavigationItem = ({ navigationItem, isSelected }) => {
-    const { name, slug } = navigationItem;
+  const { name, slug } = navigationItem;
 
-    const className = isSelected
-        ? [styles.navigationItem, styles.selected].join(' ')
-        : styles.navigationItem;
+  const className = isSelected
+    ? [styles.navigationItem, styles.selected].join(' ')
+    : styles.navigationItem;
 
-    const kind = isSelected ? 'navigationSelected' : 'navigationNormal';
+  const kind = isSelected ? 'navigationSelected' : 'navigationNormal';
 
-    return <span className={className}>
-        <Link kind={kind} to={slug}>{name}</Link>
+  return (
+    <span className={className}>
+      <Link kind={kind} to={slug}>
+        {name}
+      </Link>
     </span>
+  );
 };
 
 class NavigationBar extends React.Component {
-    render() {
-        const { slug } = this.props;
+  render() {
+    const { slug } = this.props;
 
-        return <StaticQuery
-            query={_navigationQuery}
+    return (
+      <StaticQuery
+        query={_navigationQuery}
+        render={data => {
+          const systemNavigationItems = [{ name: `Home`, slug: `/` }];
 
-            render={ data => {
-                const systemNavigationItems = [
-                    {name: `Home`, slug: `/`}
-                ];
+          const {
+            config: {
+              navigation: {
+                createsNavigationItemsForCategories,
+                overwritingCategoryNavigationItems,
+                customNavigationItems,
+              },
+            },
+            allCategory: { edges: categories },
+          } = data;
 
+          let overwrittenCategoryNavigationItems = [];
+
+          if (createsNavigationItemsForCategories) {
+            let systemCategoryNavigationItems = categories.map(category => ({
+              name: category.node.name,
+              slug: category.node.slug,
+              weight: 0,
+            }));
+
+            overwritingCategoryNavigationItems.forEach(
+              overwritingCategoryNavigationItem => {
                 const {
-                    config: {
-                        navigation: {
-                            createsNavigationItemsForCategories,
-                            overwritingCategoryNavigationItems,
-                            customNavigationItems,
-                        }
-                    },
-                    allCategory: {
-                        edges: categories
-                    }
-                } = data;
+                  name,
+                  weight,
+                  isVisible,
+                } = overwritingCategoryNavigationItem;
 
-                let overwrittenCategoryNavigationItems = [];
+                if (isVisible) {
+                  const candidateOverwrittenCategoryNavigationItems = systemCategoryNavigationItems.filter(
+                    item => item.name === name,
+                  );
 
-                if (createsNavigationItemsForCategories) {
-                    let systemCategoryNavigationItems = categories.map(category => ({name: category.node.name, slug: category.node.slug, weight: 0}));
-
-                    overwritingCategoryNavigationItems.forEach(overwritingCategoryNavigationItem => {
-                        const { name, weight, isVisible } = overwritingCategoryNavigationItem;
-
-                        if (isVisible) {
-                            const candidateOverwrittenCategoryNavigationItems = systemCategoryNavigationItems.filter(item => item.name === name);
-
-                            if (candidateOverwrittenCategoryNavigationItems.length === 1) {
-                                const overwrittenCategoryNavigationItem = candidateOverwrittenCategoryNavigationItems[0];
-                                overwrittenCategoryNavigationItem.weight = weight;
-                                overwrittenCategoryNavigationItems.push(overwrittenCategoryNavigationItem);
-                            } else if (candidateOverwrittenCategoryNavigationItems.length === 0) {
-                                // do nothing
-                            } else {
-                                throw `Multiple category navigation item with the same name found.`
-                            }
-                        }
-                    });
+                  if (
+                    candidateOverwrittenCategoryNavigationItems.length === 1
+                  ) {
+                    const overwrittenCategoryNavigationItem =
+                      candidateOverwrittenCategoryNavigationItems[0];
+                    overwrittenCategoryNavigationItem.weight = weight;
+                    overwrittenCategoryNavigationItems.push(
+                      overwrittenCategoryNavigationItem,
+                    );
+                  } else if (
+                    candidateOverwrittenCategoryNavigationItems.length === 0
+                  ) {
+                    // do nothing
+                  } else {
+                    throw `Multiple category navigation item with the same name found.`;
+                  }
                 }
+              },
+            );
+          }
 
-                const userNavigationItems = [
-                    ...overwrittenCategoryNavigationItems,
-                    ...customNavigationItems,
-                ];
+          const userNavigationItems = [
+            ...overwrittenCategoryNavigationItems,
+            ...customNavigationItems,
+          ];
 
-                userNavigationItems.sort((a, b) => {
-                    if (a.weight === b.weight) {
-                        return a > b
-                    } else {
-                        return a.weight < b.weight
-                    }
-                });
+          userNavigationItems.sort((a, b) => {
+            if (a.weight === b.weight) {
+              return a > b;
+            } else {
+              return a.weight < b.weight;
+            }
+          });
 
-                const navigationItems = [
-                    ...systemNavigationItems,
-                    ...userNavigationItems,
-                ];
+          const navigationItems = [
+            ...systemNavigationItems,
+            ...userNavigationItems,
+          ];
 
-                const components = navigationItems.map((navigationItem) => {
-                    const slugPattern = navigationItem.slug === '/'
-                        ? `^((${navigationItem.slug})|(/page-\\d+))$`
-                        : `^((${navigationItem.slug})|(${navigationItem.slug}/page-\\d+))$`;
-                    const slugRegex = new RegExp(slugPattern);
-                    const isSelected = slug && slugRegex.exec(slug);
+          const components = navigationItems.map(navigationItem => {
+            const slugPattern =
+              navigationItem.slug === '/'
+                ? `^((${navigationItem.slug})|(/page-\\d+))$`
+                : `^((${navigationItem.slug})|(${
+                    navigationItem.slug
+                  }/page-\\d+))$`;
+            const slugRegex = new RegExp(slugPattern);
+            const isSelected = slug && slugRegex.exec(slug);
 
-                    return <li
-                        className={styles.navigationListItem}
-                        key={navigationItem.slug}
-                    >
-                        <NavigationItem
-                            navigationItem={navigationItem}
-                            isSelected={isSelected}
-                        />
-                    </li>
-                });
+            return (
+              <li
+                className={styles.navigationListItem}
+                key={navigationItem.slug}
+              >
+                <NavigationItem
+                  navigationItem={navigationItem}
+                  isSelected={isSelected}
+                />
+              </li>
+            );
+          });
 
-                return <nav className={styles.navigationBar}>
-                    <ol className={styles.navigationList}>
-                        {components}
-                    </ol>
-                </nav>
-            }}
-        />;
-    }
+          return (
+            <nav className={styles.navigationBar}>
+              <ol className={styles.navigationList}>{components}</ol>
+            </nav>
+          );
+        }}
+      />
+    );
+  }
 }
 
-export default NavigationBar
+export default NavigationBar;
 
 const _navigationQuery = graphql`
-    query NavigationBarQuery {
-        config: configYaml {
-            navigation {
-                createsNavigationItemsForCategories
-                overwritingCategoryNavigationItems {
-                    name
-                    weight
-                    isVisible
-                }
-                customNavigationItems {
-                    name
-                    slug
-                    weight
-                }
-            }
+  query NavigationBarQuery {
+    config: configYaml {
+      navigation {
+        createsNavigationItemsForCategories
+        overwritingCategoryNavigationItems {
+          name
+          weight
+          isVisible
         }
-        allCategory {
-            edges {
-                node {
-                    name
-                    slug
-                }
-            }
+        customNavigationItems {
+          name
+          slug
+          weight
         }
+      }
     }
+    allCategory {
+      edges {
+        node {
+          name
+          slug
+        }
+      }
+    }
+  }
 `;

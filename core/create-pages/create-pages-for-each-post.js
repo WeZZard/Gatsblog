@@ -1,67 +1,72 @@
 const path = require('path');
+const debug = require('debug');
 const Template = path.resolve('src/templates/Post.js');
 
-module.exports = async (args) => {
-    const { createPagesArgs } = args;
+module.exports = async args => {
+  const { createPagesArgs } = args;
 
-    const { graphql, actions } = createPagesArgs;
-    const { createPage } = actions;
+  const { graphql, actions } = createPagesArgs;
+  const { createPage } = actions;
 
-    const result = await graphql(`
-        {
-            allPost(sort: { fields: [createdTime], order: DESC }) {
-                edges {
-                    node {
-                        id
-                        slug
-                        lang
-                        isLocalized
-                    }
-                }
-            }
+  const result = await graphql(`
+    {
+      allPost(sort: { fields: [createdTime], order: DESC }) {
+        edges {
+          node {
+            id
+            slug
+            lang
+            isLocalized
+          }
         }
-    `);
-
-    if (result.errors) {
-        throw result.errors
+      }
     }
+  `);
 
-    const { data: { allPost } } = result;
+  if (result.errors) {
+    throw result.errors;
+  }
 
-    const { edges: posts } = allPost || { edges: [] };
+  const {
+    data: { allPost },
+  } = result;
 
-    await Promise.all(
-        posts.map( async (postNode, index) => {
-            const earlierPost = (index + 1 < posts.length) ? posts[index + 1] : null;
+  const { edges: posts } = allPost || { edges: [] };
 
-            const laterPost = (index - 1 >= 0) ? posts[index - 1] : null;
+  await Promise.all(
+    posts.map(async (postNode, index) => {
+      const earlierPost = index + 1 < posts.length ? posts[index + 1] : null;
 
-            const localeSlug = postNode.node.isLocalized
-                ? `/${postNode.node.lang}`
-                : '';
+      const laterPost = index - 1 >= 0 ? posts[index - 1] : null;
 
-            const originalPath = [localeSlug, postNode.node.slug].filter(_ => _).join('');
+      const localeSlug = postNode.node.isLocalized
+        ? `/${postNode.node.lang}`
+        : '';
 
-            let paths = [originalPath];
+      const originalPath = [localeSlug, postNode.node.slug]
+        .filter(_ => _)
+        .join('');
 
-            if (!postNode.node.isLocalized && postNode.node.lang) {
-                const localizedPath = `/${postNode.node.lang}/${postNode.node.slug}`;
-                paths.push(localizedPath);
-            }
+      let paths = [originalPath];
 
-            paths.forEach(path => {
-                console.log(`Create page for post: ${path}.`);
+      if (!postNode.node.isLocalized && postNode.node.lang) {
+        const localizedPath = `/${postNode.node.lang}/${postNode.node.slug}`;
+        paths.push(localizedPath);
+      }
 
-                createPage({
-                    path: path,
-                    component: Template,
-                    context: {
-                        postId: postNode.node.id,
-                        earlierPostId: (earlierPost && earlierPost.node.id) || null,
-                        laterPostId: (laterPost && laterPost.node.id) || null,
-                    },
-                });
-            });
-        })
-    );
+      paths.forEach(path => {
+        debug(`Create page for post: ${path}.`);
+
+        createPage({
+          path: path,
+          component: Template,
+          context: {
+            postId: postNode.node.id,
+            earlierPostId: (earlierPost && earlierPost.node.id) || null,
+            laterPostId: (laterPost && laterPost.node.id) || null,
+          },
+        });
+      });
+    }),
+  );
 };

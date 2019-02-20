@@ -1,32 +1,32 @@
-import React from "react"
-import assert from 'assert'
-import styles from './MorePosts.module.scss'
+import React from 'react';
+import assert from 'assert';
+import styles from './MorePosts.module.scss';
 
-import MorePostItem from './MorePostItem'
+import MorePostItem from './MorePostItem';
 
 class MorePosts extends React.Component {
-    render() {
-        const { earlierPostExcerpt, laterPostExcerpt } = this.props;
+  render() {
+    const { earlierPostExcerpt, laterPostExcerpt } = this.props;
 
-        assert(earlierPostExcerpt || laterPostExcerpt);
+    assert(earlierPostExcerpt || laterPostExcerpt);
 
-        const morePostInfo = [
-            { item: laterPostExcerpt, title: 'Later Post' },
-            { item: earlierPostExcerpt, title: 'Earlier Post' },
-        ].filter(_ => _.item);
+    const morePostInfo = [
+      { item: laterPostExcerpt, title: 'Later Post' },
+      { item: earlierPostExcerpt, title: 'Earlier Post' },
+    ].filter(_ => _.item);
 
-        const components = morePostInfo.map(info =>
-            <div key={info.title} className={styles.morePostItem}>
-                <MorePostItem info={info}/>
-            </div>
-        );
+    const components = morePostInfo.map(info => (
+      <div key={info.title} className={styles.morePostItem}>
+        <MorePostItem info={info} />
+      </div>
+    ));
 
-        return <React.Fragment>
-            <div className={styles.morePosts}>
-                {components}
-            </div>
-        </React.Fragment>
-    }
+    return (
+      <React.Fragment>
+        <div className={styles.morePosts}>{components}</div>
+      </React.Fragment>
+    );
+  }
 }
 
-export default MorePosts
+export default MorePosts;

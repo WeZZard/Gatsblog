@@ -1,21 +1,19 @@
-import React from 'react'
-import styles from './Link.module.scss'
+import React from 'react';
+import styles from './Link.module.scss';
 
-export default (props) => {
-    const {
-        kind,
-        to: href,
-        className,
-    } = props;
+export default props => {
+  const { kind, to: href, className } = props;
 
-    const newProps = {...props};
-    delete newProps.kind;
-    delete newProps.to;
-    delete newProps.className;
+  const newProps = { ...props };
+  delete newProps.kind;
+  delete newProps.to;
+  delete newProps.className;
 
-    return <a
-        className={[styles[kind], className].join(' ')}
-        href={href}
-        {...newProps}
+  return (
+    <a
+      className={[styles[kind], className].join(' ')}
+      href={href}
+      {...newProps}
     />
-}
+  );
+};

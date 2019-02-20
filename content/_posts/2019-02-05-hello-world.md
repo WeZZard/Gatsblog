@@ -7,13 +7,13 @@ Hello, world!
 
 I haven't been writing blog posts for a long time. The reason why I had given
 up blogging is that currently there are no blog systems fulfill all my needs. I
-tried to get used to Medium. I love its reply system -- which guides people to 
+tried to get used to Medium. I love its reply system -- which guides people to
 write a new post instead of a simple comment -- actually this was what the world
 of blog used to be, but the render effects of code blocks sucks. Moreover, I'm a
 multi-linguist, I want to write both in Chinese and English at the same time,
 and sometimes Japanese and German. But the quality of Chinese character's render
-effects on Medium doesn't match those of Latin script or even Japanese Kana. 
-After 1 year of bearing such a torture of playing with mismatched product 
+effects on Medium doesn't match those of Latin script or even Japanese Kana.
+After 1 year of bearing such a torture of playing with mismatched product
 quality on Medium, finally I decided to implement my own.
 
 ## Jekyll and Abandoned
@@ -29,16 +29,16 @@ Traditional Chinese. You write less on the surface, but remember more and take
 more time to understand what you written under the surface.
 
 There are more historical details I can tell in between China and Japan about
-how simplification "took over" two countries, which one is the "motherland" of 
+how simplification "took over" two countries, which one is the "motherland" of
 Simplified Chinese and the other Ruby's.
 
 Japan got started to simplify the pronunciation system of Chinese characters
 (Kanji) in Meiji Restoration. Several decades later, 9 days after the foundation
 of the People's Republic of China, Japan announced the use of its new form of
 Chinese characters -- Shinjitai (literally means "new character form"), which
-is just another approach to simplify Traditional Chinese. 
+is just another approach to simplify Traditional Chinese.
 
-While Japan simplified the Chinese character's pronunciation system, it is 
+While Japan simplified the Chinese character's pronunciation system, it is
 impossible for China. For there are already tons of homophonic words in Chinese,
 whenever you are speaking Chinese or Japanese, the number of homophonic words
 would dramatically increase after you did whatever simplification to the
@@ -49,7 +49,7 @@ Chinese, there are no "fallback words". Thus we don't simplify the pronunciation
 system of our language.
 
 Thus the only simplification we did to our language is just the simplification
-to the form of characters. About ten years after the foundation of the People's 
+to the form of characters. About ten years after the foundation of the People's
 Republic of China, the central government announced to gradually replace the use
 of Traditional Chinese with Simplified Chinese.
 
@@ -66,7 +66,7 @@ Because I've been learning Rust for weeks when I decided to implement my own
 blog system, I also searched some blog frameworks written in Rust. Then I found
 Zola.
 
-Truth be told, Zola is a good book generator. Even you can use it to generate 
+Truth be told, Zola is a good book generator. Even you can use it to generate
 documentations and guides. But as a blog system, it fails.
 
 It was designed to be a single binary such that the extension of the system is
@@ -114,11 +114,11 @@ escapes backslash (/) escaped tokens (which means interprets valid escaped
 tokens likes "\n" into a real newline and invalid escaped tokens likes "\L" into
 "L"), the first thing I have to do is to get the framework stopped doing that.
 
-For the framework converts the MDX document into Markdown AST firstly, and then 
+For the framework converts the MDX document into Markdown AST firstly, and then
 into MDX AST, this mis-interpretation can be corrected after Markdown AST
 generation by inserting a guard backslash before each backslash in the Markdown
 AST. The principal behind this is simple: Since the JavaScript blindly escapes
-everything after a backslash, so just get that backslash escaped.  
+everything after a backslash, so just get that backslash escaped.
 
 You may wonder that there are also escaped characters in Markdown grammar, what
 happens to them when you blindly inserting a guard backslash before each existed
@@ -157,17 +157,16 @@ Currently this blog implements
 - RSS feed
 
 But this is not the end. In the next stage the project would add support to:
-  
+
 - Webmention
-  
+
 - "Shortcode" for major video sites
 
 And the site would finally implement a beautiful render effect for Chinese
 character and Latin script mixed documents which enables me to post in languages
 I intentionally want to.
 
-Since I decided to build this site in a couple of weeks, I didn't ship a very 
+Since I decided to build this site in a couple of weeks, I didn't ship a very
 modern design. The appearance of the site is quit old school. But I have already
 got a new design. Since refreshing the appearance of the site needs a lot of
 time, it might be taken after half or one year.
- 

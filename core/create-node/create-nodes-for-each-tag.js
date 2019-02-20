@@ -1,51 +1,49 @@
 const createNodeForTag = require('./create-node-for-tag');
 
-module.exports = async (args) => {
-    const {
-        actions,
-        getNodesByType,
-        createNodeId,
-        createContentDigest,
-        graphql,
-    } = args;
+module.exports = async args => {
+  const {
+    actions,
+    getNodesByType,
+    createNodeId,
+    createContentDigest,
+    graphql,
+  } = args;
 
-    const { createNode } = actions;
+  const { createNode } = actions;
 
-    const result = await graphql(`
-        {
-            allPost {
-                edges {
-                    node {
-                        tags
-                    }
-                }
-            }
+  const result = await graphql(`
+    {
+      allPost {
+        edges {
+          node {
+            tags
+          }
         }
-    `);
-
-    if (result.errors) {
-        return [];
+      }
     }
+  `);
 
-    const {
-        data: {
-            allPost: {
-                edges: posts,
-            },
-        },
-    } = result;
+  if (result.errors) {
+    return [];
+  }
 
-    const tags = (posts || [])
-        .map(post => post.node.tags)
-        .flatMap(_ => _);
+  const {
+    data: {
+      allPost: { edges: posts },
+    },
+  } = result;
 
-    const nonDuplicateTags = new Set(tags);
+  const tags = (posts || []).map(post => post.node.tags).flatMap(_ => _);
 
-    return [...nonDuplicateTags].map(tag => createNodeForTag({
-        tag: tag,
-        getNodesByType: getNodesByType,
-        createNode: createNode,
-        createNodeId: createNodeId,
-        createContentDigest: createContentDigest
-    }));
+  const nonDuplicateTags = new Set(tags);
+
+  return [...nonDuplicateTags].map(tag =>
+    createNodeForTag({
+      tag: tag,
+      getNodesByType: getNodesByType,
+      createNode: createNode,
+      createNodeId: createNodeId,
+      createContentDigest: createContentDigest,
+    }),
+  );
 };

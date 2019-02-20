@@ -3,170 +3,176 @@
 @import '../styles/responsive';
 
 @mixin container-column-stretch {
-    align-items: stretch;
-    display: flex;
-    flex-direction: column;
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
 }
 
 @mixin container-row-stretch {
-    align-items: stretch;
-    display: flex;
-    flex-direction: row;
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
 }
 
 @mixin container-row-center {
-    align-items: center;
-    display: flex;
-    flex-direction: row;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
 }
 
 .navigation {
+  @include container-column-stretch;
+
+  height: 100%;
+  position: fixed;
+  top: 0;
+  width: 30%;
+
+  @media (max-width: $mobile-max) {
+    background-color: white;
+    height: 44px;
+    overflow: hidden;
+    transition: all 0.3s ease-in, background 0.5s ease-in;
+    width: 100%;
+    z-index: 999;
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .siteTitle {
     @include container-column-stretch;
 
-    height: 100%;
-    position: fixed;
-    top: 0;
-    width: 30%;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-bottom: 0;
+    margin-left: 3.4rem;
+    margin-right: 3.4rem;
+    margin-top: 3.4rem;
 
-    @media (max-width: $mobile-max) {
-        background-color: transparentize(white, 0.7);
-        height: 44px;
-        overflow: hidden;
-        padding-top: env(safe-area-inset-top);
-        transition: all 0.3s ease-in, background 0.5s ease-in;
-        width: 100%;
-        z-index: 999;
+    .siteTitleLabel {
+      color: $color-ui-nav-headline-normal;
+
+      font-size: 3em;
+      font-weight: 400;
+      line-height: 1.13;
+      margin-bottom: -0.4rem;
+      margin-top: -0.8rem;
+      text-align: right;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      text-transform: uppercase;
     }
 
-    .siteTitle {
-        @include container-column-stretch;
+    @media (max-width: $mobile-max) {
+      display: none;
+    }
+  }
 
-        flex-grow: 0;
-        flex-shrink: 0;
-        margin-bottom: 0;
-        margin-left: 3.4rem;
-        margin-right: 3.4rem;
-        margin-top: 3.4rem;
+  .navigationBarWrapper {
+    @include container-column-stretch;
 
-        .siteTitleLabel {
-            color: $color-ui-nav-headline-normal;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-bottom: 0;
+    margin-left: 3.4rem;
+    margin-right: 3.4rem;
+    margin-top: 3.4rem;
 
-            font-size: 3em;
-            font-weight: 400;
-            line-height: 1.13;
-            margin-bottom: -0.4rem;
-            margin-top: -0.8rem;
-            text-align: right;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-            text-transform: uppercase;
+    @media (max-width: $mobile-max) {
+      @include container-row-center;
+
+      height: 44px;
+      margin: 0;
+      margin-left: calc(2.1rem + env(safe-area-inset-left));
+      margin-right: calc(2.1rem + env(safe-area-inset-right));
+      z-index: 999;
+    }
+
+    .navigationBar {
+      @include container-column-stretch;
+
+      @media (max-width: $mobile-max) {
+        @include container-row-center;
+
+        flex-grow: 1;
+        height: 44px;
+        max-width: calc(100% - 2.1em * 2);
+        opacity: 1;
+        -ms-overflow-style: none;
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+        transform: scale(1) translateY(0);
+        transition: transform 0.5s $cubic, opacity 0.6s $cubic;
+
+        ::-webkit-scrollbar {
+          display: none;
         }
+      }
+    }
+  }
 
-        @media (max-width: $mobile-max) {
-            display: none;
-        }
+  .tableOfContents {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: flex-end;
+    margin-bottom: 6.3rem;
+    margin-left: 3.4rem;
+    margin-right: 3.4rem;
+    margin-top: 3.4rem;
+
+    @media (max-width: $small-screen-max) {
+      margin-left: 0;
+    }
+
+    @media (max-width: $mobile-max) {
+      flex-grow: 1;
+      margin: 0;
+      margin-top: calc(-44px);
+      opacity: 0;
+      transition: all 0.3s ease-in;
+    }
+  }
+
+  &.tocOpen {
+    @media (max-width: $mobile-max) {
+      height: 100%;
+      transition: all 0.3s ease-in, background 0.5s ease-in;
     }
 
     .navigationBarWrapper {
-        @include container-column-stretch;
-
-        flex-grow: 0;
-        flex-shrink: 0;
-        margin-bottom: 0;
-        margin-left: 3.4rem;
-        margin-right: 3.4rem;
-        margin-top: 3.4rem;
-
-        @media (max-width: $mobile-max) {
-            @include container-row-center;
-
-            height: 44px;
-            margin: 0;
-            margin-left: calc(2.1rem + env(safe-area-inset-left));
-            margin-right: calc(2.1rem + env(safe-area-inset-right));
-            z-index: 999;
-        }
-
-        .navigationBar {
-            @include container-column-stretch;
-
-            @media (max-width: $mobile-max) {
-                @include container-row-center;
-
-                flex-grow: 1;
-                height: 44px;
-                max-width: calc(100% - 2.1em * 2);
-                opacity: 1;
-                -ms-overflow-style: none;
-                overflow-x: scroll;
-                -webkit-overflow-scrolling: touch;
-                transform: scale(1) translateY(0);
-                transition: transform 0.5s $cubic, opacity 0.6s $cubic;
-            }
-        }
+      .navigationBar {
+        opacity: 0;
+        transform: scale(1.15) translateY(-30px);
+        transition: transform 0.5s $cubic, opacity 0.6s $cubic;
+      }
     }
 
     .tableOfContents {
-        align-items: stretch;
-        display: flex;
-        flex-direction: row;
-        flex-grow: 1;
-        justify-content: flex-end;
-        margin-bottom: 6.3rem;
-        margin-left: 3.4rem;
-        margin-right: 3.4rem;
-        margin-top: 3.4rem;
-
-        @media (max-width: $small-screen-max) {
-            margin-left: 0;
-        }
-
-        @media (max-width: $mobile-max) {
-            flex-grow: 1;
-            margin: 0;
-            margin-top: calc(-44px);
-            opacity: 0;
-            transition: all 0.3s ease-in;
-        }
+      opacity: 1;
+      transition: all 0.3s ease-in;
     }
+  }
 
-    &.tocOpen {
-        @media (max-width: $mobile-max) {
-            height: 100%;
-            transition: all 0.3s ease-in, background 0.5s ease-in;
-        }
-
-        .navigationBarWrapper {
-            .navigationBar {
-                opacity: 0;
-                transform: scale(1.15) translateY(-30px);
-                transition: transform 0.5s $cubic, opacity 0.6s $cubic;
-            }
-        }
-
-        .tableOfContents {
-            opacity: 1;
-            transition: all 0.3s ease-in;
-        }
+  &.bordered {
+    @media (max-width: $mobile-max) {
+      border-bottom: 0.5px solid transparentize(black, 0.9);
+      transition: all 0.1s ease-in;
     }
+  }
 
-    &.bordered {
-        @media (max-width: $mobile-max) {
-            border-bottom: 0.5px solid transparentize(black, 0.9);
-            transition: all 0.1s ease-in;
-        }
-    }
-
-    &.errorCode404 {
-        width: 100%;
-    }
+  &.errorCode404 {
+    width: 100%;
+  }
 }
 
-@supports ((-webkit-backdrop-filter: blur(1.8em)) or (backdrop-filter: blur(2em))) {
-    .navigation {
-        @media (max-width: $mobile-max) {
-            -webkit-backdrop-filter: saturate(180%) blur(20px);
-            backdrop-filter: saturate(180%) blur(20px);
-            background-color: transparentize(white, 0.7);
-        }
+@supports (
+  (-webkit-backdrop-filter: blur(1.8em)) or (backdrop-filter: blur(2em))
+) {
+  .navigation {
+    @media (max-width: $mobile-max) {
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      backdrop-filter: saturate(180%) blur(20px);
+      background-color: transparentize(white, 0.7);
     }
+  }
 }

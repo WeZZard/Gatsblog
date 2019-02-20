@@ -1,109 +1,109 @@
 site:
-    # The title of the site.
-    #
-    title: Pieces of My Soul
+  # The title of the site.
+  #
+  title: Pieces of My Soul
 
-    # The owner of the site, which is shown in site copyright declaration.
-    #
-    owner: WeZZard
+  # The owner of the site, which is shown in site copyright declaration.
+  #
+  owner: WeZZard
 
-    # The language of the site. This also being used for posts and pages whose
-    # "lang" field of their frontmatters are not specified.
-    #
-    lang: en-US
+  # The language of the site. This also being used for posts and pages whose
+  # "lang" field of their frontmatters are not specified.
+  #
+  lang: en-US
 
-    # The description of the site. An SEO option.
-    #
-    description: ''
+  # The description of the site. An SEO option.
+  #
+  description: ''
 
-    # The keywords of the site. An SEO option.
-    #
-    keywords:
-        - WeZZard
-        - Pieces of My Soul
+  # The keywords of the site. An SEO option.
+  #
+  keywords:
+    - WeZZard
+    - Pieces of My Soul
 
-    # The default license for each post.
-    #
-    # Currently only support Creative Common 4.0.
-    #
-    # Available Options:
-    #   - cc4.0-by
-    #   - cc4.0-by-sa
-    #   - cc4.0-by-nd
-    #   - cc4.0-by-nc
-    #   - cc4.0-by-nc-sa
-    #   - cc4.0-by-nc-nd
-    #
-    # Suffixes Meaning:
-    #   - BY = Attribution
-    #   - ND = No Derivatives
-    #   - NC = Non-Commercial
-    #   - SA = ShareAlike
-    #
-    # * SA is exclusive to ND.
-    #
-    license: cc4.0-by-nc-nd
+  # The default license for each post.
+  #
+  # Currently only support Creative Common 4.0.
+  #
+  # Available Options:
+  #   - cc4.0-by
+  #   - cc4.0-by-sa
+  #   - cc4.0-by-nd
+  #   - cc4.0-by-nc
+  #   - cc4.0-by-nc-sa
+  #   - cc4.0-by-nc-nd
+  #
+  # Suffixes Meaning:
+  #   - BY = Attribution
+  #   - ND = No Derivatives
+  #   - NC = Non-Commercial
+  #   - SA = ShareAlike
+  #
+  # * SA is exclusive to ND.
+  #
+  license: cc4.0-by-nc-nd
 
-    # Whether builds an index page for taxonomies.
-    #
-    indexing:
-        - name: Tags
-          isEnabled: true
+  # Whether builds an index page for taxonomies.
+  #
+  indexing:
+    - name: Tags
+      isEnabled: true
 
-        - name: Categories
-          isEnabled: false
+    - name: Categories
+      isEnabled: false
 
-    slogans:
-        - I'm WeZZard
-        - Making Software
-        - Composing Music
-        - Designing UX
+  slogans:
+    - I'm WeZZard
+    - Making Software
+    - Composing Music
+    - Designing UX
 
-    footerMessages:
-        - Freiheit ist Wille, Handeln ist Fähigkeit.
+  footerMessages:
+    - Freiheit ist Wille, Handeln ist Fähigkeit.
 
 contact:
-    - service: Email
-      identifier: me@wezzard.com
+  - service: Email
+    identifier: me@wezzard.com
 
-    - service: GitHub
-      identifier: WeZZard
+  - service: GitHub
+    identifier: WeZZard
 
 navigation:
-    createsNavigationItemsForCategories: true
+  createsNavigationItemsForCategories: true
 
-    overwritingCategoryNavigationItems:
-        - name: Uncategorized
-          weight: 0
-          isVisible: false
+  overwritingCategoryNavigationItems:
+    - name: Uncategorized
+      weight: 0
+      isVisible: false
 
-    customNavigationItems:
-        - name: Profile
-          slug: /profile
-          weight: 0
+  customNavigationItems:
+    - name: Profile
+      slug: /profile
+      weight: 0
 
 # The pagination config for index pages.
 #
 pagination:
-    - indexName: Home
-      itemsPerPage: 8
+  - indexName: Home
+    itemsPerPage: 8
 
-    # The page displays all the categories.
-    #
-    - indexName: Categories
-      itemsPerPage: 8
+  # The page displays all the categories.
+  #
+  - indexName: Categories
+    itemsPerPage: 8
 
-    # The page displays all the posts under a category.
-    #
-    - indexName: Category
-      itemsPerPage: 8
+  # The page displays all the posts under a category.
+  #
+  - indexName: Category
+    itemsPerPage: 8
 
-    # The page displays all the tags.
-    #
-    - indexName: Tags
-      itemsPerPage: 8
+  # The page displays all the tags.
+  #
+  - indexName: Tags
+    itemsPerPage: 8
 
-    # The page displays all the posts under a tag.
-    #
-    - indexName: Tag
-      itemsPerPage: 8
+  # The page displays all the posts under a tag.
+  #
+  - indexName: Tag
+    itemsPerPage: 8

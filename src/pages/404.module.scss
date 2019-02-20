@@ -3,45 +3,44 @@
 @import '../styles/responsive';
 
 .main {
+  width: 100%;
+
+  .errorInfoWrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: calc(
+      (100% - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * 0.618
+    );
+    justify-content: space-around;
+    position: absolute;
     width: 100%;
 
-    .errorInfoWrapper {
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-        height: calc((100% - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * 0.618);
-        justify-content: space-around;
-        position: absolute;
-        width: 100%;
-
-        @media (max-width: $mobile-max) {
-            justify-content: space-around;
-            top: 44px;
-        }
-
-        .errorInfo {
-            background-color: black;
-            color: white;
-            font-family: $font-text-monospaced;
-            font-size: 1.5rem;
-            margin-left: 2.1rem;
-            margin-right: 2.1rem;
-            padding: 5.5rem;
-            text-align: center;
-            text-transform: uppercase;
-            z-index: 500;
-
-            @media (max-width: $mobile-max) {
-                margin-top: 2.1rem;
-                padding: 2.1rem;
-            }
-
-            .title {
-                margin-bottom: 2.1rem;
-            }
-
-            .description {
-            }
-        }
+    @media (max-width: $mobile-max) {
+      justify-content: space-around;
+      top: 44px;
     }
+
+    .errorInfo {
+      background-color: black;
+      color: white;
+      font-family: $font-text-monospaced;
+      font-size: 1.5rem;
+      margin-left: 2.1rem;
+      margin-right: 2.1rem;
+      padding: 5.5rem;
+      text-align: center;
+      text-transform: uppercase;
+      z-index: 500;
+
+      @media (max-width: $mobile-max) {
+        margin-top: 2.1rem;
+        padding: 2.1rem;
+      }
+
+      .title {
+        margin-bottom: 2.1rem;
+      }
+    }
+  }
 }

@@ -2,89 +2,89 @@
 @import '../styles/colors';
 
 @mixin container-column-stretch {
-    align-items: stretch;
-    display: flex;
-    flex-direction: column;
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
 }
 
 .flexWrapper {
+  @include container-column-stretch;
+
+  .caption {
     @include container-column-stretch;
 
-    .caption {
+    margin-bottom: 3.4rem;
+
+    .captionContent {
+      color: $color-tint;
+      display: block;
+      font-family: $font-ui-sans;
+      font-size: 1.1em;
+      font-weight: 500;
+      line-height: calc(13 / 11);
+      margin-bottom: -0.3rem;
+      margin-top: -0.2rem;
+      text-align: left;
+      text-transform: uppercase;
+    }
+  }
+
+  .postExcerpt {
+    @include container-column-stretch;
+
+    .header {
+      margin: 0;
+
+      .title {
         @include container-column-stretch;
 
-        margin-bottom: 3.4rem;
+        color: $color-ui-main-headline-primary;
 
-        .captionContent {
-            color: $color-tint;
-            display: block;
-            font-family: $font-ui-sans;
-            font-size: 1.1em;
-            font-weight: 500;
-            line-height: calc(13 / 11);
-            margin-bottom: -0.3rem;
-            margin-top: -0.2rem;
-            text-align: left;
-            text-transform: uppercase;
+        h1 {
+          display: block;
+          font-size: 2.4em;
+          font-weight: 500;
+          line-height: calc(29 / 24);
+          margin-bottom: -0.6rem;
+          margin-top: -0.6rem;
         }
-    }
+      }
 
-    .postExcerpt {
+      .subtitle {
         @include container-column-stretch;
 
-        .header {
-            margin: 0;
+        color: $color-ui-main-headline-secondary;
+        margin-top: 2.1rem;
 
-            .title {
-                @include container-column-stretch;
-
-                color: $color-ui-main-headline-primary;
-
-                h1 {
-                    display: block;
-                    font-size: 2.4em;
-                    font-weight: 500;
-                    line-height: calc(29 / 24);
-                    margin-bottom: -0.6rem;
-                    margin-top: -0.6rem;
-                }
-            }
-
-            .subtitle {
-                @include container-column-stretch;
-
-                color: $color-ui-main-headline-secondary;
-                margin-top: 2.1rem;
-
-                h2 {
-                    display: block;
-                    font-size: 1.5em;
-                    font-weight: 400;
-                    line-height: calc(18 / 15);
-                    margin-bottom: -0.4rem;
-                    margin-top: -0.6rem;
-                }
-            }
+        h2 {
+          display: block;
+          font-size: 1.5em;
+          font-weight: 400;
+          line-height: calc(18 / 15);
+          margin-bottom: -0.4rem;
+          margin-top: -0.6rem;
         }
-
-        .content {
-            margin-top: 3.4rem;
-
-            .paragraph {
-                color: $color-content-summary;
-                font-family: $font-text-serif;
-                font-size: 1.7em;
-                line-height: calc(29 / 17);
-                margin: 0;
-                margin-bottom: -1rem;
-                margin-top: -1.2rem;
-            }
-        }
-
-        .footer {
-            @include container-column-stretch;
-
-            margin-top: 3.4rem;
-        }
+      }
     }
+
+    .content {
+      margin-top: 3.4rem;
+
+      .paragraph {
+        color: $color-content-summary;
+        font-family: $font-text-serif;
+        font-size: 1.7em;
+        line-height: calc(29 / 17);
+        margin: 0;
+        margin-bottom: -1rem;
+        margin-top: -1.2rem;
+      }
+    }
+
+    .footer {
+      @include container-column-stretch;
+
+      margin-top: 3.4rem;
+    }
+  }
 }

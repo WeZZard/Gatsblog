@@ -2,14 +2,14 @@
 @import '../styles/colors';
 
 .superscript {
-    font-family: $font-text-monospaced;
-    font-size: 0.618em;
+  font-family: $font-text-monospaced;
+  font-size: 0.618em;
 
-    &::before {
-        content: '[';
-    }
+  &::before {
+    content: '[';
+  }
 
-    &::after {
-        content: ']';
-    }
+  &::after {
+    content: ']';
+  }
 }

@@ -3,49 +3,49 @@
 @import '../styles/responsive';
 
 @mixin wrapper-common {
-    align-items: stretch;
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    margin-bottom: 3.4rem;
-    -ms-overflow-style: none;
-    overflow-x: scroll;
-    width: auto;
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  margin-bottom: 3.4rem;
+  -ms-overflow-style: none;
+  overflow-x: scroll;
+  width: auto;
 }
 
 .wrapper {
-    @include wrapper-common;
+  @include wrapper-common;
 
-    @media (max-width: $mobile-max) {
-        margin-left: -2.1rem;
-        margin-right: -2.1rem;
-    }
+  @media (max-width: $mobile-max) {
+    margin-left: -2.1rem;
+    margin-right: -2.1rem;
+  }
 }
 
 .blockquoteWrapper {
-    @include wrapper-common;
+  @include wrapper-common;
 }
 
 .table {
-    border-collapse: collapse;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 
-    thead {
-        border-bottom: 3px solid $color-content-table-separator;
-        border-top: 3px solid $color-content-table-separator;
-        color: $color-content-heading;
-        font-weight: 600;
-    }
+  thead {
+    border-bottom: 3px solid $color-content-table-separator;
+    border-top: 3px solid $color-content-table-separator;
+    color: $color-content-heading;
+    font-weight: 600;
+  }
 
-    tbody {
-        border-bottom: 3px solid $color-content-table-separator;
-        color: $color-content-body;
-        font-weight: 300;
-    }
+  tbody {
+    border-bottom: 3px solid $color-content-table-separator;
+    color: $color-content-body;
+    font-weight: 300;
+  }
 
-    tr {
-        border-bottom: 1px solid $color-content-table-separator;
-    }
+  tr {
+    border-bottom: 1px solid $color-content-table-separator;
+  }
 }

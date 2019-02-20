@@ -1,74 +1,75 @@
 const createNodeForLocale = require('./create-node-for-locale');
 
-module.exports = async (args) => {
-    const {
-        actions,
-        getNodesByType,
-        createNodeId,
-        createContentDigest,
-        graphql,
-    } = args;
+module.exports = async args => {
+  const {
+    actions,
+    getNodesByType,
+    createNodeId,
+    createContentDigest,
+    graphql,
+  } = args;
 
-    const { createNode } = actions;
+  const { createNode } = actions;
 
-    const result = await graphql(`
-        {
-            allPost {
-                edges {
-                    node {
-                        lang
-                    }
-                }
-            }
-            allPage {
-                edges {
-                    node {
-                        lang
-                    }
-                }
-            }
-            configYaml {
-                site {
-                    lang
-                }
-            }
+  const result = await graphql(`
+    {
+      allPost {
+        edges {
+          node {
+            lang
+          }
         }
-    `);
-
-    if (result.errors && !result.data) {
-        throw result.errors
+      }
+      allPage {
+        edges {
+          node {
+            lang
+          }
+        }
+      }
+      configYaml {
+        site {
+          lang
+        }
+      }
     }
+  `);
 
-    const { data } = result;
+  if (result.errors && !result.data) {
+    throw result.errors;
+  }
 
-    const { allPost, allPage, configYaml } = data || {
-        allPost: { edges: [] },
-        allPage: { edges: [] },
-        configYaml: { site: { lang: 'en-US' } },
-    };
+  const { data } = result;
 
-    const { edges: posts } = allPost || { edges: [] };
+  const { allPost, allPage, configYaml } = data || {
+    allPost: { edges: [] },
+    allPage: { edges: [] },
+    configYaml: { site: { lang: 'en-US' } },
+  };
 
-    const { edges: pages } = allPage || { edges: [] };
+  const { edges: posts } = allPost || { edges: [] };
 
-    const { site } = configYaml || { site: { lang: 'en-US' } };
+  const { edges: pages } = allPage || { edges: [] };
 
-    const { lang: siteLanguage } = site || { lang: 'en-US' };
+  const { site } = configYaml || { site: { lang: 'en-US' } };
 
-    const contentLanguages = [...posts, ...pages]
-        .map(object => object.node.lang)
-        .filter(_ => _);
+  const { lang: siteLanguage } = site || { lang: 'en-US' };
 
-    const allLanguages = [...contentLanguages, siteLanguage];
+  const contentLanguages = [...posts, ...pages]
+    .map(object => object.node.lang)
+    .filter(_ => _);
 
-    const nonDuplicateLocales = new Set(allLanguages);
+  const allLanguages = [...contentLanguages, siteLanguage];
 
-    return [...nonDuplicateLocales]
-        .map(locale => createNodeForLocale({
-        locale: locale,
-        getNodesByType: getNodesByType,
-        createNode: createNode,
-        createNodeId: createNodeId,
-        createContentDigest: createContentDigest
-    }));
+  const nonDuplicateLocales = new Set(allLanguages);
+
+  return [...nonDuplicateLocales].map(locale =>
+    createNodeForLocale({
+      locale: locale,
+      getNodesByType: getNodesByType,
+      createNode: createNode,
+      createNodeId: createNodeId,
+      createContentDigest: createContentDigest,
+    }),
+  );
 };

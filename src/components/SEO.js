@@ -1,117 +1,117 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Helmet from 'react-helmet'
-import { StaticQuery, graphql } from 'gatsby'
+import React from 'react';
+import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
+import { StaticQuery, graphql } from 'gatsby';
 
-const SEO = (
-    {
-        lang,
-        title: pageTitle,
-        description: pageDescription,
-        keywords,
-        meta
-    }) =>
-{
-    return (
-        <StaticQuery
-            query={siteSEOQuery}
-            render={data => {
+const SEO = ({
+  lang,
+  title: pageTitle,
+  description: pageDescription,
+  keywords,
+  meta,
+}) => {
+  return (
+    <StaticQuery
+      query={siteSEOQuery}
+      render={data => {
+        const {
+          config: {
+            site: {
+              title: siteTitle,
+              description: siteDescription,
+              owner: siteOwner,
+            },
+          },
+        } = data;
 
-                const {
-                    config: {
-                        site: {
-                            title: siteTitle,
-                            description: siteDescription,
-                            owner: siteOwner,
-                        }
-                    },
-                } = data;
+        const description = pageDescription || siteDescription;
 
-                const description = pageDescription || siteDescription;
+        const title =
+          pageTitle !== null && pageTitle !== undefined
+            ? `${pageTitle} | ${siteTitle}`
+            : siteTitle;
 
-                const title = (pageTitle !== null && pageTitle !== undefined) ? `${pageTitle} | ${siteTitle}` : siteTitle;
-
-                return (
-                    <Helmet
-                        htmlAttributes={{
-                            lang,
-                        }}
-                        title={title}
-                        titleTemplate={`%s`}
-                        meta={[
-                            {
-                                name: `description`,
-                                content: description,
-                            },
-                            {
-                                property: `og:title`,
-                                content: pageTitle,
-                            },
-                            {
-                                property: `og:description`,
-                                content: description,
-                            },
-                            {
-                                property: `og:type`,
-                                content: `website`,
-                            },
-                            {
-                                name: `twitter:card`,
-                                content: `summary`,
-                            },
-                            {
-                                name: `twitter:creator`,
-                                content: siteOwner,
-                            },
-                            {
-                                name: `twitter:title`,
-                                content: pageTitle,
-                            },
-                            {
-                                name: `twitter:description`,
-                                content: description,
-                            },
-                        ]
-                            .concat(
-                                keywords.length > 0
-                                    ? {
-                                          name: `keywords`,
-                                          content: keywords.join(`, `),
-                                      }
-                                    : []
-                            )
-                            .concat(meta)}
-                    />
-                )
+        return (
+          <Helmet
+            htmlAttributes={{
+              lang,
             }}
-        />
-    )
+            title={title}
+            titleTemplate={`%s`}
+            meta={[
+              {
+                name: `description`,
+                content: description,
+              },
+              {
+                property: `og:title`,
+                content: pageTitle,
+              },
+              {
+                property: `og:description`,
+                content: description,
+              },
+              {
+                property: `og:type`,
+                content: `website`,
+              },
+              {
+                name: `twitter:card`,
+                content: `summary`,
+              },
+              {
+                name: `twitter:creator`,
+                content: siteOwner,
+              },
+              {
+                name: `twitter:title`,
+                content: pageTitle,
+              },
+              {
+                name: `twitter:description`,
+                content: description,
+              },
+            ]
+              .concat(
+                keywords.length > 0
+                  ? {
+                      name: `keywords`,
+                      content: keywords.join(`, `),
+                    }
+                  : [],
+              )
+              .concat(meta)}
+          />
+        );
+      }}
+    />
+  );
 };
 
 SEO.defaultProps = {
-    lang: `en`,
-    meta: [],
-    keywords: [],
+  lang: `en`,
+  meta: [],
+  keywords: [],
 };
 
 SEO.propTypes = {
-    description: PropTypes.string,
-    lang: PropTypes.string,
-    meta: PropTypes.array,
-    keywords: PropTypes.arrayOf(PropTypes.string),
-    pageTitle: PropTypes.string,
+  description: PropTypes.string,
+  lang: PropTypes.string,
+  meta: PropTypes.array,
+  keywords: PropTypes.arrayOf(PropTypes.string),
+  pageTitle: PropTypes.string,
 };
 
-export default SEO
+export default SEO;
 
 const siteSEOQuery = graphql`
-    query SiteSEOQuery {
-        config: configYaml {
-            site {
-                title
-                description
-                owner
-            }
-        }
+  query SiteSEOQuery {
+    config: configYaml {
+      site {
+        title
+        description
+        owner
+      }
     }
+  }
 `;

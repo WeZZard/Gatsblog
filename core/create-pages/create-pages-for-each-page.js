@@ -1,61 +1,67 @@
 const path = require('path');
+const debug = require('debug');
+
 const Template = path.resolve('src/templates/Page.js');
 
-module.exports = async (args) => {
-    const { createPagesArgs } = args;
+module.exports = async args => {
+  const { createPagesArgs } = args;
 
-    const { graphql, actions } = createPagesArgs;
-    const { createPage } = actions;
+  const { graphql, actions } = createPagesArgs;
+  const { createPage } = actions;
 
-    const result = await graphql(`
-        {
-            allPage(sort: { fields: [createdTime], order: DESC }) {
-                edges {
-                    node {
-                        id
-                        slug
-                        lang
-                        isLocalized
-                    }
-                }
-            }
+  const result = await graphql(`
+    {
+      allPage(sort: { fields: [createdTime], order: DESC }) {
+        edges {
+          node {
+            id
+            slug
+            lang
+            isLocalized
+          }
         }
-    `);
-
-    if (result.errors) {
-        throw result.errors
+      }
     }
+  `);
 
-    const { data: { allPage } } = result;
+  if (result.errors) {
+    throw result.errors;
+  }
 
-    const { edges: pages } = allPage || { edges: [] };
+  const {
+    data: { allPage },
+  } = result;
 
-    await Promise.all(
-        pages.map( async pageNode => {
-            const localeSlug = pageNode.node.isLocalized
-                ? `/${pageNode.node.lang}`
-                : '';
+  const { edges: pages } = allPage || { edges: [] };
 
-            const originalPath = [localeSlug, pageNode.node.slug].filter(_ => _).join('');
+  await Promise.all(
+    pages.map(async pageNode => {
+      const localeSlug = pageNode.node.isLocalized
+        ? `/${pageNode.node.lang}`
+        : '';
 
-            let paths = [originalPath];
+      const originalPath = [localeSlug, pageNode.node.slug]
+        .filter(_ => _)
+        .join('');
 
-            if (!pageNode.node.isLocalized && pageNode.node.lang) {
-                const localizedPath = `/${pageNode.node.lang}/${pageNode.node.slug}`;
-                paths.push(localizedPath);
-            }
+      let paths = [originalPath];
 
-            paths.forEach(path => {
-                console.log(`Create page for page: ${path}.`);
+      if (!pageNode.node.isLocalized && pageNode.node.lang) {
+        const localizedPath = `/${pageNode.node.lang}/${pageNode.node.slug}`;
+        paths.push(localizedPath);
+      }
 
-                createPage({
-                    path: path,
-                    component: Template,
-                    context: {
-                        pageId: pageNode.node.id,
-                    },
-                });
-            });
-        })
-    );
+      paths.forEach(path => {
+        debug(`Create page for page: ${path}.`);
+
+        createPage({
+          path: path,
+          component: Template,
+          context: {
+            pageId: pageNode.node.id,
+          },
+        });
+      });
+    }),
+  );
 };
