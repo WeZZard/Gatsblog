@@ -44,8 +44,6 @@ class TableOfContents extends React.Component {
       return indicesStack.slice(0, depth);
     }
 
-    let previousDepth = 0;
-
     headings.forEach(item => {
       const { value, depth } = item;
 
@@ -59,8 +57,6 @@ class TableOfContents extends React.Component {
 
       const indices = snapshotStack(depth);
       items.push({ title: value, indices });
-
-      previousDepth = depth;
     });
 
     while (
