@@ -18,18 +18,18 @@ class TableOfContents extends React.Component {
   render() {
     const { headings, tocItemOnClick, isOpen } = this.props;
 
-    assert(headings.length > 0);
-
     const items = [];
 
-    const indicesStack = [1];
+    const initialIndex = headings.length > 0 ? headings[0].depth - 1 : 0;
+
+    const indicesStack = [initialIndex];
 
     function fillStackGap(depth) {
       while (indicesStack.length < depth) {
         indicesStack.push(0);
       }
       for (let i = depth; i < indicesStack.length; i++) {
-        indicesStack[i] = 1;
+        indicesStack[i] = 0;
       }
     }
 
@@ -53,23 +53,22 @@ class TableOfContents extends React.Component {
 
     while (
       items.reduce(
-        (previous, currrent) => {
+        (previous, current) => {
           if (previous && previous.index !== null) {
             const { shouldShift: flag, index } = previous;
-            const canShift = currrent.indices.length > 1;
-            const isSameIndex = index === currrent.indices[0];
+            const canShift = current.indices.length > 1;
+            const isSameIndex = index === current.indices[0];
             const shouldShift = flag && isSameIndex && canShift;
-            return { shouldShift, index: currrent.indices[0] };
+            return { shouldShift, index: current.indices[0] };
           } else {
             return {
-              shouldShift: true,
-              index: currrent.indices[0],
+              shouldShift: current.indices.length > 1,
+              index: current.indices[0],
             };
           }
         },
-        { shouldShift: true, index: null },
-      ).shouldShift &&
-      items.length > 1
+        { shouldShift: false, index: null },
+      ).shouldShift
     ) {
       items.forEach(each => each.indices.shift());
     }
