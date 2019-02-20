@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { StaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 
@@ -21,7 +22,7 @@ const getName = options => {
   }
 };
 
-export default ({ options }) => (
+const CC40Image = ({ options }) => (
   <StaticQuery
     query={graphql`
       {
@@ -74,3 +75,9 @@ export default ({ options }) => (
     )}
   />
 );
+
+CC40Image.propTypes = {
+  options: PropTypes.object.isRequired,
+};
+
+export default CC40Image;

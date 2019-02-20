@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './PostExcerpt.module.scss';
 
 import PostExcerptMetadata from './PostExcerptMetadata';
 import Link from './Link';
 
-export default ({ item }) => {
+const PostExcerpt = ({ item }) => {
   const subtitleComponent =
     item.subtitle !== '' ? (
       <h2 className={styles.subtitle}>{item.subtitle}</h2>
@@ -39,3 +40,9 @@ export default ({ item }) => {
     </div>
   );
 };
+
+PostExcerpt.propTypes = {
+  item: PropTypes.object.isRequired,
+};
+
+export default PostExcerpt;

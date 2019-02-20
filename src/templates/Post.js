@@ -3,6 +3,7 @@ import styles from './Post.module.scss';
 
 import { graphql } from 'gatsby';
 
+import GatsbyPage from '../gatsby/Page';
 import Main from '../components/Main';
 import Title from '../components/Title';
 import MDXMetadata from '../components/MDXMetadata';
@@ -10,7 +11,7 @@ import MDXBody from '../components/MDXBody';
 import PostFooter from '../components/PostFooter';
 import MorePosts from '../components/MorePosts';
 
-class Post extends React.Component {
+class Post extends GatsbyPage {
   render() {
     const { data } = this.props;
 

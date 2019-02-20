@@ -30,8 +30,14 @@ export default ({ codeString, language, ...props }) => {
       </div>
     ) : null;
 
+    const languageClassName = language ? getLanguageClassName(language) : null;
+
+    const languageString = [language, version].filter(_ => _).join(' ');
+
     const languageLabel = language ? (
-      <LanguageLabel language={language} version={version} />
+      <div className={styles[languageClassName] || styles.languageLabel}>
+        <span>{languageString}</span>
+      </div>
     ) : null;
 
     return (
@@ -48,11 +54,32 @@ export default ({ codeString, language, ...props }) => {
                     : styles.languageUnspecifiedCode
                 }
               >
-                <Code
-                  tokens={tokens}
-                  getLineProps={getLineProps}
-                  getTokenProps={getTokenProps}
-                />
+                <div aria-hidden={'true'} className={styles.lineNumberList}>
+                  {tokens.map((_, lineNumber) => (
+                    <div
+                      aria-hidden={'true'}
+                      key={lineNumber}
+                      className={styles.lineNumber}
+                    />
+                  ))}
+                </div>
+                <div className={styles.codeContent}>
+                  {tokens.map((line, lineNumber) => (
+                    <div
+                      {...getLineProps({ line })}
+                      key={lineNumber}
+                      className={styles.line}
+                    >
+                      {line.map((token, key) => (
+                        <span
+                          {...getTokenProps({ token })}
+                          key={key}
+                          className={styles.token}
+                        />
+                      ))}
+                    </div>
+                  ))}
+                </div>
               </code>
             </pre>
           );
@@ -62,89 +89,38 @@ export default ({ codeString, language, ...props }) => {
   }
 };
 
-class LanguageLabel extends React.Component {
-  render() {
-    const { language, version } = this.props;
-
-    const className =
-      styles[LanguageLabel.getLanguageClassName(language)] ||
-      styles.languageLabel;
-
-    const contents = [language, version].filter(_ => _).join(' ');
-
-    return (
-      <div className={className}>
-        <span>{contents}</span>
-      </div>
-    );
+const getLanguageClassName = language => {
+  if (/^objective-c$/i.test(language)) {
+    return 'objectiveC';
   }
-
-  static getLanguageClassName(language) {
-    if (/^objective-c$/i.test(language)) {
-      return 'objectiveC';
-    }
-    if (/^objective-c\+\+$/i.test(language)) {
-      return 'objectiveCPP';
-    }
-    if (/^c\+\+$/i.test(language)) {
-      return 'cPP';
-    }
-    if (/^\/etc\/hosts$/.test(language)) {
-      return 'etcHosts';
-    }
-    if (/^pseudo-code$/.test(language)) {
-      return 'pseudoCode';
-    }
-    if (/^js$/.test(language)) {
-      return 'javaScript';
-    }
-    if (/^ts$/.test(language)) {
-      return 'typeScript';
-    }
-    if (/^graphql$/.test(language)) {
-      return 'graphQL';
-    }
-    if (/^latex$/.test(language)) {
-      return 'laTex';
-    }
-    if (/^sass$/.test(language)) {
-      return 'scss';
-    }
-    return language.toLowerCase();
+  if (/^objective-c\+\+$/i.test(language)) {
+    return 'objectiveCPP';
   }
-}
-
-const Code = ({ tokens, getLineProps, getTokenProps }) => {
-  return (
-    <React.Fragment>
-      <div aria-hidden={'true'} className={styles.lineNumberList}>
-        {tokens.map((_, lineNumber) => (
-          <div
-            aria-hidden={'true'}
-            key={lineNumber}
-            className={styles.lineNumber}
-          />
-        ))}
-      </div>
-      <div className={styles.codeContent}>
-        {tokens.map((line, lineNumber) => (
-          <div
-            {...getLineProps({ line })}
-            key={lineNumber}
-            className={styles.line}
-          >
-            {line.map((token, key) => (
-              <span
-                {...getTokenProps({ token })}
-                key={key}
-                className={styles.token}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-    </React.Fragment>
-  );
+  if (/^c\+\+$/i.test(language)) {
+    return 'cPP';
+  }
+  if (/^\/etc\/hosts$/.test(language)) {
+    return 'etcHosts';
+  }
+  if (/^pseudo-code$/.test(language)) {
+    return 'pseudoCode';
+  }
+  if (/^js$/.test(language)) {
+    return 'javaScript';
+  }
+  if (/^ts$/.test(language)) {
+    return 'typeScript';
+  }
+  if (/^graphql$/.test(language)) {
+    return 'graphQL';
+  }
+  if (/^latex$/.test(language)) {
+    return 'laTex';
+  }
+  if (/^sass$/.test(language)) {
+    return 'scss';
+  }
+  return language.toLowerCase();
 };
 
 const basic = [

@@ -13,7 +13,7 @@
     "acorn": "^6.1.0",
     "create-react-context": "^0.2.3",
     "debug": "^4.1.1",
-    "gatsby": "^2.1.9",
+    "gatsby": "^2.1.10",
     "gatsby-image": "^2.0.29",
     "gatsby-mdx": "^0.4.0",
     "gatsby-plugin-feed": "^2.0.13",
@@ -83,6 +83,7 @@
   },
   "scripts": {
     "eslint": "eslint ./gatsby-browser.js ./gatsby-config.js ./gatsby-node.js ./gatsby-ssr.js ./src ./core",
+    "eslint-fix": "eslint --fix ./gatsby-browser.js ./gatsby-config.js ./gatsby-node.js ./gatsby-ssr.js ./src ./core",
     "stylelint": "stylelint --config ./.stylelintrc.yaml ./src/**/*.scss",
     "format-check": "prettier --config ./.prettierrc.yaml --check '.*.yaml' './src/**/.*.yaml' './core/**/.*.yaml' '*.json' '*.js' 'core/**/*.js' 'src/**/*.js' 'src/**/*.scss' '*.md' 'content/**/*.md' 'content/**/*.mdx'",
     "format-write": "prettier --config ./.prettierrc.yaml --write '.*.yaml' './src/**/.*.yaml' './core/**/.*.yaml' '*.json' '*.js' 'core/**/*.js' 'src/**/*.js' 'src/**/*.scss' '*.md' 'content/**/*.md' 'content/**/*.mdx'",

@@ -3,8 +3,10 @@ import styles from './Blockquote.module.scss';
 
 import BlockquoteContext from './BlockquoteContext';
 
-export default props => (
+const Blockquote = props => (
   <BlockquoteContext.Provider value={true}>
     <blockquote className={styles.blockquote} {...props} />
   </BlockquoteContext.Provider>
 );
+
+export default Blockquote;

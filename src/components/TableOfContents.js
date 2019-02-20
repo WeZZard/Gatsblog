@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import assert from 'assert';
 import _ from 'lodash';
 import styles from './TableOfContents.module.scss';
@@ -120,5 +121,11 @@ class TableOfContents extends React.Component {
     );
   }
 }
+
+TableOfContents.propTypes = {
+  headings: PropTypes.object.isRequired,
+  isOpen: PropTypes.func.isRequired,
+  tocItemOnClick: PropTypes.bool.isRequired,
+};
 
 export default TableOfContents;

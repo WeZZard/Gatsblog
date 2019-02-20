@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './SiteFooter.module.scss';
 
 import { graphql, StaticQuery } from 'gatsby';
@@ -51,6 +52,10 @@ class SiteFooter extends React.Component {
     );
   }
 }
+
+SiteFooter.propTypes = {
+  errorCode: PropTypes.string,
+};
 
 export default SiteFooter;
 

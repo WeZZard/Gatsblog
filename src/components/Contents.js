@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Contents.module.scss';
 
 import PageInfo from './PageInfo';
@@ -6,7 +7,7 @@ import ContentSeparator from './ContentSeparator';
 
 import { normalizeChildren } from '../utils';
 
-export default ({ sections }) => {
+const Contents = ({ sections }) => {
   const normalizedSections = normalizeChildren(sections);
 
   const numberOfContents = normalizedSections.length;
@@ -30,3 +31,9 @@ export default ({ sections }) => {
     </div>
   );
 };
+
+Contents.propTypes = {
+  sections: PropTypes.arrayOf(PropTypes.node),
+};
+
+export default Contents;

@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 const _ = require('lodash');
 
 import Taxonomy from './Taxonomy';
 
-export default ({ tags }) => (
+const TagsLabel = ({ tags }) => (
   <Taxonomy
     kind={'secondary'}
     name="Tags"
@@ -13,3 +14,9 @@ export default ({ tags }) => (
     }))}
   />
 );
+
+TagsLabel.propTypes = {
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+export default TagsLabel;

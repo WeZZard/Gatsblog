@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Main.module.scss';
 
 import Viewport from './Viewport';
@@ -8,7 +9,7 @@ import Navigation from './Navigation';
 import SiteFooter from './SiteFooter';
 import Contents from './Contents';
 
-export default ({
+const Main = ({
   slug,
   lang,
   title,
@@ -16,22 +17,32 @@ export default ({
   keywords,
   headings,
   sections,
-}) => {
-  return (
-    <React.Fragment>
-      <Viewport />
-      <GoogleAnalytics />
-      <SEO
-        lang={lang}
-        title={title}
-        description={description}
-        keywords={keywords}
-      />
-      <div className={styles.main}>
-        <Navigation slug={slug} headings={headings} />
-        <Contents sections={sections} />
-        <SiteFooter />
-      </div>
-    </React.Fragment>
-  );
+}) => (
+  <React.Fragment>
+    <Viewport />
+    <GoogleAnalytics />
+    <SEO
+      lang={lang}
+      title={title}
+      description={description}
+      keywords={keywords}
+    />
+    <div className={styles.main}>
+      <Navigation slug={slug} headings={headings} />
+      <Contents sections={sections} />
+      <SiteFooter />
+    </div>
+  </React.Fragment>
+);
+
+Main.propTypes = {
+  description: PropTypes.string,
+  headings: PropTypes.object,
+  keywords: PropTypes.arrayOf(PropTypes.string),
+  lang: PropTypes.string,
+  sections: PropTypes.arrayOf(PropTypes.node),
+  slug: PropTypes.string,
+  title: PropTypes.string,
 };
+
+export default Main;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './TimeLabel.module.scss';
 
 class TimeLabel extends React.Component {
@@ -38,3 +39,9 @@ class TimeLabel extends React.Component {
 }
 
 export default TimeLabel;
+
+TimeLabel.propTypes = {
+  dateTime: PropTypes.string.isRequired,
+  locale: PropTypes.string,
+  localizedFormatOption: PropTypes.object,
+};

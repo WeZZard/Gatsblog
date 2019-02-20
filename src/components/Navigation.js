@@ -114,8 +114,8 @@ class Navigation extends React.Component {
 
 Navigation.propTypes = {
   slug: PropTypes.string,
-  tableOfContents: PropTypes.object,
   errorCode: PropTypes.number,
+  headings: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default Navigation;

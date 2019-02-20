@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './MDXMetadata.module.scss';
 
 import TimeLabel from './TimeLabel';
 import CategoryLabel from './CategoryLabel';
 import TagsLabel from './TagsLabel';
 
-export default ({ items }) => {
+const MDXMetadata = ({ items }) => {
   const components = items
     .map(item => {
       const { name, data } = item;
@@ -30,3 +31,9 @@ export default ({ items }) => {
 
   return <div className={styles.flexWrapper}>{components}</div>;
 };
+
+MDXMetadata.propTypes = {
+  items: PropTypes.object.isRequired,
+};
+
+export default MDXMetadata;

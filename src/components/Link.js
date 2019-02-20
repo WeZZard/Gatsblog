@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Link.module.scss';
 
-export default props => {
+const Link = props => {
   const { kind, to: href, className } = props;
 
   const newProps = { ...props };
@@ -17,3 +18,11 @@ export default props => {
     />
   );
 };
+
+Link.propTypes = {
+  kind: PropTypes.string,
+  to: PropTypes.string,
+  className: PropTypes.string,
+};
+
+export default Link;

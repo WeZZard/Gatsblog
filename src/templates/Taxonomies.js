@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Taxonomies.module.scss';
 
+import GatsbyPage from '../gatsby/Page';
 import Main from '../components/Main';
 import Title from '../components/Title';
 import Paginator from '../components/Paginator';
@@ -8,7 +9,7 @@ import TaxonomySummary from '../components/TaxonomySummary';
 
 import { graphql } from 'gatsby';
 
-class Taxonomies extends React.Component {
+class Taxonomies extends GatsbyPage {
   render() {
     const { data, pageContext } = this.props;
     const {

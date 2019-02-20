@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import styles from './TaxonomySummary.module.scss';
 
 import Link from './Link';
 
-export default ({ type, taxonomy, posts }) => {
+const TaxonomySummary = ({ type, taxonomy, posts }) => {
   const baseSlug = getBaseSlug(type);
 
   const slug = `${baseSlug}/${_.kebabCase(taxonomy)}`;
@@ -41,6 +42,16 @@ export default ({ type, taxonomy, posts }) => {
     </React.Fragment>
   );
 };
+
+TaxonomySummary.displayName = 'TaxonomySummary';
+
+TaxonomySummary.propTypes = {
+  posts: PropTypes.arrayOf(PropTypes.string).isRequired,
+  taxonomy: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+};
+
+export default TaxonomySummary;
 
 const getRelatedPosts = (type, posts, taxonomy, limit = 5) => {
   switch (type) {

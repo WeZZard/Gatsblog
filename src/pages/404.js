@@ -1,6 +1,6 @@
 import React from 'react';
-import { graphql } from 'gatsby';
 
+import GatsbyPage from '../gatsby/Page';
 import Viewport from '../components/Viewport';
 import SEO from '../components/SEO';
 import GoogleAnalytics from '../components/GoogleAnalytics';
@@ -8,15 +8,8 @@ import Navigation from '../components/Navigation';
 import SiteFooter from '../components/SiteFooter';
 import styles from './404.module.scss';
 
-class NotFoundPage extends React.Component {
+class NotFoundPage extends GatsbyPage {
   render() {
-    const { data } = this.props;
-    const {
-      config: {
-        site: { siteTitle },
-      },
-    } = data;
-
     return (
       <React.Fragment>
         <Viewport />
@@ -40,13 +33,3 @@ class NotFoundPage extends React.Component {
 }
 
 export default NotFoundPage;
-
-export const pageQuery = graphql`
-  query {
-    config: configYaml {
-      site {
-        title
-      }
-    }
-  }
-`;

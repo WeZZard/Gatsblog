@@ -12,7 +12,7 @@ const SEO = ({
 }) => {
   return (
     <StaticQuery
-      query={siteSEOQuery}
+      query={componentQuery}
       render={data => {
         const {
           config: {
@@ -95,17 +95,17 @@ SEO.defaultProps = {
 };
 
 SEO.propTypes = {
-  description: PropTypes.string,
   lang: PropTypes.string,
-  meta: PropTypes.array,
+  title: PropTypes.string,
+  description: PropTypes.string,
   keywords: PropTypes.arrayOf(PropTypes.string),
-  pageTitle: PropTypes.string,
+  meta: PropTypes.array,
 };
 
 export default SEO;
 
-const siteSEOQuery = graphql`
-  query SiteSEOQuery {
+const componentQuery = graphql`
+  query SEOQuery {
     config: configYaml {
       site {
         title

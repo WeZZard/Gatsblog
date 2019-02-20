@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Taxonomy.module.scss';
 
 import Link from './Link';
 
-export default ({ kind, name, className, taxonomies }) => {
+const Taxonomy = ({ kind, name, className, taxonomies }) => {
   const taxonomyItems = taxonomies.map(taxonomy => (
     <li key={`${taxonomy.slug}`} className={styles.taxonomyItem}>
       <span className={styles.taxonomyItemContent}>
@@ -22,4 +23,13 @@ export default ({ kind, name, className, taxonomies }) => {
       <ul className={styles.taxonomyItemList}>{taxonomyItems}</ul>
     </div>
   );
+};
+
+export default Taxonomy;
+
+Taxonomy.propTypes = {
+  className: PropTypes.string,
+  kind: PropTypes.string,
+  name: PropTypes.string,
+  taxonomies: PropTypes.arrayOf(PropTypes.string),
 };

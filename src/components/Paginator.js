@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Link from './Link';
 import styles from './Paginator.module.scss';
 
@@ -60,5 +61,9 @@ class Paginator extends React.Component {
     );
   }
 }
+
+Paginator.propTypes = {
+  paginationInfo: PropTypes.object,
+};
 
 export default Paginator;

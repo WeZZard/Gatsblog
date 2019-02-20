@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './InlineSegment.module.scss';
 
 import Paragraph from './Paragraph';
@@ -19,7 +20,7 @@ const isInlineElement = child => {
   }
 };
 
-export default props => {
+const InlineSegment = props => {
   const { children } = props;
   const normalizedChildren = normalizeChildren(children);
 
@@ -58,7 +59,7 @@ export default props => {
     }, [])
     .map((child, index) => {
       if (Array.isArray(child)) {
-        return <Paragraph key={index} children={child} />;
+        return <Paragraph key={index}>{child}</Paragraph>;
       } else {
         return child;
       }
@@ -66,3 +67,9 @@ export default props => {
 
   return <div className={styles.inlineSegment}>{reducedChildren}</div>;
 };
+
+InlineSegment.propTypes = {
+  children: PropTypes.any,
+};
+
+export default InlineSegment;

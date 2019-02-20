@@ -1,7 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 
-export default () => {
+const Viewport = () => {
   return (
     <Helmet>
       <meta
@@ -11,3 +11,7 @@ export default () => {
     </Helmet>
   );
 };
+
+Viewport.displayName = 'Viewport';
+
+export default Viewport;

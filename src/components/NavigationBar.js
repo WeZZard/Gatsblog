@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './NavigationBar.module.scss';
 
 import { StaticQuery, graphql } from 'gatsby';
@@ -20,6 +21,11 @@ const NavigationItem = ({ navigationItem, isSelected }) => {
       </Link>
     </span>
   );
+};
+
+NavigationItem.propTypes = {
+  isSelected: PropTypes.bool,
+  navigationItem: PropTypes.object,
 };
 
 class NavigationBar extends React.Component {
@@ -137,6 +143,10 @@ class NavigationBar extends React.Component {
     );
   }
 }
+
+NavigationBar.propTypes = {
+  slug: PropTypes.string,
+};
 
 export default NavigationBar;
 

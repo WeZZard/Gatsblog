@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './License.module.scss';
 
 import CC40Image from './CC40Image';
 import { graphql, StaticQuery } from 'gatsby';
 
-export default ({ license }) => (
+const License = ({ license }) => (
   <StaticQuery
     query={componentQuery}
     render={({
@@ -44,6 +45,10 @@ export default ({ license }) => (
   />
 );
 
+License.displayName = 'License';
+
+export default License;
+
 const cc40TextForOptions = options => {
   const items = [];
 
@@ -66,6 +71,10 @@ const cc40TextForOptions = options => {
   return `This work is licensed under a Creative Commons ${items.join(
     '-',
   )} 4.0 International License.`;
+};
+
+License.propTypes = {
+  license: PropTypes.string.isRequired,
 };
 
 const componentQuery = graphql`

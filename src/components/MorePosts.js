@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import assert from 'assert';
 import styles from './MorePosts.module.scss';
 
@@ -28,5 +29,10 @@ class MorePosts extends React.Component {
     );
   }
 }
+
+MorePosts.propTypes = {
+  earlierPostExcerpt: PropTypes.object,
+  laterPostExcerpt: PropTypes.object,
+};
 
 export default MorePosts;

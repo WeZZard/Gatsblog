@@ -3,12 +3,13 @@ import styles from './Page.module.scss';
 
 import { graphql } from 'gatsby';
 
+import GatsbyPage from '../gatsby/Page';
 import Main from '../components/Main';
 import Title from '../components/Title';
 import MDXMetadata from '../components/MDXMetadata';
 import MDXBody from '../components/MDXBody';
 
-class Page extends React.Component {
+class Page extends GatsbyPage {
   render() {
     const { data } = this.props;
     const { page } = data;

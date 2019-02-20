@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import assert from 'assert';
 import styles from './PostExcerptMetadata.module.scss';
 
 import MDXMetadata from './MDXMetadata';
 
-export default ({ post }) => {
+const PostExcerptMetadata = ({ post }) => {
   const createdTime = { name: 'time', data: post.createdTime };
 
   const category = post.category
@@ -31,3 +32,9 @@ export default ({ post }) => {
     </React.Fragment>
   );
 };
+
+PostExcerptMetadata.propTypes = {
+  post: PropTypes.object.isRequired,
+};
+
+export default PostExcerptMetadata;

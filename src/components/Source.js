@@ -1,3 +1,6 @@
 import React from 'react';
 
-export default props => <source {...props} />;
+const Source = props => <source {...props} />;
+Source.displayName = 'Source';
+
+export default Source;

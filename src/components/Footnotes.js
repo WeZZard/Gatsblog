@@ -1,28 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Footnotes.module.scss';
 
 import Anchor from './Anchor';
 import Paragraph from './Paragraph';
 import MDXContext from './MDXContext';
 import { normalizeChildren, processChildren, rawStringToSpan } from '../utils';
-
-export default props => {
-  const { children } = props;
-  const separator = children[0];
-  const footnotes = children.slice(1);
-  return (
-    <React.Fragment>
-      {separator}
-      <MDXContext.Provider value={'sans'}>
-        <section className={styles.flexWrapper}>
-          {footnotes.map((footnotesItem, index) => (
-            <FootnoteList key={index} {...footnotesItem.props} />
-          ))}
-        </section>
-      </MDXContext.Provider>
-    </React.Fragment>
-  );
-};
 
 class FootnoteList extends React.Component {
   render() {
@@ -33,6 +16,10 @@ class FootnoteList extends React.Component {
     return <ul className={styles.footnoteList}>{listItems}</ul>;
   }
 }
+
+FootnoteList.propTypes = {
+  children: PropTypes.any,
+};
 
 class FootnoteItem extends React.Component {
   render() {
@@ -50,6 +37,11 @@ class FootnoteItem extends React.Component {
     );
   }
 }
+
+FootnoteItem.propTypes = {
+  children: PropTypes.any,
+  props: PropTypes.object,
+};
 
 const processFootnoteListItemChildren = (children, footnoteId, processors) => {
   return children.map((child, index) => {
@@ -88,21 +80,46 @@ const p = (child, index, footnoteId) => {
 };
 
 const a = (child, index) => {
-  const { children, props } = child.props;
+  const { children, props: p } = child.props;
 
-  if (props.className === 'footnote-backref') {
-    const { href } = props;
+  if (p.className === 'footnote-backref') {
+    const { href } = p;
 
     return (
       <span key={index} className={styles.backReference}>
-        <Anchor href={href} children={'^'} />
+        <Anchor href={href}>{'^'}</Anchor>
       </span>
     );
   }
 
   return (
     <span key={index}>
-      <Anchor {...props} children={children} />
+      <Anchor {...p}>{children}</Anchor>
     </span>
   );
 };
+
+const Footnotes = ({ children }) => {
+  const separator = children[0];
+  const footnotes = children.slice(1);
+  return (
+    <React.Fragment>
+      {separator}
+      <MDXContext.Provider value={'sans'}>
+        <section className={styles.flexWrapper}>
+          {footnotes.map((footnotesItem, index) => (
+            <FootnoteList key={index} {...footnotesItem.props} />
+          ))}
+        </section>
+      </MDXContext.Provider>
+    </React.Fragment>
+  );
+};
+
+Footnotes.propTypes = {
+  children: PropTypes.any,
+};
+
+Footnotes.displayName = 'Footnotes';
+
+export default Footnotes;

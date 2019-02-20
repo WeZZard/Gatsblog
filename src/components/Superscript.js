@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Superscript.module.scss';
 
 import Anchor from './Anchor';
 
 import { normalizeChildren, processChildren } from '../utils';
 
-export default ({ id, children }) => {
+const Superscript = ({ id, children }) => {
   const normalizedChildren = normalizeChildren(children);
   const processedChildren = processChildren(normalizedChildren, { a });
   return (
@@ -14,6 +15,13 @@ export default ({ id, children }) => {
     </sup>
   );
 };
+
+Superscript.propTypes = {
+  children: PropTypes.any,
+  id: PropTypes.string,
+};
+
+export default Superscript;
 
 const a = (child, index) => {
   const {

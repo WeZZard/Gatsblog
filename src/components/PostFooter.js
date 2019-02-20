@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './PostFooter.module.scss';
 
 import MDXMetadata from './MDXMetadata';
 import License from './License';
 
-export default ({ tags, license }) => {
+const PostFooter = ({ tags, license }) => {
   const tagsComponent =
     tags.length > 0 ? (
       <div className={styles.tags}>
@@ -21,3 +22,10 @@ export default ({ tags, license }) => {
     </React.Fragment>
   );
 };
+
+PostFooter.propTypes = {
+  license: PropTypes.string,
+  tags: PropTypes.arrayOf(PropTypes.string),
+};
+
+export default PostFooter;

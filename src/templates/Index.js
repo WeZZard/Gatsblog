@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Index.module.scss';
 
+import GatsbyPage from '../gatsby/Page';
 import Main from '../components/Main';
 import Title from '../components/Title';
 import PostExcerpt from '../components/PostExcerpt';
@@ -8,7 +9,7 @@ import Paginator from '../components/Paginator';
 
 import { graphql } from 'gatsby';
 
-class Index extends React.Component {
+class Index extends GatsbyPage {
   render() {
     const { data, pageContext } = this.props;
     const {

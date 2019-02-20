@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import MDXRenderer from 'gatsby-mdx/mdx-renderer';
 import MDXContext from './MDXContext';
@@ -25,7 +26,110 @@ import PreFormattedBlock from './PreFormattedBlock';
 
 import { pToImage, pToPicture, preToMathBlock, preToCodeBlock } from '../utils';
 
-export default ({ textStyle, code }) => (
+const scope = {
+  InlineMath,
+  MathBlock,
+};
+
+const h1 = props => <Heading level={1} {...props} />;
+h1.displayName = 'h1';
+
+const h2 = props => <Heading level={2} {...props} />;
+h2.displayName = 'h2';
+
+const h3 = props => <Heading level={3} {...props} />;
+h3.displayName = 'h3';
+
+const h4 = props => <Heading level={4} {...props} />;
+h4.displayName = 'h4';
+
+const h5 = props => <Heading level={5} {...props} />;
+h5.displayName = 'h5';
+
+const h6 = props => <Heading level={6} {...props} />;
+h6.displayName = 'h6';
+
+const p = props => {
+  const image = pToImage(props);
+  if (image) {
+    return <Image {...image} />;
+  }
+  const picture = pToPicture(props);
+  if (picture) {
+    return <Picture {...picture} />;
+  }
+  return <Paragraph {...props} />;
+};
+p.displayName = 'p';
+
+const pre = props => {
+  const codeBlock = preToCodeBlock(props);
+  const mathBlock = preToMathBlock(props);
+  // if there's a codeString and some props, we passed the test
+  if (codeBlock) {
+    return <CodeBlock {...codeBlock} />;
+  } else if (preToMathBlock) {
+    return <MathBlock {...mathBlock} />;
+  } else {
+    return <PreFormattedBlock {...props} />;
+  }
+};
+pre.displayName = 'pre';
+
+const ol = props => <List type={'orderedList'} {...props} />;
+ol.displayName = 'ol';
+
+const ul = props => <List type={'unorderedList'} {...props} />;
+ul.displayName = 'ul';
+
+const input = props => {
+  if (props.type && props.type === 'checkbox') {
+    return <Checkbox {...props} />;
+  }
+  return <input {...props} />;
+};
+input.displayName = 'input';
+input.propTypes = {
+  type: PropTypes.object,
+};
+
+const div = props => {
+  if (props.className === 'footnotes') {
+    return <Footnotes {...props} />;
+  }
+  return <div {...props} />;
+};
+input.displayName = 'div';
+div.propTypes = {
+  className: PropTypes.object,
+};
+
+const components = {
+  wrapper: React.Fragment,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  inlineCode: InlineCode,
+  pre,
+  strong: Strong,
+  hr: SegmentSeparator,
+  ol,
+  ul,
+  table: Table,
+  th: TableHeader,
+  td: TableData,
+  blockquote: Blockquote,
+  input,
+  div,
+  sup: Superscript,
+  a: Anchor,
+};
+
+const MDXBody = ({ textStyle, code }) => (
   <MDXContext.Provider value={textStyle}>
     <MDXRenderer scope={scope} components={components}>
       {code.body}
@@ -33,63 +137,9 @@ export default ({ textStyle, code }) => (
   </MDXContext.Provider>
 );
 
-const scope = {
-  InlineMath,
-  MathBlock,
+MDXBody.propTypes = {
+  code: PropTypes.string.isRequired,
+  textStyle: PropTypes.string.isRequired,
 };
 
-const components = {
-  wrapper: React.Fragment,
-  h1: props => <Heading level={1} {...props} />,
-  h2: props => <Heading level={2} {...props} />,
-  h3: props => <Heading level={3} {...props} />,
-  h4: props => <Heading level={4} {...props} />,
-  h5: props => <Heading level={5} {...props} />,
-  h6: props => <Heading level={6} {...props} />,
-  p: props => {
-    const image = pToImage(props);
-    if (image) {
-      return <Image {...image} />;
-    }
-    const picture = pToPicture(props);
-    if (picture) {
-      return <Picture {...picture} />;
-    }
-    return <Paragraph {...props} />;
-  },
-  inlineCode: InlineCode,
-  pre: props => {
-    const codeBlock = preToCodeBlock(props);
-    const mathBlock = preToMathBlock(props);
-    // if there's a codeString and some props, we passed the test
-    if (codeBlock) {
-      return <CodeBlock {...codeBlock} />;
-    } else if (preToMathBlock) {
-      return <MathBlock {...mathBlock} />;
-    } else {
-      return <PreFormattedBlock {...props} />;
-    }
-  },
-  strong: Strong,
-  hr: SegmentSeparator,
-  ol: props => <List type={'orderedList'} {...props} />,
-  ul: props => <List type={'unorderedList'} {...props} />,
-  table: Table,
-  th: TableHeader,
-  td: TableData,
-  blockquote: Blockquote,
-  input: props => {
-    if (props.type && props.type === 'checkbox') {
-      return <Checkbox {...props} />;
-    }
-    return <input {...props} />;
-  },
-  div: props => {
-    if (props.className === 'footnotes') {
-      return <Footnotes {...props} />;
-    }
-    return <div {...props} />;
-  },
-  sup: Superscript,
-  a: Anchor,
-};
+export default MDXBody;

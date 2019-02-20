@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './TocButton.module.scss';
 
-export default ({ onClick, isOpen }) => (
+const TocButton = ({ onClick, isOpen }) => (
   <div
     className={[styles.button, isOpen ? styles.open : null]
       .filter(_ => _)
@@ -18,3 +19,12 @@ export default ({ onClick, isOpen }) => (
     </div>
   </div>
 );
+
+TocButton.propTypes = {
+  onClick: PropTypes.function,
+  isOpen: PropTypes.bool,
+};
+
+TocButton.displayName = 'TocButton';
+
+export default TocButton;

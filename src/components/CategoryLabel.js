@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 const _ = require('lodash');
 
 import Taxonomy from './Taxonomy';
 
-export default ({ category }) => (
+const CategoryLabel = ({ category }) => (
   <Taxonomy
     kind={'primary'}
     name="Category"
@@ -12,3 +13,9 @@ export default ({ category }) => (
     ]}
   />
 );
+
+CategoryLabel.propTypes = {
+  category: PropTypes.string,
+};
+
+export default CategoryLabel;

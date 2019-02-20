@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Title.module.scss';
 
 class Title extends React.Component {
@@ -21,5 +22,11 @@ class Title extends React.Component {
     );
   }
 }
+
+Title.propTypes = {
+  textStyle: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
+};
 
 export default Title;

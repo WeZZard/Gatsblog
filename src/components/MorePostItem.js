@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './MorePostItem.module.scss';
 
 import PostExcerptMetadata from './PostExcerptMetadata';
 import Link from './Link';
 
-export default ({ info }) => {
+const MorePostItem = ({ info }) => {
   const { title, item } = info;
 
   const subtitleComponent =
@@ -50,3 +51,9 @@ export default ({ info }) => {
     </div>
   );
 };
+
+MorePostItem.propTypes = {
+  info: PropTypes.object.isRequired,
+};
+
+export default MorePostItem;

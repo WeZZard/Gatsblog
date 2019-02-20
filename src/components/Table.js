@@ -4,7 +4,7 @@ import styles from './Table.module.scss';
 import MDXContext from './MDXContext';
 import BlockquoteContext from './BlockquoteContext';
 
-export default props => (
+const Table = props => (
   <BlockquoteContext.Consumer>
     {isInBlockquote => (
       <MDXContext.Provider value={'sans'}>
@@ -17,3 +17,7 @@ export default props => (
     )}
   </BlockquoteContext.Consumer>
 );
+
+Table.displayName = 'Table';
+
+export default Table;

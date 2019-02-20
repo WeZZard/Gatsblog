@@ -5,7 +5,6 @@ extends:
   - stylelint-config-recommended
 rules:
   at-rule-no-unknown:
-  indentation: 4
   unit-whitelist:
     - em
     - rem

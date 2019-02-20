@@ -3,7 +3,7 @@ import styles from './PageInfo.module.scss';
 
 import { graphql, StaticQuery } from 'gatsby';
 
-export default () => (
+const PageInfo = () => (
   <StaticQuery
     query={componentQuery}
     render={({
@@ -31,6 +31,10 @@ export default () => (
     }}
   />
 );
+
+PageInfo.displayName = 'PageInfo';
+
+export default PageInfo;
 
 const componentQuery = graphql`
   query MainQuery {

@@ -1,6 +1,10 @@
 import Span from '../components/Span';
 import React from 'react';
 
-export default (string, index) => {
+export default rawStringToSpan;
+
+const rawStringToSpan = (string, index) => {
   return <Span key={index}>{string}</Span>;
 };
+
+rawStringToSpan.displayName = 'Span';

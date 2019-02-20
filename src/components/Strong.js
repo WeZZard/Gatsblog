@@ -1,4 +1,8 @@
 import React from 'react';
 import styles from './Strong.module.scss';
 
-export default props => <strong className={styles.strong} {...props} />;
+const Strong = props => <strong className={styles.strong} {...props} />;
+
+Strong.displayName = 'Strong';
+
+export default Strong;
