@@ -10,7 +10,7 @@ import Link from './Link';
 const Item = styled.li`
   @media (max-width: 1280px) {
     transition-delay: ${({ isOpen, index, count }) =>
-      isOpen ? 0.56 - index * (0.56 / count) : 0.2 + index * (0.56 / count)}s;
+      isOpen ? 0.2 + 0.07 * index : 0.56 - index * (0.56 / (count - 1))}s;
   }
 `;
 

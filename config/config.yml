@@ -82,6 +82,15 @@ navigation:
       slug: /profile
       weight: 0
 
+social:
+  - name: GitHub
+    icon: fontawesome://fab/github
+    link: https://github.com/WeZZard
+
+  - name: Feed
+    icon: fontawesome://fas/rss-square
+    link: rss.xml
+
 # The pagination config for index pages.
 #
 pagination:

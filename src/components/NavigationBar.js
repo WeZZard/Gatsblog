@@ -9,12 +9,12 @@ import styled from 'styled-components';
 const Item = styled.li`
   @media (max-width: 1280px) {
     transition-delay: ${({ isOpen, index, count }) =>
-      isOpen ? 0.56 - index * (0.56 / count) : 0.2 + index * (0.56 / count)}s;
+      isOpen ? 0.2 + 0.07 * index : 0.56 - index * (0.56 / (count - 1))}s;
     }
   }
 `;
 
-const NavigationItem = ({ navigationItem, isSelected }) => {
+const NavigationItem = ({ navigationItem, isSelected, onClick }) => {
   const { name, slug } = navigationItem;
 
   const className = isSelected
@@ -25,7 +25,7 @@ const NavigationItem = ({ navigationItem, isSelected }) => {
 
   return (
     <span className={className}>
-      <Link kind={kind} to={slug}>
+      <Link kind={kind} to={slug} onClick={onClick}>
         {name}
       </Link>
     </span>
@@ -33,13 +33,14 @@ const NavigationItem = ({ navigationItem, isSelected }) => {
 };
 
 NavigationItem.propTypes = {
-  isSelected: PropTypes.bool,
-  navigationItem: PropTypes.object,
+  isSelected: PropTypes.bool.isRequried,
+  navigationItem: PropTypes.object.isRequried,
+  onClick: PropTypes.func.isRequried,
 };
 
 class NavigationBar extends React.Component {
   render() {
-    const { isOpen, slug } = this.props;
+    const { isOpen, slug, navItemOnClick } = this.props;
 
     return (
       <StaticQuery
@@ -138,6 +139,7 @@ class NavigationBar extends React.Component {
                 <NavigationItem
                   navigationItem={navigationItem}
                   isSelected={isSelected}
+                  onClick={navItemOnClick}
                 />
               </Item>
             );
@@ -164,6 +166,7 @@ class NavigationBar extends React.Component {
 
 NavigationBar.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  navItemOnClick: PropTypes.func.isRequired,
   slug: PropTypes.string,
 };
 

@@ -32,7 +32,7 @@
     background-color: white;
     height: 44px;
     overflow: hidden;
-    transition: all 0.3s ease-in, background 0.5s ease-in;
+    transition: all 0.5s ease-out, background 1s ease-out;
     width: 100vw;
     padding-top: env(safe-area-inset-top);
     z-index: 999;
@@ -68,7 +68,7 @@
 
       @media (max-width: $mobile-max) {
         display: flex;
-        margin-left: -1.5rem;
+        margin-left: -1.2rem;
         margin-right: 2.1rem;
         transition: all 0.3s ease-in;
         z-index: 999;
@@ -79,6 +79,8 @@
       display: flex;
 
       @media (max-width: $mobile-max) {
+        opacity: 1;
+        transform: scale(1) translateY(0);
         transition: all 0.3s ease-in;
       }
     }
@@ -91,7 +93,7 @@
       @media (max-width: $mobile-max) {
         display: flex;
         margin-left: 2.1rem;
-        margin-right: -1.5rem;
+        margin-right: -1.2rem;
         transition: all 0.3s ease-in;
         z-index: 999;
       }
@@ -99,8 +101,9 @@
   }
 
   .navigation {
-    @include container-row-stretch;
-
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
     flex-grow: 0;
     flex-shrink: 0;
     margin-bottom: 0;
@@ -109,6 +112,9 @@
     margin-top: 3.4rem;
 
     @media (max-width: $mobile-max) {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
       margin: 0;
       margin-top: 44px;
       opacity: 0;

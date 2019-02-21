@@ -5,6 +5,7 @@ import MediaQuery from 'react-responsive';
 
 import TableOfContents from './TableOfContents';
 import NavigationBar from './NavigationBar';
+import SocialBar from './SocialBar';
 import TocButton from './TocButton';
 import NavButton from './NavButton';
 import SiteTitle from './SiteTitle';
@@ -17,7 +18,7 @@ class Navigation extends React.Component {
     this.toggleToc = this.toggleToc.bind(this);
     this.toggleNav = this.toggleNav.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
-    this.navItemOnClick = this.navItemOnClick.bind(this);
+    this.menuItemOnClick = this.menuItemOnClick.bind(this);
     this.state = {
       isTocSelected: false,
       isNavSelected: false,
@@ -55,7 +56,7 @@ class Navigation extends React.Component {
     this.setState(newState);
   }
 
-  navItemOnClick() {
+  menuItemOnClick() {
     this.setState({
       ...this.state,
       isTocSelected: false,
@@ -98,7 +99,7 @@ class Navigation extends React.Component {
       <div className={styles.tableOfContents}>
         <TableOfContents
           headings={headings}
-          tocItemOnClick={this.navItemOnClick}
+          tocItemOnClick={this.menuItemOnClick}
           isOpen={isTocSelected}
         />
       </div>
@@ -140,7 +141,15 @@ class Navigation extends React.Component {
                 {navButton}
               </div>
               <div className={styles.navigation}>
-                <NavigationBar isOpen={isNavSelected} slug={slug} />
+                <NavigationBar
+                  isOpen={isNavSelected}
+                  navItemOnClick={this.menuItemOnClick}
+                  slug={slug}
+                />
+                <SocialBar
+                  isOpen={isNavSelected}
+                  socialItemOnClick={this.menuItemOnClick}
+                />
               </div>
               {tableOfContentsComponent}
             </div>

@@ -165,6 +165,10 @@
   }
 }
 
+.social {
+  @include navigation;
+}
+
 .toc {
   text-decoration: none;
 

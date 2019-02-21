@@ -11,20 +11,14 @@ const Link = props => {
   delete newProps.kind;
   delete newProps.className;
 
+  const linkClassName = [styles[kind], className].filter(_ => _).join(' ');
+
   if (to.startsWith('/')) {
-    return (
-      <_Link className={[styles[kind], className].join(' ')} {...newProps} />
-    );
+    return <_Link className={linkClassName} {...newProps} />;
   } else {
     delete newProps.to;
 
-    return (
-      <a
-        className={[styles[kind], className].join(' ')}
-        href={to}
-        {...newProps}
-      />
-    );
+    return <a className={linkClassName} href={to} {...newProps} />;
   }
 };
 

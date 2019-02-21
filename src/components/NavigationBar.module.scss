@@ -17,13 +17,14 @@
   @include container-column;
 
   color: $color-ui-nav-headline-normal;
-  flex-grow: 1;
+  flex-grow: 0;
   flex-shrink: 0;
   text-transform: uppercase;
 
   @media (max-width: $mobile-max) {
     flex-direction: row;
-    flex-grow: 1;
+    flex-grow: 0;
+    flex-shrink: 0;
     text-align: left;
   }
 
