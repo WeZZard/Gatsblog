@@ -27,7 +27,6 @@
   flex-grow: 1;
   flex-shrink: 1;
   max-width: 396px;
-  padding: 2.1rem;
   width: calc(100% - 4.2rem);
 
   @media (max-width: $small-screen-max) {
@@ -43,19 +42,23 @@
   }
 
   .header {
-    align-items: baseline;
+    align-items: flex-end;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-shrink: 0;
-    margin-bottom: 2.1rem;
+    padding-bottom: 2.1rem;
+    padding-left: 2.1rem;
+    padding-right: 2.1rem;
+    padding-top: 2.1rem;
 
     @media (max-width: $mobile-max) {
       @include horizontal-margin;
 
       align-items: center;
+      flex-direction: row;
       justify-content: space-around;
       height: 44px;
-      margin-bottom: 0;
+      padding: 0;
     }
 
     .title {
@@ -90,12 +93,15 @@
     overflow-x: hidden;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 0.3rem;
-    padding-top: 0.2rem;
+    margin-bottom: 2.1rem;
+    padding-left: 2.1rem;
+    padding-right: 2.1rem;
+    padding-top: 1.3rem;
 
     @media (max-width: $mobile-max) {
-      padding-top: 2.1rem;
+      padding: 0;
       padding-bottom: 2.1rem;
+      padding-top: 2.1rem;
     }
 
     .sectionList {
@@ -118,22 +124,30 @@
 
         counter-increment: ordered-list;
         flex-shrink: 0;
-        margin-bottom: 2.1rem;
         padding: 0;
 
         @media (max-width: $mobile-max) {
           opacity: 0;
           transform: scale(1.15) translateY(-30px);
           transition: transform 0.5s $cubic, opacity 0.6s $cubic;
-          margin-bottom: 3.4rem;
         }
 
-        .content {
+        &:first-child {
+          margin-top:  -1.7rem;
+        }
+
+        &:last-child {
+          margin-bottom: -1.7rem;
+        }
+
+        .anchor {
           align-items: baseline;
           display: flex;
           flex-direction: row;
           justify-content: space-between;
           line-height: calc(13 / 11);
+          padding-bottom: 1.7rem;
+          padding-top: 1.7rem;
 
           @media (max-width: $mobile-max) {
             @include horizontal-margin;
@@ -141,36 +155,18 @@
 
           .sectionName {
             font-family: $font-text-sans;
-            font-size: 1.1em;
-            font-weight: 400;
-            margin-bottom: -0.3rem;
-            margin-top: -0.2rem;
-            text-transform: uppercase;
-
-            @media (max-width: $mobile-max) {
-              font-family: $font-text-sans;
-              font-size: 1.5em;
-              line-height: calc(29 / 15);
-              margin-bottom: -0.9rem;
-              margin-top: -1.2rem;
-              text-transform: none;
-            }
+            font-size: 1.5em;
+            line-height: calc(29 / 15);
+            margin-bottom: -0.9rem;
+            margin-top: -1.2rem;
           }
 
           .sectionIndex {
             font-family: $font-text-monospaced;
-            font-size: 1.1em;
-            font-weight: 400;
-            margin-bottom: -0.3rem;
-            margin-top: -0.2rem;
-
-            @media (max-width: $mobile-max) {
-              font-family: $font-text-monospaced;
-              font-size: 1.5em;
-              line-height: calc(29 / 15);
-              margin-bottom: -0.9rem;
-              margin-top: -1.2rem;
-            }
+            font-size: 1.5em;
+            line-height: calc(29 / 15);
+            margin-bottom: -0.9rem;
+            margin-top: -1.2rem;
           }
         }
 

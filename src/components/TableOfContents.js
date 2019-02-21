@@ -104,7 +104,7 @@ class TableOfContents extends React.Component {
               <Link
                 kind={'toc'}
                 to={url}
-                className={styles.content}
+                className={styles.anchor}
                 onClick={tocItemOnClick}
               >
                 <span className={styles.sectionName}>{item.title}</span>
