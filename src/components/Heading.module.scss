@@ -1,7 +1,8 @@
 @import '../styles/colors';
 @import '../styles/fonts';
+@import '../styles/responsive';
 
-@mixin heading {
+@mixin content {
   color: $color-content-heading;
   display: block;
   margin: 0;
@@ -12,11 +13,17 @@
   display: flex;
   flex-direction: column;
   font-size: 1em;
-  margin-bottom: 3.4rem;
-  margin-top: 2.1rem;
+  margin: 0;
+  padding-bottom: 3.4rem;
+  padding-top: 2.1rem;
+
+  @media (max-width: $mobile-max) {
+    margin-top: calc(-44px);
+    padding-top: calc(2.1rem + 44px);
+  }
 
   .h1 {
-    @include heading;
+    @include content;
 
     font-family: $font-text-sans;
     font-size: 3.2em;
@@ -27,7 +34,7 @@
   }
 
   .h2 {
-    @include heading;
+    @include content;
 
     font-family: $font-text-sans;
     font-size: 2.6em;
@@ -38,7 +45,7 @@
   }
 
   .h3 {
-    @include heading;
+    @include content;
 
     font-family: $font-text-sans;
     font-size: 2.1em;
@@ -49,7 +56,7 @@
   }
 
   .h4 {
-    @include heading;
+    @include content;
 
     font-family: $font-text-sans;
     font-size: 1.9em;
@@ -60,7 +67,7 @@
   }
 
   .h5 {
-    @include heading;
+    @include content;
 
     font-family: $font-text-sans;
     font-size: 1.7em;
@@ -71,7 +78,7 @@
   }
 
   .h6 {
-    @include heading;
+    @include content;
 
     font-family: $font-text-sans;
     font-size: 1.5em;
