@@ -14,30 +14,6 @@ const Item = styled.li`
   }
 `;
 
-const NavigationItem = ({ navigationItem, isSelected, onClick }) => {
-  const { name, slug } = navigationItem;
-
-  const className = isSelected
-    ? [styles.navigationItemContents, styles.selected].join(' ')
-    : styles.navigationItemContents;
-
-  const kind = isSelected ? 'navigationSelected' : 'navigationNormal';
-
-  return (
-    <span className={className}>
-      <Link kind={kind} to={slug} onClick={onClick}>
-        {name}
-      </Link>
-    </span>
-  );
-};
-
-NavigationItem.propTypes = {
-  isSelected: PropTypes.bool.isRequried,
-  navigationItem: PropTypes.object.isRequried,
-  onClick: PropTypes.func.isRequried,
-};
-
 class NavigationBar extends React.Component {
   render() {
     const { isOpen, slug, navItemOnClick } = this.props;
@@ -130,17 +106,25 @@ class NavigationBar extends React.Component {
             const slugRegex = new RegExp(slugPattern);
             const isSelected = slug && slugRegex.exec(slug) !== null;
 
+            const { name: itemName, slug: itemSlug } = navigationItem;
+
+            const className = isSelected
+              ? [styles.navigationItemContents, styles.selected].join(' ')
+              : styles.navigationItemContents;
+
+            const kind = isSelected ? 'navigationSelected' : 'navigationNormal';
+
             return (
               <Item
                 className={styles.item}
                 key={navigationItem.slug}
                 isOpen={isOpen}
               >
-                <NavigationItem
-                  navigationItem={navigationItem}
-                  isSelected={isSelected}
-                  onClick={navItemOnClick}
-                />
+                <span className={className}>
+                  <Link kind={kind} to={itemSlug} onClick={navItemOnClick}>
+                    {itemName}
+                  </Link>
+                </span>
               </Item>
             );
           });
