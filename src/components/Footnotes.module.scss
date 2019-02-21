@@ -1,5 +1,6 @@
 @import '../styles/fonts';
 @import '../styles/colors';
+@import '../styles/responsive';
 
 .flexWrapper {
   align-items: stretch;
@@ -17,7 +18,15 @@
       align-items: stretch;
       display: flex;
       flex-direction: column;
+      margin: 0;
       margin-bottom: 5.5rem;
+      padding-bottom: 3.4rem;
+      padding-top: 2.1rem;
+
+      @media (max-width: $mobile-max) {
+        margin-top: calc(-44px);
+        padding-top: calc(2.1rem + 44px);
+      }
 
       &:last-child {
         margin-bottom: 0;

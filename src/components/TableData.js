@@ -6,7 +6,7 @@ import InlineSegment from './InlineSegment';
 
 const TableData = ({ align, children }) => {
   return (
-    <td className={styles.tableHeader} align={align}>
+    <td className={styles.tableData} align={align}>
       <InlineSegment>{children}</InlineSegment>
     </td>
   );

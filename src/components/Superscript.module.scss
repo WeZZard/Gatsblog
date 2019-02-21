@@ -1,9 +1,18 @@
 @import '../styles/fonts';
 @import '../styles/colors';
+@import '../styles/responsive';
 
 .superscript {
   font-family: $font-text-monospaced;
   font-size: 0.618em;
+  margin: 0;
+  padding-bottom: 3.4rem;
+  padding-top: 2.1rem;
+
+  @media (max-width: $mobile-max) {
+    margin-top: calc(-44px);
+    padding-top: calc(2.1rem + 44px);
+  }
 
   &::before {
     content: '[';
