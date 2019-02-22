@@ -20,7 +20,7 @@ test('MDXMetadata creates metadata of Post whose createdTime can fallback to tim
     frontmatter: {
       title: 'Post Title',
       subtitle: 'Post Subtitle',
-      isPublished: true,
+      isPublished: 'true',
       tags: ['Tag1', 'Tag2', 'Tag3'],
       category: 'Category1',
       lastModifiedTime: '2019-01-03',
@@ -40,21 +40,14 @@ test('MDXMetadata creates metadata of Post whose createdTime can fallback to tim
 
   const result = {
     documentType: 'Post',
-    documentIdentifier: '2019-01-01-Post-Title',
     title: 'Post Title',
-    subtitle: 'Post Subtitle',
     isIndex: false,
     isPublished: true,
     createdTime: new Date('2019-01-01'),
-    lastModifiedTime: new Date('2019-01-03'),
-    tags: ['Tag1', 'Tag2', 'Tag3'],
-    category: 'Category1',
     lang: '',
     isLocalized: false,
     slug: `/post/2019/01/post-title-${_('2019-01-01-Post-Title')}`,
-    relativePath: '2019-01-01-Post-Title.md',
     inlineFileLink: '2019-01-01-Post-Title.md',
-    license: '',
   };
 
   expect(MDXMetadata(args)).toEqual(result);
@@ -79,7 +72,7 @@ test('MDXMetadata creates metadata of Page whose createdTime can fallback to bir
     frontmatter: {
       title: 'Page Title',
       subtitle: 'Page Subtitle',
-      isPublished: true,
+      isPublished: 'true',
       tags: ['Tag1', 'Tag2', 'Tag3'],
       category: 'Category1',
       lastModifiedTime: '2019-01-02',
@@ -99,19 +92,14 @@ test('MDXMetadata creates metadata of Page whose createdTime can fallback to bir
 
   const result = {
     documentType: 'Page',
-    documentIdentifier: 'page-title',
     title: 'Page Title',
-    subtitle: 'Page Subtitle',
     isIndex: false,
     isPublished: true,
     createdTime: new Date('2019-01-01'),
-    lastModifiedTime: new Date('2019-01-02'),
     lang: '',
     isLocalized: false,
     slug: '/page-title',
-    relativePath: 'Page-Title.md',
     inlineFileLink: 'Page-Title.md',
-    license: '',
   };
 
   expect(MDXMetadata(args)).toEqual(result);

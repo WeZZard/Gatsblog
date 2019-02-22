@@ -2,7 +2,6 @@
 extends:
   - eslint:recommended
   - plugin:prettier/recommended
-  - node
 
 env:
   node: true
@@ -12,4 +11,4 @@ env:
 
 parserOptions:
   sourceType: module
-  ecmaVersion: 6
+  ecmaVersion: 2018

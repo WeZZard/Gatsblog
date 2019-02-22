@@ -32,7 +32,7 @@ test('MDXMetadata creates metadata of Post', () => {
     frontmatter: {
       title: 'Post Title',
       subtitle: 'Post Subtitle',
-      isPublished: true,
+      isPublished: 'true',
       tags: ['Tag1', 'Tag2', 'Tag3'],
       category: 'Category1',
       date: '2019-01-02',
@@ -52,22 +52,15 @@ test('MDXMetadata creates metadata of Post', () => {
   };
 
   const result = {
+    createdTime: new Date('2019-01-02T00:00:00.000Z'),
     documentType: 'Post',
-    documentIdentifier: '2019-01-01-Post-Title',
     title: 'Post Title',
-    subtitle: 'Post Subtitle',
     isIndex: false,
     isPublished: true,
-    createdTime: new Date('2019-01-02'),
-    lastModifiedTime: new Date('2019-01-03'),
-    tags: ['Tag1', 'Tag2', 'Tag3'],
-    category: 'Category1',
     lang: '',
     isLocalized: false,
     slug: `/post/2019/01/post-title-${_('2019-01-01-Post-Title')}`,
-    relativePath: '2019-01-01-Post-Title.md',
     inlineFileLink: '2019-01-01-Post-Title.md',
-    license: '',
   };
 
   expect(MDXMetadata(args)).toEqual(result);
@@ -90,7 +83,7 @@ test('MDXMetadata creates metadata of localized Post', () => {
     frontmatter: {
       title: 'Post Title',
       subtitle: 'Post Subtitle',
-      isPublished: true,
+      isPublished: 'true',
       tags: ['Tag1', 'Tag2', 'Tag3'],
       category: 'Category1',
       lastModifiedTime: '2019-01-02',
@@ -110,21 +103,14 @@ test('MDXMetadata creates metadata of localized Post', () => {
 
   const result = {
     documentType: 'Post',
-    documentIdentifier: '2019-01-01-Post-Title',
     title: 'Post Title',
-    subtitle: 'Post Subtitle',
     isIndex: true,
     isPublished: true,
     createdTime: new Date('2019-01-01'),
-    lastModifiedTime: new Date('2019-01-02'),
-    tags: ['Tag1', 'Tag2', 'Tag3'],
-    category: 'Category1',
     lang: 'en-US',
     isLocalized: true,
     slug: `/post/2019/01/post-title-${_('2019-01-01-Post-Title')}`,
-    relativePath: '2019-01-01-Post-Title/en-US/index.md',
     inlineFileLink: 'index.md',
-    license: '',
   };
 
   expect(MDXMetadata(args)).toEqual(result);
@@ -149,7 +135,7 @@ test('MDXMetadata creates metadata of Page', () => {
     frontmatter: {
       title: 'Page Title',
       subtitle: 'Page Subtitle',
-      isPublished: true,
+      isPublished: 'true',
       lastModifiedTime: '2019-01-02',
     },
     parent: {
@@ -167,19 +153,14 @@ test('MDXMetadata creates metadata of Page', () => {
 
   const result = {
     documentType: 'Page',
-    documentIdentifier: 'page-title',
     title: 'Page Title',
-    subtitle: 'Page Subtitle',
     isIndex: false,
     isPublished: true,
     createdTime: new Date('2019-01-01'),
-    lastModifiedTime: new Date('2019-01-02'),
     lang: '',
     isLocalized: false,
     slug: '/page-title',
-    relativePath: 'Page-Title.md',
     inlineFileLink: 'Page-Title.md',
-    license: '',
   };
 
   expect(MDXMetadata(args)).toEqual(result);
@@ -202,7 +183,7 @@ test('MDXMetadata creates metadata of localized Page', () => {
     frontmatter: {
       title: 'Page Title',
       subtitle: 'Page Subtitle',
-      isPublished: true,
+      isPublished: 'true',
       lastModifiedTime: '2019-01-02',
     },
     parent: {
@@ -220,19 +201,14 @@ test('MDXMetadata creates metadata of localized Page', () => {
 
   const result = {
     documentType: 'Page',
-    documentIdentifier: 'page-title',
     title: 'Page Title',
-    subtitle: 'Page Subtitle',
     isIndex: true,
     isPublished: true,
     createdTime: new Date('2019-01-01'),
-    lastModifiedTime: new Date('2019-01-02'),
     lang: 'en-US',
     isLocalized: true,
     slug: '/page-title',
-    relativePath: 'Page-Title/en-US/index.md',
     inlineFileLink: 'index.md',
-    license: '',
   };
 
   expect(MDXMetadata(args)).toEqual(result);
@@ -255,7 +231,7 @@ test('MDXMetadata creates metadata of Page with tags omitted', () => {
     frontmatter: {
       title: 'Page Title',
       subtitle: 'Page Subtitle',
-      isPublished: true,
+      isPublished: 'true',
       tags: ['Tag1', 'Tag2', 'Tag3'],
       lastModifiedTime: '2019-01-02',
     },
@@ -274,19 +250,14 @@ test('MDXMetadata creates metadata of Page with tags omitted', () => {
 
   const result = {
     documentType: 'Page',
-    documentIdentifier: 'page-title',
     title: 'Page Title',
-    subtitle: 'Page Subtitle',
     isIndex: false,
     isPublished: true,
     createdTime: new Date('2019-01-01'),
-    lastModifiedTime: new Date('2019-01-02'),
     lang: '',
     isLocalized: false,
     slug: '/page-title',
-    relativePath: 'Page-Title.md',
     inlineFileLink: 'Page-Title.md',
-    license: '',
   };
 
   expect(MDXMetadata(args)).toEqual(result);
@@ -309,7 +280,7 @@ test('MDXMetadata creates metadata of Page with category omitted', () => {
     frontmatter: {
       title: 'Page Title',
       subtitle: 'Page Subtitle',
-      isPublished: true,
+      isPublished: 'true',
       category: 'Category1',
       lastModifiedTime: '2019-01-02',
     },
@@ -328,19 +299,14 @@ test('MDXMetadata creates metadata of Page with category omitted', () => {
 
   const result = {
     documentType: 'Page',
-    documentIdentifier: 'page-title',
     title: 'Page Title',
-    subtitle: 'Page Subtitle',
     isIndex: false,
     isPublished: true,
     createdTime: new Date('2019-01-01'),
-    lastModifiedTime: new Date('2019-01-02'),
     lang: '',
     isLocalized: false,
     slug: '/page-title',
-    relativePath: 'Page-Title.md',
     inlineFileLink: 'Page-Title.md',
-    license: '',
   };
 
   expect(MDXMetadata(args)).toEqual(result);

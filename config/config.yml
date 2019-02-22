@@ -63,7 +63,7 @@ site:
     - Freiheit ist Wille, Handeln ist Fähigkeit.
 
 navigation:
-  createsNavigationItemsForCategories: true
+  createsNavigationItemsForCategories: false
 
   overwritingCategoryNavigationItems:
     - name: Uncategorized

@@ -8,7 +8,6 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
   /*
   {
       name: string,
-      documentIdentifier: string,
       inlineFileLink: string,
       isIndex: bool,
       lang: string?
@@ -87,9 +86,9 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
 
     metadata.createdTime = new Date(createdTime);
 
-    metadata.documentIdentifier = createdTime + '-' + metadata.name;
+    const documentIdentifier = createdTime + '-' + metadata.name;
 
-    const disambiguateIdentifier = _(metadata.documentIdentifier);
+    const disambiguateIdentifier = _(documentIdentifier);
 
     const resourceName = `${year}/${month}/${
       metadata.name
@@ -107,7 +106,6 @@ const _parseMetadataForRelativePathOfPage = relativePath => {
   /*
   {
       name: string,
-      documentIdentifier: string,
       inlineFileLink: string,
       isIndex: bool,
       lang: string?
@@ -137,8 +135,8 @@ const _parseMetadataForRelativePathOfPage = relativePath => {
     } else {
       metadata.isLocalized = false;
     }
-    metadata.documentIdentifier = metadata.name.toLocaleLowerCase();
-    metadata.slug = `/${metadata.documentIdentifier}`;
+    const documentIdentifier = metadata.name.toLocaleLowerCase();
+    metadata.slug = `/${documentIdentifier}`;
     metadata.inlineFileLink = relativePath.split('/').pop();
   }
   return metadata;

@@ -4,7 +4,6 @@ const { makeDisambiguateIdentifier: _ } = require('../../MDXShims');
 test('MDXRelativePathMetadata creates metadata for standalone Post relative path of valid date', () => {
   expect(MDXRelativePathMetadata(`Post`, `1990-01-02-post-name.md`)).toEqual({
     name: `post-name`,
-    documentIdentifier: `1990-01-02-post-name`,
     isIndex: false,
     createdTime: new Date(`1990-01-02`),
     slug: `/post/1990/01/post-name-${_(`1990-01-02-post-name`)}`,
@@ -18,7 +17,6 @@ test('MDXRelativePathMetadata creates metadata for standalone Post relative path
     MDXRelativePathMetadata(`Post`, `1990-01-02T04_03_02-post-name.md`),
   ).toEqual({
     name: `post-name`,
-    documentIdentifier: `1990-01-02T04:03:02-post-name`,
     isIndex: false,
     createdTime: new Date(`1990-01-02T04:03:02`),
     slug: `/post/1990/01/post-name-${_(`1990-01-02T04:03:02-post-name`)}`,
@@ -40,7 +38,6 @@ test('MDXRelativePathMetadata creates metadata for language localized wrapped Po
     MDXRelativePathMetadata(`Post`, `1990-01-02-post-name/zh/index.md`),
   ).toEqual({
     name: `post-name`,
-    documentIdentifier: `1990-01-02-post-name`,
     isIndex: true,
     createdTime: new Date(`1990-01-02`),
     slug: `/post/1990/01/post-name-${_(`1990-01-02-post-name`)}`,
@@ -55,7 +52,6 @@ test('MDXRelativePathMetadata creates metadata for language and script localized
     MDXRelativePathMetadata(`Post`, `1990-01-02-post-name/zh-Hant/index.md`),
   ).toEqual({
     name: `post-name`,
-    documentIdentifier: `1990-01-02-post-name`,
     isIndex: true,
     createdTime: new Date(`1990-01-02`),
     slug: `/post/1990/01/post-name-${_(`1990-01-02-post-name`)}`,
@@ -70,7 +66,6 @@ test('MDXRelativePathMetadata creates metadata for wrapped Post relative path of
     MDXRelativePathMetadata(`Post`, `1990-01-02-post-name/index.md`),
   ).toEqual({
     name: `post-name`,
-    documentIdentifier: `1990-01-02-post-name`,
     isIndex: true,
     createdTime: new Date(`1990-01-02`),
     slug: `/post/1990/01/post-name-${_(`1990-01-02-post-name`)}`,
@@ -84,7 +79,6 @@ test('MDXRelativePathMetadata creates metadata for wrapped Post relative path of
     MDXRelativePathMetadata(`Post`, `1990-01-02T04_03_02-post-name/index.md`),
   ).toEqual({
     name: `post-name`,
-    documentIdentifier: `1990-01-02T04:03:02-post-name`,
     isIndex: true,
     createdTime: new Date(`1990-01-02T04:03:02`),
     slug: `/post/1990/01/post-name-${_(`1990-01-02T04:03:02-post-name`)}`,
@@ -101,7 +95,6 @@ test('MDXRelativePathMetadata creates metadata for wrapped Post relative path of
     ),
   ).toEqual({
     name: `post-name`,
-    documentIdentifier: `1990-01-02T04:03:02+08:00-post-name`,
     isIndex: true,
     createdTime: new Date(`1990-01-02T04:03:02+08:00`),
     slug: `/post/1990/01/post-name-${_(`1990-01-02T04:03:02+08:00-post-name`)}`,
@@ -118,7 +111,6 @@ test('MDXRelativePathMetadata creates metadata for wrapped Post relative path of
     ),
   ).toEqual({
     name: `post-name`,
-    documentIdentifier: `1990-01-02T04:03:02+0800-post-name`,
     isIndex: true,
     createdTime: new Date(`1990-01-02T04:03:02+0800`),
     slug: `/post/1990/01/post-name-${_(`1990-01-02T04:03:02+0800-post-name`)}`,

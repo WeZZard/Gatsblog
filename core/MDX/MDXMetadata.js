@@ -5,19 +5,12 @@ module.exports = function(args) {
   /*
     {
         documentType: string('Post', 'Page')
-        documentIdentifier: string
         inlineFileLink: string
         title: string
-        subtitle: string
         isIndex: bool
         isPublished: bool
         createdTime: string(ISO 8601)
-        lastModifiedTime: string(ISO 8601)
-        tags: [string]?
-        category: string?
-        lang: string?
-        isLocalized: bool
-        slug: string
+        slug: string,
     }
     */
 
@@ -33,9 +26,7 @@ module.exports = function(args) {
     const createdTime = node.frontmatter.date
       ? new Date(node.frontmatter.date)
       : null;
-    const lastModifiedTime = node.frontmatter.lastModifiedTime
-      ? new Date(node.frontmatter.lastModifiedTime)
-      : null;
+
     const birthTime = parentNode.birthTime
       ? new Date(parentNode.birthTime)
       : null;
@@ -52,8 +43,6 @@ module.exports = function(args) {
       relativePathMetadata.name,
     );
 
-    metadata.subtitle = node.frontmatter.subtitle || '';
-
     metadata.lang = relativePathMetadata.lang || node.frontmatter.lang || '';
 
     metadata.isLocalized = relativePathMetadata.isLocalized;
@@ -64,29 +53,15 @@ module.exports = function(args) {
       node.frontmatter.isPublished === undefined ||
       node.frontmatter.isPublished === 'true';
 
-    metadata.documentIdentifier = relativePathMetadata.documentIdentifier;
-
-    if (metadata.documentType === 'Post') {
-      metadata.tags = node.frontmatter.tags || [];
-
-      metadata.category = node.frontmatter.category || 'Uncategorized';
-    }
-
     metadata.createdTime = getCreatedTime(
       createdTime,
       relativePathMetadata.createdTime,
       birthTime,
     );
 
-    metadata.lastModifiedTime = lastModifiedTime || metadata.createdTime;
-
     metadata.slug = relativePathMetadata.slug;
 
-    metadata.relativePath = relativePath;
-
     metadata.inlineFileLink = relativePathMetadata.inlineFileLink;
-
-    metadata.license = node.frontmatter.license || '';
 
     return metadata;
   }
