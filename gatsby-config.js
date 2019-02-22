@@ -110,7 +110,7 @@ module.exports = {
       options: {
         query: `
                     {
-                        config: configYaml {
+                        config {
                             site {
                                 title
                                 description

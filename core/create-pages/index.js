@@ -13,7 +13,7 @@ module.exports = async args => {
 
   const result = await graphql(`
     {
-      configYaml {
+      config: configYaml {
         site {
           indexing {
             name
@@ -33,7 +33,7 @@ module.exports = async args => {
   }
 
   const {
-    data: { configYaml },
+    data: { config },
   } = result;
 
   const {
@@ -44,7 +44,7 @@ module.exports = async args => {
       description: siteDescription,
       license: defaultLicense,
     },
-  } = configYaml || {
+  } = config || {
     site: {
       indexing: [],
       lang: 'en-US',

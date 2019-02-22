@@ -61,7 +61,7 @@ export default SiteFooter;
 
 const componentQuery = graphql`
   query SiteFooterQuery {
-    config: configYaml {
+    config {
       site {
         owner
         slogans

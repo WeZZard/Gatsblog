@@ -62,7 +62,7 @@ export default SocialBar;
 
 const componentQuery = graphql`
   query SocialQuery {
-    config: configYaml {
+    config {
       social {
         name
         icon

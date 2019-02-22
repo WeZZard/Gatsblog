@@ -62,13 +62,6 @@ site:
   footerMessages:
     - Freiheit ist Wille, Handeln ist Fähigkeit.
 
-contact:
-  - service: Email
-    identifier: me@wezzard.com
-
-  - service: GitHub
-    identifier: WeZZard
-
 navigation:
   createsNavigationItemsForCategories: true
 
@@ -86,6 +79,10 @@ social:
   - name: GitHub
     icon: fontawesome://fab/github
     link: https://github.com/WeZZard
+
+  - name: Email
+    icon: fontawesome://fas/envelope
+    link: toprotect://mailto:me@wezzard.com
 
   - name: Feed
     icon: fontawesome://fas/rss-square

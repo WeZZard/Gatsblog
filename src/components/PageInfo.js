@@ -38,7 +38,7 @@ export default PageInfo;
 
 const componentQuery = graphql`
   query MainQuery {
-    config: configYaml {
+    config {
       site {
         footerMessages
       }

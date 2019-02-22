@@ -77,7 +77,7 @@ export const pageQuery = graphql`
     $earlierPostId: String
     $laterPostId: String
   ) {
-    config: configYaml {
+    config {
       site {
         lang
       }

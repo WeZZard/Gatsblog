@@ -106,7 +106,7 @@ export default SEO;
 
 const componentQuery = graphql`
   query SEOQuery {
-    config: configYaml {
+    config {
       site {
         title
         description

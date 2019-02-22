@@ -79,7 +79,7 @@ License.propTypes = {
 
 const componentQuery = graphql`
   query LicenseQuery {
-    config: configYaml {
+    config {
       site {
         license
       }

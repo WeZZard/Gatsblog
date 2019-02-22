@@ -158,7 +158,7 @@ export default NavigationBar;
 
 const _navigationQuery = graphql`
   query NavigationBarQuery {
-    config: configYaml {
+    config {
       navigation {
         createsNavigationItemsForCategories
         overwritingCategoryNavigationItems {

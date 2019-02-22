@@ -46,7 +46,7 @@ export default Page;
 
 export const pageQuery = graphql`
   query PageQuery($pageId: String!) {
-    config: configYaml {
+    config {
       site {
         lang
       }

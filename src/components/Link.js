@@ -4,12 +4,7 @@ import styles from './Link.module.scss';
 
 import { Link as _Link } from 'gatsby';
 
-const protectedProtocols = {
-  mailto: 'mailto:',
-  tel: 'tel:',
-  sms: 'sms:',
-  facetime: 'facetime:',
-};
+const { decrypt } = require('../../core/utils');
 
 class Link extends React.Component {
   constructor(props) {
@@ -18,28 +13,20 @@ class Link extends React.Component {
 
     const { to } = this.props;
 
-    let protectedProtocol;
+    const protectedPrefix = 'protected://';
 
-    for (const [protocolName, protocol] of Object.entries(protectedProtocols)) {
-      if (to.startsWith(protocol)) {
-        protectedProtocol = { protocolName, protocol };
-      }
-    }
+    if (to.startsWith(protectedPrefix)) {
+      const protectedUrl = to.slice(protectedPrefix.length);
 
-    if (protectedProtocol) {
-      const { protocol } = protectedProtocol;
-      const url = to.substring(protocol.length);
-      const urlComponents = url.split('').reverse();
+      const originalUrl = decrypt(protectedUrl);
 
-      this.state = {
-        isProtected: true,
-        protocol,
-        urlComponents,
-      };
+      const components = originalUrl.split('').reverse();
+
+      this.state = { isProtected: true, components };
+    } else if (to.startsWith('toprotect://')) {
+      throw `Trying to created a link with to-protect contents (link starts with toprotect://), which is expected to be converted into protected contents by the framework.`;
     } else {
-      this.state = {
-        isProtected: false,
-      };
+      this.state = { isProtected: false };
     }
   }
 
@@ -48,7 +35,6 @@ class Link extends React.Component {
       to,
       kind,
       className,
-      obfuscateIfNeeded,
       obfuscatedHref,
       onClick,
       ...others
@@ -57,24 +43,21 @@ class Link extends React.Component {
     const { isProtected } = this.state;
 
     if (isProtected) {
-      if (obfuscateIfNeeded) {
-        return this.renderProtectedLink({
-          kind,
-          className,
-          props: others,
-          obfuscatedHref,
-        });
-      }
+      return this.renderProtectedLink({
+        kind,
+        className,
+        props: others,
+        obfuscatedHref,
+      });
     }
 
     return Link.renderLink({ kind, className, to, onClick, props: others });
   }
 
   getProtectedUrl() {
-    const { protocol, urlComponents } = this.state;
-    if (protocol && urlComponents) {
-      const link = `${protocol}${urlComponents.reverse().join('')}`;
-      return link;
+    const { components } = this.state;
+    if (components) {
+      return `${components.reverse().join('')}`;
     } else {
       return undefined;
     }
@@ -84,9 +67,13 @@ class Link extends React.Component {
     const linkClassName = [styles[kind], className].filter(_ => _).join(' ');
 
     if (to.startsWith('/')) {
-      return <_Link className={linkClassName} to={to} onClick={onClick} {...props} />;
+      return (
+        <_Link className={linkClassName} to={to} onClick={onClick} {...props} />
+      );
     } else {
-      return <a className={linkClassName} href={to} onClick={onClick} {...props} />;
+      return (
+        <a className={linkClassName} href={to} onClick={onClick} {...props} />
+      );
     }
   }
 
@@ -115,15 +102,13 @@ Link.propTypes = {
   kind: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,
   className: PropTypes.string,
-  obfuscateIfNeeded: PropTypes.bool,
   obfuscatedHref: PropTypes.string,
   onClick: PropTypes.func,
   children: PropTypes.any,
 };
 
 Link.defaultProps = {
-  obfuscateIfNeeded: true,
-  obfuscatedHref: '',
+  obfuscatedHref: 'https://yo-mama-wears-a-pair-of-fancy-glasses',
 };
 
 export default Link;

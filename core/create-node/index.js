@@ -1,4 +1,5 @@
 module.exports = {
+  createNodeForConfig: require('./create-node-for-config'),
   createNodeForCategory: require('./create-node-for-category'),
   createNodeForLocale: require('./create-node-for-locale'),
   createNodeForPage: require('./create-node-for-page'),

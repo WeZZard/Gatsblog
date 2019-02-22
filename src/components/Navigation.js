@@ -170,7 +170,7 @@ export default Navigation;
 
 const componentQuery = graphql`
   query NavigationQuery {
-    config: configYaml {
+    config {
       site {
         title
       }
