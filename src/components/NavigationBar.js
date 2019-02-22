@@ -20,7 +20,7 @@ class NavigationBar extends React.Component {
 
     return (
       <StaticQuery
-        query={_navigationQuery}
+        query={componentQuery}
         render={data => {
           const systemNavigationItems = [{ name: `Home`, slug: `/` }];
 
@@ -35,48 +35,41 @@ class NavigationBar extends React.Component {
             allCategory: { edges: categories },
           } = data;
 
-          let overwrittenCategoryNavigationItems = [];
+          const sortedCategories = categories.map(
+            ({ node: { name, slug } }) => ({ name, slug }),
+          );
+
+          sortedCategories.sort((a, b) => a.name <= b.name);
+
+          const categoryNavigationItems = {};
 
           if (createsNavigationItemsForCategories) {
-            let systemCategoryNavigationItems = categories.map(category => ({
-              name: category.node.name,
-              slug: category.node.slug,
-              weight: 0,
-            }));
+            sortedCategories.forEach(({ name, slug }, index) => {
+              categoryNavigationItems[name] = { index, slug, weight: 0 };
+            });
 
-            overwritingCategoryNavigationItems.forEach(
-              overwritingCategoryNavigationItem => {
-                const {
-                  name,
-                  weight,
-                  isVisible,
-                } = overwritingCategoryNavigationItem;
+            overwritingCategoryNavigationItems.forEach(item => {
+              const { name, weight, isVisible } = item;
 
+              const overwrittenItem = categoryNavigationItems[name];
+
+              if (overwrittenItem) {
                 if (isVisible) {
-                  const candidateOverwrittenCategoryNavigationItems = systemCategoryNavigationItems.filter(
-                    item => item.name === name,
-                  );
-
-                  if (
-                    candidateOverwrittenCategoryNavigationItems.length === 1
-                  ) {
-                    const overwrittenCategoryNavigationItem =
-                      candidateOverwrittenCategoryNavigationItems[0];
-                    overwrittenCategoryNavigationItem.weight = weight;
-                    overwrittenCategoryNavigationItems.push(
-                      overwrittenCategoryNavigationItem,
-                    );
-                  } else if (
-                    candidateOverwrittenCategoryNavigationItems.length === 0
-                  ) {
-                    // do nothing
-                  } else {
-                    throw `Multiple category navigation item with the same name found.`;
-                  }
+                  categoryNavigationItems[name].weight = weight;
+                } else {
+                  delete categoryNavigationItems[name];
                 }
-              },
-            );
+              }
+            });
           }
+
+          const overwrittenCategoryNavigationItems = Object.entries(
+            categoryNavigationItems,
+          ).map(([name, detail]) => ({ name, ...detail }));
+
+          overwrittenCategoryNavigationItems.sort((a, b) => a.index < b.index);
+
+          overwrittenCategoryNavigationItems.forEach(item => delete item.index);
 
           const userNavigationItems = [
             ...overwrittenCategoryNavigationItems,
@@ -84,11 +77,7 @@ class NavigationBar extends React.Component {
           ];
 
           userNavigationItems.sort((a, b) => {
-            if (a.weight === b.weight) {
-              return a > b;
-            } else {
-              return a.weight < b.weight;
-            }
+            return a.weight <= b.weight;
           });
 
           const navigationItems = [
@@ -156,7 +145,7 @@ NavigationBar.propTypes = {
 
 export default NavigationBar;
 
-const _navigationQuery = graphql`
+const componentQuery = graphql`
   query NavigationBarQuery {
     config {
       navigation {
