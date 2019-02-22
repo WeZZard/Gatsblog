@@ -86,7 +86,7 @@ social:
 
   - name: Feed
     icon: fontawesome://fas/rss-square
-    link: /rss.xml
+    link: feed://wezzard.com/rss.xml
 
 # The pagination config for index pages.
 #
