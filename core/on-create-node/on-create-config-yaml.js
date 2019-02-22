@@ -29,23 +29,23 @@ module.exports = args => {
 
     const relativePath = parentNode.relativePath;
 
-    const encryptedSocial = social.map(eachSocial => {
-      if (eachSocial.link.startsWith(toProtectPrefix)) {
-        const originalLink = eachSocial.link.substring(toProtectPrefix.length);
+    const protectedSocial = social.map(eachItem => {
+      if (eachItem.link.startsWith(toProtectPrefix)) {
+        const originalLink = eachItem.link.substring(toProtectPrefix.length);
 
         return {
-          name: eachSocial.name,
-          icon: eachSocial.icon,
+          name: eachItem.name,
+          icon: eachItem.icon,
           link: `protected://${encrypt(originalLink)}`,
-        }
+        };
       } else {
-        return eachSocial;
+        return eachItem;
       }
     });
 
     const config = Object.assign({}, rest, {
       relativePath,
-      social: encryptedSocial,
+      social: protectedSocial,
     });
 
     createNodeForConfig({

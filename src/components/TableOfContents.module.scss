@@ -137,7 +137,7 @@
         }
 
         &:last-child {
-          margin-bottom: -1.7rem;
+          margin-bottom: 0;
         }
 
         .anchor {
@@ -168,10 +168,6 @@
             margin-bottom: -0.9rem;
             margin-top: -1.2rem;
           }
-        }
-
-        &:last-child {
-          margin-bottom: 0;
         }
       }
     }

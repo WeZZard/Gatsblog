@@ -2,12 +2,14 @@
 extends:
   - eslint:recommended
   - plugin:prettier/recommended
+  - node
 
 env:
   node: true
   es6: true
   jest: true
+  commonjs: true
 
 parserOptions:
   sourceType: module
-  ecmaVersion: 2018
+  ecmaVersion: 6
