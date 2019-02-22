@@ -66,7 +66,7 @@ class Link extends React.Component {
   static renderLink({ kind, className, to, onClick, props }) {
     const linkClassName = [styles[kind], className].filter(_ => _).join(' ');
 
-    if (to.startsWith('/')) {
+    if (to.startsWith('/') && !to.endsWith('.xml')) {
       return (
         <_Link className={linkClassName} to={to} onClick={onClick} {...props} />
       );
