@@ -12,8 +12,8 @@
   padding-top: 3.4rem;
 
   @media (max-width: $mobile-max) {
-    margin-top: calc(-3.4rem - 44px - #{$margin-top-delta});
-    padding-top: calc(3.4rem + 44px);
+    margin-top: calc(-2.1rem - 44px - #{$margin-top-delta});
+    padding-top: calc(2.1rem + 44px);
   }
 }
 

@@ -142,7 +142,7 @@ but building what I need is quite simple with Gatsby.js.
 
 Currently this blog implements
 
-- A Responsive design
+- A responsive design
 
 - Basic Markdown syntax support
 
