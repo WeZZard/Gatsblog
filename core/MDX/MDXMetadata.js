@@ -9,8 +9,8 @@ module.exports = function(args) {
         title: string
         isIndex: bool
         isPublished: bool
-        createdTime: string(ISO 8601)
-        slug: string,
+        createdTime: Date(string(ISO 8601))
+        slug: string
     }
     */
 
