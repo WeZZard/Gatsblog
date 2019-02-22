@@ -13,10 +13,8 @@ class Heading extends React.Component {
     const Component = `h${level}`;
 
     return (
-      <Component id={name} className={styles.h}>
-        <span className={styles[`h${level}`]}>
-          {children}
-        </span>
+      <Component className={styles.h}>
+        <span id={name} className={styles[`h${level}`]}>{children}</span>
       </Component>
     );
   }
