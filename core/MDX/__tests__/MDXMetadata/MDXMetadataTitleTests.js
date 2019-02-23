@@ -46,7 +46,7 @@ test('MDXMetadata creates metadata of Post whose title can fallback to its docum
     lang: '',
     isLocalized: false,
     slug: `/post/2019/01/post-title-${_('2019-01-01-Post-Title')}`,
-    inlineFileLink: '2019-01-01-Post-Title.md',
+    relativePath: '2019-01-01-Post-Title.md',
   };
 
   expect(MDXMetadata(args)).toEqual(result);
@@ -95,7 +95,7 @@ test('MDXMetadata creates metadata of Page whose title can fallback to its docum
     lang: '',
     isLocalized: false,
     slug: '/page-title',
-    inlineFileLink: 'Page-Title.md',
+    relativePath: 'Page-Title.md',
   };
   expect(MDXMetadata(args)).toEqual(result);
 });

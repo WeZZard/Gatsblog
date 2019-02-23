@@ -19,8 +19,10 @@ class Page extends GatsbyPage {
       title,
       subtitle,
       createdTime,
+      keywords,
+      lang,
       file: {
-        childMdx: { code },
+        childMdx: { excerpt, code },
       },
     } = page;
 
@@ -38,7 +40,16 @@ class Page extends GatsbyPage {
       </article>
     );
 
-    return <Main slug={slug} title={page.title} sections={article} />;
+    return (
+      <Main
+        slug={slug}
+        lang={lang}
+        title={page.title}
+        sections={article}
+        keywords={keywords}
+        description={excerpt}
+      />
+    );
   }
 }
 
@@ -46,11 +57,6 @@ export default Page;
 
 export const pageQuery = graphql`
   query PageQuery($pageId: String!) {
-    config {
-      site {
-        lang
-      }
-    }
     page(id: { eq: $pageId }) {
       title
       slug
@@ -61,6 +67,7 @@ export const pageQuery = graphql`
       license
       file {
         childMdx {
+          excerpt(pruneLength: 300)
           code {
             body
             scope

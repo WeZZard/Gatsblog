@@ -8,7 +8,7 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
   /*
   {
       name: string,
-      inlineFileLink: string,
+      relativePath: string,
       isIndex: bool,
       lang: string?
       isLocalized: bool
@@ -96,7 +96,7 @@ const _parseMetadataForRelativePathOfPost = relativePath => {
 
     metadata.slug = `/post/${resourceName}`.toLocaleLowerCase();
 
-    metadata.inlineFileLink = relativePath.split('/').pop();
+    metadata.relativePath = relativePath.split('/').pop();
   }
 
   return metadata;
@@ -106,7 +106,7 @@ const _parseMetadataForRelativePathOfPage = relativePath => {
   /*
   {
       name: string,
-      inlineFileLink: string,
+      relativePath: string,
       isIndex: bool,
       lang: string?
       isLocalized: bool
@@ -137,8 +137,9 @@ const _parseMetadataForRelativePathOfPage = relativePath => {
     }
     const documentIdentifier = metadata.name.toLocaleLowerCase();
     metadata.slug = `/${documentIdentifier}`;
-    metadata.inlineFileLink = relativePath.split('/').pop();
+    metadata.relativePath = relativePath.split('/').pop();
   }
+
   return metadata;
 };
 

@@ -91,6 +91,7 @@ module.exports = {
         },
       },
     },
+    /*
     {
       resolve: `gatsby-plugin-webmention`,
       options: {
@@ -105,6 +106,7 @@ module.exports = {
         token: process.env.WEBMENTIONS_TOKEN,
       },
     },
+    */
     {
       resolve: `gatsby-plugin-feed`,
       options: {

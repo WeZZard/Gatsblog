@@ -4,38 +4,40 @@ import Helmet from 'react-helmet';
 import { StaticQuery, graphql } from 'gatsby';
 
 const SEO = ({
-  lang,
+  lang: pageLang,
   title: pageTitle,
   description: pageDescription,
-  keywords,
+  keywords: pageKeywords,
   meta,
 }) => {
   return (
     <StaticQuery
       query={componentQuery}
-      render={data => {
-        const {
-          config: {
-            site: {
-              title: siteTitle,
-              description: siteDescription,
-              owner: siteOwner,
-            },
+      render={({
+        config: {
+          site: {
+            lang: siteLang,
+            title: siteTitle,
+            description: siteDescription,
+            owner: siteOwner,
+            keywords: siteKeywords,
           },
-        } = data;
-
+        },
+      }) => {
         const description = pageDescription || siteDescription;
+
+        const keywords = pageKeywords.join(', ') || siteKeywords.join(', ');
 
         const title =
           pageTitle !== null && pageTitle !== undefined
             ? `${pageTitle} | ${siteTitle}`
             : siteTitle;
 
+        const lang = pageLang || siteLang || 'en-US';
+
         return (
           <Helmet
-            htmlAttributes={{
-              lang,
-            }}
+            htmlAttributes={{ lang }}
             title={title}
             titleTemplate={`%s`}
             meta={[
@@ -73,12 +75,7 @@ const SEO = ({
               },
             ]
               .concat(
-                keywords.length > 0
-                  ? {
-                      name: `keywords`,
-                      content: keywords.join(`, `),
-                    }
-                  : [],
+                keywords.length ? { name: `keywords`, content: keywords } : [],
               )
               .concat(meta)}
           />
@@ -89,7 +86,6 @@ const SEO = ({
 };
 
 SEO.defaultProps = {
-  lang: `en`,
   meta: [],
   keywords: [],
 };
@@ -108,9 +104,11 @@ const componentQuery = graphql`
   query SEOQuery {
     config {
       site {
+        lang
         title
         description
         owner
+        keywords
       }
     }
   }

@@ -18,14 +18,16 @@ class Post extends GatsbyPage {
     const { post, earlierPostExcerpt, laterPostExcerpt } = data;
 
     const {
+      lang,
       title,
       subtitle,
       createdTime,
       category,
       tags,
+      keywords,
       license,
       file: {
-        childMdx: { code, headings },
+        childMdx: { excerpt, code, headings },
       },
     } = post;
 
@@ -61,7 +63,10 @@ class Post extends GatsbyPage {
 
     return (
       <Main
+        lang={lang}
         title={post.title}
+        keywords={[category, ...tags, ...keywords]}
+        description={excerpt}
         headings={headings}
         sections={[article, moreItems].filter(_ => _)}
       />
@@ -77,11 +82,6 @@ export const pageQuery = graphql`
     $earlierPostId: String
     $laterPostId: String
   ) {
-    config {
-      site {
-        lang
-      }
-    }
     post(id: { eq: $postId }) {
       title
       subtitle
@@ -93,6 +93,7 @@ export const pageQuery = graphql`
       category
       file {
         childMdx {
+          excerpt(pruneLength: 100)
           code {
             body
             scope

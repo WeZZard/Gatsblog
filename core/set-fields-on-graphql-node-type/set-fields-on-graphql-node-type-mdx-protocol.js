@@ -1,4 +1,4 @@
-const { GraphQLString, GraphQLBoolean } = require('gatsby/graphql');
+const { GraphQLString, GraphQLBoolean, GraphQLList } = require('gatsby/graphql');
 
 module.exports = async args => {
   const { type, getNode } = args;
@@ -43,6 +43,16 @@ module.exports = async args => {
             return parent.frontmatter.license;
           }
           return null;
+        },
+      },
+      keywords: {
+        type: new GraphQLList(GraphQLString),
+        resolve: source => {
+          const parent = getNode(source.parent);
+          if (parent.frontmatter.keywords) {
+            return parent.frontmatter.keywords;
+          }
+          return [];
         },
       },
     };

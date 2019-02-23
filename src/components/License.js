@@ -74,7 +74,7 @@ const cc40TextForOptions = options => {
 };
 
 License.propTypes = {
-  license: PropTypes.string.isRequired,
+  license: PropTypes.string,
 };
 
 const componentQuery = graphql`

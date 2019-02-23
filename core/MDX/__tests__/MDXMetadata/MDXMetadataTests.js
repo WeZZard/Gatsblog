@@ -60,7 +60,7 @@ test('MDXMetadata creates metadata of Post', () => {
     lang: '',
     isLocalized: false,
     slug: `/post/2019/01/post-title-${_('2019-01-01-Post-Title')}`,
-    inlineFileLink: '2019-01-01-Post-Title.md',
+    relativePath: '2019-01-01-Post-Title.md',
   };
 
   expect(MDXMetadata(args)).toEqual(result);
@@ -110,7 +110,7 @@ test('MDXMetadata creates metadata of localized Post', () => {
     lang: 'en-US',
     isLocalized: true,
     slug: `/post/2019/01/post-title-${_('2019-01-01-Post-Title')}`,
-    inlineFileLink: 'index.md',
+    relativePath: 'index.md',
   };
 
   expect(MDXMetadata(args)).toEqual(result);
@@ -160,7 +160,7 @@ test('MDXMetadata creates metadata of Page', () => {
     lang: '',
     isLocalized: false,
     slug: '/page-title',
-    inlineFileLink: 'Page-Title.md',
+    relativePath: 'Page-Title.md',
   };
 
   expect(MDXMetadata(args)).toEqual(result);
@@ -208,7 +208,7 @@ test('MDXMetadata creates metadata of localized Page', () => {
     lang: 'en-US',
     isLocalized: true,
     slug: '/page-title',
-    inlineFileLink: 'index.md',
+    relativePath: 'index.md',
   };
 
   expect(MDXMetadata(args)).toEqual(result);
@@ -257,7 +257,7 @@ test('MDXMetadata creates metadata of Page with tags omitted', () => {
     lang: '',
     isLocalized: false,
     slug: '/page-title',
-    inlineFileLink: 'Page-Title.md',
+    relativePath: 'Page-Title.md',
   };
 
   expect(MDXMetadata(args)).toEqual(result);
@@ -306,7 +306,7 @@ test('MDXMetadata creates metadata of Page with category omitted', () => {
     lang: '',
     isLocalized: false,
     slug: '/page-title',
-    inlineFileLink: 'Page-Title.md',
+    relativePath: 'Page-Title.md',
   };
 
   expect(MDXMetadata(args)).toEqual(result);

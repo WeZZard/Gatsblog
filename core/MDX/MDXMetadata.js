@@ -5,7 +5,7 @@ module.exports = function(args) {
   /*
     {
         documentType: string('Post', 'Page')
-        inlineFileLink: string
+        relativePath: string
         title: string
         isIndex: bool
         isPublished: bool
@@ -61,7 +61,7 @@ module.exports = function(args) {
 
     metadata.slug = relativePathMetadata.slug;
 
-    metadata.inlineFileLink = relativePathMetadata.inlineFileLink;
+    metadata.relativePath = relativePathMetadata.relativePath;
 
     return metadata;
   }

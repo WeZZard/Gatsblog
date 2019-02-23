@@ -7,7 +7,7 @@ test('MDXRelativePathMetadata creates metadata for standalone Post relative path
     isIndex: false,
     createdTime: new Date(`1990-01-02`),
     slug: `/post/1990/01/post-name-${_(`1990-01-02-post-name`)}`,
-    inlineFileLink: '1990-01-02-post-name.md',
+    relativePath: '1990-01-02-post-name.md',
     isLocalized: false,
   });
 });
@@ -20,7 +20,7 @@ test('MDXRelativePathMetadata creates metadata for standalone Post relative path
     isIndex: false,
     createdTime: new Date(`1990-01-02T04:03:02`),
     slug: `/post/1990/01/post-name-${_(`1990-01-02T04:03:02-post-name`)}`,
-    inlineFileLink: '1990-01-02T04_03_02-post-name.md',
+    relativePath: '1990-01-02T04_03_02-post-name.md',
     isLocalized: false,
   });
 });
@@ -41,7 +41,7 @@ test('MDXRelativePathMetadata creates metadata for language localized wrapped Po
     isIndex: true,
     createdTime: new Date(`1990-01-02`),
     slug: `/post/1990/01/post-name-${_(`1990-01-02-post-name`)}`,
-    inlineFileLink: 'index.md',
+    relativePath: 'index.md',
     isLocalized: true,
     lang: `zh`,
   });
@@ -55,7 +55,7 @@ test('MDXRelativePathMetadata creates metadata for language and script localized
     isIndex: true,
     createdTime: new Date(`1990-01-02`),
     slug: `/post/1990/01/post-name-${_(`1990-01-02-post-name`)}`,
-    inlineFileLink: 'index.md',
+    relativePath: 'index.md',
     isLocalized: true,
     lang: `zh-Hant`,
   });
@@ -69,7 +69,7 @@ test('MDXRelativePathMetadata creates metadata for wrapped Post relative path of
     isIndex: true,
     createdTime: new Date(`1990-01-02`),
     slug: `/post/1990/01/post-name-${_(`1990-01-02-post-name`)}`,
-    inlineFileLink: 'index.md',
+    relativePath: 'index.md',
     isLocalized: false,
   });
 });
@@ -82,7 +82,7 @@ test('MDXRelativePathMetadata creates metadata for wrapped Post relative path of
     isIndex: true,
     createdTime: new Date(`1990-01-02T04:03:02`),
     slug: `/post/1990/01/post-name-${_(`1990-01-02T04:03:02-post-name`)}`,
-    inlineFileLink: 'index.md',
+    relativePath: 'index.md',
     isLocalized: false,
   });
 });
@@ -98,7 +98,7 @@ test('MDXRelativePathMetadata creates metadata for wrapped Post relative path of
     isIndex: true,
     createdTime: new Date(`1990-01-02T04:03:02+08:00`),
     slug: `/post/1990/01/post-name-${_(`1990-01-02T04:03:02+08:00-post-name`)}`,
-    inlineFileLink: 'index.md',
+    relativePath: 'index.md',
     isLocalized: false,
   });
 });
@@ -114,7 +114,7 @@ test('MDXRelativePathMetadata creates metadata for wrapped Post relative path of
     isIndex: true,
     createdTime: new Date(`1990-01-02T04:03:02+0800`),
     slug: `/post/1990/01/post-name-${_(`1990-01-02T04:03:02+0800-post-name`)}`,
-    inlineFileLink: 'index.md',
+    relativePath: 'index.md',
     isLocalized: false,
   });
 });
