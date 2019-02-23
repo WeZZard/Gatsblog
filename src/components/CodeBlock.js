@@ -7,15 +7,13 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 export default ({ codeString, language, ...props }) => {
   if (props['react-live']) {
     return (
-      <LiveProvider
-        className={styles.liveCode}
-        code={codeString}
-        noInline={true}
-      >
-        <LiveEditor />
-        <LiveError />
-        <LivePreview />
-      </LiveProvider>
+      <div className={styles.liveCode}>
+        <LiveProvider code={codeString} mountStylesheet={false}>
+          <LiveEditor />
+          <LiveError />
+          <LivePreview />
+        </LiveProvider>
+      </div>
     );
   } else {
     defaultProps.theme = theme;

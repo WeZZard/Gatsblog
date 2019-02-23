@@ -1,14 +1,60 @@
 @import '../styles/fonts';
 @import '../styles/colors';
+@import '../styles/responsive';
 
 .liveCode {
-  align-items: flex-end;
+  align-items: flex-start;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: stretch;
   margin-bottom: 3.4rem;
   margin-left: -2.1rem;
   margin-right: -2.1rem;
   margin-top: 0;
+
+  :global(.react-live) {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    width: 100%;
+
+    @media (max-width: $small-screen-max) {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+    }
+
+    :global(.prism-code) {
+      font-family: $font-text-monospaced;
+      font-size: 1.3em;
+      font-weight: 400;
+      line-height: calc(26 / 13);
+      padding: 2.1rem;
+      overflow-x: scroll;
+      width: calc(50% - 2.1rem / 2);
+
+      @media (max-width: $small-screen-max) {
+        width: calc(100%);
+      }
+    }
+
+    :global(.react-live-preview) {
+      border: 2px solid $_gray-89;
+      flex-grow: 0;
+      margin-left: 2.1rem;
+      padding: 2.1rem;
+      overflow-x: scroll;
+      width: calc(50% - 2.1rem * 2 - 2.1rem / 2 - 4px);
+
+      @media (max-width: $small-screen-max) {
+        margin-left: 0;
+        margin-top: 2.1rem;
+        overflow-x: auto;
+        width: calc(100% - 2.1rem * 2);
+      }
+    }
+  }
 }
 
 .preFormattedCodeBlock {

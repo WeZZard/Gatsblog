@@ -13,10 +13,65 @@ I just decided to write down the whole process, from design to implementation,
 to make a memento of my journey, which conducted by an iOS developer with
 industrial design background, into modern frontend tech stack.
 
-# How Does This Blog Work
+# Features Looking Glass
 
 ## Statically Deployed
 
 ## Live Preview
 
 ## Rhythmic Design
+
+## React Live
+
+```javascript react-live
+class Counter extends React.Component {
+  constructor() {
+    super()
+    this.state = { count: 0 }
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(() => {
+      this.setState(state => ({ count: state.count + 1 }))
+    }, 1000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
+  }
+
+  render() {
+    return (
+      <center>
+        <h3>
+          {this.state.count}
+        </h3>
+      </center>
+    )
+  }
+}
+```
+
+## Code Block with Path Label
+
+By putting `path=path_of_file` after the _language_ metadata in the beginning
+line of the fenced code block
+
+```markdown
+```c path=src/main.c
+#include <stdio>
+
+int main(int argc, char[] * args) {
+    return 0;
+}
+​```
+```
+
+you can get a code block likes
+
+```c path=src/main.c
+#include <stdio>
+int main(int argc, char[] * args) {
+    return 0;
+}
+```
