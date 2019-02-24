@@ -7,6 +7,8 @@ site:
   #
   owner: WeZZard
 
+  url: https://wezzard.com
+
   # The language of the site. This also being used for posts and pages whose
   # "lang" field of their frontmatters are not specified.
   #

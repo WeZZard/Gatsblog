@@ -5,9 +5,85 @@ require('dotenv').config({
 const remarkMath = require(`remark-math`);
 const mdxBackSlashSafeGuarder = require('./core/remark/mdx-backslash-safe-guarder');
 const kaTexMdxTag = require(`./core/remark/katex-mdx-tag`);
+const gatsbyPluginFeedOptions = require(`./gatsby-plugin-feed-options`);
 
 module.exports = {
   plugins: [
+    ////////////////////////////////////////////////////////////////////////////
+    // Site Info
+    ////////////////////////////////////////////////////////////////////////////
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `Pieces of My Soul`,
+        short_name: `WeZZard`,
+        start_url: `/`,
+        background_color: `#ffffff`,
+        theme_color: `#3d4260`,
+        display: `minimal-ui`,
+        icon: `assets/gatsby-icon.png`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-webmention`,
+      options: {
+        username: 'wezzard.com', // webmention.io username
+        identity: {
+          github: 'WeZZard',
+        },
+        mentions: true,
+        pingbacks: false,
+        forwardPingbacksAsWebmentions: 'https://example.com/endpoint',
+        domain: 'wezzard.com',
+        token: process.env.WEBMENTIONS_TOKEN,
+      },
+    },
+    ////////////////////////////////////////////////////////////////////////////
+    // SEO
+    ////////////////////////////////////////////////////////////////////////////
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        policy: [
+          { userAgent: 'Baiduspider', disallow: '/' },
+          { userAgent: 'Sosospider', disallow: '/' },
+          { userAgent: 'sogou spider', disallow: '/' },
+          { userAgent: 'YodaoBot', disallow: '/' },
+          { userAgent: '*', allow: '/' },
+        ],
+        query: `{
+          site: config {
+            siteMetadata: site {
+              siteUrl: url
+            }
+          }
+        }`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-sitemap`,
+      options: {
+        // Exclude specific pages or groups of pages using glob parameters
+        // See: https://github.com/isaacs/minimatch
+        exclude: ['/tag/*'],
+        query: `
+          {
+            site: config {
+              siteMetadata: site{
+                siteUrl: url
+              }
+            }
+            allSitePage {
+              edges {
+                node {
+                  path
+                }
+              }
+            }
+        }`,
+      },
+    },
+    ////////////////////////////////////////////////////////////////////////////
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -37,18 +113,17 @@ module.exports = {
         name: `Config`,
       },
     },
-    `gatsby-plugin-catch-links`,
     {
       resolve: `gatsby-mdx`,
       options: {
         extensions: ['.mdx', '.md'],
         mdPlugins: [remarkMath, mdxBackSlashSafeGuarder, kaTexMdxTag],
         globalScope: `
-                import { InlineMath } from 'react-katex';
-                import { BlockMath as MathBlock } from 'react-katex';
-                
-                export default { InlineMath, MathBlock };
-                `,
+        import { InlineMath } from 'react-katex';
+        import { BlockMath as MathBlock } from 'react-katex';
+        
+        export default { InlineMath, MathBlock };
+        `,
         gatsbyRemarkPlugins: [
           {
             resolve: `gatsby-remark-primitive-images`,
@@ -64,21 +139,10 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-transformer-yaml`,
     `gatsby-plugin-sharp`,
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `Pieces of My Soul`,
-        short_name: `WeZZard`,
-        start_url: `/`,
-        background_color: `#ffffff`,
-        theme_color: `#3d4260`,
-        display: `minimal-ui`,
-        icon: `assets/gatsby-icon.png`,
-      },
-    },
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-sass`,
+    `gatsby-plugin-catch-links`,
     {
       resolve: `gatsby-plugin-web-font-loader`,
       options: {
@@ -91,126 +155,9 @@ module.exports = {
         },
       },
     },
-    /*
-    {
-      resolve: `gatsby-plugin-webmention`,
-      options: {
-        username: 'wezzard.com', // webmention.io username
-        identity: {
-          github: 'WeZZard',
-        },
-        mentions: true,
-        pingbacks: false,
-        forwardPingbacksAsWebmentions: 'https://example.com/endpoint',
-        domain: 'wezzard.com',
-        token: process.env.WEBMENTIONS_TOKEN,
-      },
-    },
-    */
     {
       resolve: `gatsby-plugin-feed`,
-      options: {
-        query: `
-                    {
-                        config {
-                            site {
-                                title
-                                description
-                                owner
-                            }
-                        }
-                    }
-                `,
-        setup: {},
-        feeds: [
-          {
-            setup: ({
-              query: {
-                config: { site },
-                ...rest
-              },
-            }) => {
-              let siteUrl = process.env.GATSBY_SITE_URL || '';
-
-              let safeSiteUrl;
-              if (siteUrl.endsWith('/')) {
-                safeSiteUrl = siteUrl.substring(0, siteUrl.length - 1);
-              } else {
-                safeSiteUrl = siteUrl;
-              }
-
-              return {
-                site_url: safeSiteUrl,
-                feed_url: safeSiteUrl + '/rss.xml',
-                copyright: site.owner,
-                title: site.title,
-                description: site.description,
-                ...rest,
-              };
-            },
-            serialize: ({ query: { allPost } }) => {
-              return allPost.edges.map(edge => {
-                const post = edge.node;
-                const mdx = edge.node.file.childMdx;
-
-                let siteUrl = process.env.GATSBY_SITE_URL || '';
-
-                let safeSiteUrl;
-                if (siteUrl.endsWith('/')) {
-                  safeSiteUrl = siteUrl.substring(0, siteUrl.length - 1);
-                } else {
-                  safeSiteUrl = siteUrl;
-                }
-
-                const url = safeSiteUrl + post.slug;
-
-                return Object.assign(
-                  {},
-                  { title: post.title },
-                  {
-                    description: mdx.excerpt,
-                    date: post.createdTime,
-                    url: url,
-                    guid: url,
-                    custom_elements: [
-                      {
-                        'content:encoded': mdx.html,
-                      },
-                    ],
-                  },
-                );
-              });
-            },
-            query: `
-                            {
-                                allPost(
-                                    filter: { 
-                                        isPublished: { eq: true },
-                                        isLocalized: { eq: false } 
-                                    }
-                                    sort: { order: DESC, fields: [createdTime] }
-                                ) {
-                                    edges {
-                                        node {
-                                            title
-                                            createdTime
-                                            slug
-                                            file {
-                                                childMdx {
-                                                    excerpt
-                                                    html
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        `,
-            output: '/rss.xml',
-            title: ({ query: { config } }) => config.site.title,
-          },
-        ],
-      },
+      options: gatsbyPluginFeedOptions,
     },
   ],
 };
