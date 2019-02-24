@@ -14,29 +14,27 @@ class SiteFooter extends React.Component {
             site: { owner: siteOwner, slogans },
           },
         }) => {
-          const { errorCode } = this.props;
+          const { showsSlogans } = this.props;
 
           const siteFooterClassNames = [styles.siteFooter];
-
-          if (errorCode === 404) {
-            siteFooterClassNames.push(styles.errorCode404);
-          }
 
           const siteFooterClassName = siteFooterClassNames.join(' ');
 
           return (
             <div className={siteFooterClassName}>
               <div className={styles.siteInfo}>
-                {slogans.map((slogan, index) => (
-                  <div key={index} className={styles.siteInfoItem}>
-                    <span
-                      className={styles.slogan}
-                      dangerouslySetInnerHTML={{
-                        __html: slogan,
-                      }}
-                    />
-                  </div>
-                ))}
+                {showsSlogans || showsSlogans === undefined
+                  ? slogans.map((slogan, index) => (
+                      <div key={index} className={styles.siteInfoItem}>
+                        <span
+                          className={styles.slogan}
+                          dangerouslySetInnerHTML={{
+                            __html: slogan,
+                          }}
+                        />
+                      </div>
+                    ))
+                  : null}
                 <div className={styles.siteInfoItem}>
                   <span className={styles.copyright}>
                     © {new Date().getFullYear()} {siteOwner} All Copyright
@@ -44,7 +42,6 @@ class SiteFooter extends React.Component {
                   </span>
                 </div>
               </div>
-              <div className={styles.overlay} />
             </div>
           );
         }}
@@ -54,7 +51,7 @@ class SiteFooter extends React.Component {
 }
 
 SiteFooter.propTypes = {
-  errorCode: PropTypes.string,
+  showsSlogans: PropTypes.bool,
 };
 
 export default SiteFooter;

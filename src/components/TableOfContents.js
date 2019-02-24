@@ -16,7 +16,7 @@ const Item = styled.li`
 
 class TableOfContents extends React.Component {
   render() {
-    const { headings, tocItemOnClick, isOpen } = this.props;
+    const { headings, menuItemDidTap, isOpen } = this.props;
 
     const items = [];
 
@@ -105,7 +105,7 @@ class TableOfContents extends React.Component {
                 kind={'toc'}
                 to={url}
                 className={styles.anchor}
-                onClick={tocItemOnClick}
+                onClick={menuItemDidTap}
               >
                 <span className={styles.sectionName}>{item.title}</span>
                 <span className={styles.sectionIndex}>
@@ -132,7 +132,7 @@ class TableOfContents extends React.Component {
 TableOfContents.propTypes = {
   headings: PropTypes.arrayOf(PropTypes.object).isRequired,
   isOpen: PropTypes.bool.isRequired,
-  tocItemOnClick: PropTypes.func.isRequired,
+  menuItemDidTap: PropTypes.func.isRequired,
 };
 
 export default TableOfContents;

@@ -21,7 +21,7 @@ const Icon = ({ icon }) => {
   throw `Unexpected icon resource: ${icon}`;
 };
 
-const SocialBar = ({ isOpen, socialItemOnClick }) => (
+const SocialBar = ({ isOpen, menuItemDidTap }) => (
   <StaticQuery
     query={componentQuery}
     render={({ config: { social: socialItems } }) => {
@@ -37,7 +37,7 @@ const SocialBar = ({ isOpen, socialItemOnClick }) => (
         <div className={wrapperClassName}>
           {socialItems.map(item => (
             <div key={item.name} className={styles.item}>
-              <Link kind={'social'} to={item.link} onClick={socialItemOnClick}>
+              <Link kind={'social'} to={item.link} onClick={menuItemDidTap}>
                 <div className={styles.icon}>
                   <Icon icon={item.icon} />
                 </div>
@@ -55,7 +55,7 @@ SocialBar.displayName = 'SocialBar';
 
 SocialBar.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  socialItemOnClick: PropTypes.func.isRequired,
+  menuItemDidTap: PropTypes.func.isRequired,
 };
 
 export default SocialBar;

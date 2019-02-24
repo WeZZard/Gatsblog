@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Navigation.module.scss';
-import MediaQuery from 'react-responsive';
+import Media from 'react-media';
 
 import TableOfContents from './TableOfContents';
 import NavigationBar from './NavigationBar';
@@ -9,86 +9,66 @@ import SocialBar from './SocialBar';
 import TocButton from './TocButton';
 import NavButton from './NavButton';
 import SiteTitle from './SiteTitle';
+import SiteFooter from './SiteFooter';
 
 import { graphql, StaticQuery } from 'gatsby';
 
 class Navigation extends React.Component {
   constructor(props) {
     super(props);
-    this.toggleToc = this.toggleToc.bind(this);
-    this.toggleNav = this.toggleNav.bind(this);
-    this.handleScroll = this.handleScroll.bind(this);
-    this.menuItemOnClick = this.menuItemOnClick.bind(this);
+    this.tocButtonDidTap = this.tocButtonDidTap.bind(this);
+    this.navButtonDidTap = this.navButtonDidTap.bind(this);
+    this.menuItemDidTap = this.menuItemDidTap.bind(this);
     this.state = {
-      isTocSelected: false,
-      isNavSelected: false,
-      pageYOffset: 0,
+      isTocMenuOpen: false,
+      isNavMenuOpen: false,
     };
   }
 
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll, { passive: true });
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
-
-  toggleNav() {
-    const isNavSelected = this.state.isNavSelected;
+  navButtonDidTap() {
+    const isNavMenuOpen = this.state.isNavMenuOpen;
     this.setState({
       ...this.state,
-      isNavSelected: !isNavSelected,
+      isNavMenuOpen: !isNavMenuOpen,
     });
+    this.props.delegate.menuDidToggle();
   }
 
-  toggleToc() {
-    const isTocSelected = this.state.isTocSelected;
+  tocButtonDidTap() {
+    const isTocMenuOpen = this.state.isTocMenuOpen;
     this.setState({
       ...this.state,
-      isTocSelected: !isTocSelected,
+      isTocMenuOpen: !isTocMenuOpen,
     });
+    this.props.delegate.menuDidToggle();
   }
 
-  handleScroll() {
-    const isTocSelected = this.state.isTocSelected;
-    const newState = { isTocSelected, pageYOffset: window.pageYOffset };
-    this.setState(newState);
-  }
-
-  menuItemOnClick() {
+  menuItemDidTap() {
     this.setState({
       ...this.state,
-      isTocSelected: false,
-      isNavSelected: false,
+      isTocMenuOpen: false,
+      isNavMenuOpen: false,
     });
+    this.props.delegate.menuDidClose();
   }
 
   render() {
-    const { slug, headings, errorCode } = this.props;
+    const { slug, headings } = this.props;
 
-    const { isTocSelected, isNavSelected, pageYOffset } = this.state;
+    const { isTocMenuOpen, isNavMenuOpen } = this.state;
 
-    let navigationClassNames = [styles.flexWrapper];
+    let navigationClassNames = [styles.navigation];
 
-    if (isTocSelected || isNavSelected) {
+    if (isTocMenuOpen || isNavMenuOpen) {
       navigationClassNames.push(styles.isButtonSelected);
     }
 
-    if (isTocSelected) {
+    if (isTocMenuOpen) {
       navigationClassNames.push(styles.isTocButtonSelected);
     }
 
-    if (isNavSelected) {
+    if (isNavMenuOpen) {
       navigationClassNames.push(styles.isNavButtonSelected);
-    }
-
-    if (pageYOffset > 0) {
-      navigationClassNames.push(styles.bordered);
-    }
-
-    if (errorCode === 404) {
-      navigationClassNames.push(styles.errorCode404);
     }
 
     const navigationClassName = navigationClassNames.join(' ');
@@ -99,28 +79,56 @@ class Navigation extends React.Component {
       <div className={styles.tableOfContents}>
         <TableOfContents
           headings={headings}
-          tocItemOnClick={this.menuItemOnClick}
-          isOpen={isTocSelected}
+          menuItemDidTap={this.menuItemDidTap}
+          isOpen={isTocMenuOpen}
         />
       </div>
     ) : null;
 
     const tocButton = (
-      <MediaQuery query="(max-width: 960px)">
+      <Media query={{ maxWidth: 960 }}>
         <div className={styles.navButton}>
-          <NavButton onClick={this.toggleNav} isSelected={isNavSelected} />
+          <NavButton
+            onClick={this.navButtonDidTap}
+            isSelected={isNavMenuOpen}
+          />
         </div>
-      </MediaQuery>
+      </Media>
     );
 
     const navButton = (
-      <MediaQuery query="(max-width: 960px)">
+      <Media query={{ maxWidth: 960 }}>
         <div className={styles.tocButton}>
           {hasTableOfContents ? (
-            <TocButton onClick={this.toggleToc} isSelected={isTocSelected} />
+            <TocButton
+              onClick={this.tocButtonDidTap}
+              isSelected={isTocMenuOpen}
+            />
           ) : null}
         </div>
-      </MediaQuery>
+      </Media>
+    );
+
+    const showsSlogans = !(headings && headings.length > 0);
+
+    const siteFooterClassNames = [styles.siteFooter];
+
+    if (showsSlogans) {
+      siteFooterClassNames.push(styles.growEnabled);
+    }
+
+    const siteFooterClassName = siteFooterClassNames.join(' ');
+
+    const siteFooter = (
+      <Media query={{ maxWidth: 960 }}>
+        {matches =>
+          matches ? null : (
+            <div className={siteFooterClassName}>
+              <SiteFooter showsSlogans={showsSlogans} />
+            </div>
+          )
+        }
+      </Media>
     );
 
     return (
@@ -140,18 +148,19 @@ class Navigation extends React.Component {
                 </div>
                 {navButton}
               </div>
-              <div className={styles.navigation}>
+              <div className={styles.navigationBar}>
                 <NavigationBar
-                  isOpen={isNavSelected}
-                  navItemOnClick={this.menuItemOnClick}
+                  isOpen={isNavMenuOpen}
+                  menuItemDidTap={this.menuItemDidTap}
                   slug={slug}
                 />
                 <SocialBar
-                  isOpen={isNavSelected}
-                  socialItemOnClick={this.menuItemOnClick}
+                  isOpen={isNavMenuOpen}
+                  menuItemDidTap={this.menuItemDidTap}
                 />
               </div>
               {tableOfContentsComponent}
+              {siteFooter}
             </div>
           );
         }}
@@ -162,8 +171,8 @@ class Navigation extends React.Component {
 
 Navigation.propTypes = {
   slug: PropTypes.string,
-  errorCode: PropTypes.number,
   headings: PropTypes.arrayOf(PropTypes.object),
+  delegate: PropTypes.object.isRequired,
 };
 
 export default Navigation;

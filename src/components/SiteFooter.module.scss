@@ -18,41 +18,20 @@
 }
 
 .siteFooter {
-  background: url('../../assets/images/background-cover.jpg') no-repeat
-    $color-ui-nav-background;
-  background-position: left;
-  background-size: cover;
+  align-items: stretch;
   display: flex;
   flex-direction: column-reverse;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  width: 30%;
-  z-index: -1;
-
-  @media (max-width: $mobile-max) {
-    background-position: center;
-    height: auto;
-    position: relative;
-    top: auto;
-    width: auto;
-    z-index: 0;
-  }
+  flex-grow: 1;
+  flex-shrink: 0;
 
   .siteInfo {
-    @include container-column-stretch;
-
-    margin-bottom: 3.4rem;
-    margin-left: 5.5rem;
-    margin-right: 3.4rem;
-    margin-top: 3.4rem;
-    z-index: -1;
-
-    @media (max-width: $mobile-max) {
-      margin-bottom: calc(5.5rem + env(safe-area-inset-bottom));
-      margin-left: 3.4rem;
-      margin-top: 5.5rem;
-    }
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    flex-grow: 1;
+    flex-shrink: 0;
+    margin: 0;
 
     .siteInfoItem {
       @include container-column-stretch;
@@ -71,8 +50,8 @@
         font-weight: 500;
         line-height: calc(42 / 30);
         margin: 0;
-        margin-bottom: -1.1rem;
-        margin-top: -1rem;
+        margin-bottom: -1rem;
+        margin-top: -1.5rem;
         padding: 0;
       }
 
@@ -86,37 +65,6 @@
         margin-bottom: -0.3rem;
         margin-top: -0.5rem;
       }
-    }
-  }
-
-  .overlay {
-    background-color: transparentize($color-theme, 0.8);
-    background-image: linear-gradient(
-      140deg,
-      $color-theme-gradient-end 20%,
-      $color-theme-gradient-end
-    );
-    bottom: 0;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: -2;
-  }
-
-  &.errorCode404 {
-    background-position: center;
-    background-size: cover;
-    width: 100%;
-
-    @media (max-width: $mobile-max) {
-      background-size: cover;
-      flex-grow: 1;
-      height: calc(
-        100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 44px
-      );
-      margin-top: 44px;
     }
   }
 }

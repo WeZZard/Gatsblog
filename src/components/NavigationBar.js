@@ -16,7 +16,7 @@ const Item = styled.li`
 
 class NavigationBar extends React.Component {
   render() {
-    const { isOpen, slug, navItemOnClick } = this.props;
+    const { isOpen, slug, menuItemDidTap } = this.props;
 
     return (
       <StaticQuery
@@ -110,7 +110,7 @@ class NavigationBar extends React.Component {
                 isOpen={isOpen}
               >
                 <span className={className}>
-                  <Link kind={kind} to={itemSlug} onClick={navItemOnClick}>
+                  <Link kind={kind} to={itemSlug} onClick={menuItemDidTap}>
                     {itemName}
                   </Link>
                 </span>
@@ -118,16 +118,16 @@ class NavigationBar extends React.Component {
             );
           });
 
-          const wrapperClassNames = [styles.flexWrapper];
+          const navigationBarClassNames = [styles.navigationBar];
 
           if (isOpen) {
-            wrapperClassNames.push(styles.open);
+            navigationBarClassNames.push(styles.open);
           }
 
-          const wrapperClassName = wrapperClassNames.join(' ');
+          const navigationBarClassName = navigationBarClassNames.join(' ');
 
           return (
-            <nav className={wrapperClassName}>
+            <nav className={navigationBarClassName}>
               <ol className={styles.list}>{components}</ol>
             </nav>
           );
@@ -139,7 +139,7 @@ class NavigationBar extends React.Component {
 
 NavigationBar.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  navItemOnClick: PropTypes.func.isRequired,
+  menuItemDidTap: PropTypes.func.isRequired,
   slug: PropTypes.string,
 };
 

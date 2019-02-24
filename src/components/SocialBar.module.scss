@@ -7,11 +7,13 @@
     flex-grow: 0;
     flex-shrink: 0;
     flex-direction: row-reverse;
-    justify-content: space-around;
+    justify-content: space-between;
     margin-top: 3.4rem;
 
     @media (max-width: $mobile-max) {
         flex-direction: row;
+        margin-left: calc(2.1rem + env(safe-area-inset-left));
+        margin-right: calc(2.1rem + env(safe-area-inset-right));
         opacity: 0;
         transform: scale(1.15) translateY(-30px);
         transition: transform 0.5s $cubic, opacity 0.6s $cubic;

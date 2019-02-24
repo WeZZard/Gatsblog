@@ -125,14 +125,6 @@
       transition: background 0.3s ease-in-out;
     }
   }
-
-  @media (max-width: $mobile-max) {
-    color: $_gray-21;
-
-    &:visited {
-      color: $_gray-21;
-    }
-  }
 }
 
 .navigationNormal {
@@ -153,14 +145,6 @@
 
     &::after {
       background: $color-ui-nav-headline-selected;
-    }
-  }
-
-  @media (max-width: $mobile-max) {
-    color: $_gray-34;
-
-    &:visited {
-      color: $_gray-34;
     }
   }
 }
@@ -194,30 +178,6 @@
     span {
       color: $color-hover;
       transition: color 0.3s ease-in-out;
-    }
-  }
-
-  @media (max-width: $mobile-max) {
-    span {
-      color: $_gray-21;
-    }
-
-    &:hover {
-      span {
-        color: $color-hover;
-      }
-    }
-
-    &:visited {
-      span {
-        color: $_gray-21;
-      }
-    }
-
-    &:visited:hover {
-      span {
-        color: $color-hover;
-      }
     }
   }
 }
