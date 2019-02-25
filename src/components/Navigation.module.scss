@@ -136,7 +136,7 @@
     justify-content: flex-end;
 
     @media (max-width: $small-screen-max) {
-      margin-left: 0;
+      margin-left: -5.5rem;
     }
 
     @media (max-width: $mobile-max) {
