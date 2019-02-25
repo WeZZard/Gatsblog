@@ -3,9 +3,9 @@
 @import '../styles/responsive';
 
 .liveCode {
-  align-items: flex-start;
+  align-items: stretch;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: stretch;
   margin-bottom: 3.4rem;
   margin-left: -2.1rem;
@@ -13,45 +13,59 @@
   margin-top: 0;
 
   :global(.react-live) {
-    align-items: flex-start;
+    align-items: stretch;
     display: flex;
-    flex-direction: row;
-    justify-content: stretch;
+    flex-direction: column;
     width: 100%;
 
-    @media (max-width: $small-screen-max) {
+    .editor {
       align-items: stretch;
       display: flex;
       flex-direction: column;
-    }
+      width: 100%;
 
-    :global(.prism-code) {
-      font-family: $font-text-monospaced;
-      font-size: 1.3em;
-      font-weight: 400;
-      line-height: calc(26 / 13);
-      padding: 2.1rem;
-      overflow-x: scroll;
-      width: calc(50% - 2.1rem / 2);
-
-      @media (max-width: $small-screen-max) {
-        width: calc(100%);
+      :global(.prism-code) {
+        font-family: $font-text-monospaced;
+        font-size: 1.3em;
+        font-weight: 400;
+        line-height: calc(26 / 13);
+        padding: 2.1rem;
+        overflow-x: scroll;
       }
     }
 
-    :global(.react-live-preview) {
-      border: 2px solid $_gray-89;
-      flex-grow: 0;
-      margin-left: 2.1rem;
-      padding: 2.1rem;
-      overflow-x: scroll;
-      width: calc(50% - 2.1rem * 2 - 2.1rem / 2 - 4px);
+    .preview {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      margin-top: 2.1rem;
+      width: 100%;
 
-      @media (max-width: $small-screen-max) {
-        margin-left: 0;
-        margin-top: 2.1rem;
-        overflow-x: auto;
+      :global(.react-live-error) {
+        background-color: red;
+        color: white;
+        flex-grow: 0;
+        font-family: $font-text-sans;
+        font-size: 1.5em;
+        font-weight: 300;
+        line-height: calc(29 / 15);
+        margin-bottom: 2.1rem;
         width: calc(100% - 2.1rem * 2);
+        padding: 2.1rem;
+      }
+
+      :global(.react-live-preview) {
+        border: 2px solid $_gray-89;
+        flex-grow: 0;
+        padding: 2.1rem;
+        overflow-x: scroll;
+        width: calc(100% - 2.1rem * 2 - 4px);
+
+        @media (max-width: $mobile-max) {
+          border-left: none;
+          border-right: none;
+          width: calc(100% - 2.1rem * 2 - 2px);
+        }
       }
     }
   }
@@ -69,13 +83,11 @@
   padding: 0;
 
   .pathLabel {
+    align-items: stretch;
     border-bottom: 1px solid $color-content-code-block-indicator;
-    color: $color-content-body;
-    display: block;
-    font-family: $font-text-monospaced;
-    font-size: 1.3em;
-    font-weight: 400;
-    line-height: 1;
+    color: $color-content-summary;
+    display: flex;
+    flex-direction: column;
     margin: 0;
     margin-bottom: -0.1rem;
     -ms-overflow-style: none;
@@ -85,22 +97,40 @@
     padding-left: 2.1rem;
     padding-right: 2.1rem;
     padding-top: 1.2rem;
+
+    .path {
+      display: inline-block;
+      font-family: $font-text-monospaced;
+      font-size: 1.3em;
+      font-weight: 400;
+      line-height: calc(15 / 13);
+      margin-bottom: -0.1rem;
+      margin-top: -0.1rem;
+    }
   }
 
   @mixin language {
+    align-items: stretch;
     border-bottom-left-radius: 0.7rem;
     border-bottom-right-radius: 0.7rem;
-    display: block;
-    font-family: $font-text-monospaced;
-    font-size: 1.1em;
-    font-weight: 400;
-    line-height: 1;
+    display: flex;
+    flex-direction: column;
     margin-bottom: 0.6rem;
     margin-left: auto;
     margin-right: 2.1rem;
     margin-top: 0;
     padding: 0.8rem;
     text-transform: uppercase;
+
+    .language {
+      display: inline-block;
+      font-family: $font-text-monospaced;
+      font-size: 1.1em;
+      font-weight: 400;
+      line-height: calc(13 / 11);
+      margin-bottom: -0.3rem;
+      margin-top: -0.2rem;
+    }
   }
 
   .languageLabel {

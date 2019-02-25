@@ -4,16 +4,16 @@
 .inlineCode {
   background-color: $color-content-code-block-background;
   border-left: solid 2px $color-content-code-block-indicator;
-  border-right: solid 2px $color-content-code-block-indicator;
   display: inline;
   font-family: $font-text-monospaced;
   font-size: calc(13em / 17);
   font-weight: 400;
-  line-height: calc((29 - 6 - 6) / 13);
-  margin-bottom: -0.6rem;
+  line-height: calc(29 / 13);
+  margin-bottom: -0.5rem;
   margin-top: -0.6rem;
-  padding: 0;
+  padding-bottom: 0.1rem;
   padding-left: 0.3rem;
   padding-right: 0.3rem;
+  padding-top: 0;
   word-break: break-word;
 }

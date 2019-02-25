@@ -53,11 +53,7 @@
 
     &.error {
       width: 100vw;
-      z-index: -1;
-
-      @media (max-width: $mobile-max) {
-        z-index: 999;
-      }
+      z-index: 999;
     }
   }
 

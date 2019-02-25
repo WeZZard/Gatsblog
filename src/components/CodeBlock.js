@@ -9,9 +9,13 @@ export default ({ codeString, language, ...props }) => {
     return (
       <div className={styles.liveCode}>
         <LiveProvider code={codeString} mountStylesheet={false}>
-          <LiveEditor />
-          <LiveError />
-          <LivePreview />
+          <div className={styles.editor}>
+            <LiveEditor />
+          </div>
+          <div className={styles.preview}>
+            <LiveError />
+            <LivePreview />
+          </div>
         </LiveProvider>
       </div>
     );
@@ -24,7 +28,7 @@ export default ({ codeString, language, ...props }) => {
 
     const pathLabel = path ? (
       <div className={styles.pathLabel}>
-        <span>{path}</span>
+        <span className={styles.path}>{path}</span>
       </div>
     ) : null;
 
@@ -34,7 +38,7 @@ export default ({ codeString, language, ...props }) => {
 
     const languageLabel = language ? (
       <div className={styles[languageClassName] || styles.languageLabel}>
-        <span>{languageString}</span>
+        <span className={styles.language}>{languageString}</span>
       </div>
     ) : null;
 

@@ -186,6 +186,7 @@
         @media (max-width: $mobile-max) {
           opacity: 1;
           transform: scale(1) translateY(0);
+          transition: transform 0.5s $cubic, opacity 0.6s $cubic;
         }
       }
     }
