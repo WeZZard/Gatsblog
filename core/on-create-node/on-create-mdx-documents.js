@@ -8,7 +8,7 @@ module.exports = args => {
   const { createNode, createParentChildLink } = actions;
 
   if (node.internal.type === 'Mdx') {
-    const isPreviewEnabled = process.env.GATSBY_IS_PREVIEW_ENABLED || false;
+    const isPreviewEnabled = process.env.GATSBY_IS_PREVIEW_ENABLED === 'true';
 
     const metadata = new MDXMetadata(args);
 
