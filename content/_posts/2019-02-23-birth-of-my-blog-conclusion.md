@@ -1,5 +1,5 @@
 ---
-title: "Birth of My Blog - Part IV: Conclusion"
+title: A Sequel to Gatsblog
 category: Showcase
 isPublished: false
 ---

@@ -1,5 +1,5 @@
 ---
-title: "Birth of My Blog - Part III: Implementation"
+title: On Implementation of Gatsblog
 category: Showcase
 isPublished: false
 ---
