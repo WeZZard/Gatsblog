@@ -1,13 +1,11 @@
 module.exports = str => {
   var utf8 = [];
-  for (var i=0; i < str.length; i++) {
+  for (var i = 0; i < str.length; i++) {
     var charCode = str.charCodeAt(i);
     if (charCode < 0x80) utf8.push(charCode);
     else if (charCode < 0x800) {
-      utf8.push(0xc0 | (charCode >> 6),
-        0x80 | (charCode & 0x3f));
-    }
-    else if (charCode < 0xd800 || charCode >= 0xe000) {
+      utf8.push(0xc0 | (charCode >> 6), 0x80 | (charCode & 0x3f));
+    } else if (charCode < 0xd800 || charCode >= 0xe000) {
       utf8.push(
         0xe0 | (charCode >> 12),
         0x80 | ((charCode >> 6) & 0x3f),

@@ -14,7 +14,11 @@
 }
 
 @mixin horizontal-margin {
+  margin-left: calc(2.1rem);
+  margin-left: calc(2.1rem + constant(safe-area-inset-left));
   margin-left: calc(2.1rem + env(safe-area-inset-left));
+  margin-right: calc(2.1rem);
+  margin-right: calc(2.1rem + constant(safe-area-inset-right));
   margin-right: calc(2.1rem + env(safe-area-inset-right));
 }
 
@@ -37,7 +41,9 @@
 
   @media (max-width: $mobile-max) {
     background-color: transparent;
-    margin-bottom: calc(env(safe-area-inset-bottom));
+    margin-bottom: 0;
+    margin-bottom: constant(safe-area-inset-bottom);
+    margin-bottom: env(safe-area-inset-bottom);
     max-width: none;
     padding: 0;
     width: auto;
@@ -91,7 +97,7 @@
 
   .body {
     @supports (overflow: -moz-scrollbars-none) {
-      overflow:-moz-scrollbars-none;
+      overflow: -moz-scrollbars-none;
     }
 
     align-items: stretch;
@@ -100,7 +106,9 @@
     flex-grow: 1;
     flex-shrink: 1;
     -ms-overflow-style: none;
-    overflow-y: scroll ;
+    overflow-y: scroll;
+    margin-bottom: calc(2.1rem - 0.3rem);
+    margin-bottom: calc(2.1rem - 0.3rem + constant(safe-area-inset-bottom));
     margin-bottom: calc(2.1rem - 0.3rem + env(safe-area-inset-bottom));
     min-height: 0;
     padding-left: 2.1rem;

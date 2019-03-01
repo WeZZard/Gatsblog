@@ -1,4 +1,8 @@
-const { GraphQLString, GraphQLBoolean, GraphQLList } = require('gatsby/graphql');
+const {
+  GraphQLString,
+  GraphQLBoolean,
+  GraphQLList,
+} = require('gatsby/graphql');
 
 module.exports = async args => {
   const { type, getNode } = args;

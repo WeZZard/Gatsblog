@@ -1,6 +1,7 @@
 ---
 plugins:
   - stylelint-scss
+  - stylelint-prettier
 extends:
   - stylelint-config-recommended
 rules:
@@ -31,6 +32,10 @@ rules:
     - ignoreProperties:
         - composes
         - compose-with
+  declaration-block-no-duplicate-properties:
+    - true
+    - ignore:
+        - consecutive-duplicates-with-different-values
   value-no-vendor-prefix:
   property-no-vendor-prefix:
   selector-no-vendor-prefix:
@@ -40,3 +45,5 @@ rules:
     - true
     - ignoreAtRules:
         - value
+  prettier/prettier:
+    - true

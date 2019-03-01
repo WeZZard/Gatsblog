@@ -37,7 +37,11 @@
     @media (max-width: $mobile-max) {
       overflow: visible;
       height: 44px;
+      padding-top: 0;
+      padding-top: constant(safe-area-inset-top);
       padding-top: env(safe-area-inset-top);
+      padding-bottom: 0;
+      padding-bottom: constant(safe-area-inset-bottom);
       padding-bottom: env(safe-area-inset-bottom);
       transition: height 0.5s ease-out, background 1s ease-out;
       width: 100vw;
@@ -63,27 +67,51 @@
     flex-direction: column;
     flex-grow: 1;
     margin-bottom: 0;
+    margin-left: calc(30%);
+    margin-left: calc(30% + constant(safe-area-inset-left));
     margin-left: calc(30% + env(safe-area-inset-left));
+    margin-right: 0;
+    margin-right: constant(safe-area-inset-right);
     margin-right: env(safe-area-inset-right);
     margin-top: 0;
     max-width: 780px;
+    width: 61.8vw;
+    width: calc(
+      61.8vw - constant(safe-area-inset-left) - constant(safe-area-inset-right)
+    );
     width: calc(
       61.8vw - env(safe-area-inset-left) - env(safe-area-inset-right)
     );
 
     @media (max-width: $small-screen-max) {
       max-width: none;
+      width: 70vw;
+      width: calc(
+        70vw - constant(safe-area-inset-left) - constant(safe-area-inset-right)
+      );
       width: calc(
         70vw - env(safe-area-inset-left) - env(safe-area-inset-right)
       );
     }
 
     @media (max-width: $mobile-max) {
+      margin-left: 0;
+      margin-left: constant(safe-area-inset-left);
       margin-left: env(safe-area-inset-left);
+      margin-right: 0;
+      margin-right: constant(safe-area-inset-right);
       margin-right: env(safe-area-inset-right);
+      margin-top: 44px;
+      margin-top: calc(44px + constant(safe-area-inset-top));
       margin-top: calc(44px + env(safe-area-inset-top));
       max-width: none;
-      width: calc(100vw - env(safe-area-inset-left) - env(safe-area-inset-right));
+      width: 100vw;
+      width: calc(
+        100vw - constant(safe-area-inset-left) - constant(safe-area-inset-right)
+      );
+      width: calc(
+        100vw - env(safe-area-inset-left) - env(safe-area-inset-right)
+      );
     }
 
     &.error {
@@ -102,15 +130,22 @@
 
   .footer {
     @media (max-width: $mobile-max) {
-      background: url('../../assets/images/background-cover.jpg') no-repeat $color-ui-nav-background;
+      background: url('../../assets/images/background-cover.jpg') no-repeat
+        $color-ui-nav-background;
       background-position: center;
       background-size: cover;
       display: flex;
       flex-grow: 0;
       flex-shrink: 0;
       flex-direction: column-reverse;
+      padding-bottom: 5.5rem;
+      padding-bottom: calc(5.5rem + constant(safe-area-inset-bottom));
       padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
+      padding-left: 2.1rem;
+      padding-left: calc(2.1rem + constant(safe-area-inset-left));
       padding-left: calc(2.1rem + env(safe-area-inset-left));
+      padding-right: 2.1rem;
+      padding-right: calc(2.1rem + constant(safe-area-inset-right));
       padding-right: calc(2.1rem + env(safe-area-inset-right));
       padding-top: 5.5rem;
       position: relative;
@@ -121,9 +156,9 @@
       @media (max-width: $mobile-max) {
         background-color: transparentize($color-theme, 0.8);
         background-image: linear-gradient(
-                        140deg,
-                        $color-theme-gradient-end 20%,
-                        $color-theme-gradient-end
+          140deg,
+          $color-theme-gradient-end 20%,
+          $color-theme-gradient-end
         );
         width: 100%;
         height: 100%;
@@ -137,9 +172,27 @@
 
     &.error {
       @media (max-width: $mobile-max) {
+        padding-top: calc(44px + 5.5rem);
+        padding-top: calc(44px + 5.5rem + constant(safe-area-inset-top));
         padding-top: calc(44px + 5.5rem + env(safe-area-inset-top));
-        width: calc(100% - 2.1rem * 2 - env(safe-area-inset-left) - env(safe-area-inset-right));
-        height: calc(100% - 5.5rem * 2 - 44px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+        width: calc(100% - 2.1rem * 2);
+        width: calc(
+          100% - 2.1rem * 2 - constant(safe-area-inset-left) -
+            constant(safe-area-inset-right)
+        );
+        width: calc(
+          100% - 2.1rem * 2 - env(safe-area-inset-left) -
+            env(safe-area-inset-right)
+        );
+        height: calc(100% - 5.5rem * 2 - 44px);
+        height: calc(
+          100% - 5.5rem * 2 - 44px - constant(safe-area-inset-top) -
+            constant(safe-area-inset-bottom)
+        );
+        height: calc(
+          100% - 5.5rem * 2 - 44px - env(safe-area-inset-top) -
+            env(safe-area-inset-bottom)
+        );
         bottom: 0;
         left: 0;
         position: absolute;

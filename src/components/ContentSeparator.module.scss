@@ -11,7 +11,11 @@
   padding: 0;
 
   @media (max-width: $mobile-max) {
+    margin-left: calc(-2.1rem);
+    margin-left: calc(-2.1rem - constant(safe-area-inset-left));
     margin-left: calc(-2.1rem - env(safe-area-inset-left));
+    margin-right: calc(-2.1rem);
+    margin-right: calc(-2.1rem - constant(safe-area-inset-right));
     margin-right: calc(-2.1rem - env(safe-area-inset-right));
   }
 }

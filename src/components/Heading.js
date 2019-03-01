@@ -14,7 +14,9 @@ class Heading extends React.Component {
 
     return (
       <Component className={styles.h}>
-        <span id={name} className={styles[`h${level}`]}>{children}</span>
+        <span id={name} className={styles[`h${level}`]}>
+          {children}
+        </span>
       </Component>
     );
   }
