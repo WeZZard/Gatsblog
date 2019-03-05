@@ -34,7 +34,9 @@ export default ({ codeString, language, ...props }) => {
 
     const languageClassName = language ? getLanguageClassName(language) : null;
 
-    const languageString = [language, version].filter(_ => _).join(' ');
+    const languageString = [getLanguageName(language), version]
+      .filter(_ => _)
+      .join(' ');
 
     const languageLabel = language ? (
       <div className={styles[languageClassName] || styles.languageLabel}>
@@ -91,14 +93,27 @@ export default ({ codeString, language, ...props }) => {
   }
 };
 
+const getLanguageName = language => {
+  if (/^objectivec$/i.test(language)) {
+    return 'Objective-C';
+  }
+  if (/^objectivecpp$/i.test(language)) {
+    return 'Objective-C++';
+  }
+  if (/^cpp$/i.test(language)) {
+    return 'C++';
+  }
+  return language;
+};
+
 const getLanguageClassName = language => {
-  if (/^objective-c$/i.test(language)) {
+  if (/^objectivec$/i.test(language)) {
     return 'objectiveC';
   }
-  if (/^objective-c\+\+$/i.test(language)) {
+  if (/^objectivecpp$/i.test(language)) {
     return 'objectiveCPP';
   }
-  if (/^c\+\+$/i.test(language)) {
+  if (/^cpp$/i.test(language)) {
     return 'cPP';
   }
   if (/^\/etc\/hosts$/.test(language)) {

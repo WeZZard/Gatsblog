@@ -82,6 +82,10 @@ social:
     icon: fontawesome://fab/github
     link: https://github.com/WeZZard
 
+  - name: Stack Overflow
+    icon: fontawesome://fab/stack-overflow
+    link: https://stackoverflow.com/users/1393062/wezzard
+
   - name: Email
     icon: fontawesome://fas/envelope
     link: toprotect://mailto:me@wezzard.com

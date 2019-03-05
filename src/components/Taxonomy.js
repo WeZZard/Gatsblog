@@ -7,7 +7,7 @@ import Link from './Link';
 const Taxonomy = ({ kind, name, className, taxonomies }) => {
   const taxonomyItems = taxonomies.map(taxonomy => (
     <li key={`${taxonomy.slug}`} className={styles.taxonomyItem}>
-      <span className={styles.taxonomyItemContent}>
+      <span>
         <Link to={taxonomy.slug} kind={kind}>
           {taxonomy.name}
         </Link>
@@ -18,7 +18,7 @@ const Taxonomy = ({ kind, name, className, taxonomies }) => {
   return (
     <div className={[styles.taxonomy, className].join(' ')}>
       <div className={styles.taxonomyName}>
-        <label className={styles.taxonomyNameContent}>{name}</label>
+        <label>{name}</label>
       </div>
       <ul className={styles.taxonomyItemList}>{taxonomyItems}</ul>
     </div>
