@@ -19,13 +19,43 @@ stack.
 
 ## Semi-Live Editing
 
+## Responsive Image with Retina Display Support
+
 ## KaTex
+
+Because I'm a fan of math, Gatsby supports inline KaTex syntax like
+`$$a^2 + b^2 = c^2$$` which rendered as $$a^2 + b^2 = c^2$$, and block
+KaTex syntax:
+
+```katex
+$$
+\frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} \equiv 1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}} {1+\frac{e^{-8\pi}} {1+\cdots} } } }
+$$
+```
 
 $$
 \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} \equiv 1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}} {1+\frac{e^{-8\pi}} {1+\cdots} } } }
 $$
 
-Because I'm a fan of math, Gatsby supports KaTex
+```katex
+$$
+\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)
+$$
+```
+
+$$
+\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)
+$$
+
+```katex
+$$
+\int u \frac{dv}{dx}\,dx=uv-\int \frac{du}{dx}v\,dx
+$$ 
+```
+
+$$
+\int u \frac{dv}{dx}\,dx=uv-\int \frac{du}{dx}v\,dx 
+$$
 
 ## Enhanced with MDX
 
@@ -57,8 +87,6 @@ class Counter extends React.Component {
   }
 }
 ```
-
-### Responsive Image with Retina Display Support
 
 ### Code Block with Path Label
 

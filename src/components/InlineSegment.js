@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './InlineSegment.module.scss';
+import MDXRenderer from 'gatsby-mdx';
 
 import InlineParagraph from './InlineParagraph';
 import { normalizeChildren } from '../utils';
@@ -9,6 +10,8 @@ const inlineTags = ['label', 'span', 'code', 'input', 'a'];
 
 const isInlineElement = child => {
   if (typeof child === 'string') {
+    return true;
+  } else if (child && child.props && typeof child.props === 'string') {
     return true;
   } else {
     return (
@@ -60,6 +63,7 @@ const InlineSegment = props => {
       }
     }, [])
     .map((child, index) => {
+      console.log(child);
       if (Array.isArray(child)) {
         return (
           <InlineParagraph key={`inline-paragraph: ${index}`}>

@@ -146,6 +146,8 @@ const components = {
   img: Image,
   figure: Figure,
   figcaption: FigureCaption,
+  mathblock: MathBlock,
+  inlinemath: InlineMath,
 };
 
 const MDXBody = ({ textStyle, code }) => (

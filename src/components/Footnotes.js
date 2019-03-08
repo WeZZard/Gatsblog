@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './Footnotes.module.scss';
 
 import MDXContext from './MDXContext';
-import { normalizeChildren, processChildren, rawStringToSpan } from '../utils';
+import { normalizeChildren, processChildren } from '../utils';
 import InlineSegment from './InlineSegment';
 
 class FootnoteList extends React.Component {
@@ -34,11 +34,7 @@ class FootnoteItem extends React.Component {
 
     const totalChildren = [footnoteLabel, ...normalizedChildren];
 
-    const processedChildren = processChildren(
-      totalChildren,
-      { a },
-      rawStringToSpan,
-    );
+    const processedChildren = processChildren(totalChildren, { a });
 
     return (
       <li id={this.props.props.id} className={styles.footnoteItem}>
