@@ -4,7 +4,7 @@ category: Programming
 tags: [Swift, Objective-C, 'Aspect-Oriented Programming']
 ---
 
-## Case Study: Intervening UIScrollView instances's Pan Gesture Recognizer
+## Case Study: Intervening UIScrollView Instances's Pan Gesture Recognizer
 
 As we known, `UIScrollView` translates pan gesture signals into
 `scrollViewDidXXX:` messages and sends to its delegate, most of the time
