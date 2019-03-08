@@ -166,7 +166,7 @@ const createHtmlImageContents = async ({
       processedTag = `<a href="${originalImg}">${processedTag}</a>`.trim();
     }
 
-    if (showsCaptions) {
+    if (showsCaptions && !!title) {
       processedTag = `
 <figure>
     ${processedTag}
