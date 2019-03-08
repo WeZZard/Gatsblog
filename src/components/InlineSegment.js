@@ -2,26 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './InlineSegment.module.scss';
 
-import Paragraph from './Paragraph';
+import InlineParagraph from './InlineParagraph';
 import { normalizeChildren } from '../utils';
 
-const inlineTags = ['span', 'code', 'input', 'a'];
+const inlineTags = ['label', 'span', 'code', 'input', 'a'];
 
 const isInlineElement = child => {
   if (typeof child === 'string') {
     return true;
   } else {
     return (
-      child &&
-      child.props &&
-      child.props.name &&
-      inlineTags.includes(child.props.name)
+      (child &&
+        child.props &&
+        child.props.name &&
+        inlineTags.includes(child.props.name)) ||
+      (child && child.type && inlineTags.includes(child.type))
     );
   }
 };
 
 const InlineSegment = props => {
   const { children } = props;
+
   const normalizedChildren = normalizeChildren(children);
 
   const reducedChildren = normalizedChildren
@@ -59,7 +61,11 @@ const InlineSegment = props => {
     }, [])
     .map((child, index) => {
       if (Array.isArray(child)) {
-        return <Paragraph key={index}>{child}</Paragraph>;
+        return (
+          <InlineParagraph key={`inline-paragraph: ${index}`}>
+            {child}
+          </InlineParagraph>
+        );
       } else {
         return child;
       }

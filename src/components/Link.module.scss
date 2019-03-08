@@ -117,11 +117,11 @@
 
   &:hover,
   &:visited:hover {
-    color: $color-hover;
+    color: $color-tint;
     transition: color 0.3s ease-in-out;
 
     &::after {
-      background: $color-hover;
+      background: $color-tint;
       transition: background 0.3s ease-in-out;
     }
   }
@@ -163,7 +163,7 @@
 
   &:hover {
     span {
-      color: $color-hover;
+      color: $color-tint;
       transition: color 0.3s ease-in-out;
     }
   }
@@ -176,7 +176,7 @@
 
   &:visited:hover {
     span {
-      color: $color-hover;
+      color: $color-tint;
       transition: color 0.3s ease-in-out;
     }
   }

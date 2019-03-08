@@ -3,8 +3,7 @@ require('dotenv').config({
 });
 
 const remarkMath = require(`remark-math`);
-const mdxBackSlashSafeGuarder = require('./core/remark/mdx-backslash-safe-guarder');
-const kaTexMdxTag = require(`./core/remark/katex-mdx-tag`);
+const mdxTagKaTex = require(`./core/remark/mdx-tag-katex`);
 const gatsbyPluginFeedOptions = require(`./gatsby-plugin-feed-options`);
 
 module.exports = {
@@ -22,20 +21,6 @@ module.exports = {
         theme_color: `#3d4260`,
         display: `minimal-ui`,
         icon: `assets/gatsby-icon.png`,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-webmention`,
-      options: {
-        username: 'wezzard.com', // webmention.io username
-        identity: {
-          github: 'WeZZard',
-        },
-        mentions: true,
-        pingbacks: false,
-        forwardPingbacksAsWebmentions: 'https://example.com/endpoint',
-        domain: 'wezzard.com',
-        token: process.env.WEBMENTIONS_TOKEN,
       },
     },
     ////////////////////////////////////////////////////////////////////////////
@@ -117,7 +102,7 @@ module.exports = {
       resolve: `gatsby-mdx`,
       options: {
         extensions: ['.mdx', '.md'],
-        mdPlugins: [remarkMath, mdxBackSlashSafeGuarder, kaTexMdxTag],
+        mdPlugins: [remarkMath, mdxTagKaTex],
         globalScope: `
         import { InlineMath } from 'react-katex';
         import { BlockMath as MathBlock } from 'react-katex';
@@ -126,11 +111,13 @@ module.exports = {
         `,
         gatsbyRemarkPlugins: [
           {
-            resolve: `gatsby-remark-primitive-images`,
+            resolve: 'gatsby-remark-copy-linked-files',
+          },
+          {
+            resolve: `gatsby-remark-mdx-images`,
             options: {
-              withWebp: true,
-              maxWidth: 1440,
-              quality: 100,
+              withWebp: { quality: 100 },
+              maxWidth: 712,
             },
           },
         ],

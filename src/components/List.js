@@ -20,7 +20,14 @@ const List = props => {
       </ListItem>
     );
   });
-  return <ol className={listClassName}>{listItems}</ol>;
+  switch (type) {
+    case 'orderedList':
+      return <ol className={listClassName}>{listItems}</ol>;
+    case 'unorderedList':
+      return <ul className={listClassName}>{listItems}</ul>;
+    default:
+      throw `Unexpected list type: ${type}`;
+  }
 };
 
 List.propTypes = {

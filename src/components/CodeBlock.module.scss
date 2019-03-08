@@ -30,6 +30,8 @@
         font-weight: 400;
         line-height: calc(26 / 13);
         padding: 2.1rem;
+        -ms-overflow-style: none;
+        -webkit-overflow-scrolling: touch;
         overflow-x: scroll;
       }
     }
@@ -58,6 +60,8 @@
         border: 2px solid $_gray-89;
         flex-grow: 0;
         padding: 2.1rem;
+        -ms-overflow-style: none;
+        -webkit-overflow-scrolling: touch;
         overflow-x: scroll;
         width: calc(100% - 2.1rem * 2 - 4px);
 
@@ -91,6 +95,7 @@
     margin: 0;
     margin-bottom: -0.1rem;
     -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
     overflow-x: scroll;
     padding: 0;
     padding-bottom: 1.2rem;
@@ -184,6 +189,7 @@
       display: block;
       margin: 0;
       -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
       overflow-x: scroll;
       padding-right: 3.4rem;
 

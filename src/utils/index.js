@@ -5,6 +5,7 @@ import preToCodeBlock from './pre-to-code-block';
 import normalizeChildren from './normalize-children';
 import processChildren from './process-children';
 import rawStringToSpan from './raw-string-to-span';
+import pToFigure from './p-to-figure';
 
 export {
   pToImage,
@@ -14,4 +15,5 @@ export {
   normalizeChildren,
   processChildren,
   rawStringToSpan,
+  pToFigure,
 };

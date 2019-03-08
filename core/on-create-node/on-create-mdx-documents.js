@@ -12,6 +12,10 @@ module.exports = args => {
 
     const metadata = new MDXMetadata(args);
 
+    const parentNode = getNode(node.parent);
+
+    const absolutePath = parentNode.absolutePath;
+
     if (isPreviewEnabled || (!isPreviewEnabled && metadata.isPublished)) {
       switch (metadata.documentType) {
         case 'Post':
@@ -25,7 +29,7 @@ module.exports = args => {
               slug: metadata.slug,
               file: metadata.relativePath,
             },
-            nodeIdBase: metadata.relativePath,
+            nodeIdBase: absolutePath,
             nodeContent: node.rawBody,
             getNode,
             createNode,
@@ -45,7 +49,7 @@ module.exports = args => {
               slug: metadata.slug,
               file: metadata.relativePath,
             },
-            nodeIdBase: metadata.relativePath,
+            nodeIdBase: absolutePath,
             nodeContent: node.rawBody,
             getNode,
             createNode,

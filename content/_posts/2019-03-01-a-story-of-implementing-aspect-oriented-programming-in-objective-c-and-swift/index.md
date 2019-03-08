@@ -1,10 +1,10 @@
 ---
 title: A Story of Implementing Aspect-Oriented Programming in Objective-C and Swift
 category: Programming
-tags: [Swift, Objective-C, "Aspect-Oriented Programming"]
+tags: [Swift, Objective-C, 'Aspect-Oriented Programming']
 ---
 
-## Case Study: Intervening UIScrollView's Pan Gesture Recognizer
+## Case Study: Intervening UIScrollView instances's Pan Gesture Recognizer
 
 As we known, `UIScrollView` translates pan gesture signals into
 `scrollViewDidXXX:` messages and sends to its delegate, most of the time
@@ -17,26 +17,26 @@ recognition.
 Here, if we don't modify the internal mechanism of `UIScrollView`, we
 have to make a subclass.
 
-Since `UIScrollView`'s pan gesture recognizer solidates its delegate to be
-the owning `UIScrollView` instance itself. If you set its delegate to
-another "man in-the-middle", you would get a runtime exception. Most
-people would come up with subclassing here, but what if you are expecting
-this modification may affect some subclasses inherited to `UIScrollView`
-at some point?
+`UIScrollView`'s pan gesture recognizer solidates its delegate to be the
+owning `UIScrollView` instance itself. If you set its delegate to another
+"man in-the-middle", you would get a runtime exception. Most people would
+come up with subclassing here, but what if you are expecting this
+modification may affect some instances of subclasses inherited to
+`UIScrollView` at some point?
 
 In object-oriented programming paradigm, modifying the internal mechanism
 of an existed class is not encouraged. Since object-oriented programming
 builds upon continuously making **is-a** assertions -- what a class do
 make the reason why this class **is** the class itself, then one of the
 core concepts of object-oriented programming is to extend but not modify.
-Modifying the internal meachanism of an existed class just breaks the
+Modifying the internal mechanism of an existed class just breaks the
 paradigm. If you modified it, the **is-a** assertion torn down and the
 foundation of software architecture swinged.
 
 So, don't be cult of whatever-oriented programming forever. This time you
 need aspect-oriented programming. With it, you don't have to create a new
-class from `UIView` but also can achive the goal of intervening the pan
-gesture recognizer's work and this intervention can affact the subclasses
+class from `UIView` but also can achieve the goal of intervening the pan
+gesture recognizer's work and this intervention can affect the subclasses
 inherited to `UIScrollView`.
 
 ## Aspect-Oriented Programming Introduction
@@ -51,11 +51,11 @@ Plant grafting means to fix a shoot or twig to a slit of the trunk or
 stem of a living plant, such that the shoot or twig can receive sap from
 the living plant and continue to grow up.
 
-![Plant Grafting](./plant-grafting.png "Plant Grafting")
+![Plant Grafting](./plant-grafting.png 'Plant Grafting')
 
 Aspect-oriented programming is quite like plant grafting.
 
-![Plant Grafting v.s. AOP](./plant-grafting-vs-aop.png "Plant Grafting v.s. AOP")
+![Plant Grafting v.s. AOP](./plant-grafting-vs-aop.png 'Plant Grafting v.s. AOP')
 
 As the above figure shown, aspect-oriented programming concerns about
 three things:
@@ -77,7 +77,7 @@ Apple.
 
 No.
 
-Key-Value Observation is just an ad-hoc aspected-oriented programming
+Key-Value Observation is just an ad-hoc aspect-oriented programming
 framework in Objective-C and is an official feature shipped by Apple. We
 can plug Key-Value Observation in previous plant grafting model:
 
@@ -92,7 +92,7 @@ Thus we can know that Key-Value Observation is of aspect-oriented
 programming, but its "aspect" is "ad-hoc" and what Apple don't officially
 support is a "general" aspect support to aspect-oriented programming.
 
-Aspect-oriented programming in Swift is compilcated. With the legacy of
+Aspect-oriented programming in Swift is complicated. With the legacy of
 Objective-C, Swift supports Key-Value Observation by default. But since
 dispatches of function calls can be potentially resolved at compile time
 and are written to the compiled products, and Key-Value Observation
@@ -101,7 +101,7 @@ to call those run-time generated code and you need to markup your observed
 properties with `@objc` attribute, which enforces the compiler to
 generate codes to resolve the dispatch of the function at run-time.
 
-Likes Objective-C, there is no "general" aspect support in aspect-oriented
+Like Objective-C, there is no "general" aspect support in aspect-oriented
 programming in Swift.
 
 Well done. Apple made a good framework then we enjoy it and you still
@@ -143,8 +143,8 @@ out to be very tedious to manage the method swizzling code.
 ### A Sophisticated Approach
 
 By giving a glimpse to the official supported aspect-oriented programming
-framework -- Key-Value Observation, we can spot that it tottaly don't
-have the disadvantages I talked above. How did Apple achive this?
+framework -- Key-Value Observation, we can spot that it totally don't
+have the disadvantages I talked above. How did Apple achieve this?
 
 In fact, Apple implemented this aspect-oriented programming technique with
 a technique called is-a swizzling.
@@ -180,7 +180,7 @@ aspect-oriented programming, creating a subclass of the class of an object
 and then setting its is-a pointer to the object's might work. But when
 doing system design, the most important problem is: why may it work?
 
-### An Analysis to KVO's Deisgn
+### An Analysis to KVO's design
 
 Open Swift Playground and typing following code:
 
@@ -236,7 +236,7 @@ are only in the observer's event handler:
 other hand, the observed object is just about to sending events -- which
 is quite mechanical, the observed object side is dumbly fixed. This means
 one subclass for observed objects of one class is totally enough --
-because those observed objects of the same class actuall work the same
+because those observed objects of the same class actually work the same
 way.
 
 Replace the code in your Swift Playground with following code:
@@ -315,19 +315,20 @@ Since the boolean true in Objective-C are practically stored as `1` in
 memory, thus we can ensure that `_isKVOA` is just a method returns
 boolean value. Obviously, we can infer that `_isKVOA` indicates whether
 this class is a KVO generated class (Though we don't know what the
-trailing `A` extacly means to be).
+trailing `A` extactly means to be).
 
 ### Our System
 
 Our system is not quit different from KVO.
 
-First, our goal is to design a system offers "general" aspect support to aspect-oriented programming, which means you can inject custom
+First, our goal is to design a system offers "general" aspect support to
+aspect-oriented programming, which means you can inject custom
 implementation to any objects and any methods. This leads that creating
 one class to umbrella all the changes done to the injected objects of one
-class is no longer capcable.
+class is no longer capable.
 
-Second, we want a nominal appraoch instead of a non-nominal, or say
-anonymous appraoch to make such an injection. Giving something a name
+Second, we want a nominal approach instead of a non-nominal, or say
+anonymous approach to make such an injection. Giving something a name
 makes us to draw the boundary of responsibilities of the thing, and the
 boundaries of responsibilities are the foundation of clean software
 architecture.
@@ -335,24 +336,26 @@ architecture.
 Third, we want the system doesn't introduce any mechanisms that would
 result to "scare" developers.
 
-By referring to the deisgn of KVO, we can hand out the following design:
+By referring to the design of KVO, we can hand out the following design:
 
-- An object contains the methods to be injected into.
+- An object ( `Foo * foo` ) contains the methods to be injected into.
 
-- A protocol to represent the aspect which defines the methods to be
-  injected into (enforces the developer to give a name to the aspect).
+- A protocol ( `Aspect` ) to represent the aspect which defines the
+  methods to be injected into (enforces the developer to give a name to
+  the aspect).
 
-- A class nominally implements the aspect and offers implementations of
-  the methods to be injected with.
+- A class ( `Bar` ) nominally implements the aspect and offers
+  implementations of the methods to be injected with.
 
 - When an object was injected with custom implementations, the system
-  creates a subclass which identifies each other by taking all the
-  existed injections and incomming injections into consideration and
-  sets the object's is-a pointer to the newly creates subclass'.
+  creates a subclass ( `_ObjCGrafted_Foo_Aspect->Bar` ) which identifies
+  each other by taking all the existed injections and incoming injections
+  into consideration and sets the object's is-a pointer to the newly
+  creates subclass'.
 
-![Mechanism Explained](./mechanism-explained.png "Mechanism Explained")
+![Mechanism Explained](./mechanism-explained.png 'Mechanism Explained')
 
-> You can see that the name of the system created class contains
+> You may have spotted that the name of the system created class contains
 > characters "->" which is illegal in source code. But in Objective-C
 > runtime environment, these characters are permitted to be a part of
 > the class name. These characters build up a guaranteed fence between
@@ -370,7 +373,7 @@ Considering following codes:
 ```
 
 Since `Foo` inherited to `NSObject` protocol, the declaration of method:
-`-isKindOfClass:` is contained in the hierarchy. When we us this 
+`-isKindOfClass:` is contained in the hierarchy. When we us this
 protocol as an aspect, should we take the implementation of
 `-isKindOfClass:` and inject it to the injected object?
 
@@ -387,11 +390,11 @@ class offers custom implementations.
 
 Finally, there is the [repository](https://github.com/WeZZard/ObjCGraft) and the API looks like below:
 
-![API Explained](./api-explained.png "API Explained")
+![API Explained](./api-explained.png 'API Explained')
 
 And there is the example code to intervene the pan gesture recognizer
 of `UIScrollView`.
- 
+
 ```objectivec path=MyUIScrollViewAspect.h
 @protocol MyUIScrollViewAspect<NSObject>
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer;
@@ -431,10 +434,11 @@ building software at that time. The thing I cared the most at that time
 was drawing boundaries of responsibilities such that we can make a clean
 software architecture. But the development of software is progressive.
 This design may give an opportunity to a clean software architecture, but
-enforcing developers to give an aspect a name at the very begining time
+enforcing developers to give an aspect a name at the very beginning time
 slows down the progress of development.
 
 > Name that can be named is not universal and eternal Name.
+>
 > -- Lao Tsu
 
 We give something a name for somewhat purpose. If the purpose changes,
@@ -451,7 +455,7 @@ doesn't support any anonymous functions.
 
 To make this framework to support anonymous functions, we have to build
 a unified procedure abstraction umbrellas the procedure abstraction of
-Objective-C and Swfit and make this procedure abstraction to be capable to
+Objective-C and Swift and make this procedure abstraction to be capable to
 dynamically allocating frame stack. This requires a lot of work and I
 don't have time to do so. But at some time in the future, this would be
 done.

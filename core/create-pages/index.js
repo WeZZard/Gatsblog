@@ -84,8 +84,8 @@ module.exports = async args => {
       require('./create-page-of-tags'),
       require('./create-pages-for-each-category'),
       require('./create-pages-for-each-tag'),
-      require('./create-pages-for-each-post'),
       require('./create-pages-for-each-page'),
+      require('./create-pages-for-each-post'),
     ].map(async createPages => await createPages(createPagesArgs)),
   );
 };

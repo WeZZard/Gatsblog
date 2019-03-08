@@ -22,9 +22,19 @@ import InlineCode from './InlineCode';
 import MathBlock from './MathBlock';
 import InlineMath from './InlineMath';
 import Anchor from './Anchor';
+import Span from './Span';
+import Figure from './Figure';
+import FigureCaption from './FigureCaption';
 import PreFormattedBlock from './PreFormattedBlock';
+import Geometry from './Geometry';
 
-import { pToImage, pToPicture, preToMathBlock, preToCodeBlock } from '../utils';
+import {
+  pToImage,
+  pToPicture,
+  preToMathBlock,
+  preToCodeBlock,
+  pToFigure,
+} from '../utils';
 
 const scope = {
   InlineMath,
@@ -52,11 +62,15 @@ h6.displayName = 'h6';
 const p = props => {
   const image = pToImage(props);
   if (image) {
-    return <Image {...image} />;
+    return <Geometry {...props} />;
   }
   const picture = pToPicture(props);
   if (picture) {
-    return <Picture {...picture} />;
+    return <Geometry {...props} />;
+  }
+  const figure = pToFigure(props);
+  if (figure) {
+    return <Geometry {...props} />;
   }
   return <Paragraph {...props} />;
 };
@@ -127,6 +141,11 @@ const components = {
   div,
   sup: Superscript,
   a: Anchor,
+  span: Span,
+  picture: Picture,
+  img: Image,
+  figure: Figure,
+  figcaption: FigureCaption,
 };
 
 const MDXBody = ({ textStyle, code }) => (

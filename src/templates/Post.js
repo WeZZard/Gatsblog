@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './Post.module.scss';
+import PropTypes from 'prop-types';
 
 import { graphql } from 'gatsby';
 
-import GatsbyPage from '../gatsby/Page';
 import Main from '../components/Main';
 import Title from '../components/Title';
 import MDXMetadata from '../components/MDXMetadata';
@@ -11,7 +11,7 @@ import MDXBody from '../components/MDXBody';
 import PostFooter from '../components/PostFooter';
 import MorePosts from '../components/MorePosts';
 
-class Post extends GatsbyPage {
+class Post extends React.Component {
   render() {
     const { data } = this.props;
 
@@ -61,11 +61,13 @@ class Post extends GatsbyPage {
         />
       ) : null;
 
+    const allKeywords = [category, ...tags, ...(keywords ? keywords : [])];
+
     return (
       <Main
         lang={lang}
         title={post.title}
-        keywords={[category, ...tags, ...keywords]}
+        keywords={allKeywords}
         description={excerpt}
         headings={headings}
         sections={[article, moreItems].filter(_ => _)}
@@ -73,6 +75,11 @@ class Post extends GatsbyPage {
     );
   }
 }
+
+Post.propTypes = {
+  data: PropTypes.object.isRequired,
+  pageContext: PropTypes.object.isRequired,
+};
 
 export default Post;
 

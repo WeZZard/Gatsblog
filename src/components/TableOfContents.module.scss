@@ -106,6 +106,7 @@
     flex-grow: 1;
     flex-shrink: 1;
     -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
     overflow-y: scroll;
     margin-bottom: calc(2.1rem - 0.3rem);
     margin-bottom: calc(2.1rem - 0.3rem + constant(safe-area-inset-bottom));

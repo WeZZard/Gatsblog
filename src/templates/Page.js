@@ -1,15 +1,15 @@
 import React from 'react';
 import styles from './Page.module.scss';
+import PropTypes from 'prop-types';
 
 import { graphql } from 'gatsby';
 
-import GatsbyPage from '../gatsby/Page';
 import Main from '../components/Main';
 import Title from '../components/Title';
 import MDXMetadata from '../components/MDXMetadata';
 import MDXBody from '../components/MDXBody';
 
-class Page extends GatsbyPage {
+class Page extends React.Component {
   render() {
     const { data } = this.props;
     const { page } = data;
@@ -34,9 +34,9 @@ class Page extends GatsbyPage {
             <MDXMetadata items={[{ name: 'time', data: createdTime }]} />
           </aside>
         </header>
-        <main className={styles.main}>
+        <section className={styles.main}>
           <MDXBody textStyle={'sans'} code={code} />
-        </main>
+        </section>
       </article>
     );
 
@@ -52,6 +52,11 @@ class Page extends GatsbyPage {
     );
   }
 }
+
+Page.propTypes = {
+  data: PropTypes.object.isRequired,
+  pageContext: PropTypes.object.isRequired,
+};
 
 export default Page;
 
