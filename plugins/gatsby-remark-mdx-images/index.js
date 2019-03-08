@@ -1,7 +1,7 @@
 const visitWithParents = require(`unist-util-visit-parents`);
 const getDefinitions = require(`mdast-util-definitions`);
 const path = require(`path`);
-const { fluid, fixed, getImageSize } = require(`gatsby-plugin-sharp`);
+const { fluid, resize, getImageSize } = require(`gatsby-plugin-sharp`);
 const Promise = require(`bluebird`);
 const slash = require(`slash`);
 
@@ -465,7 +465,8 @@ const createResponsivenessEnsuredSourceSet = async (fileSet, context) => {
 
         const size = getImageSize(file);
         const { width, height } = size;
-        responsiveFileSet[scaleKey] = await fixed({
+
+        responsiveFileSet[scaleKey] = await resize({
           file,
           args: { width, height, quality },
           reporter,
@@ -483,7 +484,7 @@ const createResponsivenessEnsuredSourceSet = async (fileSet, context) => {
         const scaledWidth = Math.ceil((width / scale) * fallbackScale);
         const scaledHeight = Math.ceil((height / scale) * fallbackScale);
 
-        responsiveFileSet[scaleKey] = await fixed({
+        responsiveFileSet[scaleKey] = await resize({
           fallbackFile,
           args: { scaledWidth, scaledHeight, quality },
           reporter,
@@ -498,6 +499,7 @@ const createResponsivenessEnsuredSourceSet = async (fileSet, context) => {
   } else if (scales.length === 1) {
     const scaleKey = scales[0];
     const imageFileNode = fileSet[scaleKey];
+
     const fluidResults = await getFluidResultsForImage({
       imageFileNode,
       context,
@@ -539,7 +541,10 @@ const getFluidResultsForImage = async ({ imageFileNode, context }) => {
   const { options, reporter, cache, defaults, pluginOptions } = context;
   let fluidResult = await fluid({
     file: imageFileNode,
-    args: options,
+    args: {
+      ...defaults,
+      ...pluginOptions,
+    },
     reporter,
     cache,
   });

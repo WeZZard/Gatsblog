@@ -116,7 +116,7 @@ module.exports = {
           {
             resolve: `gatsby-remark-mdx-images`,
             options: {
-              withWebp: { quality: 100 },
+              withWebp: { quality: 90 },
               maxWidth: 712,
             },
           },
@@ -125,7 +125,14 @@ module.exports = {
     },
     `gatsby-transformer-sharp`,
     `gatsby-transformer-yaml`,
-    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        useMozJpeg: false,
+        stripMetadata: true,
+        defaultQuality: 75,
+      },
+    },
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-sass`,
