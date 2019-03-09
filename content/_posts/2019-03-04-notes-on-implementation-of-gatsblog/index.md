@@ -126,17 +126,18 @@ box element to wrap the block elements.
 
 This project is not a well tested project. Because testing in JavaScript
 is very tedious or say, boring. Since JavaScript is a dynamic language,
-there is no explicit schema for data types. This means the correctness of
-code is seriously relied on testing. But since there is no explicit schema
-for data types in the language, there are tons of works to do.
+we don't need to build explicit schemes for data types. This leads that
+the correctness of code is seriously relied on testing. But since we don't
+need to build explicit schemes for data types in the language, there are
+also tons of works to do.
 
-You might come up with snapshot -- which is a great feature in Jest. But some
-issues are caused by mismatched types or other mistakes can be eliminated by
-automatic language check. Thus those issues shall be prevented from those
-automatic checks.
+You might come up with "snapshot" -- which is a great feature in Jest. But
+some issues are caused by mismatched types or other mistakes can be
+eliminated by automatic language check. Thus those issues shall be
+prevented from those automatic checks.
 
 Moreover, how do you ensure your manually grabbed snapshot is correct?
 
-I need a type system in JavaScript. Yes, I mean I need TypeScript and I would
-transfer the development language from JavaScript to TypeScript if I continued
-to upgrade this blog project.
+I need a type system in JavaScript. Yes, I mean I need TypeScript and I
+would transfer the development language from JavaScript to TypeScript if I
+continued to upgrade this blog project.
