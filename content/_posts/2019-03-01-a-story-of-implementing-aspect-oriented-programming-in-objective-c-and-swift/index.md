@@ -64,8 +64,8 @@ three things:
 - The aspect
 - The manipulated object
 
-We can take the the **added code** in aspect-oriented programming as
-**twig** in plant grafting, the **aspect** as the **slit** and the
+We can take the **added code** in aspect-oriented programming as **twig**
+in plant grafting, the **aspect** as the **slit** and the
 **manipulated object** as the **living plant**. Then aspect-oriented
 programming is **to fix** these three things together.
 

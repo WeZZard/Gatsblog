@@ -35,8 +35,8 @@ rectangles.
 
 You can find that the simplified geometry of letter "x" is much smaller
 than that of letter capital "K". In fact, the differences between the
-the sizes of simplified geometries of letters vary over different font
-sizes. But how should we understand these size gaps?
+sizes of simplified geometries of letters vary over different font sizes.
+But how should we understand these size gaps?
 
 The letter-frequency table below is taken from Pavel Mička's website[^1],
 which cites Robert Lewand's *Cryptological Mathematics*.
