@@ -19,7 +19,7 @@ For there are posts may have the same name, we have to distinguish a post from
 others. Like Jekyll, I chose a URL scheme like `/post/YYYY/MM/post-name` and
 a file name scheme like `YYYY-MM-DDThh-mm-ssZ-post-name.md`(The time and
 timezone is optional). Because the file name scheme may contain time
-info (Thh-mm-ss) and timezone info (Z), soon it was found that you cannot
+info ( `Thh-mm-ss` ) and timezone info ( `Z` ), soon it was found that you cannot
 distinguish posts which were posted at the same day with the same post name in
 this way.
 
@@ -35,15 +35,17 @@ and we can distinguish each post now.
 ## Protects Sensitive Info from Bots
 
 There are always some sensitive info on our site and we only want to give them
-to real users but not bots. But plain HTML content like
-`mailto:whatever@email.ltd` exposes your sensitive info to the bots. To prevent
+to real users but not bots. But plain HTML contents like
+`mailto:whatever@email.ltd` expose your sensitive info to the bots. To prevent
 bots from crawling our sensitive info, I designed an ad-hoc progress and
-implemented a React component to do the things: the blog system firstly encrypts
-sensitive info when compiling the sources, then the React component decrypts the
-sensitive info when the component was clicked by a real user.
+implemented a React component to do the things:
 
-Implementing this is quite simple, the only glitch here is that Safari prevents
-programmatically page redirect unless you called `event.preventDefault()`.
+1. The blog system firstly encrypts sensitive info when compiling the sources.
+2. Then the React component decrypts the sensitive info when the component was clicked by a real user.
+
+Implementing this is quite simple, the only trouble here is that Safari prevents
+programmatically behavior changes like page redirection against clicking unless
+you called `event.preventDefault()` right after a click event.
 
 ## Getting used to CSS layout box
 
