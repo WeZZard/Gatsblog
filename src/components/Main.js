@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Main.module.scss';
 import Media from 'react-media';
+import styled from 'styled-components';
 
 import Viewport from './Viewport';
 import SEO from './SEO';
@@ -102,8 +103,10 @@ class Main extends React.Component {
           <div className={contentsClassName}>{contents}</div>
           <Media query={{ maxWidth: 960 }}>
             <div className={footerClassName}>
-              <SiteFooter />
-              <div className={styles.footerOverlay} />
+              <div className={styles.footerContents}>
+                <SiteFooter />
+                <div className={styles.footerOverlay} />
+              </div>
             </div>
           </Media>
         </div>

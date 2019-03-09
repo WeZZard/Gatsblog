@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
 
   .appBackground {
     align-items: stretch;
@@ -14,7 +14,7 @@
     flex-direction: column;
     height: 100vh;
     position: fixed;
-    width: 30vw;
+    width: 30%;
     z-index: -999;
 
     @media (max-width: $mobile-max) {
@@ -22,7 +22,7 @@
     }
 
     &.error {
-      width: 100vw;
+      width: 100%;
     }
   }
 
@@ -32,7 +32,7 @@
     flex-direction: column;
     height: 100vh;
     position: fixed;
-    width: 30vw;
+    width: 30%;
 
     @media (max-width: $mobile-max) {
       overflow: visible;
@@ -41,7 +41,7 @@
       padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0;
       padding: constant(safe-area-inset-top) 0 constant(safe-area-inset-bottom) 0;
       transition: height 0.5s ease-out, background 1s ease-out;
-      width: 100vw;
+      width: 100%;
       z-index: 999;
     }
 
@@ -53,7 +53,7 @@
     }
 
     &.error {
-      width: 100vw;
+      width: 100%;
       z-index: 999;
     }
   }
@@ -63,40 +63,38 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    margin: 0 0 0 30%;
-    margin: 0 env(safe-area-inset-right) 0 calc(30% + env(safe-area-inset-left));
-    margin: 0 constant(safe-area-inset-right) 0 calc(30% + constant(safe-area-inset-left));
+    margin: 0 constant(safe-area-inset-right) 0 constant(safe-area-inset-left);
+    margin: 0 env(safe-area-inset-right) 0 env(safe-area-inset-left);
     max-width: 780px;
-    width: 61.8vw;
+    padding-left: 30%;
+    width: 61.8%;
     width: calc(
-      61.8vw - constant(safe-area-inset-left) - constant(safe-area-inset-right)
+      61.8% - constant(safe-area-inset-left) - constant(safe-area-inset-right)
     );
     width: calc(
-      61.8vw - env(safe-area-inset-left) - env(safe-area-inset-right)
+      61.8% - env(safe-area-inset-left) - env(safe-area-inset-right)
     );
 
     @media (max-width: $small-screen-max) {
       max-width: none;
-      width: 70vw;
+      width: 70%;
       width: calc(
-        70vw - constant(safe-area-inset-left) - constant(safe-area-inset-right)
+        70% - constant(safe-area-inset-left) - constant(safe-area-inset-right)
       );
       width: calc(
-        70vw - env(safe-area-inset-left) - env(safe-area-inset-right)
+        70% - env(safe-area-inset-left) - env(safe-area-inset-right)
       );
     }
 
     @media (max-width: $mobile-max) {
-      margin: 44px 0 0 0;
-      margin: calc(44px + constant(safe-area-inset-top)) constant(safe-area-inset-right) 0 constant(safe-area-inset-left);
-      margin: calc(44px + env(safe-area-inset-top)) env(safe-area-inset-right) 0 env(safe-area-inset-left);
       max-width: none;
-      width: 100vw;
+      padding: 44px 0 0 0;
+      width: 100%;
       width: calc(
-        100vw - constant(safe-area-inset-left) - constant(safe-area-inset-right)
+        100% - constant(safe-area-inset-left) - constant(safe-area-inset-right)
       );
       width: calc(
-        100vw - env(safe-area-inset-left) - env(safe-area-inset-right)
+        100% - env(safe-area-inset-left) - env(safe-area-inset-right)
       );
     }
 
@@ -124,36 +122,39 @@
       flex-grow: 0;
       flex-shrink: 0;
       flex-direction: column-reverse;
-      padding: 5.5rem 2.1rem;
-      padding: 5.5rem calc(2.1rem + constant(safe-area-inset-right)) calc(5.5rem + constant(safe-area-inset-bottom)) calc(2.1rem + constant(safe-area-inset-left));
-      padding: 5.5rem calc(2.1rem + env(safe-area-inset-right)) calc(5.5rem + env(safe-area-inset-bottom)) calc(2.1rem + env(safe-area-inset-left));
+      padding: 0 constant(safe-area-inset-right) constant(safe-area-inset-bottom) constant(safe-area-inset-left);
+      padding: 0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
       position: relative;
       z-index: -1;
     }
 
-    .footerOverlay {
+    .footerContents {
       @media (max-width: $mobile-max) {
-        background-color: transparentize($color-theme, 0.8);
-        background-image: linear-gradient(
-          140deg,
-          $color-theme-gradient-end 20%,
-          $color-theme-gradient-end
-        );
-        width: 100%;
-        height: 100%;
-        bottom: 0;
-        left: 0;
-        position: absolute;
-        right: 0;
-        z-index: -1;
+        margin: 5.5rem 2.1rem 5.5rem 2.1rem;
+        padding: 0;
+      }
+
+      .footerOverlay {
+        @media (max-width: $mobile-max) {
+          background-color: transparentize($color-theme, 0.8);
+          background-image: linear-gradient(
+                          140deg,
+                          $color-theme-gradient-end 20%,
+                          $color-theme-gradient-end
+          );
+          width: 100%;
+          height: 100%;
+          bottom: 0;
+          left: 0;
+          position: absolute;
+          right: 0;
+          z-index: -1;
+        }
       }
     }
 
     &.error {
       @media (max-width: $mobile-max) {
-        padding-top: calc(44px + 5.5rem);
-        padding-top: calc(44px + 5.5rem + constant(safe-area-inset-top));
-        padding-top: calc(44px + 5.5rem + env(safe-area-inset-top));
         width: calc(100% - 2.1rem * 2);
         width: calc(
           100% - 2.1rem * 2 - constant(safe-area-inset-left) -
@@ -176,6 +177,12 @@
         left: 0;
         position: absolute;
         right: 0;
+      }
+
+      .footerContents {
+        @media (max-width: $mobile-max) {
+          margin-top: calc(44px + 5.5rem);
+        }
       }
     }
   }

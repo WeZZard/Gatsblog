@@ -25,6 +25,14 @@
     flex-direction: row;
     flex-grow: 0;
     flex-shrink: 0;
+    margin-top: constant(safe-area-inset-top);
+    margin-top: env(safe-area-inset-top);
+    margin-right: constant(safe-area-inset-right);
+    margin-right: env(safe-area-inset-right);
+    margin-bottom: constant(safe-area-inset-bottom);
+    margin-bottom: env(safe-area-inset-bottom);
+    margin-left: constant(safe-area-inset-left);
+    margin-left: env(safe-area-inset-left);
     padding-top: 44px;
   }
 
@@ -45,12 +53,9 @@
       @media (max-width: $mobile-max) {
         border-bottom: solid 0.5px $_gray-55;
         justify-content: flex-start;
-        margin: 0 2.1em;
-        margin: 0 calc(2.1em + constant(safe-area-inset-right)) 0 calc(2.1em + constant(safe-area-inset-left));
-        margin: 0 calc(2.1em + env(safe-area-inset-right)) 0 calc(2.1em + env(safe-area-inset-left));
+        margin: 0;
         opacity: 0;
-        padding-bottom: 2.1rem;
-        padding-top: 2.1rem;
+        padding: 2.1rem;
         transform: scale(1.15) translateY(-30px);
         transition: transform 0.5s $cubic, opacity 0.6s $cubic;
       }

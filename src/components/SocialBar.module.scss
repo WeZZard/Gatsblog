@@ -12,9 +12,11 @@
 
   @media (max-width: $mobile-max) {
     flex-direction: row;
-    margin: 0 2.1rem;
-    margin: 0 calc(2.1rem + constant(safe-area-inset-left)) 0 calc(2.1rem + constant(safe-area-inset-right));
-    margin: 0 calc(2.1rem + env(safe-area-inset-left)) 0 calc(2.1rem + env(safe-area-inset-right));
+    margin: 3.4rem 2.1rem 0 2.1rem;
+    padding-left: constant(safe-area-inset-left);
+    padding-left: env(safe-area-inset-left);
+    padding-right: constant(safe-area-inset-right);
+    padding-right: env(safe-area-inset-right);
     opacity: 0;
     transform: scale(1.15) translateY(-30px);
     transition: transform 0.5s $cubic, opacity 0.6s $cubic;

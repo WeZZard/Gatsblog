@@ -13,12 +13,6 @@
   }
 }
 
-@mixin horizontal-margin {
-  margin: 0 2.1rem;
-  margin: 0 calc(2.1rem + constant(safe-area-inset-left)) 0 calc(2.1rem + constant(safe-area-inset-right));
-  margin: 0 calc(2.1rem + env(safe-area-inset-left)) 0 calc(2.1rem + env(safe-area-inset-right));
-}
-
 .tableOfContents {
   @include container-column;
 
@@ -38,9 +32,14 @@
 
   @media (max-width: $mobile-max) {
     background-color: transparent;
-    margin-bottom: 0;
+    margin-top: constant(safe-area-inset-top);
+    margin-top: env(safe-area-inset-top);
+    margin-right: constant(safe-area-inset-right);
+    margin-right: env(safe-area-inset-right);
     margin-bottom: constant(safe-area-inset-bottom);
     margin-bottom: env(safe-area-inset-bottom);
+    margin-left: constant(safe-area-inset-left);
+    margin-left: env(safe-area-inset-left);
     max-width: none;
     padding: 0;
     width: auto;
@@ -57,14 +56,14 @@
     padding-right: 2.1rem;
 
     @media (max-width: $mobile-max) {
-      @include horizontal-margin;
-
       align-items: center;
       flex-direction: row;
       justify-content: space-around;
       height: 44px;
       margin-bottom: 0;
       padding: 0;
+      padding-left: 2.1rem;
+      padding-right: 2.1rem;
     }
 
     .title {
@@ -105,9 +104,11 @@
     -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
     overflow-y: scroll;
-    margin-bottom: calc(2.1rem - 0.3rem);
-    margin-bottom: calc(2.1rem - 0.3rem + constant(safe-area-inset-bottom));
-    margin-bottom: calc(2.1rem - 0.3rem + env(safe-area-inset-bottom));
+    padding-bottom: calc(2.1rem - 0.3rem);
+    padding-bottom: calc(2.1rem - 0.3rem);
+    padding-bottom: calc(2.1rem - 0.3rem);
+    margin-bottom: constant(safe-area-inset-bottom);
+    margin-bottom: env(safe-area-inset-bottom);
     min-height: 0;
     padding-left: 2.1rem;
     padding-right: 2.1rem;
@@ -166,12 +167,12 @@
           margin-top: -0.5rem;
 
           @media (max-width: $mobile-max) {
-            @include horizontal-margin;
-
             font-size: 1.5em;
             line-height: calc(29 / 15);
             margin-bottom: -0.9rem;
             margin-top: -1.2rem;
+            padding-left: 2.1rem;
+            padding-right: 2.1rem;
           }
 
           .sectionName {
