@@ -120,10 +120,11 @@ child, we have to use a flex box element to wrap the block elements.
 
 ## Testing
 
-Testing in JavaScript is very tedious. Since JavaScript is a dynamic language,
-there is no explicit schema for data types. This means the correctness of code
-is seriously relied on testing. But since there is no explicit schema for data
-types in the language, there are tons of works to do.
+This project is not a well tested project. Because testing in JavaScript
+is very tedious or say, boring. Since JavaScript is a dynamic language,
+there is no explicit schema for data types. This means the correctness of
+code is seriously relied on testing. But since there is no explicit schema
+for data types in the language, there are tons of works to do.
 
 You might come up with snapshot -- which is a great feature in Jest. But some
 issues are caused by mismatched types or other mistakes can be eliminated by

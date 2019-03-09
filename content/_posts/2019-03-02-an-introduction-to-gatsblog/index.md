@@ -15,11 +15,41 @@ implementation, to make a memento of my journey, which conducted by an
 iOS developer with industrial design background, into modern frontend tech
 stack.
 
-## Sophisticated Grid System
-
 ## Semi-Live Editing
 
+You can do a very naïve live editing by launching Gatsby's develop mode
+server and opening a browser to `http://localhost:8000` then watch your
+post changes each time you saved the edited file to the disk.
+
+## Sophisticated Grid System
+
+I adopted a sophisticated grid system and tweaked the sizes of elements
+and the spaces between elements. The design is not very modern, but
+functional -- at least the content is clear and spaces between elements
+are not annoying.
+
 ## Responsive Image with Retina Display Support
+
+Most of the figures on my posts are authored by myself. Thus it is very
+easy to output `@2x` and `@3x` version at the same time I'm outputting the
+original version. Thus Gatsby supports such a resolution density in file
+names. It recognizes image files with names like `xxx.png`, `xxx@2x.png`
+and `xxx@3x.png` as a series of image files whose resolution density is
+`1x`, `2x` and `3x`. You only have to link your image with the image
+markup in Markdown grammar:
+
+```markdown
+![Image Alternative Text](xxx.png "Image Title")
+```
+
+Then Gatsblog handles responsiveness and Retina display support for you.
+
+Since there are also images that we grabbed from web or taken by cameras
+asking users to offer versions for all the resolution densities is
+impossible. What happens to an image file without paired resolution
+density versions? Don't worry. If you just put an image file named after
+`xxx.png` in your Markdown document's folder, Gatsblog handles
+responsiveness support for you.
 
 ## KaTex
 
@@ -116,3 +146,5 @@ int main(int argc, char[] * args) {
 
 ## Statically Deployed
 
+Empowered by Gatsby.js, Gatsblog can be statically deployed. You can
+deploy a site by several clicking on [Netlify](https://netlify.com).
