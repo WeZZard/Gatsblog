@@ -79,9 +79,10 @@ change the basic trend in this table.
 By reading this table, for relative frequency of letters in English
 language, we can know that 60.82% of it are small-cases-x-height-capped
 (like "x") and 6.17% of it are small-cases-with-decent (like "j"), this
-means for a given font with small enough font size, the simplified
-geometries of characters in lines of a paragraph are convergent to a
-rectangle whose height is the x-height. 
+means for a given font with small enough font size, the descents,
+`(ascents - x-height)` and `(cap-height - x-height)` come to be
+negligible and the simplified geometries of characters in lines of a
+paragraph are convergent to a rectangle whose height is the x-height. 
 
 ![Font Geometry Convergence Example](./font-geometry-convergence-example.png "Font Geometry Convergence Example")
 
