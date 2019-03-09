@@ -1,8 +1,7 @@
 ---
 title: Notes on Design of Gatsblog
 category: Showcase
-tags: [Blog, Design]
-isPublished: false
+tags: [Blog, Design, Gatsblog]
 ---
 
 I didn't have much time to give a very modern design to the very first

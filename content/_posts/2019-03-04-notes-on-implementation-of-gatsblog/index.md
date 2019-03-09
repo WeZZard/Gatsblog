@@ -1,8 +1,7 @@
 ---
 title: Notes On Implementation of Gatsblog
 category: Showcase
-tags: [Blog, Programming]
-isPublished: false
+tags: [Blog, Programming, Gatsblog]
 ---
 
 I'm gonna talk about the implementation of Gatsblog, which is a blog system

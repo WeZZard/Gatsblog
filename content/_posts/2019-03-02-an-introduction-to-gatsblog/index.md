@@ -2,8 +2,7 @@
 title: An Introduction to Gatsblog
 subtitle: 'A Blog Built with Gatsby.js'
 category: Showcase
-tags: [Blog, Design, Programming]
-isPublished: false
+tags: [Blog, Design, Programming, Gatsblog]
 ---
 
 As I mentioned in the Hello World post, there are no blog systems fulfill
@@ -15,11 +14,15 @@ implementation, to make a memento of my journey, which conducted by an
 iOS developer with industrial design background, into modern frontend tech
 stack.
 
-## Semi-Live Editing
+## Pseudo-Live Editing
 
-You can do a very naïve live editing by launching Gatsby's develop mode
-server and opening a browser to `http://localhost:8000` then watch your
-post changes each time you saved the edited file to the disk.
+Any site built with Gatsby.js comes with a very naïve live editing
+feature. You can just launch Gatsby's develop mode server with
+`gatsby develop -H 0.0.0.0` or `npm run start` and open a browser with
+address `http://localhost:8000`. Then you can watch your post changes each
+time you saved the edited file to the disk.
+
+![Pseudo-Live Editing](./pseudo-live-editing.gif "Pseudo-Live Editing")
 
 ## Sophisticated Grid System
 
