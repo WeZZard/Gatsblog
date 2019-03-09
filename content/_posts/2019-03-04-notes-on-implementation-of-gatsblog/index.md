@@ -134,8 +134,8 @@ also tons of works to do.
 
 You might come up with "snapshot" -- which is a great feature in Jest. But
 some issues are caused by mismatched types or other mistakes can be
-eliminated by automatic language check. Thus those issues shall be
-prevented from those automatic checks.
+eliminated by automatic grammar check which may be offered by the language
+itself.
 
 Moreover, how do you ensure your manually grabbed snapshot is correct?
 
