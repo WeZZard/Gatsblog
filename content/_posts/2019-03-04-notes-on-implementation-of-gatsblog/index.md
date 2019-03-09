@@ -47,22 +47,23 @@ Implementing this is quite simple, the only trouble here is that Safari prevents
 programmatically behavior changes like page redirection against clicking unless
 you called `event.preventDefault()` right after a click event.
 
-## Getting used to CSS layout box
+## Getting Used to CSS Layout Box
 
 When implementing my design, I spotted that CSS layout box is not designed for
-a grid system assisted layout.
+implementing efficiently with layout designs done by professional designers.
 
 Someone probably would say: Wow, there are another layout models like flex-box
 and grid in CSS.
 
-Nope. I didn't mean the box model of CSS is not designed for a grid system
-assisted layout, but all the layout models of css are not designed for a grid
-system assisted layout.
+Nope. I didn't mean the box model of CSS is not designed for implementing
+efficiently with layout designs done by professional designers, but all the
+layout models of css are not designed for that.
 
 A CSS layout box in whatsoever layout model computes its content size of texts
 with `line-height`. But `line-height` is not a native creature in designer's
-world. A designer may be familiar with ascent, descent, x height and cap height,
-which are properties of font, but it would not be familiar with `line-height`.
+world. A designer may be familiar with ascent, descent, x height, height and
+even line spacing which are properties related to typography, but it would not
+be familiar with `line-height`.
 
 ![Typography Explained](typography-explained.png "Typography Explained")
 
@@ -75,11 +76,11 @@ a ratio between `line-height` and `font-size`.
 ![Line Height Explained](./line-height-explained.png 'Line Height Explained')
 
 But as we showed in the previous post, a designer may lay things out with the
-attributes of fonts. This makes that the default size of a layout box in CSS is
-not as what you expected.
+attributes of fonts. This makes that the default size of a layout box in CSS
+may not work as what you expected.
 
-To fill the gap between CSS layout box and the designer's world, we need to take
-the `line-height` into consideration when we setting up margins. In fact, I
+To make a bridge connects CSS layout box and the designer's world, we need to
+take the `line-height` into consideration when we setting up margins. In fact, I
 developed a solution: Normalized Layout Box to shrink the layout box's size to
 the designer purposed one.
 
@@ -98,10 +99,12 @@ To shrink the layout box's size, we can make use of negative margin.
 }
 ```
 
-But since `block` element collapses margins, we finally get `0` top margin if
-the layout box is the first child and `0` bottom margin if the layout box is the
-last child. To make negative margin to work for the case of being first and last
-child, we have to use a flex box element to wrap the block elements.
+But since `block` element collapses margins, which happens whenever an
+element is next to another but also an element is nested to another, we
+finally get `0` top margin if the layout box is the first child and `0`
+bottom margin if the layout box is the last child. To make negative margin
+to work for the case of being first and last child, we have to use a flex
+box element to wrap the block elements.
 
 ```css
 .normalized-layout-box-flex-wrapper {
@@ -114,7 +117,7 @@ child, we have to use a flex box element to wrap the block elements.
 ```html
 <div class="normalized-layout-box-flex-wrapper">
   <div class="normalized-layout-box">
-    Element
+    Contents
   </div>
 </div>
 ```
