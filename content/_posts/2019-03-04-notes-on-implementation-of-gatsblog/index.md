@@ -41,7 +41,8 @@ bots from crawling our sensitive info, I designed an ad-hoc progress and
 implemented a React component to do the things:
 
 1. The blog system firstly encrypts sensitive info when compiling the sources.
-2. Then the React component decrypts the sensitive info when the component was clicked by a real user.
+2. Then the React component decrypts the sensitive info when the component was
+clicked by a real user.
 
 Implementing this is quite simple, the only trouble here is that Safari prevents
 programmatically behavior changes like page redirection against clicking unless
