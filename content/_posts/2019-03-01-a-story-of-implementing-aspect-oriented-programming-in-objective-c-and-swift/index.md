@@ -51,11 +51,11 @@ Plant grafting means to fix a shoot or twig to a slit of the trunk or
 stem of a living plant, such that the shoot or twig can receive sap from
 the living plant and continue to grow up.
 
-![Plant Grafting](./plant-grafting.png 'Plant Grafting')
+![Plant Grafting](plant-grafting.png 'Plant Grafting')
 
 Aspect-oriented programming is quite like plant grafting.
 
-![Plant Grafting v.s. AOP](./plant-grafting-vs-aop.png 'Plant Grafting v.s. AOP')
+![Plant Grafting v.s. AOP](plant-grafting-vs-aop.png 'Plant Grafting v.s. AOP')
 
 As the above figure shown, aspect-oriented programming concerns about
 three things:
@@ -353,7 +353,7 @@ By referring to the design of KVO, we can hand out the following design:
   into consideration and sets the object's is-a pointer to the newly
   creates subclass'.
 
-![Mechanism Explained](./mechanism-explained.png 'Mechanism Explained')
+![Mechanism Explained](mechanism-explained.png 'Mechanism Explained')
 
 > You may have spotted that the name of the system created class contains
 > characters "->" which is illegal in source code. But in Objective-C
@@ -390,7 +390,7 @@ class offers custom implementations.
 
 Finally, there is the [repository](https://github.com/WeZZard/ObjCGraft) and the API looks like below:
 
-![API Explained](./api-explained.png 'API Explained')
+![API Explained](api-explained.png 'API Explained')
 
 And there is the example code to intervene the pan gesture recognizer
 of `UIScrollView`.
