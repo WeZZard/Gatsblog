@@ -37,12 +37,9 @@
     @media (max-width: $mobile-max) {
       overflow: visible;
       height: 44px;
-      padding-top: 0;
-      padding-top: constant(safe-area-inset-top);
-      padding-top: env(safe-area-inset-top);
-      padding-bottom: 0;
-      padding-bottom: constant(safe-area-inset-bottom);
-      padding-bottom: env(safe-area-inset-bottom);
+      padding: 0;
+      padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0;
+      padding: constant(safe-area-inset-top) 0 constant(safe-area-inset-bottom) 0;
       transition: height 0.5s ease-out, background 1s ease-out;
       width: 100vw;
       z-index: 999;
@@ -66,14 +63,9 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    margin-bottom: 0;
-    margin-left: calc(30%);
-    margin-left: calc(30% + constant(safe-area-inset-left));
-    margin-left: calc(30% + env(safe-area-inset-left));
-    margin-right: 0;
-    margin-right: constant(safe-area-inset-right);
-    margin-right: env(safe-area-inset-right);
-    margin-top: 0;
+    margin: 0 0 0 30%;
+    margin: 0 env(safe-area-inset-right) 0 calc(30% + env(safe-area-inset-left));
+    margin: 0 constant(safe-area-inset-right) 0 calc(30% + constant(safe-area-inset-left));
     max-width: 780px;
     width: 61.8vw;
     width: calc(
@@ -95,15 +87,9 @@
     }
 
     @media (max-width: $mobile-max) {
-      margin-left: 0;
-      margin-left: constant(safe-area-inset-left);
-      margin-left: env(safe-area-inset-left);
-      margin-right: 0;
-      margin-right: constant(safe-area-inset-right);
-      margin-right: env(safe-area-inset-right);
-      margin-top: 44px;
-      margin-top: calc(44px + constant(safe-area-inset-top));
-      margin-top: calc(44px + env(safe-area-inset-top));
+      margin: 44px 0 0 0;
+      margin: calc(44px + constant(safe-area-inset-top)) constant(safe-area-inset-right) 0 constant(safe-area-inset-left);
+      margin: calc(44px + env(safe-area-inset-top)) env(safe-area-inset-right) 0 env(safe-area-inset-left);
       max-width: none;
       width: 100vw;
       width: calc(
@@ -138,16 +124,9 @@
       flex-grow: 0;
       flex-shrink: 0;
       flex-direction: column-reverse;
-      padding-bottom: 5.5rem;
-      padding-bottom: calc(5.5rem + constant(safe-area-inset-bottom));
-      padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
-      padding-left: 2.1rem;
-      padding-left: calc(2.1rem + constant(safe-area-inset-left));
-      padding-left: calc(2.1rem + env(safe-area-inset-left));
-      padding-right: 2.1rem;
-      padding-right: calc(2.1rem + constant(safe-area-inset-right));
-      padding-right: calc(2.1rem + env(safe-area-inset-right));
-      padding-top: 5.5rem;
+      padding: 5.5rem 2.1rem;
+      padding: 5.5rem calc(2.1rem + constant(safe-area-inset-right)) calc(5.5rem + constant(safe-area-inset-bottom)) calc(2.1rem + constant(safe-area-inset-left));
+      padding: 5.5rem calc(2.1rem + env(safe-area-inset-right)) calc(5.5rem + env(safe-area-inset-bottom)) calc(2.1rem + env(safe-area-inset-left));
       position: relative;
       z-index: -1;
     }

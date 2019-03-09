@@ -45,13 +45,9 @@
       @media (max-width: $mobile-max) {
         border-bottom: solid 0.5px $_gray-55;
         justify-content: flex-start;
-        margin: 0;
-        margin-left: 2.1em;
-        margin-left: calc(2.1em + constant(safe-area-inset-left));
-        margin-left: calc(2.1em + env(safe-area-inset-left));
-        margin-right: 2.1em;
-        margin-right: calc(2.1em + constant(safe-area-inset-right));
-        margin-right: calc(2.1em + env(safe-area-inset-right));
+        margin: 0 2.1em;
+        margin: 0 calc(2.1em + constant(safe-area-inset-right)) 0 calc(2.1em + constant(safe-area-inset-left));
+        margin: 0 calc(2.1em + env(safe-area-inset-right)) 0 calc(2.1em + env(safe-area-inset-left));
         opacity: 0;
         padding-bottom: 2.1rem;
         padding-top: 2.1rem;
