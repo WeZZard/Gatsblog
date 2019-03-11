@@ -51,13 +51,13 @@ you called `event.preventDefault()` right after a click event.
 ## Getting Used to CSS Layout Box
 
 When implementing my design, I spotted that CSS layout box is not designed for
-implementing efficiently with layout designs done by professional designers.
+efficient implementation against layouts done by professional designers.
 
 Someone probably would say: Wow, there are another layout models like flex-box
 and grid in CSS.
 
-Nope. I didn't mean the box model of CSS is not designed for implementing
-efficiently with layout designs done by professional designers, but all the
+Nope. I didn't mean the box model of CSS is not designed for efficient
+implementation against layouts done by professional designers, but all the
 layout models of css are not designed for that.
 
 A CSS layout box in whatsoever layout model computes its content size of texts
@@ -85,7 +85,7 @@ take the `line-height` into consideration when we setting up margins. In fact, I
 developed a solution: Normalized Layout Box to shrink the layout box's size to
 the designer purposed one.
 
-![Line Height Solution](./line-height-solution.png 'Line Height Solution')
+![Normalized Layout Box](./normalized-layout-box.png 'Normalized Layout Box')
 
 ### Normalized Layout Box
 
