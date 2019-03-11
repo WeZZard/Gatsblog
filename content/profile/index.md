@@ -6,6 +6,8 @@ I'm an iOS developer with industrial design background.
 
 ## Tools
 
+- Notebooks, pencil and erasers
+
 - Xcode
 
 - Visual Studio Code
@@ -15,8 +17,6 @@ I'm an iOS developer with industrial design background.
 - Vim
 
 - Sketch
-
-- Notebooks, pencil and erasers
 
 ## Operating Systems
 
