@@ -128,8 +128,9 @@ Then, even we are doing aspect-oriented programming, we don't mean to
 abandon making **is-a** assertions, which is the key step to draw the
 boundary of components' responsibilities and a corner stone of
 whatever-oriented programming. Method swizzling is an anonymous approach
-of modification. This kind of modification swings the foundation of
-software architecture and is hard to spot and trace.
+of modification which bypasses "making **is-a** assertions". This kind of
+modification is likely to swing the foundation of software architecture
+and hard to spot and trace.
 
 Moreover, since Swift doesn't support overload `class func load()` method
 of Objective-C bridged classes, many posts suggest you to put the method
