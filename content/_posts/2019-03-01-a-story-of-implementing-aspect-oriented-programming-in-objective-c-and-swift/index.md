@@ -456,13 +456,9 @@ doesn't support any anonymous functions.
 
 I need more research to make this framework to support anonymous
 functions. At least, at glance, the size of the reference of function in
-Swift is 2 words which that of C is 1. Roughly, I think the reference of
-Swift function may not only contain an instruction pointer but also
-environment pointer (I haven't read that part of source code. This is just
-a conjecture came up by referring the reality of Swift and my knowledge of
-compilers). Moreover, compile-time resolving is troublesome. Obviously
-this needs enormous amount of work and currently I don't have so much
-time. But it would come true in the future.
+Swift is 2 words which that of C is 1. Plus, compile-time resolving is
+troublesome. Obviously this needs enormous amount of work and currently I
+don't have so much time. But it would come true in the future.
 
 ---
 
