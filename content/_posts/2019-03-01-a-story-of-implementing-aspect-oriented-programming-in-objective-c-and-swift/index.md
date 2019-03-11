@@ -356,11 +356,12 @@ By referring to the design of KVO, we can hand out the following design:
 
 ![Mechanism Explained](mechanism-explained.png 'Mechanism Explained')
 
-> You may have spotted that the name of the system created class contains
-> characters "->" which is illegal in source code. But in Objective-C
-> runtime environment, these characters are permitted to be a part of
-> the class name. These characters build up a guaranteed fence between
-> system generated classes and those user created classes in source code.
+> You may have spotted that the name of the class created by our system
+> contains characters "->" which is illegal in source code. But in
+> Objective-C runtime environment, these characters are permitted to be a
+> part of the class name. These characters build up a guaranteed fence
+> between system generated classes and those user created classes in
+> source code.
 
 The implementation is quite simple until you got touched with resolving
 protocol hierarchy: which implementations should I take to inject with?
@@ -449,10 +450,11 @@ In the progress of software development, the purpose comes from how we
 define the questions and how we explain them, which varies as the
 development of the whole software developing progress. Thus a good
 framework which really contributes to easing the pain of building software
-shall have a portion of API makes use anonymous functions, or say
-closures in Swift and blocks in Objective-C. But since this framework was
-designed in 2017 and I don't realize the things I mentioned above, it
-doesn't support any anonymous functions.
+shall have a portion of API makes use anonymous functions, or say closures
+in Swift and blocks in Objective-C, which can prevent us from naming
+something before we have sophisticated perspective upon it. But since this
+framework was designed in 2017 and I don't realize the things I mentioned
+above, it doesn't support any anonymous functions.
 
 I need more research to make this framework to support anonymous
 functions. At least, at glance, the size of the reference of function in
