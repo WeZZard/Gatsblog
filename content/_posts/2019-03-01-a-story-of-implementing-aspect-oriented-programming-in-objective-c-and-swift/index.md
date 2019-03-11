@@ -453,12 +453,15 @@ closures in Swift and blocks in Objective-C. But since this framework was
 designed in 2017 and I don't realize the things I mentioned above, it
 doesn't support any anonymous functions.
 
-To make this framework to support anonymous functions, we have to build
-a unified procedure abstraction umbrellas the procedure abstraction of
-Objective-C and Swift and make this procedure abstraction to be capable to
-dynamically allocating frame stack. This requires a lot of work and I
-don't have time to do so. But at some time in the future, this would be
-done.
+I need more research to make this framework to support anonymous
+functions. At least, at glance, the size of the reference of function in
+Swift is 2 words which that of C is 1. Roughly, I think the reference of
+Swift function may not only contain an instruction pointer but also
+environment pointer (I haven't read that part of source code. This is just
+a conjecture came up by referring the reality of Swift and my knowledge of
+compilers). Moreover, compile-time resolving is troublesome. Obviously
+this needs enormous amount of work and currently I don't have so much
+time. But it would come true in the future.
 
 ---
 
