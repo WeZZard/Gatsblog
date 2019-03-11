@@ -76,14 +76,14 @@ a ratio between `line-height` and `font-size`.
 
 ![Line Height Explained](./line-height-explained.png 'Line Height Explained')
 
-But as we showed in the previous post, a designer may lay things out with the
+But as we showed in the previous post, a designer may lay things out with
 attributes of fonts. This makes that the default size of a layout box in CSS
 may not work as what you expected.
 
 To make a bridge connects CSS layout box and the designer's world, we need to
 take the `line-height` into consideration when we setting up margins. In fact, I
-developed a solution: Normalized Layout Box to shrink the layout box's size to
-the designer purposed one.
+developed a solution: Normalized Layout Box -- to shrink the layout box's size
+to the designer purposed one.
 
 ![Normalized Layout Box](./normalized-layout-box.png 'Normalized Layout Box')
 
