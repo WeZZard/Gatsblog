@@ -1,5 +1,6 @@
 ---
 title: 一個在 Objective-C 和 Swift 中實現剖面導向編程的故事
+isPublished: false
 ---
 
 ## 案例：干預 UIScrollView 的 Pan Gesture Recognizer
