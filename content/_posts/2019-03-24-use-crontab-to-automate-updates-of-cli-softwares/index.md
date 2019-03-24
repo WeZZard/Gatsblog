@@ -4,9 +4,9 @@ category: Productivity
 tag: [UNIX, crontab, Automation]
 ---
 
-**crontab**, an abbreviation of chronic table (time table), is a task
-scheduler on UNIX systems. Each user in UNIX systems have its own
-"crontab".
+**crontab**, an abbreviation of chronic table (periodical time table), is
+a task scheduler which schedules tasks in period of time on UNIX systems.
+Each user in UNIX systems have its own "crontab".
 
 ## Editing the crontab File
 
@@ -19,9 +19,10 @@ As you can see, I'm using crontab to automate the updates of **home brew**,
 **npm** and **arcanist** (Arcanist is a CLI code review tool as a part of
 the code review, project planning and hosting suite: Phabricator).
 
-The left side sequences of numbers like `0 0 * * *` sets the execution
-time of the right side command. You can have a user-friendly tuning
-interface for this sequence of numbers at [crontab.guru](https://crontab.guru).
+The left side sequences of numbers like `0 0 * * *` means "00:00 AM each
+day", and sets the execution time of the right side command. You can have
+a user-friendly tuning interface for this sequence of numbers at
+[crontab.guru](https://crontab.guru).
 
 The right side commands only supports several environment variables. You
 can imagine a shell environment without any `*rc` file loaded, that is
@@ -37,6 +38,15 @@ system command which requires root privilege, you have to ensure the
 command you are executing is listed in your sudoers file. If you are
 executing a shell script in a crontab, you have to use
 `chmod +x your_script_name` to make your script executable.
+
+## Saving the crontab File
+
+Saving your crontab file is different on different editors. In VIM, you
+can save with `:w⏎`。 If you are using macOS, you may get a following
+dialog after saving your crontab file and you have to click "OK" to allow
+the system accept your editing.
+
+![macOS Alert](macos-alert.png "macOS Alert")
 
 ## Notification Mails
 
