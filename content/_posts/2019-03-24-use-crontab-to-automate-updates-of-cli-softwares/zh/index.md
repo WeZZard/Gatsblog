@@ -31,7 +31,7 @@ isPublished: false
 
 ## 通知郵件
 
-每一次一個命令被 crontab 所執行，你都會得到一個郵件。你可以在命令行環境以 `mail` 命令查看這封郵件。
+每一次一個命令被 crontab 所執行，你都會得到一封郵件。你可以在命令行環境以 `mail` 命令查看這封郵件。
 
 ![crontab 郵件](crontab-mails.png "crontab 郵件")
 
