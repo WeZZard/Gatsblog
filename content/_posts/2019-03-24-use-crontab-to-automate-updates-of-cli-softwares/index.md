@@ -27,9 +27,9 @@ The right side commands only supports several environment variables. You
 can imagine a shell environment without any `*rc` file loaded, that is
 what a crontab command gets.
 
-Since a crontab command gets such kind of shell environment, the `PATH`
-environment variable is not set yet, and you have to write down the full
-path of a command.
+Since a crontab command gets such kind of shell environment, even the
+`PATH` environment variable is not set yet, and you have to write down the
+full path of a command.
 
 A crontab command can be a CLI command comes with the UNXI system or a
 user script programmed by yourself. If you are executing a system command

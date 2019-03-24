@@ -9,7 +9,7 @@ isPublished: false
 
 ## 編輯 crontab 文件。
 
-通過執行 `crontab -e`，你可以打開你登入的用戶的 crontab。下面的插圖現實了我的 crontab 的內容。
+通過執行 `crontab -e`，你可以打開你登入的用戶的 crontab。下面的插圖顯示了我的 crontab 的內容。
 
 ![crontab 的編輯器](crontab-e.png "crontab 的編輯器")
 
@@ -17,9 +17,9 @@ isPublished: false
 
 左側的如 `0 0 * * *` 這樣的數字序列將設置右側命令的執行時間。你可以在 [crontab.guru](https://crontab.guru) 獲得一個用戶友好的介面來設置這串數字。
 
-右側的命令僅支持少部分環境變量。你可以想想一個沒有任何 `*rc` 文件加載的 shell 環境，那就是 crontab 所擁有的。
+右側的命令僅支持少部分環境變量。你可以想象一個沒有任何 `*rc` 文件加載的 shell 環境，那就是 crontab 所擁有的。
 
-因爲 crontab 命令所擁有的是這樣的 shell 環境，`PATH` 變量也沒有被設置，所以你必須寫下要執行的命令的完全路徑。
+因爲 crontab 命令所擁有的是這樣的 shell 環境，連 `PATH` 變量也沒有被設置，所以你必須寫下要執行的命令的完全路徑。
 
 crontab 命令可以是一個 UNIX 系統隨行的命令行命令，也可以是你自己編寫的一段腳本。如果你要執行一個需要 root 權限的系統命令，那麼你需要保證你要執行的命令在 sudoers 文件裏面。如果你要在 crontab 中執行一個 shell 腳本，那麼你需要使用 `chmod +x 你腳本的名字` 來讓你的腳本有執行權限。
 
