@@ -27,21 +27,22 @@ The right side commands only supports several environment variables. You
 can imagine a shell environment without any `*rc` file loaded, that is
 what a crontab command gets.
 
-Since a crontab command gets such kind of shell environment, even the
-`PATH` environment variable is not set yet, and you have to write down the
-full path of a command.
+Since a command executed by crontab gets such kind of shell environment,
+even the `PATH` environment variable is not set yet, and you have to write
+down the full path of a command.
 
-A crontab command can be a CLI command comes with the UNXI system or a
-user script programmed by yourself. If you are executing a system command
-which requires root privilege, you have to ensure the command you are
-executing is listed in your sudoers file. If you are executing a shell script
-in a crontab, you have to use `chmod +x your_script_name` to make your
-script executable.
+A command executed by crontab can be a CLI command comes with the UNXI
+system or a user script programmed by yourself. If you are executing a
+system command which requires root privilege, you have to ensure the
+command you are executing is listed in your sudoers file. If you are
+executing a shell script in a crontab, you have to use
+`chmod +x your_script_name` to make your script executable.
 
 ## Notification Mails
 
-Each time your crontab command get executed, you would get a mail. You can
-check this mail in command line. You can use `mail` command to read these mails.
+Each time a command executed by crontab, you would get a mail. You can
+check this mail in command line. You can use `mail` command to read these
+mails.
 
 ![crontab mails](crontab-mails.png "crontab Mails")
 
@@ -53,7 +54,7 @@ updated. As you can see, the **npm** on my computer was updated today.
 
 ## Changing Notification Mails Destination
 
-By default, each execution of crontab command sends a mail to the user who
+By default, each command executed by crontab sends a mail to the user who
 sets the command up. But you can change the destination address by adding
 the following line on the top of the crontab file (open crontab file by
 typing `crontab -e`).
