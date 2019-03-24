@@ -1,7 +1,7 @@
 ---
 title: Use crontab to Automate Updates of CLI Softwares
 category: Productivity
-tag: [UNIX, crontab, Automation]
+tags: [UNIX, crontab, Automation]
 ---
 
 **crontab**, an abbreviation of chronic table (periodical time table), is
