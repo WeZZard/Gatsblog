@@ -2,6 +2,7 @@
 title: 使用 cronab 自動化命令行軟件的更新
 category: Productivity
 tag: [UNIX, crontab, Automation]
+isPublished: false
 ---
 
 **crontab**，作爲 UNIX 系統上的任務調度器，是 chronic table（時間表）的縮寫。UNIX 系統上的每一個用戶都有其自己的 "crontab"。
