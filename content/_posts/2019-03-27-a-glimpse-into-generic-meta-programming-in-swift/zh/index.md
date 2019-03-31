@@ -1,34 +1,24 @@
 ---
-title: A Glimpse into Generic Meta-Programming in Swift
-subtitle: Build a Compile-Time-Ensured Safe VFL Helper Library
-category: Programming
-tags: [Swift, MetaProgramming, Generic, VFL, AutoLayout, macOS, iOS, tvOS]
+title: 淺談 Swift 泛型元編程
+subtitle: 建構一個在編譯時就確保了安全的 VFL 助手庫
+isPublished: false
 ---
 
-## Preface
+## 前言
 
-What is the most critical thing swings your decision when you choose a
-programming language?
+什麼是在你選擇一門編程語言的時候最能左右你決定的事？
 
-Some people may say, the less lines of code they write, the better the
-language itself is. (Nope, the best programming language is PHP.)
+有人會說，寫得越少，語言越好。（並不是，PHP 是最好的語言。）
 
-OK. It may be true. But writing less code is not a quantitative indicator
-which results in the same outcome whenever, wherever. Depending on the
-task you are focusing on, lines of code floats up and down as well.
+好吧，這也許是真的。但是寫得少並不是一個可以在何時何地都得到同一結果的可以量化的指標。根據你任務的不同，代碼的行數也在上下浮動。
 
-I think a better way is to inspect what primitives the programming
-language have.
+我認爲最好的方法是考察編程語言有多少 primitives（元語）。
 
-For some old-school programming languages, they may not have
-multi-dimensional array, which means an array cannot hold another one in
-itself. This disallows developers to invent some recursive data structures
-and limits the expressiveness of the language. The expressiveness of a
-programming language, formally, is the **computational capability of a
-programming language**.
+對於一些老式的編程語言而言，他們有的沒有多維數組。這意味着數組並不能包含他們自己。這束縛了一些開發者來發明某些具有遞歸性質的數據結構，同時也限制了語言的表達性。語言的表達性，形式化地講，就是**語言的計算能力**。
 
-But the array example I mentioned above is just about runtime computational
-capability. What about the compile-time's?
+但是我剛剛提到的這個數組的例子僅僅只和運行時計算能力有關。編譯時計算能力又是怎樣呢？
+
+好的。像 C++ 這樣具備顯示編譯過程以及一些「代碼模板」設施的語言是具有進行某些編譯時計算的能力。他們通常是收集源代碼的碎片，然後將他們組織成一段新的代碼。你也許已經聽過一個大詞了：「元編程」。是的，這就是元編程
 
 Well. Languages like C++ which has an explicit compile progress and some
 "code template" infrastructures hold an ability to do some compile-time
