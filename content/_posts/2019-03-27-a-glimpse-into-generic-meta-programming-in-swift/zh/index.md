@@ -610,6 +610,8 @@ Swift 中 `OptionSet` 帶來的方便不是免費的.
 
 Exclusivity enforcement 也對性能有衝擊。在你的求值棧中你可以看見很多 `swift_beginAcces` 和 `swift_endAccess` 的調用。如果你對自己的代碼有自信，我建議關掉運行時 exclusivity enforcement。在 Build Settings 中搜索 “exclusivity” 可以看到相關選項。
 
+> 在 Swift 5 下的 release build 中，exclusivity enforcement 是默認開啓的.
+
 ![Exclusivity Enforcement 的代價](exclusivity-enforcement-cost.png "Exclusivity Enforcement 的代價")
 
 ### C 的編譯時計算

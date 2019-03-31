@@ -855,6 +855,8 @@ you are confident with your code, I suggest you to disable runtime
 exclusivity enforcement. Search "exclusivity" in your build setting you
 can find the option to turn it off.
 
+> Exclusivity enforcement is enabled for release build in Swift 5.
+
 ![Cost of Exclusivity Enforcement](exclusivity-enforcement-cost.png "Cost of Exclusivity Enforcement")
 
 ### Compile-Time Computation of C
