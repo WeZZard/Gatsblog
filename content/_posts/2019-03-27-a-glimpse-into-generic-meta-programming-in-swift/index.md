@@ -92,7 +92,8 @@ let constraints2 = withVFL(V: view3 - view4, options: .alignAllCenterY)
 ```
 
 Just imagine that how many lines of code you need for building equivalent
-things with Cartography or SnapKit? Wanna know how did I build it?
+things with Cartography or SnapKit? Have already been wanted to know how
+I built it?
 
 Let me tell you.
 
@@ -149,7 +150,7 @@ after `4`.
 
 We want our system to be able to handle correct input by making the
 compiler to accept it and to be able to handle incorrect input by making
-the compiler to reject it (because this is what **compile-time safe**
+the compiler to reject it (because this is what **compile-time-ensured safe** 
 implies). The secrete behind it is not some black magic which applied by
 an mystic engineer whom have got a "Senior SDE" title, but simply to
 accept by matching user input with a defined function and to reject by
@@ -160,7 +161,7 @@ can design the following function to handle it:
 
 ```swift
 func - (lhs: UIView, rhs: UIView) -> BinarySyntax {
-    // Do something really combine these two views togather.
+    // Do something really combine these two views together.
 }
 ```
 
@@ -205,7 +206,7 @@ A binary operator consumes two transitions but an unary operator consumes
 one. Each operator creates a new type.
 
 Since even the counting method itself is too complex, I would rather to
-explore another approach... 
+explore another approach...
 
 ### State Transitioning with Multiple States
 
@@ -223,8 +224,8 @@ problem in multiple dimensions.
 > operator, a compiler may prefer to use it for constructing syntax tree.
 > The default associativity of Swift operator is left, which means the
 > compiler prefer to use the left-hand-side of an operator to construct
-> a syntax tree. Thus we can know for a left associative operator, it is
-> visually left-leaning.
+> a syntax tree. Thus we can know for a syntax tree of a left associative
+> operator, it is visually left-leaning.
 
 Firstly, let's write down some simplest syntaxes:
 
@@ -370,7 +371,7 @@ state has successfully transitioned to another.
 We can see that, since we've set `HeadAttribute = Lhs.HeadAttribute` and
 `TailAttribute = Lhs.TailAttribute` in the body of the types above, the
 head and tail attribute of `Lhs` and `Rhs` is transferred from `Lhs` and
-`Rhs` to the newly synthesized class now. The value is stored in the type
+`Rhs` to the newly synthesized type now. The value is stored in the type
 `HeadAttribute` and `TailAttribute`.
 
 Then we've got our functions which make the compiler to receive input like
@@ -532,8 +533,7 @@ all the syntax tree constructions on paper. Planning on paper is a good
 habit for being a good software engineer.
 
 Now the core concept of the syntax tree's design is very close to my
-production code. You can check it out on [WeZZard/CTVFL/CTVFL/Syntaxes](https://github.com/WeZZard/CTVFL/tree/master/CTVFL/Syntaxes).
-
+production code. You can check it out at [here](https://github.com/WeZZard/CTVFL/tree/master/CTVFL/Syntaxes).
 
 ### Generating NSLayoutConstraint Instances
 
@@ -635,7 +635,7 @@ can know that the node `view1` was evaluated at the second but the
 evaluation result would be used at the last, thus we need a data structure
 to store each node's evaluation result. You probably would come up with
 stack. Yes, I'm using stack in my production code. But you shall know the
-reason why we need a stack: a stack transfers a recursive structure into
+reason why we need a stack: a stack transforms a recursive structure into
 linear, that is what we need. You may have already guessed that I'm gonna
 use stack, but intuition doesn't work all the time.
 
@@ -658,13 +658,13 @@ view1 | view2_4
 ```
 
 When we evaluating the node `-` at the second level of the tree (count
-from the root), we have to pick view 3, which is the "inner" node of the
+from the root), we have to pick `view3`, which is the "inner" node of the
 tree, to make an `NSLayoutConstraint` instance. Actually, generating
-`NSLayoutConstraint` always needs to pick the "inner" nodes which with the
-perspective of the node being evaluated. But for the root `|` node, 
-the "inner" node soon comes to be `view1` and `view2`. Thus we have to
-make the stack to memorize the head and tail node of the syntax tree that
-have been evaluated.
+`NSLayoutConstraint` instances always needs to pick the "inner" nodes
+which with the perspective of the node being evaluated. But for the root
+`|` node, the "inner" node soon comes to be `view1` and `view2`. Thus we
+have to make the stack to memorize the head and tail node of the syntax
+tree that have been evaluated.
 
 #### About the "Return Value"
 
@@ -702,7 +702,7 @@ The complete production code is [here](https://github.com/WeZZard/CTVFL/blob/mas
 
 ### Assessment
 
-We've done the whole concept and pseudo code of our compile-time safe VFL.
+We've done the whole concept of our compile-time-ensured safe VFL.
 
 The question now is what do we gain with it?
 
@@ -724,8 +724,9 @@ whole syntax tree is constructed on stack memory but not heap memory.
 
 In fact, after a whole day of optimizations, the performance of my
 production code exceeded all the implementation of existing alternative
-solutions (includes Cartography and SnapKit). I would place some
-optimization tips at the end of this post.
+solutions (includes Cartography and SnapKit), which of course includes the
+original VFL. I would place some optimization tips at the end of this
+post.
 
 #### For VFL
 
@@ -810,8 +811,9 @@ stack[0] = StackLevel(value: 13)
 stack[0].value = 13
 ```
 
-`subscript.modify` is a kind of function used for modifying a value of a
-container's element. But it seems did a lot more than modifying a value.
+`subscript.modify` is a kind of function used for modifying a member value
+of a container's element. But it seems did a lot more than modifying a
+value.
 
 ![Cost of subscript.modify](subscript-modify-cost.png "Cost of subscript.modify")
 
@@ -863,14 +865,17 @@ example is below:
 
 ```objectivec
 @ObjCDynamicPropertyGetter(id, WEAK) {
+    // _cmd comes to be _prop
     // Do what you wanna do with a normal atomic weak Objective-C getter.
 }
 
 @ObjCDynamicPropertyGetter(id, COPY) {
+    // _cmd comes to be _prop
     // Do what you wanna do with a normal atomic copy Objective-C getter.
 }
 
 @ObjCDynamicPropertyGetter(id, RETAIN, NONATOMIC) {
+    // _cmd comes to be _prop
     // Do what you wanna do with a normal nonatomic retain Objective-C getter.
 };
 ```
@@ -883,7 +888,7 @@ macros to ease brain burdens.
 ---
 
 Thank for your reading of this long post. I have to apologize. I lied in
-the title. This post  is totally not a "glimpse" into generic
+the title. This post is totally not a "glimpse" into Swift generic
 meta-programming, it talks about many deep content about computation. But
 I think this is a bunch of basic knowledge to be a good programmer.
 

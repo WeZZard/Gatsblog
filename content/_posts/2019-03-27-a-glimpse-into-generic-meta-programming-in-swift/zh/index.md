@@ -18,53 +18,26 @@ isPublished: false
 
 但是我剛剛提到的這個數組的例子僅僅只和運行時計算能力有關。編譯時計算能力又是怎樣呢？
 
-好的。像 C++ 這樣具備顯示編譯過程以及一些「代碼模板」設施的語言是具有進行某些編譯時計算的能力。他們通常是收集源代碼的碎片，然後將他們組織成一段新的代碼。你也許已經聽過一個大詞了：「元編程」。是的，這就是元編程
+好的。像 C++ 這樣具備顯示編譯過程以及一些「代碼模板」設施的語言是具有進行某些編譯時計算的能力。他們通常是收集源代碼的碎片，然後將他們組織成一段新的代碼。你也許已經聽過一個大詞了：「元編程」。是的，這就是元編程（但是是在編譯時）。而這些語言也包含了 C 和 Swift。
 
-Well. Languages like C++ which has an explicit compile progress and some
-"code template" infrastructures hold an ability to do some compile-time
-computations, which collects the pieces of the source code and then
-organize them into a piece of new code. You may have heard a buzz word:
-"meta-programming". Yes, this just is meta-programming (but at
-compile-time) and this a bunch of programming languages includes C and
-Swift.
+C++ 元編程依賴於模板。在 C 中，元編程依賴於一個來自 **libobjcext** 的特殊頭文件 `metamacros.h`。在 Swift 中，元編程依賴於泛型。
 
-Meta-programming in C++ relies on templates, and in C it relies on a
-special header called `metamacros.h` in **libobjcext**. In Swift, it
-relies on generics.
+儘管你可以在這三種語言中做編譯時元編程，其能力又是不同的。因爲已經有很多文章談論 C++ 模板爲什麼是**圖靈完備**（一種計算能力的度量，你可以簡單認爲它就是「啥都能算」）的了，我不想在這上面浪費我的實踐。我要討論的是 Swift 中的泛型元編程，以及要給 C 中的 `metamacros.h` 作一個簡單的介紹。這兩種語言的編譯時元編程能力都比 C++ 要弱。他們僅僅只能夠實現一個 **DFA**（確定性自動機，另一種計算能力的度量。你可以簡單的認爲它就是「能計算有限的模式」）上限的編譯時計算設施。
 
-Though you can do compile-time meta-programming in these three programming
-languages, the capability of them are different. Since there are a lot of 
-posts talked about the reason why C++ template is **turing complete** (a
-measurement of computational capability, you can just briefly treat it
-as "can compute anything"), I don't want to waste my time on it. I'm gonna
-talk about generic meta-programming in Swift and give a brief introduction
-of `metamacros.h` in C. These two programming languages are weaker than
-C++ in compile-time meta-programming. They are only able to implement a
-**DFA** (deterministic-finite automaton, another measurement of
-computational capacity. You can briefly treat it as "can compute things
-with finite patterns") capped compile-time computational infrastructure.
+---
 
---- 
+## 案例研究: 在編譯時就確保了安全的 VFL
 
-## Case Study: Compile-Time-Ensured Safe VFL
+我們有許多 Auto Layout 助手庫：Cartography, Mansory, SnapKit... 但是，他們真的好嗎？要是有一個 Swift 版本的 VFL 能在編譯時就確保正確性而且能夠和 Xcode 的代碼補全聯動如何？
 
-There are a lot of Auto Layout helper libraries: Cartography, Mansory,
-SnapKit... But, are they really good? What if there were a Swift versioned
-VFL which ensures the correctness at compile-time and can collaborate with
-Xcode's code completion?
+老實說，我是一個 VFL 愛好者。你可以用一行代碼就對很多視圖進行佈局。要是是 Cartography 或者 SnapKit，早就「王婆婆的裹腳又長又臭」了。
 
-Truth be told, I'm a fan of VFL. You can lay many views out by using one
-line of code. With Cartography or SnapKit, things always go tedious.
+由於原版的 VFL 對於現代 iOS 設計的支持上有一點問題，這主要表現在不能和 layout guide 合作上，你也許也想要我們馬上要實現的這套 API 能夠支持 layout guide。
 
-Since the original VFL has some issues with modern iOS design, which
-cannot cooperate with layout guides, you may also want layout guide
-support in the API suite we are gonna implement.
-
-Finally, in my production code, I built the following API which is
-compile-time-ensured safe and supports layout guide.
+最後，在我的生產代碼中，我構建了如下的可以在編譯時就確保了安全的並且支持 layout guide 的 API。
 
 ```swift
-// Make constraints and install to view hierarchy
+// 創建佈局約束並且裝置入視圖
 
 constrain {
     withVFL(H: view1 - view2)
@@ -74,175 +47,131 @@ constrain {
     withVFL(H: |-view2)
 }
 
-// Just make constraints
+// 僅僅創建佈局約束
 
 let constraints1 = withVFL(V: view1 - view2)
 
 let constraints2 = withVFL(V: view3 - view4, options: .alignAllCenterY)
 ```
 
-Just imagine that how many lines of code you need for building equivalent
-things with Cartography or SnapKit? Wanna know how did I build it?
+想想一下在 Cartography 或者 SnapKit 中構建等效的事情需要多少行代碼？想知道我怎麼構建出來的了嗎？
 
-Let me tell you.
+讓我來告訴你。
 
-### Transforming the Grammar
+### 語法變形
 
-If we dump the original VFL grammar into Swift source code by trimming the
-string literal quotes, then it will soon be find that some characters
-used by the original VFL such as `[`, `]`, `@`, `(` and `)` is not allowed
-in operator overloading in Swift source code. Thus I transformed the
-original VFL grammar into the following grammar:
+如果我們將原版的 VFL 語法導入到 Swift 源代碼中並且去處掉字符串字面量的引號，你很快就會發現一些在原版 VFL 中所使用的字符像 `[`, `]`, `@`, `(` 和 `)` 是不能在 Swift 中用作操作符重載的。於是我對原版 VFL 語法做了一些變形：
 
 ```swift
-// Original VFL: @"|-[view1]-[view2]"
+// 原版 VFL: @"|-[view1]-[view2]"
 withVFL(H: |-view1 - view2)
 
-// Original VFL: @"[view1(200@20)]"
+// 原版 VFL: @"[view1(200@20)]"
 withVFL(H: view1.where(200 ~ 20))
 
-// Original VFL: @"V:[view1][view2]"
+// 原版 VFL: @"V:[view1][view2]"
 withVFL(V: view1 | view2)
 
-// Original VFL: @"V:|[view1]-[view2]|"
+// 原版 VFL: @"V:|[view1]-[view2]|"
 withVFL(V: |view1 - view2|)
 
-// Original VFL: @"V:|[view1]-(>=4@200)-[view2]|"
+// 原版 VFL: @"V:|[view1]-(>=4@200)-[view2]|"
 withVFL(V: |view1 - (>=4 ~ 200) - view2|)
 ```
 
-### Figuring Out the Implementations
+### 探索實現
 
-How to achieve this design?
+如何達成我們的設計？
 
-An intuitive answer is to use operator overload.
+一個來自直覺的答案就是使用操作符重載。
 
-Yes. I've done this with operator overload in my production code. But how
-does the operator overloading work here? I mean, why the operator
-overloading is able to convey our design?
+是的。我已經在我的生產代碼中用操作符重載達成了我們的設計。但是操作符重載在這裏是如何工作的？我是說，爲什麼操作符重載可以承載我們的設計？
 
-Before answering the question above, let's check some examples out.
+在回答這個問題之前，讓我們看一些例子。
 
 ```swift
 withVFL(H: |-view1 - view2 - 4)
 ```
 
-The code above is an illegal input shall not be accepted. The relative 
-original VFL is below:
+上例是一個是一個不應該被編譯器接受的非法輸入。相應的原版 VFL 如下：
 
 ```objectivec
 @"|-[view1]-[view2]-4"
 ```
 
-We can find that there is missing another view object, a `|` or a `-|`
-after `4`.
+我們可以發現在 `4` 之後缺少了一個視圖，或者一個 `|` 又或者一個 `-|`。
 
-We want our system to be able to handle correct input by making the
-compiler to accept it and to be able to handle incorrect input by making
-the compiler to reject it (because this is what **compile-time safe**
-implies). The secrete behind it is not some black magic which applied by
-an mystic engineer whom have got a "Senior SDE" title, but simply to
-accept by matching user input with a defined function and to reject by
-all defined functions mismatching the user input.
+我們希望我們的系統可以通過讓編譯器接受一段輸入來把控正確的輸入，通過讓編譯器拒絕一段輸入來把控錯誤的輸入（因爲這就是**編譯時就確保了安全的**所隱含的意思）。這背後的祕密並不是由一個擡頭是「高級軟件開發工程師」的神祕工程師施放的黑魔法，而是簡單的通過匹配用戶輸入與已經定義好了的函數來接受用戶輸入，通過失配用戶輸入和已經定義好了的函數來拒絕用戶輸入。
 
-For example, like the `view1 - view2` in a part of the example above, we
-can design the following function to handle it:
+比如，就像上例中 `view1 - view2` 拿部分所示，我們可以設計如下函數來把控他。
 
 ```swift
 func - (lhs: UIView, rhs: UIView) -> BinarySyntax {
-    // Do something really combine these two views togather.
+    // Do something really combine these two views together.
 }
 ```
 
-If we take the `UIView` and `BinarySyntax` in the above code block as two
-states, then we introduced state transitions into our system, and the
-approach of state transitioning is operator overloading.
+如果我們將上述代碼塊中的 `UIView` 和 `BinarySyntax` 看作兩個狀態，那麼我們就可以在我們的系統中引入狀態轉移了，而狀態轉移的方法就是操作符重載。
 
-### Naïve State Transitioning
+### 樸素的狀態轉移
 
-Knowing that by introducing state transitioning with operator overload 
-may solve our problem, we may feel at a bit ease now.
+知道了通過操作符重載引入狀態轉移也許能解決我們的問題，我們可以呼一口氣了。
 
-But... How many types we are gonna create with this solution?
+但是……這個解決方案下我們要創建多少種狀態？
 
-What you may not know is that, VFL is expressible by a DFA.
+你也許不知道的是，VFL 可以被表達爲一個 DFA。
 
-Yes. Since recursive texts like `[`, `]`, `(` and `)` are not really
-recursive in VFL (only one level of them can appear in a correct VFL
-input and cannot be nested), a DFA is able to express the complete
-possible input set of VFL.
+是的。因爲如`[`, `]`, `(` 和 `)` 這樣的遞歸文本在 VFL 中並不是真正的遞歸文本（在正確的 VFL 中他們只能出現一層並且無法嵌套），一個 DFA 就可以表述出 VFL 的所有可能的輸入集合。
 
-Thus I created a DFA to simulate the state transitions of **our design**.
-Watch out! I didn't take layout guide into consideration in this figure.
-Introducing layout guide may make the DFA much more complicated.
+於是我繪製了一個 DFA 來模擬我們設計中的狀態轉移。要小心。在這種圖中我沒有把 layout guide 放進去。加入 layout guide 只會讓這個 DFA 變得更複雜。
 
-> To know more about recursiveness and DFA with a plain and brief
-> introduction, you can check this book out:
-> [Understanding Computation: From Simple Machines to Impossible Programs](http://shop.oreilly.com/product/0636920025481.do)
+> 瞭解更多的關於遞歸和 DFA 的樸實的簡介你可以看看這本書[計算的本質：深入剖析程序和計算機](https://www.amazon.cn/dp/B0153173HI/ref=sr_1_1)
 
 ![CTVFL Automaton](ctvfl-automaton.svg "CTVFL Automaton")
 
-> In the diagram above, `|pre` means prefix `|` operator and respectively
-> `|post` means postfix `|` operator, double circle means an accepting
-> state and single circle means a receiving state. 
+> 上圖中, `|pre` 表示一個前綴 `|` 操作符，同樣的，`|post` 表示一個後綴 `|` 操作符。兩個圓圈表示接受，單個圓圈表示接收。
 
-Counting the types we are gonna create is a complex task. Since there are
-binary operators `|` and `-`, and there are unary operators `|-`, `-|`,
-`|prefix` and `|postfix`, the counting method varies over these two kinds
-of operators:
+數我們要創建的類型的數目是一個複雜的任務。由於有雙目操作符 `|` 和 `-`，還有單目操作符 `|-`, `-|`, `|prefix` 和 `|postfix`，計數方法在這兩種操作符中是不同的。
 
-A binary operator consumes two transitions but an unary operator consumes
-one. Each operator creates a new type.
+一個雙目操作符消耗兩次狀態轉移，但是一個單目操作符消耗一次。每一個操作符都將創建一個新的類型。
 
-Since even the counting method itself is too complex, I would rather to
-explore another approach... 
+因爲這個計數方法本身實在太複雜了，我寧願想想別的方法……
 
-### State Transitioning with Multiple States
+### 多狀態的狀態轉移
 
-I drew the DFA diagram above by deadly putting possible characters to test
-whether a state receives them or not, this maps all the things into one
-dimension. May be we can create a cleaner expression by abstract the
-problem in multiple dimensions.
+我是通過死命測試可能的輸入字符以測試一個狀態是否接受他們來畫出上面這個 DFA 圖的。這將所有的一切都映射到了一個一個維度上。也許我們可以通過在多個維度對問題進行抽象來創造一種更加清澈的表達。
 
-> Before the beginning of further exploration, we have to acquire some
-> basic knowledge about Swift operator's associativity.
+> 在開始深入探索前，我們不得不獲取一些關於 Swift 操作符結合性的一些基礎知識。
 >
-> The associativity of an operator (strictly speaking, of a binary
-> operator, which mean an operator connects a left-hand-side operand and
-> right-hand-side operand, just like `-`) is for which side of an
-> operator, a compiler may prefer to use it for constructing syntax tree.
-> The default associativity of Swift operator is left, which means the
-> compiler prefer to use the left-hand-side of an operator to construct
-> a syntax tree. Thus we can know for a left associative operator, it is
-> visually left-leaning.
+> 結合性是一個操作符（嚴格來講，雙目操作符。就是像 `-` 那樣連結左手邊算子和右手邊算子的操作符）在編譯時期，確定編譯器選擇在哪邊構建語法樹的一個性質。Swift 默認的操作符結合性是向左。這意味着編譯器更加傾向於在一個操作符的左手邊構建語法樹。於是我們可以知道，對於一個由向左結合的操作符生成的語法樹，其在視覺上是向左傾斜的。
 
-Firstly, let's write down some simplest syntaxes:
+首先讓我們來看看幾個最簡單的表達式：
 
 ```swift
-// Should accept
+// 應該接受
 withVFL(H: view1 - view2)
 
-// Should accept
+// 應該接受
 withVFL(H: view1 | view2)
 
-// Should accept
+// 應該接受
 withVFL(H: |view1|)
 
-// Should accept
+// 應該接受
 withVFL(H: |-view1-|)
 ```
 
-The syntax tree of them are below:
+他們的語法樹如下：
 
-![Simple Syntaxes](simple-syntaxes.png "Syntax Trees for Simple Syntaxes")
+![簡單表達式](simple-syntaxes.png "簡單表達式的語法樹")
 
-Then we can split the case into two:
+然後我們可以將情況分爲兩類：
 
-- Binary syntaxes like `view1 - view2`, `view1 | view2`.
+- 像 `view1 - view2`, `view1 | view2` 這樣的雙目表達式。
 
-- Unary syntaxes like `|view1`, `view1-|`.
+- 像 `|view1`, `view1-|` 這樣的單目表達式。
 
-This makes us to intuitively create two types:
+這使我們直覺地創建了兩種類型：
 
 ```swift
 struct Binary<Lhs, Rhs> { ... }
@@ -262,27 +191,20 @@ prefix func |- <Operand>(operand: Operand) -> Unary { ... }
 postfix func -| <Operand>(operand: Operand) -> Unary { ... }
 ```
 
-But is this enough?
+但是這夠了嗎？
 
 #### Syntax Attribute
 
-Soon it will be find that we can plug anything on the `Lhs` or `Rhs` of
-`Binary`, or the `Operand` of `Unary`. We have to do some limitations.
+你馬上會發現，我們可以將任何東西代入 `Binary` 的 `Lhs` 或者 `Rhs`，或者 `Unary` 的 `Operand` 中。我們需要做一些限制。
 
-Typically, inputs like `|-`, `-|`, `|prefix`, `|postfix` shall only be
-appeared the at head and tail two sides of the syntax. Since we also want
-to support layout guide (such as `safeAreaLayoutGuide`), which also should
-only be appeared at the head and tail two sides of the syntax, we have to
-constrain these stuffs are ensured only at the head and tail side of the
-syntax.
+典型而言，像 `|-`, `-|`, `|prefix`, `|postfix` 這種輸入只應該出現在表達式首尾兩端。因爲我們也希望支持 layout guide（如 `safeAreaLayoutGuide`），而 layout guide 也只應該出現在表達式首尾兩端，我們還需要對這些東西做一些限制來確保他們僅僅出現在表達式的兩端。
 
 ```swift
 |-view-|
 |view|
 ```
 
-Moreover, inputs like `4`, `>=40` shall only be appeared when paired with
-preceding and succeeding view/superview or layout guide.
+另外，像 `4`, `>=40` 這種輸入只應該和前驅和後繼視圖/父視圖或者 layout guide 配合出現。
 
 ```swift
 view - 4 - safeAreaLayoutGuide
@@ -290,13 +212,9 @@ view - 4 - safeAreaLayoutGuide
 view1 - (>=40) - view2
 ```
 
-The above study of the syntax hinted us to split all things take
-participant in the syntax into three groups: **layout'ed object** (views),
-**confinement** (layout guides and things wrapped by `|-`, `-|`, `|prefix`
-and `|postfix`),
-and **constant**.
+以上對於表達式的研究提示我們要將所有參與表達式的事情分成三組：**layout'ed object** (視圖), **confinement** (layout guides 以及被 `|-`, `-|`, `|prefix` 還有 `|postfix` 包裹起來的東西), 和 **constant**.
 
-Now we are going to change our design into:
+現在我們要將我們的設計變更爲：
 
 ```swift
 protocol Operand {
@@ -314,16 +232,15 @@ struct SyntaxAttributeConfinment: SyntaxAttribute {}
 struct SyntaxAttributeConstant: SyntaxAttribute {}
 ```
 
-Then for specific combinations of syntaxes like `view1 - 4 - view2`, we
-can make following syntax types. 
+然後對於像 `view1 - 4 - view2` 之類的組合，我們可以創建下列表達式類型：
 
 ```swift
-/// connects `view - 4`
+/// 連結 `view - 4`
 struct LayoutableToConstantSpacedSyntax<Lhs: Operand, Rhs: Operand>: 
-    Operand where 
-    /// Checks the tail part of the lhs syntax is a layouted object
+    Operand where
+    /// 確認左手邊算子的尾部是不是一個 layouted object
     Lhs.TailAttribute == SyntaxAttributeLayoutedObject,
-    /// Checks the head part of the rhs syntax is a constant
+    /// 確認右手邊算子的頭部是不是一個 constant
     Rhs.HeadAttribute == SyntaxAttributeConstant
 {
      typealias HeadAttribute = Lhs.HeadAttribute
@@ -332,82 +249,46 @@ struct LayoutableToConstantSpacedSyntax<Lhs: Operand, Rhs: Operand>:
 
 func - <Lhs, Rhs>(lhs: Lhs, rhs: Rhs) -> LayoutableToConstantSpacedSyntax<Lhs, Rhs> { ... }
 
-/// connects `(view - 4) - view2`
+/// 連結 `(view - 4) - view2`
 struct ConstantToLayoutableSpacedSyntax<Lhs: Operand, Rhs: Operand>:
     Operand where
-    /// Checks the head part of the lhs syntax is a constant
+    /// 確認左手邊算子的尾部是不是一個 constant
     Lhs.TailAttribute == SyntaxAttributeConstant,
-    /// Checks the tail part of the rhs syntax is a layouted object
+    /// 確認右手邊算子的頭部是不是一個 layouted object
     Rhs.HeadAttribute == SyntaxAttributeLayoutedObject
 {
      typealias HeadAttribute = Lhs.HeadAttribute
-     typealias TailAttribute = Lhs.TailAttribute 
+     typealias TailAttribute = Lhs.TailAttribute
 }
 
 func - <Lhs, Rhs>(lhs: Lhs, rhs: Rhs) -> ConstantToLayoutableSpacedSyntax<Lhs, Rhs> { ... }
 ```
 
-By conforming to the protocol `Operand`, a type indeed have got two
-compile-time storage whose names are `HeadAttribute` and `TailAttribute`,
-and values are of type of `SyntaxAttribute`. By calling the
-function `-` (anyone in the above code block), the compiler checks if the
-left-hand-side and right-hand-side matches any function with the name `-`
-by reading generic constraints of the result
-type (`ConstantToLayoutableSpacedSyntax` or
-`LayoutableToConstantSpacedSyntax`). If it succeeded, we could say the
-state has successfully transitioned to another.
+通過遵從 `Operand` 協議，一個類型實際上就獲得了兩個編譯時容器，它們的名字分別爲：`HeadAttribute` 和 `TailAttribute`；其值則是屬於 `SyntaxAttribute` 的類型。通過調用函數 `-` (上述代碼塊的任意一個)，編譯器將檢查左手邊算子和右手邊算子是否和函數返回值（`ConstantToLayoutableSpacedSyntax` 或
+`LayoutableToConstantSpacedSyntax`）中的泛型約束一致。如果成功了，我們就可以說狀態成功地被轉移到另外一個了。
 
-We can see that, since we've set `HeadAttribute = Lhs.HeadAttribute` and
-`TailAttribute = Lhs.TailAttribute` in the body of the types above, the
-head and tail attribute of `Lhs` and `Rhs` is transferred from `Lhs` and
-`Rhs` to the newly synthesized class now. The value is stored in the type
-`HeadAttribute` and `TailAttribute`.
+我們可以看到，因爲我們在上述類型的體內已經設置了 `HeadAttribute = Lhs.HeadAttribute` 和 `TailAttribute = Lhs.TailAttribute`，現在 `Lhs` 和 `Rhs` 的頭部和尾部的 attribute 已經從 `Lhs` 和 `Rhs` 上被轉移到了這個被新合成的類型上。而值就被儲存在其 `HeadAttribute` 和 `TailAttribute` 上。
 
-Then we've got our functions which make the compiler to receive input like
-`view1 - 4 - view2`, `view1 - 10 - view2 - 19`... Wait! `view1 - 10 - view2 - 19`???
-`view1 - 10 - view2 - 19` shall be an illegal input which may be rejected
-by the compiler!
+然後我們成功讓編譯器接受了類似 `view1 - 4 - view2`, `view1 - 10 - view2 - 19` 這樣的輸入……等等！`view1 - 10 - view2 - 19`??? `view1 - 10 - view2 - 19` 應該是一個被編譯器拒絕的非法輸入！
 
 #### Syntax Boundaries
 
-Actually, what we did above just have ensured that a view is consecutive
-to a number and a number is consecutive is a view, it has nothing to do
-with whether the syntax shall be beginning with a view (or layout guide)
-and end with a view (or layout guide).
+實際上，我們剛才僅僅只是保證了一個視圖緊接着一個數字、一個數字緊接着一個視圖，而這和表達式是否以一個視圖（或者 layout guide）開始或結束無關。
 
-To make a syntax always begins or ends with a view, layout guide or things
-like `|-`, `-|`, `|prefix` and `|postfix`, we have to build a logic to
-help our types to **"filter"** those invalid input out, just like what we
-did like `HeadAttribute = Lhs.HeadAttribute` and
-`TailAttribute = Lhs.TailAttribute` above. We can find that there are
-actually two groups of syntax mentioned in the example above:
-**confinement** and **layout'ed object**. To make a syntax always begins
-or ends with syntax in this two groups, we have to use compile-time `or`
-logic to implemented it. Write it down in runtime code, it is:
+爲了使表達式始終以一個視圖，layout guide 或者 `|-`, `-|`, `|prefix` 和 `|postfix` 開頭，我們必須要構建一個幫助我們**過濾**掉無效輸入的邏輯——就像我們之前做的 `HeadAttribute = Lhs.HeadAttribute` 和 `TailAttribute = Lhs.TailAttribute` 那樣。我們可以發現實際上我們剛才提到的表達式中有兩組：**confinement** 和 **layout'ed object**。爲了使表達式始終以這兩組表達式中的表達式開頭或者結尾，我們必須使用編譯時`或`邏輯來實現它。我們用運行時代碼寫出來就是：
 
 ```swift
 if (lhs.tailAttribute == .isLayoutedObject || lhs.tailAttribute  == .isConfinment) &&
     (rhs.headAttribute == .isLayoutedObject || rhs.headAttribute == .isConfinment)
 { ... }
 ```
- 
-But this logic cannot be simply implemented with Swift in compile-time,
-and the only logic of Swift compile-time computation is the `and` logic.
-Since we can only use `and` logic in type constraints in Swift (by using
-the `,` symbol between `Lhs.TailAttribute == SyntaxAttributeLayoutedObject`
-and `Rhs.HeadAttribute == SyntaxAttributeConstant` in the example above),
-we can only merge the
-`(lhs.tailAttribute == .isLayoutedObject || lhs.tailAttribute  == .isConfinment)`
-and `(rhs.headAttribute == .isLayoutedObject || rhs.headAttribute == .isConfinment)`
-in the above code block into one compile-time storage value then use the
-`and` logic to concatenate them.
 
-> In fact, the `==` in `Lhs.TailAttribute == SyntaxAttributeLayoutedObject`
-> or `Rhs.HeadAttribute == SyntaxAttributeConstant` is equivalent to the
-> `==` operator in many programming languages. Moreover, there is a `>=`
-> equivalent in Swift's compile-time computation which is `:`.
+但是這個邏輯不能在 Swift 編譯時中被簡單實現，而且 Swift 編譯時計算的唯一邏輯就是`與`邏輯。由於在 Swift 中我們只能在類型約束中使用`與`邏輯（通過使用 `Lhs.TailAttribute == SyntaxAttributeLayoutedObject`
+和 `Rhs.HeadAttribute == SyntaxAttributeConstant` 中的 `,` 符號），我們只能將上述代碼塊中的 `(lhs.tailAttribute == .isLayoutedObject || lhs.tailAttribute  == .isConfinment)` 和 `(rhs.headAttribute == .isLayoutedObject || rhs.headAttribute == .isConfinment)` 融合起來存入一個編譯時容器的值，然後使用`與`邏輯來連結他們。
+
+> 實際上，`Lhs.TailAttribute == SyntaxAttributeLayoutedObject` 或者 `Rhs.HeadAttribute == SyntaxAttributeConstant` 中的 `==` 和大多數編程語言中的 `==` 操作符等效。另外，Swift 編譯時計算中也有一個和 `>=` 等效的操作符： `:`
 >
-> Considering the following code:
+> 考慮下列代碼：
 >
 > ```swift
 > protocol One {}
@@ -417,19 +298,19 @@ in the above code block into one compile-time storage value then use the
 > struct Foo<T> where T: Two {}
 > ```
 >
-> Now the `T` in `Foo` ought to be "larger than or equal to" `Two`.  
+> 現在 `Foo` 中的 `T` 只能是「比 `Two` 大」的了.  
 >
 
-Then we can change our design into:
+然後我們可以將我們的設計變更爲：
 
 ```swift
 protocol Operand {
     associatedtype HeadAttribute: SyntaxAttribute
-    
+
     associatedtype TailAttribute: SyntaxAttribute
-    
+
     associatedtype HeadBoundary: SyntaxBoundary
-    
+
     associatedtype TailBoundary: SyntaxBoundary
 }
 
@@ -440,20 +321,15 @@ struct SyntaxBoundaryIsLayoutedObjectOrConfinment: SyntaxBoundary {}
 struct SyntaxBoundaryIsConstant: SyntaxBoundary {}
 ```
 
-This time, we added two new compile-time storage: `HeadBoundary` and
-`TailBoundary`, and their values are of type of `SyntaxBoundary`. For view
-or layout guide objects, they offer head and tail two boundaries of
-`SyntaxBoundaryIsLayoutedObjectOrConfinment`. When calling the `-`
-function, the a view or layout guide's boundary info transferred to the
-newly synthesized type.
+這一次我們加入了兩個編譯時容器：`HeadBoundary` 和 `TailBoundary`，其值是屬於 `SyntaxBoundary` 的類型。對於視圖或者 layout guide 對象而言，他們提供了首尾兩個 `SyntaxBoundaryIsLayoutedObjectOrConfinment` 類型的 boundaries。當調用 `-` 函數時，視圖或者 layout guide 的 boundary 信息就會被傳入新合成的類型中。
 
 ```swift
-/// connects `view - 4`
+/// 連結 `view - 4`
 struct LayoutableToConstantSpacedSyntax<Lhs: Operand, Rhs: Operand>: 
     Operand where 
-    /// Checks the tail part of the lhs syntax is a layouted object
+    /// 確認 Lhs 的 TailAttribute 是 SyntaxAttributeLayoutedObject
     Lhs.TailAttribute == SyntaxAttributeLayoutedObject,
-    /// Checks the head part of the rhs syntax is a constant
+    /// 確認 Rhs 的 HeadAttribute 是 SyntaxAttributeConstant
     Rhs.HeadAttribute == SyntaxAttributeConstant
 {
     typealias HeadBoundary = Lhs.HeadBoundary
@@ -465,27 +341,22 @@ struct LayoutableToConstantSpacedSyntax<Lhs: Operand, Rhs: Operand>:
 func - <Lhs, Rhs>(lhs: Lhs, rhs: Rhs) -> LayoutableToConstantSpacedSyntax<Lhs, Rhs> { ... }
 ```
 
-Now, we just have to modify our `withVFL` series function's function
-signature into:
+現在我們可以修改我們的 `withVFL` 系列函數的函數簽名爲：
 
 ```swift
 func withVFL<O: Operand>(V: O) -> [NSLayoutConstraint] where
     O.HeadBoundary == SyntaxBoundaryIsLayoutedObjectOrConfinment,
     O.TailBoundary == SyntaxBoundaryIsLayoutedObjectOrConfinment
 { ... }
-``` 
+```
 
-Then, only syntaxes whose boundaries are of layout guide or views can be
-accept.
+然後，只有 boundaries 是視圖或者 layout guide 的表達式才能被接受了。
 
 #### Syntax Associativity
 
-But the concept of syntax boundaries still cannot help stop the compiler
-from accepting inputs like `view1-| | view2` or `view2-| - view2`. This is
-because that even the **boundaries** of a syntax is ensured, you cannot
-ensure the inner part of the syntax is **associable**.
+但是 syntax boundaries 的概念還是不能幫助編譯器停止接受如 `view1-| | view2` 或者 `view2-| - view2` 之類的輸入。這是因爲即使一個表達式的 **boundaries** 被確保了，你還是不能保證這個表達式是否是 **associable** （可結合）的。
 
-Thus we introduce the third pair of `associatedtype` in our design:
+於是我們要在我們的設計中引入第三對 `associatedtype`：
 
 ```swift
 protocol Operand {
@@ -510,65 +381,35 @@ struct SyntaxAssociativityIsClosed: SyntaxAssociativity {}
 
 ```
 
-For syntax like `|-`, `-|` or layout guide in a syntax, we can just
-disable their associativity in new type's synthesize progress.
+對於像 `|-`, `-|` 之類的表達式或者一個表達式中的 layout guide，我們就可以在新類型的合成過程中關掉他們的 associativity。
 
-It this enough?
+這足夠了嗎？
 
-Yes. Actually, I'm cheating here. You may wonder that why I can quickly
-spot issues by enumerating some examples and say yes to the question above
-without any hesitation. The reason of that is that I've already enumerated
-all the syntax tree constructions on paper. Planning on paper is a good
-habit for being a good software engineer.
+是的。實際上，我在這裏做了個弊。你也許會驚訝，爲什麼我可以通過舉例快速地發現問題，一起可以對上面這個問題沒有猶豫地說「是」。原因是，我已經在紙上枚舉完了所有語法樹的構型。在紙上計畫是成爲一個優秀軟件工程師的好習慣。
 
-Now the core concept of the syntax tree's design is very close to my
-production code. You can check it out on [WeZZard/CTVFL/CTVFL/Syntaxes](https://github.com/WeZZard/CTVFL/tree/master/CTVFL/Syntaxes).
+現在語法樹設計的核心概念已經非常接近我的生產代碼了。你可以在[這裏](https://github.com/WeZZard/CTVFL/tree/master/CTVFL/Syntaxes)查看他們。
 
+### 生成 NSLayoutConstraint 實例
 
-### Generating NSLayoutConstraint Instances
+好了，回來。我們還有東西要來實現。這對我們整體的工作很重要——生成佈局約束。
 
-OK. Come back. We still have something to be implemented, which is
-critical to our whole work -- generate layout constraints.
+由於我們在 `withVFL(V:)` 系列函數的參數中所獲的的是一個語法樹，我們可以簡單地構建一個環境來對這個語法樹進行求值。
 
-Since the actual thing we get in the argument of `withVFL(V:)` function
-series is a syntax tree, we can simply build an environment to evaluate
-the syntax tree. 
+> 我正在剋制自己使用大詞，所以我說的是「構建一個環境」。但是禁不住告訴你，我們現在要開始構建一個虛擬機了！
 
-> I'm trying to keep myself away from using buzz word, thus I was saying
-> that "build an environment". But I cannot stop myself from telling you
-> that we are going to build a **virtual machine** now.
+![一些語法樹的例子](simple-syntaxes.png "一些語法樹的例子")
 
-![Syntax Tree Examples](simple-syntaxes.png "Syntax Tree Examples")
+通過觀察一顆語法樹，我們可以發現每一層語法樹都是或不是一個單目操作符節點、雙目操作符節點或者算子節點。我們可以將 `NSLayoutConstraint` 的計算抽象成**小碎片**，然後讓這三種節點產生這些**小碎片**。
 
-By taking a look into a syntax tree, we can find that each level of the
-syntax tree is whether an unary operator node, a binary operator node or
-an operand node. We can abstract the computation of `NSLayoutConstraint`
-into **small pieces** and ask these three kinds of node to populate the
-**small pieces**. 
+聽起來很好。但是怎樣做這個抽象呢？如何設計那些**小碎片**呢？
 
-Sounds good. But how to do the abstraction? And how to design those
-**small pieces**?
+> 對於有虛擬機設計經驗或者編譯器構造經驗的人來說，他們也許會知道這是一個有關「過程抽象」和「指令集設計」的問題。但是我並不想嚇唬到像你這樣可能對這方面沒有足夠知識的讀者，於是我之前稱呼他們爲「將 `NSLayoutConstraint` 的計算抽象成」「小碎片」。
+>
+> 另一個讓我不以「過程抽象」和「指令集設計」來談論這個問題的理由是「指令集設計」是整個解決方案的最前端：你之後將會得到一個被稱作 opcode （operation code 的縮寫，我也不知道爲什麼他們這樣縮略這個術語）的東西。但是「指令集設計」會嚴重影響「過程抽象」的最終形態，而如果在做「指令集設計」之前跳過思考「過程抽象」的問題的話，你也很難揣測出指令集背後的概念。
 
-> For people whom have experience on designing a virtual machine or
-> compiler constructions, they may know this is a problem related to
-> "procedure abstraction" and "instruction set design". But I don't
-> want to scare readers like you whom may not have enough knowledge about
-> virtual machine or compiler constructions, thus I call them "abstract
-> the computation of `NSLayoutConstraint`" and "small pieces" above.
-> 
-> One more reason of that I'm not talking with the term "procedure
-> abstraction" and "instruction set design" is that "instruction set
-> design" is the most frontend thing of the solution: you would get a
-> thing call "opcode" (short for operation code. I don't know the reason
-> why they shorten the term this way, but that's it.) later. But the
-> "instruction set design" heavily affects the final form of "procedure
-> abstraction" and you only can hardly derive the concept behind an
-> instruction set without thinking about the "procedure abstraction"
-> before doing "instruction set design".
+#### 抽象 NSLayoutConstraint 的初始化過程
 
-#### Abstracting NSLayoutConstraint's Initialization
-
-Since we are gonna support layout guide, the old fashion API
+猶豫我們要支持 layout guide，那麼老式的 API：
 
 ```swift
 convenience init(
@@ -582,64 +423,45 @@ convenience init(
 )
 ```
 
-comes to be an unavailable option for us. You cannot get layout guide work
-with this API. Yes, I've tried.
+就變得不可用了。你不能用這個 API 讓 layout guide 工作。是的，我試過。
 
-Then we may come up with layout anchors.
+然後我們也許會想起 layout anchors。
 
-Yes. This works. My production code makes use of layout anchors. But why
-layout anchors work?
+是的，這是可行的。我的生產代碼就是利用的 layout anchors。但是爲什麼 layout anchors 可行？
 
-In fact, we can check the documentations and know that the base class
-of layout anchors `NSLayoutAnchor` has a group of API which generates
-`NSLayoutConstraint` instance. If we can get all the arguments of this
-group of API in deterministic steps, then we can abstract a formal model
-for this computation progress.
+實際上，我們可以通過檢查文檔來知道 layout anchors 的基類 `NSLayoutAnchor` 有一組生成 `NSLayoutConstraint` 的 API。如果我們可以在確定的步驟內獲得這組 API 的所有參數，那麼我們就可以爲這個計算過程抽象出一個形式化的模型。
 
-Can we get all the arguments of this group of API in deterministic steps? 
+我們可以在確定的步驟內獲得這組 API 的所有參數嗎？
 
-The answer obviously is "yes".
+答案顯然是「是的」。
 
-#### A Glimpse into Syntax Tree Evaluation
+#### 語法樹求值一瞥
 
-In Swift, syntax trees are evaluated in depth-first traversal. The
-following figure is the evaluation order of syntax `view1 - bunchOfViews`
-in code block:
+在 Swift 中，語法樹的求值是深度優先遍歷的。下面這張圖就是下面這個代碼塊中 `view1 - bunchOfViews` 的求值順序。
 
 ```swift
 let bunchOfViews = view2 - view3
 view1 | bunchOfViews
 ```
 
-![Swift Syntax Tree Evaluation](syntax-tree-evaluation.png "Swift Syntax Tree Evaluation")
+![Swift 語法樹求值](syntax-tree-evaluation.png "Swift 語法樹求值")
 
-But even the root node is the first visited node in the whole evaluation
-process, since it requires the evaluation result of its left-hand-side
-child and right-hand-side child to complete the evaluation, it generates
-`NSLayoutConstraint` instance at the last.
+但是雖然根節點是整個求值過程中最先被訪問的，猶豫它需要它左手邊子節點和右手邊子節點的求值過程來完成求值過程，它將最後一個生成 `NSLayoutConstraint` 實例。
 
-#### Abstract NSLayoutConstraint's Computation Procedure
+#### 抽象 NSLayoutConstraint 的計算過程
 
-By observing the figure of Swift syntax tree evaluation process above, we
-can know that the node `view1` was evaluated at the second but the
-evaluation result would be used at the last, thus we need a data structure
-to store each node's evaluation result. You probably would come up with
-stack. Yes, I'm using stack in my production code. But you shall know the
-reason why we need a stack: a stack transfers a recursive structure into
-linear, that is what we need. You may have already guessed that I'm gonna
-use stack, but intuition doesn't work all the time.
+通過觀察上面這個 Swift 語法樹求值過程的插圖，我們可以知道節點 `view1` 將於第二位被求值，但是求值結果最後才用得上。所以我們需要一個數據結構可以保存每一個節點的求值結果。你也許想起來了要用棧。是的。我在我的生產代碼中就是用的棧。但是你應該知道爲什麼我們要用棧：一個棧可以將遞歸結構轉換爲線性的，這就是我們想要的。你也許已經猜到了我要用棧，但是直覺並不是每次都靈。
 
-With this stack, we have to put all the computational resource of
-initializing an `NSLayoutConstraint` instance in it.
+有了這個棧，我們就可以將所有初始化一個 `NSLayoutConstraint` 實例的計算資源放入之中了。
 
-Moreover, we have to keep the stack to memorize the head and tail node of
-the syntax tree that have been evaluated.
+另外，我們也要讓棧能夠記憶已經被求完值的語法樹的首尾節點。
 
+爲什麼？看看下面這個語法樹。
 Why? Take a look at the following syntax tree:
 
-![A Complicated Syntax Tree](complicated-syntax-tree.png "A Complicated Syntax Tree")
+![一個複雜的語法樹](complicated-syntax-tree.png "一個複雜的語法樹")
 
- The syntax tree above was generated by the expression below:
+這個語法樹由以下表達式生成。
 
 ```swift
 let view2_3 = view2 - view3
@@ -647,91 +469,55 @@ let view2_4 = view2_3 - view4
 view1 | view2_4
 ```
 
-When we evaluating the node `-` at the second level of the tree (count
-from the root), we have to pick view 3, which is the "inner" node of the
-tree, to make an `NSLayoutConstraint` instance. Actually, generating
-`NSLayoutConstraint` always needs to pick the "inner" nodes which with the
-perspective of the node being evaluated. But for the root `|` node, 
-the "inner" node soon comes to be `view1` and `view2`. Thus we have to
-make the stack to memorize the head and tail node of the syntax tree that
-have been evaluated.
+當我們對位於樹的第二層（從根節點開始數）的 `-` 節點進行求值時，我們必須要選取 `view3` 這個「內側」來創建一個 `NSLayoutConstraint` 實例。實際上，生成 `NSLayoutConstraint` 實例總是需要選取從被求值節點看起來是「內側」的節點。但是對於跟節點 `|` 來說，「內側」節點就變成了 `view1` 和 `view2`。所以我們不得不讓棧來記憶被已經求完值的語法樹的首尾節點。
 
-#### About the "Return Value"
+#### 關於 "返回值"
 
-Yes, we have to design a mechanism to let each node of the syntax tree
-to return the evaluation result.
+是的，我們不得不設計一個機制來讓語法樹的每一個節點來返回求值結果。
 
-I don't want to talk about how a real computer returns value over stack
-frames, because it varies over different size of the data to be returned.
-In Swift world, since all things all safe, which means the API that
-bounding a piece of memory to be another "type" is difficult to access,
-processing data with such a fragile rhythm is not a good choice (at least
-for coding efficiency).
+我並不想談論真實電腦是如何在棧幀間是如何傳遞返回值的，因爲這會根據返回數據的大小不同而不同。在 Swift 世界中，由於所有東西都是安全的，這意味着能夠綁定一片內存爲其他類型的 API 是非常難用的，以碎片化的節奏來處理數據也不是一個好選擇（至少不是編碼效率的）。
 
-We just have to use a local variable in the evaluation context to keep
-the stack's last pop result, then generate instructions to fetch data
-from that variable, then we've done the design of the "return value"
-system.
+我們只需要使用一個在求值上下文中的本地變量來保存棧的最後一個彈棧結果，然後生成從這個變量取回數據的指令，然後我們就完成了「返回值」系統的設計。
 
-#### Building the VM
+#### 構建虛擬機
 
-Once we completed the procedure abstraction, then the design of
-instruction set just needs the last push.
+一旦我們完成了過程抽象，指令集的設計就只差臨門一腳了。
 
-In fact, we just have to let the instructions to do following things:
+實際上，我們就是需要讓指令做如下事情：
 
-- Fetch views, layout guides, relations, constants and priorities.
+- 取回視圖、layout guide、約束關係、約束常數、約束優先級。
 
-- Generate the information about which anchor to pick.
+- 生成要選取那個 layout anchor 的信息。
 
-- Make constraints.
+- 創建佈局約束。
 
-- Pop and push the stack.
+- 壓棧、彈棧。
 
-The complete production code is [here](https://github.com/WeZZard/CTVFL/blob/master/CTVFL/VM/CTVFLOpcode.swift)
+完成的生產代碼[在這裏](https://github.com/WeZZard/CTVFL/blob/master/CTVFL/VM/CTVFLOpcode.swift)
 
-### Assessment
+### 評估。
 
-We've done the whole concept and pseudo code of our compile-time safe VFL.
+我們已經完成了我們這個編譯時確保安全的 VFL 的概念設計。
 
-The question now is what do we gain with it?
+問題是我們得到了什麼？
 
-#### For Our Compile-Time-Ensured Safe VFL
+#### 對於我們的編譯時確保安全的 VFL
 
-The advantage we got here is that the correctness the syntax is guaranteed.
-Syntaxes like  `withVFL(H: 4 - view)` or `withVFL(H: view - |- 4 - view)`
-would be rejected at compile time.
+我們在此獲得的優勢是表達式的正確性是被保證了的。諸如 `withVFL(H: 4 - view)` 或者 `withVFL(H: view - |- 4 - view)` 之類的表達式將被在編譯時就被拒絕。
 
-Then, we've got layout guide worked with our Swift implementation of VFL. 
+然後，我們已經讓 layout guide 和我們的 VFL Swift 實現一起工作了起來。
 
-Third, since we're executing instructions which generated by the syntax
-trees organized at compile time, the total computation complexity is
-`O(N)`, which `N` is the number of instructions a syntax generated. But
-since the syntax trees are not constructed as compile-time, we have to
-construct the syntax tree at runtime. The good news is that, in my
-production code, the syntax tree's type is of `struct`, which means the
-whole syntax tree is constructed on stack memory but not heap memory. 
+第三，由於我們是在執行由編譯時組織的語法樹生成的指令，總體的計算複雜度就是 `O(N)`，這個 `N` 是語法樹生成的指令的數目。但是因爲語法樹並不是編譯時完成構建，我們必須要在運行時完成語法樹的構建。好消息是，在我的生產代碼中，語法樹的類型都是 `struct`，這意味着語法樹的構建都是在棧內存上而不是堆內存。
 
-In fact, after a whole day of optimizations, the performance of my
-production code exceeded all the implementation of existing alternative
-solutions (includes Cartography and SnapKit). I would place some
-optimization tips at the end of this post.
+事實上，在一整天的優化後，我的生產代碼超越了所有已有的替代方案（包括 Cartography 和 SnapKit）。這當然也包含了原版的 VFL。我將會在本文後部分放置一些優化技巧。
 
-#### For VFL
+#### 對於 VFL
 
-Theoretically, the original VFL has a bit more advantages on performance
-over our design. VFL strings would actually be stored as C strings in the
-executable file(Mach-O file)'s data segment, the operating system loads
-them into the memory directly and there are no initializations shall be
-done before using them. After loaded those VFL strings, the UI framework
-of the targeted platform is ready for parsing the VFL string. Since VFL's
-grammar is quite simple, building a parser works with time complexity of
-`O(N)` is also quite simple. But I don't know the reason why VFL is the
-slowest solution which helps developers to build Auto Layout constraints.
+理論上，相對於我們的設計，原版 VFL 在性能上存在一些優勢。VFL 字符串實際上在可執行文件（Mach-O 文件）的 data 段中被儲存爲了 C 字符串。操作系統直接將他們載入內存且在開始使用前不會有任何初始化動作。載入這些 VFL 字符串後，目標平臺的 UI 框架就預備對 VFL 字符串進行解析了。由於 VFL 語法十分簡單，構建一個時間複雜度是 `O(N)` 的解析器也很簡單。但是我不知道爲什麼 VFL 是所有幫助開發者構建 Auto Layout 佈局約束方案中最慢的。
 
-#### Benchmark
+#### 性能測試
 
-The following result is measured by building 10k constraints on iPhone X.
+以下結果通過在 iPhone X 上衡量 10k 次佈局約束構建測得。
 
 ![Benchmark 1](benchmark-1-view.png "Benchmark with 1 View")
 ![Benchmark 2](benchmark-2-views.png "Benchmark with 2 Views")
@@ -739,42 +525,33 @@ The following result is measured by building 10k constraints on iPhone X.
 
 ---
 
-## Further Readings
+## 深入閱讀
 
-### Swift Optimizations
+### Swift 優化
 
-#### Cost of Array
+#### Array 的代價
 
-`Array` in Swift would spend a lot of time on checking whether its
-internal storage is implemented by Objective-C or Swift. Using
-`ContiguousArray` would make your code think Swift-ly in dedication. 
+Swift 中的 `Array` 會花費很多時間在判斷它的內部容器是 Objective-C 還是 Swift 實現的這點上。使用 `ContiguousArray` 可以讓你的代碼單單以 Swift 的方式思考。
 
-#### Cost of Collection.map
+#### Collection.map 的代價
 
-`Collection.map` in Swift is well optimized -- it reserves capacity before
-appending elements, which eliminates allocating overhead.
+Swift 中的 `Collection.map` 被優化得很好——它每次在添加元素前都會進行預分配，這消除了頻繁的分配開銷。
 
-![Cost of Collection.map](map-cost.png "Cost of Collection.map")
+![Collection.map 的代價](map-cost.png "Collection.map 的代價")
 
-But if you're mapping an array into a multi-dimensional array, and then
-flatten it into a lower dimensional array, reserve the capacity at the
-beginning and then using traditional `Array`'s `append(_:)` function is
-a better choice.
+但是如果你將數組 `map` 成多維數組，然後將他們 `flatten` 成低維數組的話，在一開始新建一個 `Array` 然後預分配好所有空間，再調用傳統的 `Array` 的 `append(_:)` 函數會是一個更好的選擇。
 
-#### Cost of Non-Nominal Types
+#### 不具名類型的代價
 
-Don't use non-nominal types (tuples) with writing scenes.
+不要在寫入場合使用不具名類型（tuples）。
 
-![Cost of Non-Nominal Types](non-nominal-type-cost.png "Cost of Non-Nominal Types")
+![Non-Nominal Types 的代價](non-nominal-type-cost.png "Non-Nominal Types 的代價")
 
-When writing non-nominal types, Swift needs to access the runtime to
-ensure the code safety. This cost a lot of time. You should use a nominal
-type, or say `struct` instead.
+當寫入不具名類型時，Swift 需要訪問運行時來確保代碼安全。這將花費很多時間，你應該使用一個具名的類型，或者說 `struct` 來代替它。
 
-#### Cost of the subscript.modify Function
+#### subscript.modify 函數的代價
 
-A `subscript`(`[key]` in `self[key]`) in Swift have three kinds of
-potential paired functions:
+在 Swift 中，一個 `subscript`(`self[key]` 中的 `[key]`) 有三種潛在的配對函數。
 
 - `getter`
 
@@ -782,9 +559,9 @@ potential paired functions:
 
 - `modify`
 
-What is `modify`?
+什麼是 `modify`?
 
-Consider the following code:
+考慮以下代碼：
 
 ```swift
 struct StackLevel {
@@ -793,30 +570,27 @@ struct StackLevel {
 
 let stack: Array<StackLevel> = [.init()]
 
-// accessing subscript.setter
+// 使用 subscript.setter
 stack[0] = StackLevel(value: 13)
 
-// accessing subscript.modify
+// 使用 subscript.modify
 stack[0].value = 13
 ```
 
-`subscript.modify` is a kind of function used for modifying a value of a
-container's element. But it seems did a lot more than modifying a value.
+`subscript.modify` 是一種用來修改容器內部元素的某一個成員值的函數。但是它看起來做的比單純修改值要多。
 
-![Cost of subscript.modify](subscript-modify-cost.png "Cost of subscript.modify")
+![subscript.modify 的代價](subscript-modify-cost.png "subscript.modify 的代價")
 
-I even don't know why there are `malloc` and `free` on my evaluation tree.
+我甚至無法理解我的求值樹中的 `malloc` 和 `free` 是怎麼來的。
 
-I replaced the evaluation stack from `Array` to my implementation, and
-implemented a function named `modifyTopLevel(with:)` to modify the stack
-top.
+我將求值棧從 `Array` 替換爲了自己的實現，並且實現了一個叫 `modifyTopLevel(with:)` 來修改棧的頂部。
 
 ```swift
 internal class _CTVFLEvaluationStack {
     internal var _buffer: UnsafeMutablePointer<_CTVFLEvaluationStackLevel>
-    
+
     ...
-    
+
     internal func modifyTopLevel(with closure: (inout _CTVFLEvaluationStackLevel) -> Void) {
         closure(&_buffer[_count - 1])
     }
@@ -824,58 +598,48 @@ internal class _CTVFLEvaluationStack {
 ```
 
 
-#### Cost of OptionSet
+#### OptionSet 的代價
 
-The convenience of `OptionSet` is not free in Swift.
+Swift 中 `OptionSet` 帶來的方便不是免費的.
 
-![Cost of OptionSet](option-set-cost.png "Cost of OptionSet") 
+![OptionSet 的代價](option-set-cost.png "OptionSet 的代價")
 
-You can see that the `OptionSet` employs a very deep evaluation tree to
-get a value which can be evaluated by manually bit masking. I don't know
-if this phenomenon exists for release build, but I'm using manually bit
-masking in my production code now.
+你可以看到 `OptionSet` 使用了一個非常深的求值樹來獲得一個可以被手動 bit masking 求得的值。我不知道這個現象是不是存在於 release build 中，但是我現在在生產代碼中使用的是手動 bit masking。
 
-#### Cost of Exclusivity Enforcement
+#### Exclusivity Enforcement 的代價
 
-Exclusivity enforcement also impacts on performance. You would see a lot
-of `swift_beginAcces` and `swift_endAccess` in your evaluation tree. If
-you are confident with your code, I suggest you to disable runtime
-exclusivity enforcement. Search "exclusivity" in your build setting you
-can find the option to turn it off.
+Exclusivity enforcement 也對性能有衝擊。在你的求值棧中你可以看見很多 `swift_beginAcces` 和 `swift_endAccess` 的調用。如果你對自己的代碼有自信，我建議關掉運行時 exclusivity enforcement。在 Build Settings 中搜索 “exclusivity” 可以看到相關選項。
 
-![Cost of Exclusivity Enforcement](exclusivity-enforcement-cost.png "Cost of Exclusivity Enforcement")
+![Exclusivity Enforcement 的代價](exclusivity-enforcement-cost.png "Exclusivity Enforcement 的代價")
 
-### Compile-Time Computation of C
+### C 的編譯時計算
 
-I also had implemented an interesting grammar in one of my [framework](https://github.com/WeZZard/ObjCDeepDynamic/wiki/Enrich-Auto-Synthesizable-%40dynamic-Property-Types)
-which adds `@dynamic` property auto synthesizer with `metamacros.h`. The
-example is below:
+我還在我的一個[框架中](https://github.com/WeZZard/ObjCDeepDynamic/wiki/Enrich-Auto-Synthesizable-%40dynamic-Property-Types)實現一種有趣的語法：
+通過 `metamacros.h` 來爲 `@dynamic` property 來添加自動合成器。範例如下：
 
 ```objectivec
 @ObjCDynamicPropertyGetter(id, WEAK) {
-    // Do what you wanna do with a normal atomic weak Objective-C getter.
+    // _cmd 變成了 _prop
+    // 其餘和一個 atomic weak Objective-C getter 一樣.
 }
 
 @ObjCDynamicPropertyGetter(id, COPY) {
-    // Do what you wanna do with a normal atomic copy Objective-C getter.
+    // _cmd 變成了 _prop
+    // 其餘和一個  atomic copy Objective-C getter 一樣.
 }
 
 @ObjCDynamicPropertyGetter(id, RETAIN, NONATOMIC) {
-    // Do what you wanna do with a normal nonatomic retain Objective-C getter.
+    // _cmd 變成了 _prop
+    // 其餘和一個  nonatomic retain Objective-C getter 一樣.
 };
 ```
 
-The implementation file is [here](https://github.com/WeZZard/ObjCDeepDynamic/blob/master/ObjCDeepDynamic/DynamicProperty/ObjCDynamicPropertySynthesizer.h).
+實現文件在[這](https://github.com/WeZZard/ObjCDeepDynamic/blob/master/ObjCDeepDynamic/DynamicProperty/ObjCDynamicPropertySynthesizer.h).
 
-`metamacros.h` is very useful scaffold to help C programmer to create
-macros to ease brain burdens.
+對於 C 程序員而言，`metamacros.h` 是一個非常有用的用來創建宏來減輕難負擔的腳手架。
 
 ---
 
-Thank for your reading of this long post. I have to apologize. I lied in
-the title. This post  is totally not a "glimpse" into generic
-meta-programming, it talks about many deep content about computation. But
-I think this is a bunch of basic knowledge to be a good programmer.
+謝謝你閱讀完了這麼長的一篇文章。我必須要道歉：我在標題撒了謊。這篇文章完全不是「淺談」Swift 泛型元編程，而是談論了更多的關於計算的深度內容。但是我想這是作爲一個優秀程序員的基礎知識。
 
-Finally, may the generics meta-programming in Swift don't come to be a
-part of contents of iOS engineer interview. 
+最後，祝願 Swift 泛型元編程不要成爲 iOS 工程師面試內容的一部分。
