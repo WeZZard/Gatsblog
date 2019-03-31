@@ -145,8 +145,7 @@ original VFL is below:
 @"|-[view1]-[view2]-4"
 ```
 
-We can find that there is missing another view object, a `|` or a `-|`
-after `4`.
+We can find that there is missing another view object or a `-|` after `4`.
 
 We want our system to be able to handle correct input by making the
 compiler to accept it and to be able to handle incorrect input by making

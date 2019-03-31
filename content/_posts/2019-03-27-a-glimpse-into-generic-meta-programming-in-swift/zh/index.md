@@ -54,13 +54,13 @@ let constraints1 = withVFL(V: view1 - view2)
 let constraints2 = withVFL(V: view3 - view4, options: .alignAllCenterY)
 ```
 
-想想一下在 Cartography 或者 SnapKit 中構建等效的事情需要多少行代碼？想知道我怎麼構建出來的了嗎？
+想象一下在 Cartography 或者 SnapKit 中構建等效的事情需要多少行代碼？想知道我怎麼構建出來的了嗎？
 
 讓我來告訴你。
 
 ### 語法變形
 
-如果我們將原版的 VFL 語法導入到 Swift 源代碼中並且去處掉字符串字面量的引號，你很快就會發現一些在原版 VFL 中所使用的字符像 `[`, `]`, `@`, `(` 和 `)` 是不能在 Swift 中用作操作符重載的。於是我對原版 VFL 語法做了一些變形：
+如果我們將原版的 VFL 語法導入到 Swift 源代碼中並且去處掉字符串字面量的引號，你很快就會發現一些在原版 VFL 中所使用的字符像 `[`, `]`, `@`, `(` 和 `)` 是不能在 Swift 中用進行操作符重載的。於是我對原版 VFL 語法做了一些變形：
 
 ```swift
 // 原版 VFL: @"|-[view1]-[view2]"
@@ -326,7 +326,7 @@ struct SyntaxBoundaryIsConstant: SyntaxBoundary {}
 ```swift
 /// 連結 `view - 4`
 struct LayoutableToConstantSpacedSyntax<Lhs: Operand, Rhs: Operand>: 
-    Operand where 
+    Operand where
     /// 確認 Lhs 的 TailAttribute 是 SyntaxAttributeLayoutedObject
     Lhs.TailAttribute == SyntaxAttributeLayoutedObject,
     /// 確認 Rhs 的 HeadAttribute 是 SyntaxAttributeConstant
@@ -361,15 +361,15 @@ func withVFL<O: Operand>(V: O) -> [NSLayoutConstraint] where
 ```swift
 protocol Operand {
     associatedtype HeadAttribute: SyntaxAttribute
-    
+
     associatedtype TailAttribute: SyntaxAttribute
-    
+
     associatedtype HeadBoundary: SyntaxBoundary
-    
+
     associatedtype TailBoundary: SyntaxBoundary
-    
+
     associatedtype HeadAssociativity: SyntaxAssociativity
-    
+
     associatedtype TailAssociativity: SyntaxAssociativity
 }
 
@@ -413,12 +413,12 @@ struct SyntaxAssociativityIsClosed: SyntaxAssociativity {}
 
 ```swift
 convenience init(
-    item view1: Any, 
-    attribute attr1: NSLayoutConstraint.Attribute, 
-    relatedBy relation: NSLayoutConstraint.Relation, 
-    toItem view2: Any?, 
-    attribute attr2: NSLayoutConstraint.Attribute, 
-    multiplier: CGFloat, 
+    item view1: Any,
+    attribute attr1: NSLayoutConstraint.Attribute,
+    relatedBy relation: NSLayoutConstraint.Relation,
+    toItem view2: Any?,
+    attribute attr2: NSLayoutConstraint.Attribute,
+    multiplier: CGFloat,
     constant c: CGFloat
 )
 ```
@@ -596,7 +596,6 @@ internal class _CTVFLEvaluationStack {
     }
 }
 ```
-
 
 #### OptionSet 的代價
 
