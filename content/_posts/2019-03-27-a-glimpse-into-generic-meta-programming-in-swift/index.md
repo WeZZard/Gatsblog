@@ -388,9 +388,9 @@ and end with a view (or layout guide).
 To make a syntax always begins or ends with a view, layout guide or things
 like `|-`, `-|`, `|prefix` and `|postfix`, we have to build a logic to
 help our types to **"filter"** those invalid input out, just like what we
-did like `HeadAttribute = Lhs.HeadAttribute` and
-`TailAttribute = Lhs.TailAttribute` above. We can find that there are
-actually two groups of syntax mentioned in the example above:
+did like `Lhs.TailAttribute == SyntaxAttributeLayoutedObject` and
+`Rhs.HeadAttribute == SyntaxAttributeConstant` above. We can find that
+there are actually two groups of syntax mentioned in this kind of syntax:
 **confinement** and **layout'ed object**. To make a syntax always begins
 or ends with syntax in this two groups, we have to use compile-time `or`
 logic to implemented it. Write it down in runtime code, it is:
