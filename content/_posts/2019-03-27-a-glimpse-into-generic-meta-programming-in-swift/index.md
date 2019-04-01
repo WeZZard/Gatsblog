@@ -866,17 +866,17 @@ example is below:
 
 ```objectivec
 @ObjCDynamicPropertyGetter(id, WEAK) {
-    // _cmd comes to be _prop
+    // Use _prop to access property name
     // Do what you wanna do with a normal atomic weak Objective-C getter.
 }
 
 @ObjCDynamicPropertyGetter(id, COPY) {
-    // _cmd comes to be _prop
+    // Use _prop to access property name
     // Do what you wanna do with a normal atomic copy Objective-C getter.
 }
 
 @ObjCDynamicPropertyGetter(id, RETAIN, NONATOMIC) {
-    // _cmd comes to be _prop
+    // Use _prop to access property name
     // Do what you wanna do with a normal nonatomic retain Objective-C getter.
 };
 ```
