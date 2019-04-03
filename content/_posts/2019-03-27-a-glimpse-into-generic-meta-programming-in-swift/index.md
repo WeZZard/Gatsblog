@@ -612,7 +612,7 @@ The answer obviously is "yes".
 #### A Glimpse into Syntax Tree Evaluation
 
 In Swift, syntax trees are evaluated in depth-first traversal. The
-following figure is the evaluation order of syntax `view1 - bunchOfViews`
+following figure is the traversal order of syntax `view1 - bunchOfViews`
 in code block:
 
 ```swift
