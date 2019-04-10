@@ -21,26 +21,26 @@ I think a better way is to inspect what primitives the programming
 language have.
 
 For some old-school programming languages, they may not have
-multi-dimensional array, which means an array cannot hold another one in
-itself. This disallows developers to invent some recursive data structures
+multi-dimensional array. This leads an array cannot hold another one in
+itself and disallows developers to invent some recursive data structures
 and limits the expressiveness of the language. The expressiveness of a
 programming language, formally, is the **computational capability of a
 programming language**.
 
-But the array example I mentioned above is just about runtime computational
-capability. What about the compile-time's?
+But the array example I mentioned above is just about runtime
+computational capability. What about the compile-time's?
 
 Well. Languages like C++ which has an explicit compile progress and some
 "code template" infrastructures hold an ability to do some compile-time
 computations, which collects the pieces of the source code and then
 organize them into a piece of new code. You may have heard a buzz word:
 "meta-programming". Yes, this just is meta-programming (but at
-compile-time) and this a bunch of programming languages includes C and
-Swift.
+compile-time) and there is a bunch of programming languages includes C and
+Swift can do compile-time meta-programming.
 
-Meta-programming in C++ relies on templates, and in C it relies on a
-special header called `metamacros.h` in **libobjcext**. In Swift, it
-relies on generics.
+Meta-programming in C++ relies on templates. In C, it relies on a special
+header called `metamacros.h` in **libobjcext**. In Swift, it relies on
+generics.
 
 Though you can do compile-time meta-programming in these three programming
 languages, the capability of them are different. Since there are a lot of 
