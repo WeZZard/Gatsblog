@@ -84,15 +84,17 @@ I'm an iOS developer with industrial design background.
 
 ## Books
 
+- Tao Te Ching (道德經)
+
+- Kritik der reinen Vernunft (Critique of Pure Reason)
+
+- The Road Less Traveled
+
 - Structure and Interpretation of Computer Program
 
 - A History of World's Modern Deisgn, Wang Shouzhi
 
 - Die Kunst der Fuge (The Art of the Fugue)
-
-- Kritik der reinen Vernunft (Critique of Pure Reason)
-
-- The Road Less Traveled
 
 ## Sports
 
