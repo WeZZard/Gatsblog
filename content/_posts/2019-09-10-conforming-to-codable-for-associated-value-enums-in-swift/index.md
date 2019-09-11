@@ -11,7 +11,7 @@ team designed associated value enums.
 
 To understand it, firstly, let's take a look at the following example in C:
 
-```C
+```c
 struct Printer;
 
 struct Scanner;
@@ -37,7 +37,7 @@ which type of device pointer this `struct` stores.
 
 And then we can get the stored pointer with the following C code:
 
-```C
+```c
 struct Device device;
 
 Printer * printerPtr = NULL;
@@ -56,7 +56,7 @@ switch (device.device_type) {
 After I've described the purpose of the C `struct` above, you can quick
 realize that you can interpret it into Swift like the following code:
 
-```Swift
+```swift
 enum Device {
     printer(Printer)
     scanner(Scanner)
@@ -65,7 +65,7 @@ enum Device {
 
 And we can get the stored pointer with the following Swift code:
 
-```Swift
+```swift
 let device: Device = .printer(Printer());
 
 var printer: Printer!
@@ -106,7 +106,7 @@ associated value enums in Object-Oriented World.
 For the `Device` `struct` in Swift which we have shown in the previous
 example, we can write an equivalent Object-Oriented Swift code.
 
-```Swift
+```swift
 enum DeviceType {
     printer
     scanner
@@ -166,7 +166,7 @@ approach now.
 With the `DeviceObject` class, conforming to `Codable` comes to be very
 easy now. Firstly, we have to make `DeviceObject`  to conform to `Codable`.
 
-```Swift
+```swift
 class DeviceObject: Codable {
 
     ...
@@ -223,7 +223,7 @@ class ScannerObject {
 
 Then we can make `Device` to conform to `Codable` now.
 
-```Swift
+```swift
 enum Device: Codable {
 
     ...
