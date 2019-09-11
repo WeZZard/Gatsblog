@@ -134,9 +134,9 @@ class DeviceObject {
 }
 
 class PrinterObject: DeviceObject {
-    var type: DeviceType { return .printer }
+    override var type: DeviceType { return .printer }
 
-    var deviceValue: Device { return .printer(printer) }
+    override var deviceValue: Device { return .printer(printer) }
 
     let printer: Printer
 
@@ -146,9 +146,9 @@ class PrinterObject: DeviceObject {
 }
 
 class ScannerObject: DeviceObject {
-    var type: DeviceType { return .scanner }
+    override var type: DeviceType { return .scanner }
 
-    var deviceValue: Device { return .scanner(scanner) }
+    override var deviceValue: Device { return .scanner(scanner) }
 
     let scanner: Scanner
 
