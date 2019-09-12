@@ -58,7 +58,7 @@ enum Device {
 }
 ```
 
-然後我們可以用下列 Swift 代碼來獲取這個 enum 中儲存的指針：
+然後我們可以用下列 Swift 代碼來獲取這個 enum 中儲存的值：
 
 ```swift
 let device: Device = .printer(Printer());
