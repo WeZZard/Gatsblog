@@ -74,7 +74,7 @@ case let .scanner(s):
 }
 ```
 
-是的。Associated value enum 的設計意圖就是簡化類似之前 `Device` 這樣的 C `struct` 的數據結構的表述和使用的。像 `Device` 這樣的 C `struct` 的數據結構在操作系統的代碼倉庫和其他用 C 寫的基礎設施種無所不在。而像這樣的數據結構也是另一種套用 __多態__ 的途徑。
+是的。Associated value enum 的設計意圖就是簡化類似之前 `Device` 這樣的 C `struct` 的數據結構的表述和使用的。像 `Device` 這樣的 C `struct` 的數據結構在操作系統的代碼倉庫和其他用 C 寫的基礎設施中無所不在。而像這樣的數據結構也是另一種套用 __多態__ 的途徑。
 
 我說多態。是的，多態。
 
