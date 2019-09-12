@@ -7,7 +7,7 @@ tags: [Swift, Codable, Associated Value Enum]
 ## Understanding Associated Value Enums
 
 Why there are associated value enums in Swift? I mean, why the Swift core
-team designed associated value enums.
+team designed associated value enum？
 
 To understand it, firstly, let's take a look at the following example in C:
 
