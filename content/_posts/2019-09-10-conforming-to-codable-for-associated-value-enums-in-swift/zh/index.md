@@ -1,9 +1,9 @@
- ---
- title: 在 Swift 中讓 Associated Value Enums 遵從 Codable 協議
- isPublished: false
- ---
+---
+title: 在 Swift 中讓 Associated Value Enums 遵從 Codable 協議
+isPublished: false
+---
  
- ## 理解 Associated Value Enums
+## 理解 Associated Value Enums
  
  爲什麼 Swift 中會有 associated value enums？我的意思是，爲什麼 Swift core team 會設計 associated value enum？
 
