@@ -259,6 +259,7 @@ the concept "RAII" (resource acquisition is initialization) oftenly used in
 C++.
 
 ```
+  
   +-------------------------------------+
   | NSCalendar +calendarWithIdentifier: |
   +-------------------------------------+
@@ -280,6 +281,7 @@ C++.
 +-----------------------------------------+
 | NSCalendar -initWithCalendarIdentifier: | ----> Initialization
 +-----------------------------------------+
+
 ```
 
 To return an instance with derrived class of the abstract class, here is 
