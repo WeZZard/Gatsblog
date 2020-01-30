@@ -57,9 +57,12 @@ After I've described the purpose of the C `struct` above, you can quick
 realize that you can interpret it into Swift like the following code:
 
 ```swift
+struct Printer {}
+struct Scanner {}
+
 enum Device {
-    printer(Printer)
-    scanner(Scanner)
+    case printer(Printer)
+    case scanner(Scanner)
 }
 ```
 
@@ -113,11 +116,11 @@ enum DeviceType {
 }
 
 class DeviceObject {
-    var type: DeviceType { preconditionFailure("Abstract") }
+    var type: DeviceType { preconditionFailure("Abstract class") }
 
-    var deviceValue: Device { preconditionFailure("Abstract") } 
+    var deviceValue: Device { preconditionFailure("Abstract class") } 
 
-    static func make(_ device: Device) -> DeviceObject {
+    static func make(device: Device) -> DeviceObject {
         switch device {
             case let .printer(printer): return makePrinter(printer)
             case let .scanner(scanner): return makeScanner(scanner)
@@ -167,56 +170,191 @@ With the `DeviceObject` class, conforming to `Codable` comes to be very
 easy now. Firstly, we have to make `DeviceObject`  to conform to `Codable`.
 
 ```swift
+enum DeviceType: UInt8, Codable {
+    case printer
+    case scanner
+}
+
 class DeviceObject: Codable {
+    var type: DeviceType { preconditionFailure("Abstract class.") }
 
-    ...
+    var deviceValue: Device { preconditionFailure("Abstract class.") }
 
-    required init(from decoder: Decoder) throws {
+    private enum _CodingKeys: CodingKey {
+        case type
+    }
+    
+    init() {
         
     }
     
-    func encode(to encoder: Encoder) throws {
+    required init(from decoder: Decoder) throws {
         
     }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: _CodingKeys.self)
+        try container.encode(type, forKey: .type)
+    }
+
+    static func make(device: Device) -> DeviceObject {
+        switch device {
+            case let .printer(printer): return makePrinter(printer)
+            case let .scanner(scanner): return makeScanner(scanner)
+        }
+    }
+
+    static func makePrinter(_ printer: Printer) -> DeviceObject {
+        return PrinterObject(printer: printer)
+    }
+
+    static func makeScanner(_ scanner: Scanner) -> DeviceObject {
+        return ScannerObject(scanner: scanner)
+    }
+    
+    static func make(decoder: Decoder) throws -> DeviceObject {
+        let container = try decoder.container(keyedBy: _CodingKeys.self)
+        let deviceType: DeviceType = try container.decode(DeviceType.self, forKey: .type)
+        switch deviceType {
+            case .printer:
+                return try PrinterObject(from: decoder)
+            case .scanner:
+                return try ScannerObject(from: decoder)
+        }
+    }
 }
+```
 
-class PrinterObject {
+The key point here is the static function:
 
-    ...
+```swift
+static func make(decoder: Decoder) throws -> DeviceObject
+```
 
+This is a factory method for `DeviceObject`.
+
+You may doubt that in ObjectiveC, we often call "factory method" with syntax
+like
+
+```objc
+Foo * foo = [Foo foo];
+```
+
+For a concrete example, like `NSCalender`:
+
+```objc
+NSCalendar * calendar = [NSCalendar calendarWithIdentifier: NSCalendarIdentifierGregorian];
+```
+
+returns an instance of type `_NSCopyOnWriteCalendarWrapper`, which is a 
+derived class of abstract class `NSCalendar`.
+
+The class method `[NSCalendar +calendarWithIdentifier:]` actually calls
+`[NSCalendar +alloc]` on `NSCalendar` firstly and then this function calls
+into `[NSCalendar +allocWithZone:]`, then calls the designated initializer
+`[NSCalendar -initWithCalendarIdentifier:]` on the returned instance by the
+previous method call -- this is what we called two-stage initialization --
+the allocation stage and initialization stage, which is often compared with 
+the concept "RAII" (resource acquisition is initialization) oftenly used in
+C++.
+
+```
+  +-------------------------------------+
+  | NSCalendar +calendarWithIdentifier: |
+  +-------------------------------------+
+                    |
+                    |
+                    ˅
+           +-------------------+
+           | NSCalendar +alloc |
+           +-------------------+
+                    |
+                    |
+                    ˅
+       +----------------------------+
+       | NSCalendar +allocWithZone: | ----------> Allocation
+       +----------------------------+
+                    |
+                    |
+                    ˅
++-----------------------------------------+
+| NSCalendar -initWithCalendarIdentifier: | ----> Initialization
++-----------------------------------------+
+```
+
+To return an instance with derrived class of the abstract class, here is 
+`NSCalendar`, we need to dispatch the returned instance in the allocation 
+stage, which is `[NSCalendar +allocWithZone:]`. But since Swift keeps the 
+allocation stage "under-the-hood", we are no longer able to do that way when
+migrated to Swift.
+
+Thus we use a dedicated static function as a "factory method". And since 
+`DeviceObject` is an abstract class, the designated initializer `init()`
+and `init(from:)` does nothing here (Yes, because that they are
+initializers).
+
+Then implement `Codable` in `DeviceObject`'s derived classes.
+
+```swift
+class PrinterObject: DeviceObject {
     private enum _CodingKeys: CodingKey {
         case printer
     }
+
+    override var type: DeviceType { return .printer }
+
+    override var deviceValue: Device { return .printer(printer) }
+
+    let printer: Printer
+
+    init(printer: Printer) {
+        self.printer = printer
+        super.init()
+    }
+
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: _CodingKeys.self)
         printer = try container.decode(Printer.self, forKey: .printer)
-        super.init(from: decoder)
+        
+        try super.init(from: decoder)
     }
-    
+
     override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: _CodingKeys.self)
-        try encoder.encode(printer, forKey: .printer)
-        super.encode(to: encoder)
+        try container.encode(printer, forKey: .printer)
+
+        try super.encode(to: encoder)
     }
 }
 
-class ScannerObject {
-
-    ...
-
+class ScannerObject: DeviceObject {
     private enum _CodingKeys: CodingKey {
         case scanner
     }
+
+    override var type: DeviceType { return .scanner }
+
+    override var deviceValue: Device { return .scanner(scanner) }
+
+    let scanner: Scanner
+
+    init(scanner: Scanner) {
+        self.scanner = scanner
+        super.init()
+    }
+
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: _CodingKeys.self)
         scanner = try container.decode(Scanner.self, forKey: .scanner)
-        super.init(from: decoder)
+
+        try super.init(from: decoder)
     }
-    
+
     override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: _CodingKeys.self)
-        try encoder.encode(scanner, forKey: .scanner)
-        super.encode(to: encoder)
+        try container.encode(scanner, forKey: .scanner)
+
+        try super.encode(to: encoder)
     }
 }
 ```
@@ -224,12 +362,12 @@ class ScannerObject {
 Then we can make `Device` to conform to `Codable` now.
 
 ```swift
-enum Device: Codable {
+extension Printer: Codable {}
+extension Scanner: Codable {}
 
-    ...
-
-    required init(from decoder: Decoder) throws {
-        let deviceObject = try DeviceObject(from: decoder)
+extension Device: Codable {
+    init(from decoder: Decoder) throws {
+        let deviceObject = try DeviceObject.make(decoder: decoder)
         self = deviceObject.deviceValue
     }
     
