@@ -236,13 +236,13 @@ This is a factory method for `DeviceObject`.
 You may doubt that in ObjectiveC, we often call "factory method" with syntax
 like
 
-```objective-c
+```objectivec
 Foo * foo = [Foo foo];
 ```
 
 For a concrete example, like `NSCalender`:
 
-```objective-c
+```objectivec
 NSCalendar * calendar = [NSCalendar calendarWithIdentifier: NSCalendarIdentifierGregorian];
 ```
 
