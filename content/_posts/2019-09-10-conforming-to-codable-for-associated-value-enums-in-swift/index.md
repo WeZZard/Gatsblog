@@ -258,31 +258,7 @@ the allocation stage and initialization stage, which is often compared with
 the concept "RAII" (resource acquisition is initialization) oftenly used in
 C++.
 
-```
-  
-  +-------------------------------------+
-  | NSCalendar +calendarWithIdentifier: |
-  +-------------------------------------+
-                    |
-                    |
-                    ˅
-           +-------------------+
-           | NSCalendar +alloc |
-           +-------------------+
-                    |
-                    |
-                    ˅
-       +----------------------------+
-       | NSCalendar +allocWithZone: | ----------> Allocation
-       +----------------------------+
-                    |
-                    |
-                    ˅
-+-----------------------------------------+
-| NSCalendar -initWithCalendarIdentifier: | ----> Initialization
-+-----------------------------------------+
-
-```
+![NSCalendar Two-Stage Initialization](./nscalender-two-stage-initialization.png "NSCalendar Two-Stage Initialization")
 
 To return an instance with derrived class of the abstract class, here is 
 `NSCalendar`, we need to dispatch the returned instance in the allocation 
