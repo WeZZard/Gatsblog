@@ -241,8 +241,8 @@ Thus we can know that unless the `ordianal` of `Fibonacci` is equal to `0`, the 
 
 With previous analysis, we can clearly know that SwiftUI does offer the critical language structures for the execution in the example of computing Fibonacci number above — which include:
 
-- The `View` protocol which introduces recursive-able execution pattern.
-- A`View` protocol conformed type: `_ConditionalContent` which enables conditional branching.
+- The View protocol which introduces recursive-able execution pattern.
+- A View protocol conformed type: _ConditionalContent which enables conditional branching.
 
 which is quite like a real programming language. Thus we can say that SwiftUI is a programming language more than a UI framework.
 
