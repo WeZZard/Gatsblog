@@ -38,7 +38,7 @@ struct Fibonacci: View {
     
     var body: some View {
         if ordinal == 0 {
-            Text("\(value)")
+            Text("\(value.description)")
         } else {
             Fibonacci(ordinal: ordinal - 1, value: value.next())
         }
@@ -84,7 +84,7 @@ PlaygroundPage.current.setLiveView(ContentView())
 
 ![Fibonacci Number run on Swift Playground](fibonacci-number-on-swift-playground.jpeg "Fibonacci Number run on Swift Playground")
 
-As you see, we computed Fibonacci number with “native” SwiftUI code. But being able to write a program which computes Fibonacci number with things come from SwiftUI does not mean that SwiftUI is a programming language. We can only say that it is programming language unless SwiftUI offers true “language structures” to make the program ran.
+As you see, we computed Fibonacci number with “native” SwiftUI code. But being able to write a program which computes Fibonacci number with things come from SwiftUI does not mean that SwiftUI is a programming language. We can only say that SwiftUI is programming language unless it offers real “language structures” which make the program ran.
 
 ## Unexplained View Protocol
 
@@ -125,7 +125,7 @@ extension Never {
 }
 ```
 
-In SwiftUI’s internal implementation, once the `body` of a `View` instance is `Never` type, SwiftUI stops getting the `body` of the `View` instance and switch to the **built-in** logic of the view. If the **built-in** logic does not hand over the execution to other `View` instances, the recursion ends.
+In SwiftUI’s internal implementation, once the `body` of a `View` instance is `Never` type, SwiftUI stops getting the `body` of the `View` instance and switches to the **built-in** logic of the view. If the **built-in** logic does not hand over the execution to other `View` instances, the recursion ends.
 
 SwiftUI ships with a lot of `View` types whose `body` is `Never` type. Since this kind of `View` types have their own **built-in** logic, they are also called **built-in views**.
 
@@ -191,7 +191,7 @@ extension ConditionalContent : View where TrueContent : View, FalseContent : Vie
 
 > `swiftinterface` file to a Swift module is just like header files to a clang module.
 
-At the same time, there is an extension for SwiftUI’s `ViewBuilder` which shows when we using `if...else...` statements in a `@ViewBuilder` marked-up function, the Swift compiler would generate codes which warp branches of `if...else...` statement into a `_ConditionalContent` at compile-time: when the expression after `if` evaluated into `true`, the generated code invokes first `buildEither` function; when the expression evaluated into `false`, the generated code invokes the second `buildEither` function.
+At the same time, there is an extension for SwiftUI’s `ViewBuilder` which shows when we using `if...else...` statements in a `@ViewBuilder` marked-up function, the Swift compiler would generate codes which wrap branches of `if...else...` statement into a `_ConditionalContent` at compile-time: when the expression after `if` evaluated into `true`, the generated code invokes first `buildEither` function; when the expression evaluated into `false`, the generated code invokes the second `buildEither` function.
 
 ```swift
 extension ViewBuilder {
@@ -215,7 +215,7 @@ For example, in the Fibonacci number example, when the expression after `if` eva
 struct Fibonacci: View {
 
     var body: some View {
-        _ConditionalContent(storage: .trueContent(Text("\(value)")))
+        _ConditionalContent(storage: .trueContent(Text(...)))
     }
 
 }
@@ -233,7 +233,7 @@ struct Fibonacci: View {
 }
 ```
 
-**And the built-in logic of `_ConditionContent` would finally hand over the `View` instance stored in its `storage`.**
+**And the built-in logic of `_ConditionContent` would finally hand over the execution to the `View` instance stored in its `storage`.**
 
 Thus we can know that unless the `ordianal` of `Fibonacci` is equal to `0`, the `Fibonacci`’s `body` always recursively generates another `Fibonacci`. And when the `ordinal` of `Fibonacci` is equal to `0`, the `Fibonacci`’s `body` generates a `Text` view which renders the output value of `Fibonacci`.
 
@@ -248,4 +248,4 @@ which is quite like a real programming language. Thus we can say that SwiftUI is
 
 ## A Formal Perspective
 
-Actually, the Fibonacci example show that SwiftUI is Turing complete language: if a procedure can re-enter itself, and the procedure itself can change its behavior infinitely, then the language behind the procedure is Turing complete.
+Actually, the Fibonacci example shows that SwiftUI is Turing complete: if a procedure can re-enter itself, and the procedure itself can change its behavior infinitely, then the language behind the procedure is Turing complete.
