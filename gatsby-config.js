@@ -99,16 +99,10 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-mdx`,
+      resolve: `gatsby-plugin-mdx`,
       options: {
         extensions: ['.mdx', '.md'],
-        mdPlugins: [remarkMath, mdxTagKaTex],
-        globalScope: `
-        import { InlineMath } from 'react-katex';
-        import { BlockMath as MathBlock } from 'react-katex';
-        
-        export default { InlineMath, MathBlock };
-        `,
+        remarkPlugins: [remarkMath, mdxTagKaTex],
         gatsbyRemarkPlugins: [
           {
             resolve: 'gatsby-remark-copy-linked-files',
