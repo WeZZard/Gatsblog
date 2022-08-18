@@ -44,7 +44,7 @@ But the meaning of "observe" varies over contexts:
 
 - It can mean the time that user gets its finger down to the picker.
 - It can mean the time that user gets its finger up from the picker.
-- It can mean the time that the code changes the value of `$selection`.
+- It can mean the time that the code changes the value of $selection.
 
 Each of these leads to different solutions.
 
@@ -127,7 +127,7 @@ struct ContentView: View {
 
 ## Conclusion
 
-Here is a couple of reasons that why I recommend this way of user behavior
+Here is a couple of reasons why I recommend this way of user behavior
 observation:
 
 - SwiftUI is driven by value changes. This means that value changes are
