@@ -48,7 +48,7 @@ But the meaning of "observe" varies over contexts:
 
 Each of these leads to different solutions.
 
-Since SwiftUI controls adopt style modifiers which changes the appearance
+Since SwiftUI controls adopt style modifiers which change the appearance
 and behavior of a control, to achieve the goal that observing the first two
 kinds of user behaviors I mentioned above may need deep customizations over
 the control itself.
@@ -88,6 +88,8 @@ public struct Binding<Value> {
 }
 ```
 
+This is what I mentioned functional `Binding`.
+
 Here is a use case of the initializer by combining the demo code I showned
 at the beginning of the post:
 
@@ -125,26 +127,30 @@ struct ContentView: View {
 }
 ```
 
+In `observeSelectionChange` function you can organize your logics on user
+behavior observation.
+
 ## Conclusion
 
 Here is a couple of reasons why I recommend this way of user behavior
 observation:
 
 - SwiftUI is driven by value changes. This means that value changes are
-ubiquitous in a running SwiftUI program which offers a lot of observation
+ubiquitous in a running SwiftUI program and offer a lot of observation
 points.
 
-- `Binding` supports projection with key-path and collection subscripts
-which enables developers to conducts partial value changes to a control or
-a `View`. This means that you can always observe value changes with
-functional `Binding` on SwiftUI controls shipped by Apple and well-designed
-third-party SwiftUI controls.
+- `Binding` is more powerful than you what you thought. It supports
+projection with key-paths and collection subscripts which enables developers
+to conducts partial value changes to a control or a `View`. This means that
+you can observe all kinds of value changes with functional `Binding` on
+SwiftUI controls shipped by Apple and well-designed third-party SwiftUI
+controls.
 
 - `Binding` can observe all kinds of changes that can drive SwiftUI to
 update `View` contents. In contrast, `onChange(of:, perform:)` requires
 developers to observe over `Equatable` values. But there are types that are
-not of `Equatable` but can also drive SwiftUI to update `View` contents. For
-example: closures.
+not of `Equatable` but also able to drive SwiftUI to update `View` contents.
+Here is one example: closures.
 
 - In a functional `Binding` you can choose whether to observe before or
 after the value change and control the order of actions that triggerred by
