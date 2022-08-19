@@ -7,13 +7,13 @@ tags: [SwiftUI, Binding, Swift]
 ## Story
 
 This week, my colleague asked me a question: how to observe user selection
-behavior on SwiftUI's `Picker`?
+behaviors on SwiftUI's `Picker`?
 
 This is a question came from real bussiness. Thus I think it worth to take
 me time to solve it.
 
 The example code is as shown below and my colleague wanted to observe user's
-behavior on selecting candidates of the `Picker`.
+behaviors on selecting candidates of the `Picker`.
 
 ```swift
 import SwiftUI
@@ -48,10 +48,10 @@ But the meaning of "observe" varies over contexts:
 
 Each of these leads to different solutions.
 
-Since SwiftUI controls adopt style modifiers which change the appearance
+Since SwiftUI controls can adopt style modifiers which change the appearance
 and behavior of a control, to achieve the goal that observing the first two
-kinds of user behaviors I mentioned above may need deep customizations over
-the control itself.
+kinds of user behaviors that I mentioned above may need deep customizations
+over the control itself.
 
 But if you just want to observe the time that the code changes the value of
 `$selection`, you must try functional `Binding`.
@@ -62,15 +62,15 @@ But if you just want to observe the time that the code changes the value of
 OK. We just have touched the key to my colleague's question: the timing of
 `onChange(of:, perform:)` is difficult to predict and control.
 
-In my colleague's code, he triggers the network request and user behavior
-observation with `onChange(of: selection)`. But the network request is
-always about 30ms earlier than the user behavior observation. This
-phenomenon is caused by SwiftUI's `View.body` evaluation order. You can
-control the order by arrange the `onChange(of:, perform:)` modifiers on 
-SwiftUI's `View` hierarchy.
+In my colleague's code, he triggers network request and user behavior
+observation with `onChange(of: selection)`. But the callback of network
+request always comes about 30ms earlier than the callback of user behavior
+observation. This phenomenon is caused by SwiftUI's evaluation order. You
+can control the order by arranging the `onChange(of:, perform:)` modifiers
+on SwiftUI's `View` hierarchy in a fine-grained order.
 
-But we are engineering! We cannot make the position of modifiers coupled
-with SwiftUI's `View` evalution order!
+But we are engineering -- we cannot make the position to put modifiers to be
+coupled with SwiftUI's `View` evalution order!
 
 ## Solution
 
