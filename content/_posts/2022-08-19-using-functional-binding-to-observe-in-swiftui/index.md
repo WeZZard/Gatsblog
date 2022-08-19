@@ -136,15 +136,14 @@ Here is a couple of reasons why I recommend this way of user behavior
 observation:
 
 - SwiftUI is driven by value changes. This means that value changes are
-ubiquitous in a running SwiftUI program and offer a lot of observation
+ubiquitous in a running SwiftUI program to offer a lot of observation
 points.
 
-- `Binding` is more powerful than you what you thought. It supports
-projection with key-paths and collection subscripts which enables developers
-to conducts partial value changes to a control or a `View`. This means that
-you can observe all kinds of value changes with functional `Binding` on
-SwiftUI controls shipped by Apple and well-designed third-party SwiftUI
-controls.
+- `Binding` is more powerful than what you thought. It supports projection
+with key-paths and collection subscripts which enables developers to
+conducts partial value changes to a control or a `View`. This means that you
+can observe all kinds of value changes with functional `Binding` on SwiftUI
+controls shipped by Apple and well-designed third-party SwiftUI controls.
 
 - `Binding` can observe all kinds of changes that can drive SwiftUI to
 update `View` contents. In contrast, `onChange(of:, perform:)` requires
