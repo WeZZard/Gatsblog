@@ -63,7 +63,7 @@ OK. We just have touched the key to my colleague's question: the timing of
 `onChange(of:, perform:)` is difficult to predict and control.
 
 In my colleague's code, he triggers network request and user behavior
-observation with `onChange(of: selection)`. But the callback of network
+observation with `onChange(of: perform)`. But the callback of network
 request always comes about 30ms earlier than the callback of user behavior
 observation. This phenomenon is caused by SwiftUI's evaluation order. You
 can control the order by arranging the `onChange(of:, perform:)` modifiers
