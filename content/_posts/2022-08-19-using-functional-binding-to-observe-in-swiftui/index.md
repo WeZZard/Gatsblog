@@ -1,7 +1,7 @@
 ---
 title: Using Functional Binding to Observe in SwiftUI
 category: Programming
-tags: [SwiftUI, Binding, Swift]
+tags: [SwiftUI, Binding, Swift, Observer]
 ---
 
 ## Story
@@ -40,7 +40,7 @@ struct ContentView: View {
 
 ## Analysis
 
-But the meaning of "observe" varies over contexts:
+However, the meaning of "observe" varies over contexts:
 
 - It can mean the time that user gets its finger down to the picker.
 - It can mean the time that user gets its finger up from the picker.
