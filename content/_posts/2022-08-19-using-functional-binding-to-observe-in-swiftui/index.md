@@ -141,9 +141,10 @@ points.
 
 - `Binding` is more powerful than what you thought. It supports projection
 with key-paths and collection subscripts which enables developers to
-conducts partial value changes to a control or a `View`. This means that you
-can observe all kinds of value changes with functional `Binding` on SwiftUI
-controls shipped by Apple and well-designed third-party SwiftUI controls.
+conducts partial value changes to a control or a `View`. This means that for
+Apple shipped SwiftUI controls and well-designed third-party SwiftUI
+controls you can observe all value changes conducted with these `Binding`s
+by wrapping a functional `Binding`.
 
 - `Binding` can observe all kinds of changes that can drive SwiftUI to
 update `View` contents. In contrast, `onChange(of:, perform:)` requires
