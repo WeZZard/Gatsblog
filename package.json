@@ -28,7 +28,7 @@
     "gatsby-plugin-offline": "^2.0.24",
     "gatsby-plugin-react-helmet": "^3.0.8",
     "gatsby-plugin-sass": "^2.0.10",
-    "gatsby-plugin-sharp": "^2.0.25",
+    "gatsby-plugin-sharp": "^2.1.9",
     "gatsby-plugin-web-font-loader": "^1.0.4",
     "gatsby-remark-copy-linked-files": "^2.0.9",
     "gatsby-remark-mdx-images": "file:plugins/gatsby-remark-mdx-images",
