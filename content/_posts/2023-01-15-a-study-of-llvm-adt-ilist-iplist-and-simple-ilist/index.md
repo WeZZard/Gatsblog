@@ -202,7 +202,7 @@ public:
 
 `node_base_type` inherited interface:
 
-- bool isSentinel const`[^3]
+- bool isSentinel const [^3]
 - bool isKnownSentinel() const
 - void initializeSentinel()
 
