@@ -80,7 +80,7 @@ public:
 
 ### Tagging
 
-Since there is only one pair of node pointers on an `ilist_node`-inherited class, we can imply that instances of such a class are only able to be added to one intrusive list at the same time. But with `ilist_tag`, a node can be stored in multiple LLVM intrusive lists.
+Since there is only one pair of node pointers on an `ilist_node`-inherited class, we can imply that instances of such a class are only able to be added to one intrusive list at one time. But with `ilist_tag`, a node can be stored in multiple LLVM intrusive lists.
 
 Here is an example in LLVM's doc:
 
