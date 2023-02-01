@@ -6,37 +6,29 @@ I'm an iOS developer with industrial design background.
 
 ## Daily Tools
 
-- Kokuyo Campus Smart Ring Binder B5 Notebook
-
-- Kokuyo Campus Science Paper B5
-
-- Uni Kuru Toga .5mm Mechanical Pencil (For drafting)
-
-- Uni Plastic Eraser
-
-- 3M Stickers
-
-- Schneider Base Uni Fountain Pen (For English writing at home)
-
-- Zebra B4SA1 Clear Color Ballpoint Pen (For writing at office)
+- iPad Pro & Apple Pencil
 
 ## Develop Tools
 
-- Xcode
-
 - Visual Studio Code
-
-- JetBrain Series
 
 - Vim
 
 - Kaleidoscope
 
+- Xcode
+
 ## Design Tools
 
-- Sketch
+- Figma
 
 ## Music Composing Tools
+
+- Charvel Pro-Mod DK24 Mahogany
+
+- ESP Original M-II Titanium
+
+- Line 6 Helix Stomp
 
 - Logic Pro X
 
@@ -44,15 +36,11 @@ I'm an iOS developer with industrial design background.
 
 ## Writing Tools
 
-- Scrivener
+- iA Writer
 
 ## Utilities
 
-- 1 Password
-
 - Launch Bar
-
-- Paste
 
 - Surge
 
@@ -64,13 +52,17 @@ I'm an iOS developer with industrial design background.
 
 ## Languages (Programming)
 
-- Swift
+- C/C++
+
+- Python
+
+- Swift/SIL
 
 - Objective-C
 
-- C/C++
+- x86/x64 assembly
 
-- Sometimes write Python, Lua and JavaScript
+- Sometimes write Lua and JavaScript
 
 ## Languages (Human)
 
@@ -80,11 +72,9 @@ I'm an iOS developer with industrial design background.
 
 - Japanese (For reading books and watching Anime)
 
-- German (For reading books)
+- German (For reading books, alomost forgot after recovered from COVID-19...)
 
-## Books
-
-- Tao Te Ching (道德經)
+## Loved Books
 
 - Kritik der reinen Vernunft (Critique of Pure Reason)
 
@@ -92,13 +82,14 @@ I'm an iOS developer with industrial design background.
 
 - Structure and Interpretation of Computer Program
 
-- A History of World's Modern Deisgn, Wang Shouzhi
+- Engineering a Compiler, 2e
 
-- Die Kunst der Fuge (The Art of the Fugue)
+- Advanced Compiler Design & Implementation
+
+- Static Single Assignment Book
 
 ## Sports
 
 - Running
 
 - Swimming
-
