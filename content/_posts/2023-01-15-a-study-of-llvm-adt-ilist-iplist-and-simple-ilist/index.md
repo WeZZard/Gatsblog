@@ -98,7 +98,7 @@ void foo() {
 }
 ```
 
-This is because, for `ilist_node` subclasses, multiple inheritances of `ilist_node`` gives the node multiple pair of node pointers.
+This is because, for `ilist_node` subclasses, multiple inheritances of `ilist_node` gives the node multiple pair of node pointers.
 
 Then for `simple_ilist<NodeTy, ilist_tag<TagTy>>`, the implementation of intrusive list's ultimate content managing interfaces manipulate the node by casting it into `node_pointer` which eventually interpreted into `ilist_node_impl<ilist_detail::node_options<NodeTy, false, false, ilist_tag<TagTy>>>`.
 
