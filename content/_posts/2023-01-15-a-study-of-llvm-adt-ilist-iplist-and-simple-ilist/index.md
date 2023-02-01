@@ -162,13 +162,13 @@ public:
 - void push_back(pointer)
 - void pop_front()
 - void pop_back()
-- void insert<InIt>(iterator where, InIt first, InIt last)
-- void splice<InIt>(iterator, iplist_impl&)
-- void splice<InIt>(iterator, iplist_impl&, iterator first)
-- void splice<InIt>(iterator, iplist_impl&, iterator first, iterator last)
-- void splice<InIt>(iterator, iplist_impl&, reference)
-- void splice<InIt>(iterator, iplist_impl&, pointer)
-- void merge<Compare>(iplist_impl&, Compare)
+- void insert<Int\>(iterator where, InIt first, InIt last)
+- void splice<Int\>(iterator, iplist_impl&)
+- void splice<Int\>(iterator, iplist_impl&, iterator first)
+- void splice<Int\>(iterator, iplist_impl&, iterator first, iterator last)
+- void splice<Int\>(iterator, iplist_impl&, reference)
+- void splice<Int\>(iterator, iplist_impl&, pointer)
+- void merge<Compare\>(iplist_impl&, Compare)
 - void merge(iplist_impl&)
 
 `base_list_type`[^1] inherited interface:
@@ -222,8 +222,8 @@ public:
 - include/llvm/ADT/ilist.h
 - include/llvm/ADT/simple_ilist.h
 
-[^1]: This type alias usually gets ineterpreted into a ilist_base<bool enable_sentinel_tracking> class such as simple_ilist.
+[^1]: This type alias usually gets ineterpreted into a ilist_base<bool enable_sentinel_tracking\> class such as simple_ilist.
 
-[^2]: This type alias usually gets ineterpreted into ilst_node_base<bool enable_sentinel_tracking>.
+[^2]: This type alias usually gets ineterpreted into ilst_node_base<bool enable_sentinel_tracking\>.
 
-[^3]: This method is missing for derived classes of ilist_node_base<false>.
+[^3]: This method is missing for derived classes of ilist_node_base<false\>.
