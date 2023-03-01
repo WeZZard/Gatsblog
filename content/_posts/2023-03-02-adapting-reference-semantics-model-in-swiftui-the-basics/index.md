@@ -18,7 +18,7 @@ The mixture of misunderstanding towards these three topics is the reason that ma
 
 My colleague wants to implement a switch that requires user confirmation before the switch is toggled on.
 
-![Incorrect Behavior](./figure-1-expected-behavior.gif)
+![Expected Behavior](./figure-1-expected-behavior.gif)
 
 The model behind the switch is from the legacy Objective-C world which is of reference semantics. Moreover, the setter method is an asynchronous method with a completion block.
 
@@ -135,7 +135,7 @@ struct ToggleButtonStyle: ButtonStyle {
 
 But he can never get the switch to be toggled on by tapping the "OK" button with the code above.
 
-![Expected Behavior](./figure-1-expected-behavior.gif)
+![Incorect Behavior](./figure-2-incorrect-behavior.gif)
 
 ## Hack 1: What Drives SwiftUI's Updates?
 
