@@ -36,8 +36,8 @@ class LegacyModel {
 
 Firstly, he ported the model with `ObservableObject` and adapted the asynchronous setter method with:
 
-- A functional `Binding`
-- A call to `ObservableObject.objectWillChange.send()` from the completion block.
+- A functional Binding
+- A call to ObservableObject.objectWillChange.send() from the completion block.
 
 ```swift
 import SwiftUI
@@ -463,7 +463,7 @@ struct ItemView: View {
 
 Then declare a `setOn` closure on `Model.Item` that receives:
 
-- a `Binding` of `Model.Item`
+- a Binding of Model.Item
 - the new value
 
 so that we can fill customizable synchronous/asynchronous setter logic in it.
@@ -524,12 +524,12 @@ You may have spotted that there is no invocation of `self.objectWillChange.send(
 
 Even though we have iterated 3 versions of the solution but the final one is still not good enough. We can spot that:
 
-- The user interaction of the button-behaved toggle is weird. Some user interactions on `Toggle` disappeared in this implementation.
-- The `Toggle`'s toggle-off animation begins after the asynchronous setter is completed. This is not a good design for things that are going out of the user's attraction. It could be better if the `Toggle` can be toggled off immediately and reset to toggled on when failure happens.
-- We have to hand-wire the asynchronous set logic in `Item.Model.setOn`. This is error-prone;
+- The user interaction of the button-behaved toggle is weird. Some user interactions on Toggle disappeared in this implementation.
+- The Toggle's toggle-off animation begins after the asynchronous setter is completed. This is not a good design for things that are going out of the user's attraction. It could be better if the Toggle can be toggled off immediately and reset to toggled on when failure happens.
+- We have to hand-wire the asynchronous set logic in Item.Model.setOn. This is error-prone;
 - What if there is a reference semantics model that offers an asynchronous getter?
 - What if the asynchronous access can be failed?
-- There is boilerplate code in the `action` closure of the `Button` in the `ItemView`.
+- There is boilerplate code in the action closure of the Button in the ItemView.
 
 On the other hand, real-world reference semantics models may come with:
 
@@ -545,6 +545,6 @@ To keep this post concise and focused, all the points mentioned above would be t
 
 In this post, I've shown you that:
 
-- The source of truth in SwiftUI are dynamic properties that can project `Binding`s.
-- To compose a qualified source of truth, we have to directly install the dynamic properties on `View`, `Gesture` or other structural user interface types shipped with SwiftUI
-- With the help of `Binding`, we can naïvely deal with asynchronous methods in SwiftUI.
+- The source of truth in SwiftUI are dynamic properties that can project Bindings.
+- To compose a qualified source of truth, we have to directly install the dynamic properties on View, Gesture or other structural user interface types shipped with SwiftUI
+- With the help of Binding, we can naïvely deal with asynchronous methods in SwiftUI.
