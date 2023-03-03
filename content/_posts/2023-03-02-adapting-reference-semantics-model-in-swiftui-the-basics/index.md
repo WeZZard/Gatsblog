@@ -438,7 +438,7 @@ As I mentioned above, the "reference" here means `Bindng`.
 
 Firstly, we need to get the `Bindng` of the data we want to modify after the asynchronous setter is completed. We can call `$item` in the `ItemView` to get a `Binding` of `Model.Item`.
 
-```
+```swift
 struct ItemView: View {
     
   @Binding
