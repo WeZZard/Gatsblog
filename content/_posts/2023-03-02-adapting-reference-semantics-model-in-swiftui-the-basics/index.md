@@ -18,7 +18,7 @@ The mixture of misunderstanding towards these three topics is the reason that ma
 
 My colleague wants to implement a switch that requires user confirmation before the switch is toggled on.
 
-![Expected Behavior](./figure-1-expected-behavior.gif)
+![Expected Behavior](./figure-1-expected-behavior.gif "Expected Behavior")
 
 The model behind the switch is from the legacy Objective-C world which is of reference semantics. Moreover, the setter method is an asynchronous method with a completion block.
 
@@ -36,8 +36,9 @@ class LegacyModel {
 
 Firstly, he ported the model with `ObservableObject` and adapted the asynchronous setter method with:
 
-- A functional Binding
-- A call to ObservableObject.objectWillChange.send() from the completion block.
+- A functional `Binding`
+
+- A call to `ObservableObject.objectWillChange.send()` from the completion block.
 
 ```swift
 import SwiftUI
@@ -63,7 +64,7 @@ class Model: ObservableObject {
         isOn: Binding {
           LegecyModel.shared.isOn
         } set: { newValue, tnx in
-          // The value is set asynchronousely
+          // The value is set asynchronously
           LegecyModel.shared.setOn(newValue) {
             DispatchQueue.main.async {
               self.objectWillChange.send()
@@ -135,7 +136,7 @@ struct ToggleButtonStyle: ButtonStyle {
 
 But he can never get the switch to be toggled on by tapping the "OK" button with the code above.
 
-![Incorect Behavior](./figure-2-incorrect-behavior.gif)
+![Incorrect Behavior](./figure-1-expected-behavior.gif "Incorrect Behavior")
 
 ## Hack 1: What Drives SwiftUI's Updates?
 
@@ -159,7 +160,7 @@ class Model: ObservableObject {
 
 We can verify this by running the program with breakpoints set. The `ItemView.body` would not get evaluated after `self.objectWillChange.send()` was invoked.
 
-![Breakpoint for Hack 1](./figure-3-breakpoint-for-hack-1.gif)
+![Breakpoint Before The Hack 1](./figure-3-breakpoint-for-hack-1.gif "Breakpoint Before The Hack 1")
 
 To solve this issue with minimal effort, to help my colleague to meet his deadline, I suggested my colleague extend the model that fed to SwiftUI like this:
 
@@ -194,7 +195,7 @@ class Model: ObservableObject {
         isOn: Binding {
           LegecyModel.shared.isOn
         } set: { newValue, tnx in
-          // The value is set asynchronousely
+          // The value is set asynchronously
           LegecyModel.shared.setOn(newValue) {
             DispatchQueue.main.async {
               self.objectWillChange.send()
@@ -247,11 +248,11 @@ struct BySeedUpdateToggleButtonStyle: ButtonStyle {
 
 After he modified the code, and built-and-ran the program, we were waiting for a miracle to happen -- but nothing changed eventually. He still cannot make the switch to be toggled on by tapping the "OK" button.
 
-![Incorrect Behavior](./figure-2-incorrect-behavior.gif)
+![Incorrect Behavior](./figure-2-incorrect-behavior.gif "Incorrect Behavior")
 
 But the `ItemView.body` would be evaluated now.
 
-![Breakpoint for Hack 2](./figure-5-breakpoint-for-hack-2.gif)
+![Breakpoint After The Hack 1](./figure-5-breakpoint-for-hack-2.gif "Breakpoint After The Hack 1")
 
 What's wrong with this hack?
 
@@ -259,7 +260,7 @@ What's wrong with this hack?
 
 By setting breakpoints in his code, we can find that even we forced SwiftUI to evaluate the `ItemView.body` by increasing `Model.Item.seed`, the `Binding`'s `wrappedValue` is not changed.
 
-![po Binding](./figure-6-po-binding.png)
+![po Binding](./figure-6-po-binding.png "po Binding")
 
 Since my colleague used functional `Binding` instead of a `Binding` projected from `State`, you may intuitively think that the `wrappedValue` of the functional `Binding` directly returns the result of the `get` closure which is used in the `Binding`’s instantiation. This can be represented with the following pseudo-code.
 
@@ -321,15 +322,15 @@ On the other hand, since `Binding` is designed to be a reference to the managed 
 - caches the latest value at the instantiation time and the time that the dependency graph updates it;
 - returns the cached value when the dependency graph is updating.
 
-![Binding Update](./figure-7-binding-update.png)
+![Binding Update](./figure-7-binding-update.png "Binding Update")
 
 This mechanism makes the `Model.Item` raised its second issue: the `Binding` always returns the value at the instantiation time when we read it at `View.body`'s evaluation time. Since the evaluation of `View.body` happened during the dependency graph update, by honoring the transactional update pattern, `Binding` would also return its cached value. Since the `Binding` property of `Model.Item` is not managed by SwiftUI, it has no chance to get its cached value updated. Thus we can see the bug-like behavior above.
 
 ### Make a Hack That Works
 
-Is there a way that takes minimal effort to hack the code to work?
+So is there still a way that takes minimal effort to hack the code to work?
 
-Yes, there is.
+Yes, there still is.
 
 For third-party defined types that conform to `DynamicProperty` protocol, there is an `update` method would be invoked before the installed `View`'s `body` gets evaluated. With it, we still have an opportunity to manually "manage" the update of the `Binding` property on `Model.Item` before the evaluation of `ItemView.body` began.
 
@@ -399,7 +400,7 @@ struct ContentView: View {
   
   @RemakableStateObject
   @StateObject
-  var model = ModelHackedForDynamicPropertyUpdate()
+  var model = Model()
   
   ...
   
@@ -408,7 +409,7 @@ struct ContentView: View {
 
 Now we can get the switch to be toggled on by tapping the "OK" button.
 
-![Hack 2 Behavior](./figure-1-expected-behavior.gif)
+![Hack 2 Behavior](./figure-1-expected-behavior.gif "Hack 2 Behavior")
 
 ## Suggested Solution: Compose a Qualified Source of Truth
 
@@ -434,9 +435,9 @@ class Model: ObservableObject {
 
 But how to deal with the asynchronous setter on the reference semantics model? The solution is that: we need to set the new value with a "reference" to the `Model.Item` in `@StateObject var model: Model` after the asynchronous setter completes its work.
 
-As I mentioned above, the "reference" here means `Bindng`.
+As I mentioned above, the "reference" here means `Binding`.
 
-Firstly, we need to get the `Bindng` of the data we want to modify after the asynchronous setter is completed. We can call `$item` in the `ItemView` to get a `Binding` of `Model.Item`.
+Firstly, we need to get the `Binding` of the data we want to modify after the asynchronous setter is completed. We can call `$item` in the `ItemView` to get a `Binding` of `Model.Item`.
 
 ```swift
 struct ItemView: View {
@@ -463,7 +464,8 @@ struct ItemView: View {
 
 Then declare a `setOn` closure on `Model.Item` that receives:
 
-- a Binding of Model.Item
+- a `Binding` of `Model.Item`
+
 - the new value
 
 so that we can fill customizable synchronous/asynchronous setter logic in it.
@@ -516,7 +518,7 @@ class Model: ObservableObject {
 }
 ```
 
-![Qualified Source of Truth Behavior](./figure-1-expected-behavior.gif)
+![Qualified Source of Truth Behavior](./figure-1-expected-behavior.gif "Qualified Source of Truth Behavior")
 
 You may have spotted that there is no invocation of `self.objectWillChange.send()` in this solution. This is because that the `Binding` of `Model.Item` dominates the changes propagation of `@StateObject var model: Model` -- the changes to `@StateObject var model: Model` invoke `self.objectWillChange.send()` on behalf of you.
 
@@ -524,20 +526,27 @@ You may have spotted that there is no invocation of `self.objectWillChange.send(
 
 Even though we have iterated 3 versions of the solution but the final one is still not good enough. We can spot that:
 
-- The user interaction of the button-behaved toggle is weird. Some user interactions on Toggle disappeared in this implementation.
-- The Toggle's toggle-off animation begins after the asynchronous setter is completed. This is not a good design for things that are going out of the user's attraction. It could be better if the Toggle can be toggled off immediately and reset to toggled on when failure happens.
-- We have to hand-wire the asynchronous set logic in Item.Model.setOn. This is error-prone;
-- What if there is a reference semantics model that offers an asynchronous getter?
-- What if the asynchronous access can be failed?
-- There is boilerplate code in the action closure of the Button in the ItemView.
+- The user interaction of the button-behaved toggle is weird. Some user interactions on `Toggle` disappeared in this implementation.
+
+- The `Toggle`'s toggle-off animation begins after the asynchronous setter is completed which means that users may wait for the toggle-off animation to happen before moving their focus away from the `Toggle` -- this is not a good design for things that are going out of the user's attraction. It could be better if the `Toggle` can be toggled off immediately and reset to toggled on when failure happens.
+
+- We have to hand-wire the asynchronous set logic in `Item.Model.setOn`. This is error-prone;
+
+- What if there is a reference semantics model that offers an asynchronous getter? How do we deal with it?
+
+- What if the asynchronous access can be failed? How do we deal with it?
+
+- There is boilerplate code in the `action` closure of the `Button` in the `ItemView`.
 
 On the other hand, real-world reference semantics models may come with:
 
 - Only the getter method and no setter method
+
 - Only the setter method and no getter method
+
 - May be modified outside SwiftUI without any notifications
 
-With them, we have to write additional codes to get a qualified source of truth in SwiftUI work.
+To deal with reference semantics models like this, we have to write additional codes to get a source of truth in SwiftUI work.
 
 To keep this post concise and focused, all the points mentioned above would be tackled in the following posts.
 
@@ -545,6 +554,8 @@ To keep this post concise and focused, all the points mentioned above would be t
 
 In this post, I've shown you that:
 
-- The source of truth in SwiftUI are dynamic properties that can project Bindings.
-- To compose a qualified source of truth, we have to directly install the dynamic properties on View, Gesture or other structural user interface types shipped with SwiftUI
-- With the help of Binding, we can naïvely deal with asynchronous methods in SwiftUI.
+- The source of truth in SwiftUI are dynamic properties that can project `Binding`s.
+
+- To compose a qualified source of truth, we have to directly install the dynamic properties on `View`, `Gesture` or other structural user interface types shipped with SwiftUI
+
+- With the help of `Binding`, we can naïvely deal with asynchronous methods in SwiftUI.
