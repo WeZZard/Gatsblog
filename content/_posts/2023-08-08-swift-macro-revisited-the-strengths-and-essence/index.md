@@ -62,21 +62,21 @@ Each line represents a name lookup result.
 var bar: Int = 0
 //   ^
 //   |
-//   +---------------------------------------------------+
+//   +----------------------------------------------------+
 func foo() {                                          // |
   func getHexDescription(for index: Int) -> String {  // |
     return "0x" + String(index, radix: 16)            // |
   }                                                   // |
   for i in 0..<100 {                                  // |
-    // A local variable declared in a for loop           |
+    // A local variable declared in a for loop            |
     let bar = getHexDescription(for: i)               // |
-//       ^                                               |
-//       |                                               |
-//       +--------- +                                    |
-//                  |                                    |
+//       ^                                                |
+//       |                                                |
+//       +--------- +                                     |
+//                  |                                     |
     print("bar = \(bar)")                             // |
   }                                                   // |
-// +-----------------------------------------------------+
+// +------------------------------------------------------+
 // |
   bar += 1
 }
@@ -88,8 +88,8 @@ programming, defined by several key principles:
 
 - Variables are only accessible within the block of a control structure.
 - Control structures could be more expressive like using
-  `if ... else ...` instead of a simple `if` statement.
-- The `goto` statement could be eliminated by more advanced control
+  if ... else ... instead of a simple if statement.
+- The goto statement could be eliminated by more advanced control
   structures.
 - The function could be defined within other functions.
 
@@ -215,7 +215,7 @@ On top of that, the module is also a way to distribute your code. Since
 people may distribute their code either in source code or prebuilt binary,
 the Swift compiler may consider this while implementing the module system.
 
-![Potential Different Forms of Distribution for Modules](./potential-different-forms-of-distribution-for-modules.png "Potential different forms of distribution for modules")
+![Potential Different Forms of Distribution for Modules](./potential-different-forms-of-distribution-for-modules.png "Potential different forms of distribution for modules.")
 
 ### Recap
 
@@ -224,7 +224,7 @@ tend to aggregate smaller abstractions into greater ones with a particular
 protective mechanism to ensure reasonable name lookup results and expected
 program execution flow.
 
-TODO: Figure: Protection hierarchy of modules/types/functions
+![Established Trends of Modules/Types and Functions](./established-trends-of-modules-types-and-functions.png "Established trends of modules/types and functions.")
 
 However, what gives them advantages also caps their capabilities. Due to
 those protective mechanisms, there are still programming concepts that
@@ -610,8 +610,8 @@ conclusions:
     accessors to properties. The extended contents also share the same
     "namespace" of the extended point. More than that, accessor macros
     could turn a stored property into a computed property by adding either
-    the `get`, `set` or other undocumented accessors like `_read`,
-    `_modify`, `unsafeAdressor` and `unsafeMutableAddressor`.
+    the get, set or other undocumented accessors like _read,
+    _modify, unsafeAdressor and unsafeMutableAddressor.
 
 ![How Swift Macro Works](./how-swift-macro-works.png "How Swift Macro works.")
 
@@ -628,11 +628,11 @@ the following post.
 
 ## Resources
 
-- A playground project that implements the `#Color` and `#unwrap`
-  macro (needs `git checkout strengths-and-essence`)
+- A playground project that implements the #Color and #unwrap macro
 
-[Swift/SwiftMacroRevisited](https://github.com/WeZZard/SwiftMacroRevisited)
+[WeZZard/SwiftMacroRevisited](https://github.com/WeZZard/SwiftMacroRevisited), and
+don't forget `git checkout strengths-and-essence`
 
-- The production level implementation of the `@COW` macro:
+- The production level implementation of the @COW macro:
 
 [WeZZard/COW Macro](https://github.com/wezzard/cowmacro)

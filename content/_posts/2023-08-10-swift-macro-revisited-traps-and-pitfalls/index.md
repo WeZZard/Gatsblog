@@ -1100,11 +1100,11 @@ debugging.
 
 ## Resources
 
-- A playground project that implements macros in this post (needs
-`git checkout traps-and-pitfalls`):
+- A playground project that implements macros in this post:
 
-[Swift/SwiftMacroRevisited](https://github.com/WeZZard/SwiftMacroRevisited)
+[WeZZard/SwiftMacroRevisited](https://github.com/WeZZard/SwiftMacroRevisited), and
+don't forget `git checkout traps-and-pitfalls`
 
-- The production level implementation of the `@COW` macro:
+- The production level implementation of the @COW macro:
 
 [WeZZard/COW Macro](https://github.com/wezzard/cowmacro)
