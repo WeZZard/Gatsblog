@@ -180,7 +180,7 @@ public struct _ConditionalContent<TrueContent, FalseContent> {
 
 }
 
-extension ConditionalContent : View where TrueContent : View, FalseContent : View {
+extension _ConditionalContent : View where TrueContent : View, FalseContent : View {
 
   public typealias Body = Never
 

@@ -477,7 +477,7 @@ production level implementation of the COW macro resolves this issue:
 ### Semantics Conflicts
 
 In the `@DictionaryLike` macro example which competes `get` and `set`
-accessors with `@COW`` macro, we've learned that accessor macros may
+accessors with `@COW` macro, we've learned that accessor macros may
 affect each other. However, this is not the only potential pitfall brought
 by accessor macros: some language features could also be interfered with
 by attached macros. Look at the following example: a property wrapper
