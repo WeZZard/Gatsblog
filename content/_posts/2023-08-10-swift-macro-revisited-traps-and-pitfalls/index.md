@@ -5,7 +5,7 @@ tags: [Swift, Macro]
 ---
 
 In the previous post, we learned the strengths and the essence that
-uniquely define the Swift Macro. The examples in this post work so far so
+uniquely define the Swift Macro. The examples in that post work so far so
 good. However, can we be confident and bold, implementing any Swift macros
 we want now?
 
@@ -60,6 +60,7 @@ func foo(_ bar: Int?) {
       print(bar)
     }
   }
+  // Rest codes
 }
 ```
 
@@ -75,13 +76,14 @@ func foo(_ bar: Int?) {
     print(bar)
     // #unwrap expansion ended
   }
+  // Rest codes
 }
 ```
 
-From the macro expansion shown above, we can learn that if we pass a
-non-optional value to `foo`, the `bar` will only be printed once. This is
-because the `return` statement involved by the macro expansion would break
-the outer loop.
+From the macro expansion shown above, we can learn that if we pass a `nil`
+to `foo`, the rest codes after the `for` loop would not be executed. This
+is because the `return` statement involved by the macro expansion would
+break the outer loop.
 
 However, the `#unwrap` macro's name only conveys the purpose of unwrapping
 optional values. This might cause the programmer who uses this macro to
@@ -91,9 +93,9 @@ think that returning from the applied site is an
 ### Name Conflicts in Freestanding Macros
 
 The odd mentioned above is not the only potential pitfall in the expansion
-that I gave for the `#unwrap` macro. One more pitfall here is that the
-`bar` variable was re-bound by the `#unwarp` macro after the macro was
-expanded. Let's continue to examine that macro expansion:
+that I gave for the `#unwrap` macro. One more pitfall here is that
+expanding the `#unwarp` macro may cuase variable redeclarations. Let's
+continue to examine that macro expansion:
 
 ```swift
 func foo(_ bar: Int?) {
@@ -109,12 +111,11 @@ func foo(_ bar: Int?) {
 This brought variable name shadowing where the `guard let bar: Int`
 shadows the argument `_ bar: Int?`. In the case of `#unwrap`, the variable
 name shadowing is trivial because it is an intentional behavior. However,
-shadowing variables other than the `Optional`s could be considered a bad
-practice in real-world programming -- in fact, that would be uncompiled in
-Swift. As I concluded before, freestanding Swift macro expansions involve
-lexical scope sharing with the applied site. This enables potential
-variable shadowing in macro expansions. Here is a contrived example, the
-variable name `updater` is shadowed due to the macro expansion:
+since freestanding Swift macro expansions involve lexical scope sharing
+with the applied site, this could turn variable name shadowing into
+variable redeclaration in the expansions of naïvely implemented macros.
+Here is a contrived example, the variable name `updater` is shadowed
+before the macro expansion but redeclared after the expansion:
 
 Before expansion:
 
@@ -366,12 +367,13 @@ We can observe that two `get` and `set` accessors are generated under the
 allows one `get`/`set` accessor in one property, this expansion would lead
 to incorrect syntax in Swift and ultimately make the code not compile.
 
-However, this is actual seeing through a narrow lens. With the production
-level implementation of the COW macro, the `get` and `set` accessors are
-optimized into `_read` and `_modify` which could offer better performance
-in production environment, we can observe that the Swift programming
-language forbids the programmer to define accessors that not only with the
-same name but actually the same semantics.
+However, this is actual seeing through a narrow lens. By applying the
+production level implementation of the COW macro, we can find that the
+`get` and `set` accessors are optimized into `_read` and `_modify` which
+could offer better performance in production environment. At the same
+time, we also can observe that the Swift programming language forbids the
+programmer to define multiple accessors that not only with the same name
+but actually the same semantics.
 
 ![A Compilation Failure Caused by Duplicate Accessor Brought By Expanding The @UseDictionaryStorage Macro](compilation-failure-duplicate-accessor-expanding-use-dictionary-storage.png "A compilation failure caused by duplicate accessor brought by expanding the @UseDictionaryStorage macro.")
 
@@ -480,7 +482,7 @@ In the `@DictionaryLike` macro example which competes `get` and `set`
 accessors with `@COW` macro, we've learned that accessor macros may
 affect each other. However, this is not the only potential pitfall brought
 by accessor macros: some language features could also be interfered with
-by attached macros. Look at the following example: a property wrapper
+by accessor macros. Look at the following example: a property wrapper
 makes the code not compiled by being attached to a stored property in a
 struct applied `@COW` macro.
 
@@ -591,16 +593,15 @@ Observation and SwiftData.
 
 The idea behind "progressive control in macro expansion" is quite simple:
 if there are no conflicts, then the programmer shall not make any effort
-to workaround them by using conflict-resolving mechanisms. Or, there must
-be tools that allow the programmer to resolve the conflicts with minimal
-effort.
+to workaround the conflict-resolving mechanisms. Or, there must be tools
+that allow the programmer to resolve the conflicts with minimal effort.
 
 ### Maximize the Probability of the Lucky Case
 
 If a programmer does not have to resolve any conflicts while applying
 Swift macros, then we can say the programmer gets a lucky case. To
-maximize the likelihood that a Swift macro user encounters a favorable
-outcome, we must adhere to the following items:
+maximize the likelihood that a Swift macro user gets a favorable outcome,
+we must adhere to the following items:
 
 > Item 1: Macros that manipulate control flow should have names that
 > reflect this purpose.
@@ -641,8 +642,9 @@ renaming this macro into `#returnIfAnyOptional`.
 
 This would make your macro expansion get rid of most member redeclaration
 errors. For example, to avoid resolving the name conflict that is caused
-by the variable shadowing in the `#unwrap` macro, we can use a **closure**
-as the "umbrella" to protect the macro expansion:
+by turning variable shadowing into variable redeclaration in the `#unwrap`
+macro, we can use a **closure** as the "umbrella" to protect the macro
+expansion:
 
 Problematic expansion:
 
@@ -769,7 +771,6 @@ struct User {
 
   // @COW expansion ended
 
-
   // Unnecessary contents ...
 
 }
@@ -791,7 +792,6 @@ struct User {
   // Unnecessary expansions ...
 
   // @COW expansion ended
-
 
   // Unnecessary contents ...
 
@@ -1100,11 +1100,11 @@ debugging.
 
 ## Resources
 
-- A playground project that implements macros in this post:
+- A playground project that implements macros in this post (needs
+`git checkout traps-and-pitfalls`):
 
-[WeZZard/SwiftMacroRevisited](https://github.com/WeZZard/SwiftMacroRevisited), and
-don't forget `git checkout traps-and-pitfalls`
+[WeZZard/SwiftMacroRevisited](https://github.com/WeZZard/SwiftMacroRevisited)
 
-- The production level implementation of the @COW macro:
+- The production level implementation of the `@COW` macro:
 
 [WeZZard/COW Macro](https://github.com/wezzard/cowmacro)

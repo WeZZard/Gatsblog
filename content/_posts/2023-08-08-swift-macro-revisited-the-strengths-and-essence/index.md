@@ -62,21 +62,21 @@ Each line represents a name lookup result.
 var bar: Int = 0
 //   ^
 //   |
-//   +----------------------------------------------------+
+//   +---------------------------------------------------+
 func foo() {                                          // |
   func getHexDescription(for index: Int) -> String {  // |
     return "0x" + String(index, radix: 16)            // |
   }                                                   // |
   for i in 0..<100 {                                  // |
-    // A local variable declared in a for loop            |
+    // A local variable declared in a for loop           |
     let bar = getHexDescription(for: i)               // |
-//       ^                                                |
-//       |                                                |
-//       +--------- +                                     |
-//                  |                                     |
+//       ^                                               |
+//       |                                               |
+//       +--------- +                                    |
+//                  |                                    |
     print("bar = \(bar)")                             // |
   }                                                   // |
-// +------------------------------------------------------+
+// +-----------------------------------------------------+
 // |
   bar += 1
 }
@@ -87,8 +87,8 @@ didn't come easy. The idea behind this design is called structured
 programming, defined by several key principles:
 
 - Variables are only accessible within the block of a control structure.
-- Control structures could be more expressive like using
-  if ... else ... instead of a simple if statement.
+- Control structures could be more expressive like using `if ... else ...`
+  instead of a simple `if` statement.
 - The goto statement could be eliminated by more advanced control
   structures.
 - The function could be defined within other functions.
@@ -302,7 +302,7 @@ func foo(_ bar: Int?) {
 }
 ```
 
-Instead, they prefer a safer approach -- use `guard let ... else`:
+Instead, we prefer a safer approach -- use `guard let ... else`:
 
 ```swift
 func foo(_ bar: Int?) {
@@ -601,17 +601,17 @@ conclusions:
   verification into it.
 - Unlike existing code reuse features in Swift, Swift Macro does not
   protect its expansion from the existing contents of the applied site by
-  default. Yet, it also can change the semantics of it. Macro authors
-  shall watch out for potential traps and pitfalls while implementing
-  Swift macros. To be specific:
+  default. Yet, it also can change the semantics of applied site. Macro
+  authors shall watch out for potential traps and pitfalls while
+  implementing Swift macros. To be specific:
   - For freestanding Swift macros, they can affect the control flow of the
     applied site as well as share the lexical scope.
   - For attached Swift macros, they can extend members to types as well as
     accessors to properties. The extended contents also share the same
     "namespace" of the extended point. More than that, accessor macros
     could turn a stored property into a computed property by adding either
-    the get, set or other undocumented accessors like _read,
-    _modify, unsafeAdressor and unsafeMutableAddressor.
+    the `get`, `set` or other undocumented accessors like `_read`,
+    `_modify`, `unsafeAddressor` and `unsafeMutableAddressor`.
 
 ![How Swift Macro Works](./how-swift-macro-works.png "How Swift Macro works.")
 
@@ -628,11 +628,11 @@ the following post.
 
 ## Resources
 
-- A playground project that implements the #Color and #unwrap macro
+- A playground project that implements the `#Color` and `#unwrap`
+  macro (needs `git checkout strengths-and-essence`)
 
-[WeZZard/SwiftMacroRevisited](https://github.com/WeZZard/SwiftMacroRevisited), and
-don't forget `git checkout strengths-and-essence`
+[WeZZard/SwiftMacroRevisited](https://github.com/WeZZard/SwiftMacroRevisited)
 
-- The production level implementation of the @COW macro:
+- The production level implementation of the `@COW` macro:
 
-[WeZZard/COW Macro](https://github.com/wezzard/cowmacro)
+[WeZZard/COWMacro](https://github.com/wezzard/cowmacro)
