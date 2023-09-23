@@ -12,17 +12,20 @@ const inlinePropsNames = ['inlineCode'] + inlineTags;
 
 const isInlineElement = child => {
   if (typeof child === 'string') {
+    console.log(`is string`);
     return true;
   } else if (child && child.props && typeof child.props === 'string') {
+    console.log(`is string props`);
     return true;
   } else {
-    return (
-      (child &&
-        child.props &&
-        child.props.name &&
-        inlinePropsNames.includes(child.props.name)) ||
-      (child && child.type && typeof child.type === 'string' && inlineTags.includes(child.type))
-    );
+    const isInlinablePropsName = child && child.props && child.props.name
+      && inlinePropsNames.includes(child.props.name)
+    const isInlinableType = child && child.type
+      && typeof child.type === 'string'
+      && inlineTags.includes(child.type)
+    console.log(`isInlinablePropsName: ${isInlinablePropsName}`);
+    console.log(`isInlinableType: ${isInlinableType}`);
+    return isInlinablePropsName || isInlinableType;
   }
 };
 
