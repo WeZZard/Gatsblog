@@ -21,7 +21,7 @@ const isInlineElement = child => {
         child.props &&
         child.props.name &&
         inlinePropsNames.includes(child.props.name)) ||
-      (child && child.type && inlineTags.includes(child.type))
+      (child && child.type && typeof child.type === 'string' && inlineTags.includes(child.type))
     );
   }
 };
