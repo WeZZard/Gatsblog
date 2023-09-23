@@ -75,7 +75,9 @@ const InlineSegment = props => {
       }
     });
 
-  return <div className={styles.inlineSegment}>{reducedChildren}</div>;
+  return <div className={styles.flexWrapper}>
+    <div className={styles.inlineSegment}>{reducedChildren}</div>
+  </div>;
 };
 
 InlineSegment.propTypes = {
