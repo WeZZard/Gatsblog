@@ -631,8 +631,8 @@ the following post.
 - A playground project that implements the `#Color` and `#unwrap`
   macro (needs `git checkout strengths-and-essence`)
 
-[WeZZard/SwiftMacroRevisited](https://github.com/WeZZard/SwiftMacroRevisited)
+  [WeZZard/SwiftMacroRevisited](https://github.com/WeZZard/SwiftMacroRevisited)
 
 - The production level implementation of the `@COW` macro:
 
-[WeZZard/COWMacro](https://github.com/wezzard/cowmacro)
+  [WeZZard/COWMacro](https://github.com/wezzard/cowmacro)
