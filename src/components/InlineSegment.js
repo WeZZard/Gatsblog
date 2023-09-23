@@ -6,9 +6,9 @@ import MDXRenderer from 'gatsby-mdx';
 import InlineParagraph from './InlineParagraph';
 import { normalizeChildren } from '../utils';
 
-const inlineTags = ['label', 'span', 'code', 'input', 'a'];
+const inlineTags = ['label', 'span', 'code', 'input', 'a', 'sup', 'sub'];
 
-const inlinePropsNames = ['inlineCode'];
+const inlinePropsNames = ['inlineCode', 'sup', 'sub'];
 
 const isInlineElement = child => {
   if (typeof child === 'string') {
