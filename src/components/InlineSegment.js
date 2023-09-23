@@ -8,7 +8,7 @@ import { normalizeChildren } from '../utils';
 
 const inlineTags = ['label', 'span', 'code', 'input', 'a', 'sup', 'sub'];
 
-const inlinePropsNames = ['inlineCode', 'sup', 'sub', 'a'];
+const inlinePropsNames = ['inlineCode'] + inlineTags;
 
 const isInlineElement = child => {
   if (typeof child === 'string') {
