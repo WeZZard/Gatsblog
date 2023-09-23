@@ -27,10 +27,13 @@ const isInlineElement = child => {
 const InlineSegment = props => {
   const { children } = props;
 
+  console.log(`children:`, children);
+
   const normalizedChildren = normalizeChildren(children);
 
   const reducedChildren = normalizedChildren
     .reduce((reducedChildren, current) => {
+      console.log(`current to reduce`, current);
       if (reducedChildren.length > 0) {
         const last = reducedChildren[Math.max(reducedChildren.length - 1, 0)];
 
@@ -63,7 +66,7 @@ const InlineSegment = props => {
       }
     }, [])
     .map((child, index) => {
-      console.log(child);
+      console.log(`reduced child`, child);
       if (Array.isArray(child)) {
         return (
           <InlineParagraph key={`inline-paragraph: ${index}`}>
