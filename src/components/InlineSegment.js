@@ -39,8 +39,10 @@ const InlineSegment = props => {
       console.log(`current to reduce`, currentChild);
       if (reducedParagraphs.length == 0) {
         if (isInlineElement(currentChild)) {
+          console.log(`first child. build paragraph`);
           return [[currentChild]];
         } else {
+          console.log(`first child. add as a paragraph`);
           return [currentChild];
         }
       } else {
@@ -53,16 +55,21 @@ const InlineSegment = props => {
 
         if (Array.isArray(paragraphToReduce)) {
           if (isInlineElement(currentChild)) {
+            console.log(`non-first child. concate to paragraph`);
             return [...completedParagraphs, [...paragraphToReduce, currentChild]];
           } else {
+            console.log(`non-first child. add as a paragraph`);
             return [...reducedParagraphs, currentChild];
           }
         } else {
           if (isInlineElement(paragraphToReduce) && isInlineElement(currentChild)) {
+            console.log(`non-first child. concate to paragraph`);
             return [...completedParagraphs, [paragraphToReduce, currentChild]];
           } else if (!isInlineElement(paragraphToReduce) && isInlineElement(currentChild)) {
+            console.log(`non-first child. build paragraph`);
             return [...reducedParagraphs, [currentChild]];
           } else {
+            console.log(`non-first child. add as a paragraph`);
             return [...reducedParagraphs, currentChild];
           }
         }
