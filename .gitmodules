@@ -1,0 +1,4 @@
+[submodule "content/_posts"]
+	path = content/_posts
+	url = https://github.com/WeZZard/MyWorks.git
+	branch = main
