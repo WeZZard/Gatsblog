@@ -12,10 +12,8 @@ const inlinePropsNames = [...inlineTags, 'inlineCode'];
 
 const isInlineElement = child => {
   if (typeof child === 'string') {
-    console.log(`is string`);
     return true;
   } else if (child && child.props && typeof child.props === 'string') {
-    console.log(`is string props`);
     return true;
   } else {
     const isInlinablePropsName = child && child.props && child.props.name
@@ -23,8 +21,6 @@ const isInlineElement = child => {
     const isInlinableType = child && child.type
       && typeof child.type === 'string'
       && inlineTags.includes(child.type)
-    console.log(`isInlinablePropsName: ${isInlinablePropsName}`);
-    console.log(`isInlinableType: ${isInlinableType}`);
     return isInlinablePropsName || isInlinableType;
   }
 };
@@ -32,20 +28,15 @@ const isInlineElement = child => {
 const InlineSegment = props => {
   const { children } = props;
 
-  console.log(`children:`, children);
-
   // The children were normalized into an array.
   const normalizedChildren = normalizeChildren(children);
 
   const reducedParagraphs = normalizedChildren
     .reduce((reducedParagraphs, currentChild) => {
-      console.log(`current to reduce`, currentChild);
       if (reducedParagraphs.length == 0) {
         if (isInlineElement(currentChild)) {
-          console.log(`first child. build paragraph`);
           return [[currentChild]];
         } else {
-          console.log(`first child. add as a paragraph`);
           return [currentChild];
         }
       } else {
@@ -58,28 +49,22 @@ const InlineSegment = props => {
 
         if (Array.isArray(paragraphToReduce)) {
           if (isInlineElement(currentChild)) {
-            console.log(`non-first child. concate to paragraph`);
             return [...completedParagraphs, [...paragraphToReduce, currentChild]];
           } else {
-            console.log(`non-first child. add as a paragraph`);
             return [...reducedParagraphs, currentChild];
           }
         } else {
           if (isInlineElement(paragraphToReduce) && isInlineElement(currentChild)) {
-            console.log(`non-first child. concate to paragraph`);
             return [...completedParagraphs, [paragraphToReduce, currentChild]];
           } else if (!isInlineElement(paragraphToReduce) && isInlineElement(currentChild)) {
-            console.log(`non-first child. build paragraph`);
             return [...reducedParagraphs, [currentChild]];
           } else {
-            console.log(`non-first child. add as a paragraph`);
             return [...reducedParagraphs, currentChild];
           }
         }
       }
     }, [])
     .map((eachParagraphs, index) => {
-      console.log(`reduced child`, eachParagraphs);
       if (Array.isArray(eachParagraphs)) {
         return (
           <InlineParagraph key={`inline-paragraph: ${index}`}>
