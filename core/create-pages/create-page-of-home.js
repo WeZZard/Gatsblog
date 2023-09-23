@@ -23,20 +23,18 @@ module.exports = async args => {
           : `filter: { lang: { eq: "${locale.identifier}" } }`
         : 'filter: { isLocalized: { eq: false } }';
 
-      const result = await graphql(`
-            {
-                allPost(
-                    ${postFilter}
-                    sort: { fields: [createdTime], order: DESC }
-                ) {
-                    edges {
-                        node {
-                            id
-                        }
-                    }
-                }
+      const result = await graphql(`{
+        allPost(
+          ${postFilter}
+          sort: { fields: [createdTime], order: DESC }
+        ) {
+          edges {
+            node {
+              id
             }
-            `);
+          }
+        }
+      }`);
 
       if (result.errors) {
         throw result.errors;

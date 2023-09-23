@@ -3,7 +3,7 @@ const debug = require('debug');
 const Template = path.resolve('src/templates/Post.js');
 
 module.exports = async args => {
-  const { createPagesArgs } = args;
+  const { createPagesArgs, siteLang } = args;
 
   const { graphql, actions } = createPagesArgs;
   const { createPage } = actions;
@@ -33,11 +33,43 @@ module.exports = async args => {
 
   const { edges: posts } = allPost || { edges: [] };
 
+  const findEarlierPost = (posts, fromIndex, fromPost) => {
+    console.log('find earlier post for ', fromPost)
+    if (fromIndex + 1 < posts.length && posts.length > 1) {
+      for (let idx = fromIndex + 1; idx < posts.length; idx++) {
+        const post = posts[idx];
+        console.log('check earlier post ', post)
+        if (post.node.isLocalized === fromPost.node.isLocalized
+            && post.node.lang === fromPost.node.lang) {
+          return post;
+        }
+      }
+    } else {
+      return null;
+    }
+  }
+
+  const findLaterPost = (posts, fromIndex, fromPost) => {
+    console.log('find later post for ', fromPost)
+    if (fromIndex > 0) {
+      for (let idx = fromIndex - 1; idx >= 0; idx--) {
+        const post = posts[idx];
+        console.log('check later post ', post)
+        if (post.node.isLocalized === fromPost.node.isLocalized
+            && post.node.lang === fromPost.node.lang) {
+          return post;
+        }
+      }
+      return null;
+    } else {
+      return null;
+    }
+  }
+
   await Promise.all(
     posts.map(async (postNode, index) => {
-      const earlierPost = index + 1 < posts.length ? posts[index + 1] : null;
-
-      const laterPost = index - 1 >= 0 ? posts[index - 1] : null;
+      const earlierPost = findEarlierPost(posts, index, postNode);
+      const laterPost = findLaterPost(posts, index, postNode);
 
       const localeSlug = postNode.node.isLocalized
         ? `/${postNode.node.lang}`
