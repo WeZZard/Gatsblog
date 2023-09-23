@@ -1,7 +1,7 @@
 ---
 title: Unexplained SwiftUI - The Programming Language Nature of SwiftUI
 category: Programming
-tags: [SwiftUI, Swift]
+tags: [Unexplained SwiftUI, SwiftUI, Swift]
 ---
 
 ## Preface

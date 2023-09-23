@@ -98,7 +98,7 @@ void foo() {
 }
 ```
 
-This is because, for `ilist_node` subclasses, multiple inheritances of `ilist_node` gives the node multiple pair of node pointers.
+This is because, for `ilist_node` subclasses, multiple inheritances of `ilist_node`` gives the node multiple pair of node pointers.
 
 Then for `simple_ilist<NodeTy, ilist_tag<TagTy>>`, the implementation of intrusive list's ultimate content managing interfaces manipulate the node by casting it into `node_pointer` which eventually interpreted into `ilist_node_impl<ilist_detail::node_options<NodeTy, false, false, ilist_tag<TagTy>>>`.
 
@@ -143,49 +143,49 @@ public:
 
 `base_list_type`[^1] inherited interface:
 
-- size brought by using base_list_type::size;
+- `size` brought by `using base_list_type::size;`
 
 ### Managing Contents
 
 `iplist_impl` inherited interface:
 
-- void swap(iplist_impl&)
-- iterator insert(iterator, pointer)
-- iterator insert(iterator, const_reference)
-- iterator insertAfter(iterator, pointer)
-- pointer remove(const iterator&)
-- pointer remove(pointer)
-- pointer remove(reference)
-- iterator erase(iterator)
-- void clear()
-- void push_front(pointer)
-- void push_back(pointer)
-- void pop_front()
-- void pop_back()
-- void insert<Int\>(iterator where, InIt first, InIt last)
-- void splice<Int\>(iterator, iplist_impl&)
-- void splice<Int\>(iterator, iplist_impl&, iterator first)
-- void splice<Int\>(iterator, iplist_impl&, iterator first, iterator last)
-- void splice<Int\>(iterator, iplist_impl&, reference)
-- void splice<Int\>(iterator, iplist_impl&, pointer)
-- void merge<Compare\>(iplist_impl&, Compare)
-- void merge(iplist_impl&)
+- `void swap(iplist_impl&)`
+- `iterator insert(iterator, pointer)`
+- `iterator insert(iterator, const_reference)`
+- `iterator insertAfter(iterator, pointer)`
+- `pointer remove(const iterator&)`
+- `pointer remove(pointer)`
+- `pointer remove(reference)`
+- `iterator erase(iterator)`
+- `void clear()`
+- `void push_front(pointer)`
+- `void push_back(pointer)`
+- `void pop_front()`
+- `void pop_back()`
+- `void insert<InIt>(iterator where, InIt first, InIt last)`
+- `void splice<InIt>(iterator, iplist_impl&)`
+- `void splice<InIt>(iterator, iplist_impl&, iterator first)`
+- `void splice<InIt>(iterator, iplist_impl&, iterator first, iterator last)`
+- `void splice<InIt>(iterator, iplist_impl&, reference)`
+- `void splice<InIt>(iterator, iplist_impl&, pointer)`
+- `void merge<Compare>(iplist_impl&, Compare)`
+- `void merge(iplist_impl&)`
 
 `base_list_type`[^1] inherited interface:
 
-- sort brought by using base_list_type::sort;
+- `sort` brought by `using base_list_type::sort;`
 
 ### Iterators
 
 `base_list_type`[^1] inherited interface:
 
-- begin brought by using base_list_type::begin;
-- end brought by using base_list_type::end;
-- rbegin brought by using base_list_type::rbegin;
-- rend brought by using base_list_type::rend;
-- empty brought by using base_list_type::empty;
-- front brought by using base_list_type::front;
-- back brought by using base_list_type::back;
+- `begin` brought by `using base_list_type::begin;`
+- `end` brought by `using base_list_type::end;`
+- `rbegin` brought by `using base_list_type::rbegin;`
+- `rend` brought by `using base_list_type::rend;`
+- `empty` brought by `using base_list_type::empty;`
+- `front` brought by `using base_list_type::front;`
+- `back` brought by `using base_list_type::back;`
 
 ## Node Interface
 
@@ -193,37 +193,37 @@ public:
 
 `base_node_type`[^2] inherited interface:
 
-- void setPrev(ilist_node_base *)
-- void setNext(ilist_node_base *)
-- ilist_node_base *getPrev() const
-- ilist_node_base *getNext() const
+- `void setPrev(ilist_node_base *)`
+- `void setNext(ilist_node_base *)`
+- `ilist_node_base *getPrev() const`
+- `ilist_node_base *getNext() const`
 
 ### Sentinel
 
 `node_base_type` inherited interface:
 
-- bool isSentinel const [^3]
-- bool isKnownSentinel() const
-- void initializeSentinel()
+- `bool isSentinel const`[^3] ?
+- `bool isKnownSentinel() const`
+- `void initializeSentinel()`
 
 ## Intrusive List Classes
 
-- iplist
-  - ilist
-- simple_ilist
+- `iplist`
+  - `ilist`
+- `simple_ilist`
 
 ## Source Files
 
-- include/llvm/ADT/ilist_base.h
-- include/llvm/ADT/ilist_iterator.h
-- include/llvm/ADT/ilist_node_base.h
-- include/llvm/ADT/ilist_node_options.h
-- include/llvm/ADT/ilist_node.h
-- include/llvm/ADT/ilist.h
-- include/llvm/ADT/simple_ilist.h
+- `include/llvm/ADT/ilist_base.h`
+- `include/llvm/ADT/ilist_iterator.h`
+- `include/llvm/ADT/ilist_node_base.h`
+- `include/llvm/ADT/ilist_node_options.h`
+- `include/llvm/ADT/ilist_node.h`
+- `include/llvm/ADT/ilist.h`
+- `include/llvm/ADT/simple_ilist.h`
 
-[^1]: This type alias usually gets ineterpreted into a ilist_base<bool enable_sentinel_tracking\> class such as simple_ilist.
+[^1]: This type alias usually gets ineterpreted into a `ilist_base<bool enable_sentinel_tracking>` class such as `simple_ilist`.
 
-[^2]: This type alias usually gets ineterpreted into ilst_node_base<bool enable_sentinel_tracking\>.
+[^2]: This type alias usually gets ineterpreted into `ilst_node_base<bool enable_sentinel_tracking>`.
 
-[^3]: This method is missing for derived classes of ilist_node_base<false\>.
+[^3]: This method is missing for derived classes of `ilist_node_base<false>`.

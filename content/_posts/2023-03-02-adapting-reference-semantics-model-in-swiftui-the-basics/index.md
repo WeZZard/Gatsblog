@@ -18,7 +18,7 @@ The mixture of misunderstanding towards these three topics is the reason that ma
 
 My colleague wants to implement a switch that requires user confirmation before the switch is toggled on.
 
-![Expected Behavior](./figure-1-expected-behavior.gif "Expected Behavior")
+![Expected Behavior](./figure-1-expected-behavior.gif)
 
 The model behind the switch is from the legacy Objective-C world which is of reference semantics. Moreover, the setter method is an asynchronous method with a completion block.
 
@@ -37,7 +37,6 @@ class LegacyModel {
 Firstly, he ported the model with `ObservableObject` and adapted the asynchronous setter method with:
 
 - A functional `Binding`
-
 - A call to `ObservableObject.objectWillChange.send()` from the completion block.
 
 ```swift
@@ -136,7 +135,7 @@ struct ToggleButtonStyle: ButtonStyle {
 
 But he can never get the switch to be toggled on by tapping the "OK" button with the code above.
 
-![Incorrect Behavior](./figure-1-expected-behavior.gif "Incorrect Behavior")
+![Incorrect Behavior](./figure-1-expected-behavior.gif)
 
 ## Hack 1: What Drives SwiftUI's Updates?
 
@@ -160,7 +159,7 @@ class Model: ObservableObject {
 
 We can verify this by running the program with breakpoints set. The `ItemView.body` would not get evaluated after `self.objectWillChange.send()` was invoked.
 
-![Breakpoint Before The Hack 1](./figure-3-breakpoint-for-hack-1.gif "Breakpoint Before The Hack 1")
+![Breakpoint for Hack 1](./figure-3-breakpoint-for-hack-1.gif)
 
 To solve this issue with minimal effort, to help my colleague to meet his deadline, I suggested my colleague extend the model that fed to SwiftUI like this:
 
@@ -248,11 +247,11 @@ struct BySeedUpdateToggleButtonStyle: ButtonStyle {
 
 After he modified the code, and built-and-ran the program, we were waiting for a miracle to happen -- but nothing changed eventually. He still cannot make the switch to be toggled on by tapping the "OK" button.
 
-![Incorrect Behavior](./figure-2-incorrect-behavior.gif "Incorrect Behavior")
+![Incorrect Behavior](./figure-2-incorrect-behavior.gif)
 
 But the `ItemView.body` would be evaluated now.
 
-![Breakpoint After The Hack 1](./figure-5-breakpoint-for-hack-2.gif "Breakpoint After The Hack 1")
+![Breakpoint for Hack 2](./figure-5-breakpoint-for-hack-2.gif)
 
 What's wrong with this hack?
 
@@ -260,7 +259,7 @@ What's wrong with this hack?
 
 By setting breakpoints in his code, we can find that even we forced SwiftUI to evaluate the `ItemView.body` by increasing `Model.Item.seed`, the `Binding`'s `wrappedValue` is not changed.
 
-![po Binding](./figure-6-po-binding.png "po Binding")
+![po Binding](./figure-6-po-binding.png)
 
 Since my colleague used functional `Binding` instead of a `Binding` projected from `State`, you may intuitively think that the `wrappedValue` of the functional `Binding` directly returns the result of the `get` closure which is used in the `Binding`’s instantiation. This can be represented with the following pseudo-code.
 
@@ -322,7 +321,7 @@ On the other hand, since `Binding` is designed to be a reference to the managed 
 - caches the latest value at the instantiation time and the time that the dependency graph updates it;
 - returns the cached value when the dependency graph is updating.
 
-![Binding Update](./figure-7-binding-update.png "Binding Update")
+![Binding Update](./figure-7-binding-update.png)
 
 This mechanism makes the `Model.Item` raised its second issue: the `Binding` always returns the value at the instantiation time when we read it at `View.body`'s evaluation time. Since the evaluation of `View.body` happened during the dependency graph update, by honoring the transactional update pattern, `Binding` would also return its cached value. Since the `Binding` property of `Model.Item` is not managed by SwiftUI, it has no chance to get its cached value updated. Thus we can see the bug-like behavior above.
 
@@ -409,7 +408,7 @@ struct ContentView: View {
 
 Now we can get the switch to be toggled on by tapping the "OK" button.
 
-![Hack 2 Behavior](./figure-1-expected-behavior.gif "Hack 2 Behavior")
+![Hack 2 Behavior](./figure-1-expected-behavior.gif)
 
 ## Suggested Solution: Compose a Qualified Source of Truth
 
@@ -465,7 +464,6 @@ struct ItemView: View {
 Then declare a `setOn` closure on `Model.Item` that receives:
 
 - a `Binding` of `Model.Item`
-
 - the new value
 
 so that we can fill customizable synchronous/asynchronous setter logic in it.
@@ -518,7 +516,7 @@ class Model: ObservableObject {
 }
 ```
 
-![Qualified Source of Truth Behavior](./figure-1-expected-behavior.gif "Qualified Source of Truth Behavior")
+![Qualified Source of Truth Behavior](./figure-1-expected-behavior.gif)
 
 You may have spotted that there is no invocation of `self.objectWillChange.send()` in this solution. This is because that the `Binding` of `Model.Item` dominates the changes propagation of `@StateObject var model: Model` -- the changes to `@StateObject var model: Model` invoke `self.objectWillChange.send()` on behalf of you.
 
