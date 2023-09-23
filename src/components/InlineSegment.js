@@ -8,6 +8,8 @@ import { normalizeChildren } from '../utils';
 
 const inlineTags = ['label', 'span', 'code', 'input', 'a'];
 
+const inlinePropsNames = ['inlineCode'];
+
 const isInlineElement = child => {
   if (typeof child === 'string') {
     return true;
@@ -18,7 +20,7 @@ const isInlineElement = child => {
       (child &&
         child.props &&
         child.props.name &&
-        inlineTags.includes(child.props.name)) ||
+        inlinePropsNames.includes(child.props.name)) ||
       (child && child.type && inlineTags.includes(child.type))
     );
   }
@@ -29,57 +31,58 @@ const InlineSegment = props => {
 
   console.log(`children:`, children);
 
+  // The children were normalized into an array.
   const normalizedChildren = normalizeChildren(children);
 
-  const reducedChildren = normalizedChildren
-    .reduce((reducedChildren, current) => {
-      console.log(`current to reduce`, current);
-      if (reducedChildren.length > 0) {
-        const last = reducedChildren[Math.max(reducedChildren.length - 1, 0)];
-
-        const nonInlineChildren = reducedChildren.slice(
-          0,
-          Math.max(reducedChildren.length - 1, 0),
-        );
-
-        if (Array.isArray(last)) {
-          if (isInlineElement(current)) {
-            return [...nonInlineChildren, [...last, current]];
-          } else {
-            return [...reducedChildren, current];
-          }
+  const reducedParagraphs = normalizedChildren
+    .reduce((reducedParagraphs, currentChild) => {
+      console.log(`current to reduce`, currentChild);
+      if (reducedParagraphs.length == 0) {
+        if (isInlineElement(currentChild)) {
+          return [[currentChild]];
         } else {
-          if (isInlineElement(last) && isInlineElement(current)) {
-            return [...nonInlineChildren, [last, current]];
-          } else if (!isInlineElement(last) && isInlineElement(current)) {
-            return [...reducedChildren, [current]];
-          } else {
-            return [...reducedChildren, current];
-          }
+          return [currentChild];
         }
       } else {
-        if (isInlineElement(current)) {
-          return [[current]];
+        const paragraphToReduce = reducedParagraphs[Math.max(reducedParagraphs.length - 1, 0)];
+
+        const completedParagraphs = reducedParagraphs.slice(
+          0,
+          Math.max(reducedParagraphs.length - 1, 0),
+        );
+
+        if (Array.isArray(paragraphToReduce)) {
+          if (isInlineElement(currentChild)) {
+            return [...completedParagraphs, [...paragraphToReduce, currentChild]];
+          } else {
+            return [...reducedParagraphs, currentChild];
+          }
         } else {
-          return [current];
+          if (isInlineElement(paragraphToReduce) && isInlineElement(currentChild)) {
+            return [...completedParagraphs, [paragraphToReduce, currentChild]];
+          } else if (!isInlineElement(paragraphToReduce) && isInlineElement(currentChild)) {
+            return [...reducedParagraphs, [currentChild]];
+          } else {
+            return [...reducedParagraphs, currentChild];
+          }
         }
       }
     }, [])
-    .map((child, index) => {
-      console.log(`reduced child`, child);
-      if (Array.isArray(child)) {
+    .map((eachParagraphs, index) => {
+      console.log(`reduced child`, eachParagraphs);
+      if (Array.isArray(eachParagraphs)) {
         return (
           <InlineParagraph key={`inline-paragraph: ${index}`}>
-            {child}
+            {eachParagraphs}
           </InlineParagraph>
         );
       } else {
-        return child;
+        return eachParagraphs;
       }
     });
 
   return <div className={styles.flexWrapper}>
-    <div className={styles.inlineSegment}>{reducedChildren}</div>
+    <div className={styles.inlineSegment}>{reducedParagraphs}</div>
   </div>;
 };
 
