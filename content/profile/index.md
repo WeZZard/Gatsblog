@@ -2,53 +2,19 @@
 title: Profile
 ---
 
-I'm an iOS developer with industrial design background.
+I'm a software engineer with industrial design background, focusing on UI
+DSL, the Swift programming language and compiler technologies.
 
-## Daily Tools
+## Languages (Human)
 
-- iPad Pro & Apple Pencil
+- Chinese: Native speaker, Mandarin and Changsha Dialect
 
-## Develop Tools
+- English: Fluent in listening, speaking, reading and writing.
 
-- Visual Studio Code
+- Japanese: For reading books, listening music and watching Anime
 
-- Vim
-
-- Kaleidoscope
-
-- Xcode
-
-## Design Tools
-
-- Figma
-
-## Music Composing Tools
-
-- Charvel Pro-Mod DK24 Mahogany
-
-- ESP Original M-II Titanium
-
-- Line 6 Helix Stomp
-
-- Logic Pro X
-
-- iRig KEYS PRO
-
-## Writing Tools
-
-- iA Writer
-
-## Utilities
-
-- Launch Bar
-
-- Surge
-
-## Operating Systems
-
-- macOS
-
-- FreeBSD
+- German: For reading books, alomost forgot after recovered from
+  COVID-19...
 
 ## Languages (Programming)
 
@@ -60,19 +26,11 @@ I'm an iOS developer with industrial design background.
 
 - Objective-C
 
-- x86/x64 assembly
+- x86/x86_64 and arm64 assembly
 
-- Sometimes write Lua and JavaScript
+- JavaScript/TypeScript
 
-## Languages (Human)
-
-- Chinese (Native speaker, Mandarin)
-
-- English (Fluent)
-
-- Japanese (For reading books and watching Anime)
-
-- German (For reading books, alomost forgot after recovered from COVID-19...)
+- Lua
 
 ## Loved Books
 
@@ -80,16 +38,14 @@ I'm an iOS developer with industrial design background.
 
 - The Road Less Traveled
 
+- The Intelligent Investors
+
+- The Pyramid Principle
+
 - Structure and Interpretation of Computer Program
 
-- Engineering a Compiler, 2e
+- Engineering a Compiler, 2/e and 3/e
 
 - Advanced Compiler Design & Implementation
 
-- Static Single Assignment Book
-
-## Sports
-
-- Running
-
-- Swimming
+- SSA-Based Compiler Design
