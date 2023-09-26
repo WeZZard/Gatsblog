@@ -69,7 +69,7 @@ module.exports = async args => {
 
       const localeSlug = postNode.node.isLocalized
         ? `/${postNode.node.lang}`
-        : '';
+        : '/';
 
       const originalPath = [localeSlug, postNode.node.slug]
         .filter(_ => _)
