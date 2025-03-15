@@ -68,15 +68,16 @@ module.exports = async args => {
       const laterPost = findLaterPost(posts, index, postNode);
 
       if (postNode.node.slug == '') {
-        console.log(postNode);
+        console.log(`postNode.node.slug is empty: ${postNode.node}`);
+        return;
       }
 
       const localeSlug = postNode.node.isLocalized
         ? `/${postNode.node.lang}`
         : '/';
 
-      const originalPath = [ localeSlug, postNode.node.slug]
-        .filter(str => str != "")
+      const originalPath = [localeSlug, postNode.node.slug]
+        .filter(str => str != '')
         .join('');
 
       let paths = [originalPath];
@@ -89,14 +90,18 @@ module.exports = async args => {
       paths.forEach(path => {
         debug(`Create page for post: ${path}.`);
 
+        let context = {
+          postId: postNode.node.id,
+          earlierPostId: (earlierPost && earlierPost.node.id) || null,
+          laterPostId: (laterPost && laterPost.node.id) || null,
+        };
+
+        console.log(`create page for path: ${path}; component: ${Template}; context: ${context}`);
+
         createPage({
           path: path,
           component: Template,
-          context: {
-            postId: postNode.node.id,
-            earlierPostId: (earlierPost && earlierPost.node.id) || null,
-            laterPostId: (laterPost && laterPost.node.id) || null,
-          },
+          context: context,
         });
       });
     }),
