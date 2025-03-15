@@ -133,7 +133,6 @@ module.exports = {
         defaultQuality: 75,
       },
     },
-    `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-plugin-sass`,
