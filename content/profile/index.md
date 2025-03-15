@@ -2,8 +2,12 @@
 title: Profile
 ---
 
-I'm a software engineer with industrial design background, focusing on UI
-DSL, the Swift programming language and compiler technologies.
+I have a background in industrial design and a passion for various music
+genres, occasionally creating music for fun.
+
+Currently, I work on maintaining an in-house UI DSL framework at a big-tech
+in China. I am also an enthusiast of the Swift programming language and
+compiler technologies.
 
 ## Languages (Human)
 
@@ -13,20 +17,17 @@ DSL, the Swift programming language and compiler technologies.
 
 - Japanese: For reading books, listening music and watching Anime
 
-- German: For reading books, alomost forgot after recovered from
-  COVID-19...
+- ~~German: For reading books, alomost forgot after recovered from COVID-19...~~
 
 ## Languages (Programming)
 
-- C/C++
+- C/C++/Objective-C
+
+- Swift
+
+- x86/x86_64 and arm64 assembly, WebAssembly
 
 - Python
-
-- Swift/SIL
-
-- Objective-C
-
-- x86/x86_64 and arm64 assembly
 
 - JavaScript/TypeScript
 
@@ -34,18 +35,12 @@ DSL, the Swift programming language and compiler technologies.
 
 ## Loved Books
 
-- Kritik der reinen Vernunft (Critique of Pure Reason)
-
-- The Road Less Traveled
-
 - The Intelligent Investors
 
-- The Pyramid Principle
+- Concrete Mathematics
 
 - Structure and Interpretation of Computer Program
 
+- A Discipline of Programming
+
 - Engineering a Compiler, 2/e and 3/e
-
-- Advanced Compiler Design & Implementation
-
-- SSA-Based Compiler Design
