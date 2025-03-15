@@ -74,13 +74,16 @@ module.exports = async args => {
 
       const localeSlug = postNode.node.isLocalized
         ? `/${postNode.node.lang}`
-        : '/';
+        : '';
 
       const originalPath = [localeSlug, postNode.node.slug]
         .filter(str => str != '')
         .join('');
 
-      let paths = [originalPath];
+      // A workaround that fixes:
+      // create page for path: /; component: /opt/build/repo/src/templates/Post.js; context: [object Object]
+      // create page for path: //post/2025/03/when-the-swift-compiler-deleted-code-in-stdlib-9067; component: /opt/build/repo/src/templates/Post.js; context: [object Object]
+      let paths = [originalPath == '' ? '/' : originalPath];
 
       if (!postNode.node.isLocalized && postNode.node.lang) {
         const localizedPath = `/${postNode.node.lang}/${postNode.node.slug}`;
