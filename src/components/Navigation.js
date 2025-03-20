@@ -87,25 +87,18 @@ class Navigation extends React.Component {
 
     const navButton = (
       <Media query={{ maxWidth: 960 }}>
-        <div className={styles.navButton}>
-          <NavButton
-            onClick={this.navButtonDidTap}
-            isSelected={isNavMenuOpen}
-          />
-        </div>
+        <NavButton onClick={this.navButtonDidTap} isSelected={isNavMenuOpen} />
       </Media>
     );
 
     const tocButton = (
       <Media query={{ maxWidth: 960 }}>
-        <div className={styles.tocButton}>
-          {hasTableOfContents ? (
-            <TocButton
-              onClick={this.tocButtonDidTap}
-              isSelected={isTocMenuOpen}
-            />
-          ) : null}
-        </div>
+        {hasTableOfContents ? (
+          <TocButton
+            onClick={this.tocButtonDidTap}
+            isSelected={isTocMenuOpen}
+          />
+        ) : null}
       </Media>
     );
 
@@ -142,11 +135,11 @@ class Navigation extends React.Component {
           return (
             <div className={navigationClassName}>
               <div className={styles.header}>
-                <div>{navButton}</div>
+                <div className={styles.navButton}>{navButton}</div>
                 <div className={styles.siteTitle}>
                   <SiteTitle title={title} />
                 </div>
-                <div>{tocButton}</div>
+                <div className={styles.tocButton}>{tocButton}</div>
               </div>
               <div className={styles.navigationBar}>
                 <NavigationBar
