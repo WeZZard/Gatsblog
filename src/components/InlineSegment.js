@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './InlineSegment.module.scss';
-import MDXRenderer from 'gatsby-mdx';
+import { MDXRenderer } from 'gatsby-plugin-mdx';
 
 import InlineParagraph from './InlineParagraph';
 import { normalizeChildren } from '../utils';

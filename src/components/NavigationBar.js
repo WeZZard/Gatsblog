@@ -32,8 +32,10 @@ class NavigationBar extends React.Component {
                 customNavigationItems,
               },
             },
-            allCategory: { edges: categories },
           } = data;
+
+          // TODO: Re-enable category navigation once Category nodes are properly created
+          const categories = [];
 
           const sortedCategories = categories.map(
             ({ node: { name, slug } }) => ({ name, slug }),
@@ -159,14 +161,6 @@ const componentQuery = graphql`
           name
           slug
           weight
-        }
-      }
-    }
-    allCategory {
-      edges {
-        node {
-          name
-          slug
         }
       }
     }
