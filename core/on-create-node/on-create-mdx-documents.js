@@ -23,7 +23,11 @@ module.exports = args => {
             parent: node.id,
             post: {
               title: metadata.title,
+              subtitle: node.frontmatter.subtitle || '',
+              isPublished: metadata.isPublished,
               createdTime: metadata.createdTime,
+              lastModifiedTime: metadata.createdTime,
+              license: node.frontmatter.license || '',
               isLocalized: metadata.isLocalized,
               lang: metadata.lang,
               slug: metadata.slug,

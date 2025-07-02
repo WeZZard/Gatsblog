@@ -84,11 +84,6 @@ export const pageQuery = graphql`
           license
           tags
           category
-          file {
-            childMdx {
-              excerpt(pruneLength: 300)
-            }
-          }
         }
       }
     }
