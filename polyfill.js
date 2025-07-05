@@ -33,4 +33,48 @@ if (typeof global !== 'undefined' && typeof global.globalThis === 'undefined') {
   global.globalThis = global;
 }
 
-console.log('Node.js v11.10.0 compatibility polyfills loaded, globalThis:', typeof globalThis);
+// ReadableStream polyfill for Node.js v16.20.2
+if (typeof ReadableStream === 'undefined') {
+  if (typeof global !== 'undefined') {
+    // Try to get ReadableStream from stream/web
+    try {
+      const { ReadableStream: NodeReadableStream } = require('stream/web');
+      global.ReadableStream = NodeReadableStream;
+    } catch (e) {
+      // Fallback - ReadableStream might not be available in this Node.js version
+      console.warn('ReadableStream not available, some features may not work');
+    }
+  }
+}
+
+// Blob polyfill for Node.js v16.20.2
+if (typeof Blob === 'undefined') {
+  if (typeof global !== 'undefined') {
+    try {
+      const { Blob: NodeBlob } = require('buffer');
+      global.Blob = NodeBlob;
+    } catch (e) {
+      // Fallback - Blob might not be available in this Node.js version
+      console.warn('Blob not available, some features may not work');
+    }
+  }
+}
+
+// DOMException polyfill for Node.js v16.20.2
+if (typeof DOMException === 'undefined') {
+  if (typeof global !== 'undefined') {
+    try {
+      // Create a basic DOMException polyfill
+      global.DOMException = class DOMException extends Error {
+        constructor(message = '', name = 'Error') {
+          super(message);
+          this.name = name;
+        }
+      };
+    } catch (e) {
+      console.warn('DOMException polyfill failed, some features may not work');
+    }
+  }
+}
+
+console.log('Node.js compatibility polyfills loaded, globalThis:', typeof globalThis, 'ReadableStream:', typeof ReadableStream, 'Blob:', typeof Blob, 'DOMException:', typeof DOMException);
