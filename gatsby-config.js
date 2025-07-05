@@ -1,3 +1,16 @@
+// Polyfill for globalThis (Node.js v11.10.0 compatibility)
+if (typeof globalThis === 'undefined') {
+  if (typeof global !== 'undefined') {
+    global.globalThis = global;
+  } else if (typeof window !== 'undefined') {
+    window.globalThis = window;
+  } else if (typeof self !== 'undefined') {
+    self.globalThis = self;
+  } else {
+    throw new Error('Unable to locate global object');
+  }
+}
+
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
@@ -98,31 +111,32 @@ module.exports = {
         name: `Config`,
       },
     },
-    {
-      resolve: `gatsby-mdx`,
-      options: {
-        extensions: ['.mdx', '.md'],
-        mdPlugins: [remarkMath, mdxTagKaTex],
-        globalScope: `
-        import { InlineMath } from 'react-katex';
-        import { BlockMath as MathBlock } from 'react-katex';
-        
-        export default { InlineMath, MathBlock };
-        `,
-        gatsbyRemarkPlugins: [
-          {
-            resolve: 'gatsby-remark-copy-linked-files',
-          },
-          {
-            resolve: `gatsby-remark-mdx-images`,
-            options: {
-              withWebp: { quality: 90 },
-              maxWidth: 712,
-            },
-          },
-        ],
-      },
-    },
+    // Temporarily disabled gatsby-mdx for Node.js v11.10.0 compatibility
+    // {
+    //   resolve: `gatsby-mdx`,
+    //   options: {
+    //     extensions: ['.mdx', '.md'],
+    //     mdPlugins: [remarkMath, mdxTagKaTex],
+    //     globalScope: `
+    //     import { InlineMath } from 'react-katex';
+    //     import { BlockMath as MathBlock } from 'react-katex';
+    //     
+    //     export default { InlineMath, MathBlock };
+    //     `,
+    //     gatsbyRemarkPlugins: [
+    //       {
+    //         resolve: 'gatsby-remark-copy-linked-files',
+    //       },
+    //       {
+    //         resolve: `gatsby-remark-mdx-images`,
+    //         options: {
+    //           withWebp: { quality: 90 },
+    //           maxWidth: 712,
+    //         },
+    //       },
+    //     ],
+    //   },
+    // },
     `gatsby-transformer-sharp`,
     `gatsby-transformer-yaml`,
     {
@@ -137,7 +151,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-sass`,
       options: {
-        implementation: require('sass'),
+        implementation: require('node-sass'),
       },
     },
     `gatsby-plugin-catch-links`,
@@ -157,6 +171,7 @@ module.exports = {
       resolve: `gatsby-plugin-feed`,
       options: gatsbyPluginFeedOptions,
     },
-    `gatsby-plugin-offline`,
+    // Temporarily disabled gatsby-plugin-offline for Node.js v11.10.0 compatibility
+    // `gatsby-plugin-offline`,
   ],
 };
