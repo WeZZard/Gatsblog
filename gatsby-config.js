@@ -105,15 +105,15 @@ module.exports = {
       resolve: `gatsby-plugin-mdx`,
       options: {
         extensions: ['.mdx', '.md'],
-        mdxOptions: {
-          remarkPlugins: [remarkMath, mdxTagKaTex],
-        },
-        globalScope: `
-        import { InlineMath } from 'react-katex';
-        import { BlockMath as MathBlock } from 'react-katex';
-        
-        export default { InlineMath, MathBlock };
-        `,
+        // Try the older configuration format for gatsby-plugin-mdx@1.0.83
+        remarkPlugins: [remarkMath, mdxTagKaTex],
+        // Temporarily removed globalScope to debug Babel issue
+        // globalScope: `
+        // import { InlineMath } from 'react-katex';
+        // import { BlockMath as MathBlock } from 'react-katex';
+        // 
+        // export default { InlineMath, MathBlock };
+        // `,
         gatsbyRemarkPlugins: [
           {
             resolve: 'gatsby-remark-copy-linked-files',
