@@ -76,34 +76,57 @@ npm run build  # Should work now
 4. Test compatibility
 5. Update packages that benefit from v16 features
 
-### **Phase 3: Package Modernization**
-**Goal**: Upgrade packages to v16-compatible versions
+### **Phase 3: Node.js v20.18.0 Direct Jump 🎯**
 
-**Priority Order** (leaves-first):
-1. **Utility packages**: lodash, moment, etc.
-2. **Build tools**: webpack, babel plugins
-3. **Testing**: jest, eslint
-4. **Styling**: styled-components, sass
-5. **React ecosystem**: react-router, react-helmet
-6. **Gatsby plugins**: gatsby-plugin-*
+### **Strategic Decision**
+Jump directly to Node.js v20.18.0 because:
+- **Eliminate engine warnings**: All packages work natively
+- **Ecosystem alignment**: 2024 packages expect modern Node.js
+- **Avoid time period conflicts**: Stop mixing 2019 + 2021 + 2024 versions
+- **Simpler path**: Sometimes the biggest step is the easiest
 
-### **Phase 4: Upgrade to Node.js v20.18.0**
-**Goal**: Reach current LTS
+### **Implementation Plan**
 
-**Prerequisites**:
-- All packages compatible with v20
-- All tests passing
-- Build working
-- Develop server working
+1. **Upgrade Node.js**
+   ```bash
+   nvm install 20.18.0
+   nvm use 20.18.0
+   ```
 
-### **Phase 5: Final Modernization**
-**Goal**: Latest compatible package versions
+2. **Update Environment**
+   - Update `.nvmrc` to `20.18.0`
+   - Remove polyfills (no longer needed)
+   - Clean package-lock.json
 
-**Includes**:
-- React 18 upgrade
-- Gatsby 4.x/5.x evaluation
-- Modern ESM modules
-- Security vulnerability fixes
+3. **Package Strategy**
+   - Use `npm install` without `--legacy-peer-deps`
+   - Let modern packages use their expected dependencies
+   - Remove version conflicts by using contemporary ecosystem
+
+4. **Test Build Process**
+   - `npm run build`
+   - `npm run develop`
+   - Validate all functionality
+
+### **Expected Benefits**
+- Native Web API support (no polyfills needed)
+- Babel ecosystem alignment
+- Clean dependency resolution
+- Better performance
+- Future-ready foundation
+
+### **Contingency Plans**
+- If build fails, diagnose specific issues
+- Document any remaining compatibility problems
+- Consider selective package downgrades only if necessary
+
+### **Validation Criteria**
+- [ ] `npm run build` succeeds
+- [ ] `npm run develop` works
+- [ ] All MDX content renders correctly
+- [ ] No engine compatibility warnings
+- [ ] Sass compilation works
+- [ ] All plugins function properly
 
 ## 🔧 **Implementation Strategy**
 

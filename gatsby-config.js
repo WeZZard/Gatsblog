@@ -1,5 +1,5 @@
 // Load Node.js v11.10.0 compatibility polyfills
-require('./polyfill');
+// require('./polyfill');
 
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
