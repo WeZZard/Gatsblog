@@ -18,14 +18,15 @@ interface PageQueryData {
     file: {
       childMdx: {
         excerpt: string;
-        code: {
-          body: string;
-          scope: Record<string, any>;
-        };
-        headings: Array<{
-          value: string;
-          depth: number;
-        }>;
+        // TODO: Fix code and headings fields compatibility
+        // code: {
+        //   body: string;
+        //   scope: Record<string, any>;
+        // };
+        // headings: Array<{
+        //   value: string;
+        //   depth: number;
+        // }>;
       };
     };
   };
@@ -54,9 +55,13 @@ const Page: React.FC<PageProps_> = ({ data, pageContext }) => {
     createdTime,
     keywords,
     file: {
-      childMdx: { excerpt, code, headings },
+      childMdx: { excerpt /* TODO: Fix code, headings fields */ },
     },
   } = page;
+
+  // TODO: Fix code and headings fields compatibility
+  const code = { body: '', scope: {} };
+  const headings: Array<{ value: string; depth: number }> = [];
 
   const sections = (
     <article className={styles.page}>
@@ -101,14 +106,15 @@ export const query = graphql`
       file {
         childMdx {
           excerpt(pruneLength: 160)
-          code {
-            body
-            scope
-          }
-          headings {
-            value
-            depth
-          }
+          # TODO: Fix code and headings fields compatibility
+          # code {
+          #   body
+          #   scope
+          # }
+          # headings {
+          #   value
+          #   depth
+          # }
         }
       }
     }

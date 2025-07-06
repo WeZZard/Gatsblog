@@ -50,14 +50,15 @@ interface NavigationBarQueryData {
       customNavigationItems: NavigationItem[];
     };
   };
-  allCategory: {
-    edges: Array<{
-      node: {
-        name: string;
-        slug: string;
-      };
-    }>;
-  };
+  // TODO: Fix allCategory query compatibility
+  // allCategory: {
+  //   edges: Array<{
+  //     node: {
+  //       name: string;
+  //       slug: string;
+  //     };
+  //   }>;
+  // };
 }
 
 const NavigationBar: React.FC<NavigationBarProps> = ({ isOpen, slug, menuItemDidTap }) => {
@@ -75,9 +76,12 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ isOpen, slug, menuItemDid
               customNavigationItems,
             },
           },
-          allCategory: { edges: categories },
+          // TODO: Fix allCategory query compatibility
+          // allCategory: { edges: categories },
         } = data;
 
+        // TODO: Re-enable category navigation when allCategory query is fixed
+        const categories: Array<{ node: { name: string; slug: string } }> = [];
         const sortedCategories = categories.map(
           ({ node: { name, slug } }) => ({ name, slug }),
         );
@@ -192,13 +196,14 @@ const componentQuery = graphql`
         }
       }
     }
-    allCategory {
-      edges {
-        node {
-          name
-          slug
-        }
-      }
-    }
+    # TODO: Fix allCategory query compatibility
+    # allCategory {
+    #   edges {
+    #     node {
+    #       name
+    #       slug
+    #     }
+    #   }
+    # }
   }
 `;

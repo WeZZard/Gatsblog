@@ -1,18 +1,16 @@
 import type { GatsbyNode } from "gatsby";
 import path from "path";
 
-// Import TypeScript page generation functions
+// Import TypeScript implementations
 import createPagesImpl from "./src/core/create-pages";
+import onCreateNodeImpl from "./src/core/on-create-node";
+import setFieldsOnGraphQLNodeTypeImpl from "./src/core/set-fields-on-graphql-node-type";
 
-// Import legacy node creation functions (will be migrated later)
-const legacyOnCreateNode = require("./legacy/core/on-create-node");
-const legacySetFieldsOnGraphQLNodeType = require("./legacy/core/set-fields-on-graphql-node-type");
-
-export const onCreateNode: GatsbyNode["onCreateNode"] = legacyOnCreateNode;
+export const onCreateNode: GatsbyNode["onCreateNode"] = onCreateNodeImpl;
 
 export const createPages: GatsbyNode["createPages"] = createPagesImpl;
 
-export const setFieldsOnGraphQLNodeType: GatsbyNode["setFieldsOnGraphQLNodeType"] = legacySetFieldsOnGraphQLNodeType;
+export const setFieldsOnGraphQLNodeType: GatsbyNode["setFieldsOnGraphQLNodeType"] = setFieldsOnGraphQLNodeTypeImpl;
 
 // Enable GraphQL type generation for better TypeScript support
 export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({ actions }) => {

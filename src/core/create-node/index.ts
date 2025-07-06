@@ -1,6 +1,9 @@
 export { createNodeForTag } from './create-node-for-tag';
 export { createNodeForCategory } from './create-node-for-category';
 export { createNodeForLocale } from './create-node-for-locale';
+export { createNodeForPost } from './create-node-for-post';
+export { createNodeForPage } from './create-node-for-page';
+export { createNodeForConfig } from './create-node-for-config';
 export { createNodesForEachTag } from './create-nodes-for-each-tag';
 export { createNodesForEachCategory } from './create-nodes-for-each-category';
 export { createNodesForEachLocale } from './create-nodes-for-each-locale';

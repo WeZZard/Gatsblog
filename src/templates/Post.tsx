@@ -29,9 +29,13 @@ const Post: React.FC<PostProps> = ({ data, pageContext }) => {
     keywords,
     license,
     file: {
-      childMdx: { excerpt, code, headings },
+      childMdx: { excerpt /* TODO: Fix code, headings fields */ },
     },
   } = post;
+
+  // TODO: Fix code and headings fields compatibility
+  const code = { body: '', scope: {} };
+  const headings: Array<{ value: string; depth: number }> = [];
 
   const article = (
     <article className={styles.post}>
@@ -101,14 +105,15 @@ export const pageQuery = graphql`
       file {
         childMdx {
           excerpt(pruneLength: 100)
-          code {
-            body
-            scope
-          }
-          headings {
-            value
-            depth
-          }
+          # TODO: Fix code and headings fields compatibility
+          # code {
+          #   body
+          #   scope
+          # }
+          # headings {
+          #   value
+          #   depth
+          # }
         }
       }
     }
