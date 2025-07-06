@@ -1,14 +1,16 @@
 import type { GatsbyNode } from "gatsby";
 import path from "path";
 
-// Import legacy node creation functions
+// Import TypeScript page generation functions
+import createPagesImpl from "./src/core/create-pages";
+
+// Import legacy node creation functions (will be migrated later)
 const legacyOnCreateNode = require("./legacy/core/on-create-node");
-const legacyCreatePages = require("./legacy/core/create-pages");
 const legacySetFieldsOnGraphQLNodeType = require("./legacy/core/set-fields-on-graphql-node-type");
 
 export const onCreateNode: GatsbyNode["onCreateNode"] = legacyOnCreateNode;
 
-export const createPages: GatsbyNode["createPages"] = legacyCreatePages;
+export const createPages: GatsbyNode["createPages"] = createPagesImpl;
 
 export const setFieldsOnGraphQLNodeType: GatsbyNode["setFieldsOnGraphQLNodeType"] = legacySetFieldsOnGraphQLNodeType;
 
