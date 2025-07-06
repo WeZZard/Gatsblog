@@ -10,8 +10,8 @@ import {
 import createPostIndexPages from './_create-post-index-pages';
 
 // Import legacy configuration functions (will be migrated later)
-const { tag: meta }: { tag: TagPageMetadata } = require('../../../legacy/core/create-pages/post-index-meta');
-const { itemsPerPageForIndexPageName } = require('../../../legacy/core/config');
+import { tag as meta } from '../metadata/post-index-meta';
+import { itemsPerPageForIndexPageName } from '../config';
 
 export default async function createPagesForEachTag(
   args: CreatePagesArgsExtended
@@ -122,8 +122,8 @@ async function _createPageForTagsForLocale(args: {
         createPagePath: (locale, pageIndex) =>
           meta.getPagePath(tag, locale, pageIndex),
         showsPageTitle: true,
-        previousPageTitle: meta.getPreviousPageTitle(),
-        nextPageTitle: meta.getNextPageTitle(),
+        previousPageTitle: meta.getPreviousPageTitle(locale),
+        nextPageTitle: meta.getNextPageTitle(locale),
       });
     }),
   );

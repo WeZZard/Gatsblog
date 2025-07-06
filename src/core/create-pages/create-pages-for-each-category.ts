@@ -10,8 +10,8 @@ import {
 import createPostIndexPages from './_create-post-index-pages';
 
 // Import legacy configuration functions (will be migrated later)
-const { category: meta }: { category: CategoryPageMetadata } = require('../../../legacy/core/create-pages/post-index-meta');
-const { itemsPerPageForIndexPageName } = require('../../../legacy/core/config');
+import { category as meta } from '../metadata/post-index-meta';
+import { itemsPerPageForIndexPageName } from '../config';
 
 export default async function createPagesForEachCategory(
   args: CreatePagesArgsExtended

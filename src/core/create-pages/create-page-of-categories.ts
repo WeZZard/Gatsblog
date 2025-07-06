@@ -7,8 +7,8 @@ import {
 import createTaxonomyIndexPages from './_create-taxonomy-index-pages';
 
 // Import legacy configuration functions (will be migrated later)
-const { categories: meta }: { categories: TaxonomyIndexPageMetadata } = require('../../../legacy/core/create-pages/taxonomy-index-meta');
-const { itemsPerPageForIndexPageName } = require('../../../legacy/core/config');
+import { categories as meta } from '../metadata/taxonomy-index-meta';
+import { itemsPerPageForIndexPageName } from '../config';
 
 export default async function createPageOfCategories(
   args: CreatePagesArgsExtended

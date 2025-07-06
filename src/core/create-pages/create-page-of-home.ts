@@ -9,8 +9,8 @@ import {
 import createPostIndexPages from './_create-post-index-pages';
 
 // Import legacy configuration functions (will be migrated later)
-const { home: meta }: { home: PageMetadata } = require('../../../legacy/core/create-pages/post-index-meta');
-const { itemsPerPageForIndexPageName } = require('../../../legacy/core/config');
+import { home as meta } from '../metadata/post-index-meta';
+import { itemsPerPageForIndexPageName } from '../config';
 
 export default async function createPageOfHome(
   args: CreatePagesArgsExtended

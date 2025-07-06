@@ -9,20 +9,28 @@ import {
   TagNode,
 } from '../../types/page-generation';
 
-// Import legacy node creation functions (will be migrated later)
-const {
+import createPageOfHome from './create-page-of-home';
+import createPageOfCategories from './create-page-of-categories';
+import createPageOfTags from './create-page-of-tags';
+import createPagesForEachCategory from './create-pages-for-each-category';
+import createPagesForEachTag from './create-pages-for-each-tag';
+import createPagesForEachPage from './create-pages-for-each-page';
+import createPagesForEachPost from './create-pages-for-each-post';
+
+// Import TypeScript node creation functions
+import {
   createNodesForEachTag,
   createNodesForEachCategory,
   createNodesForEachLocale,
-} = require('../../../legacy/core/create-node');
+} from '../create-node';
 
 export default async function createPages(args: CreatePagesArgs): Promise<void> {
   const { graphql } = args;
 
   // Create taxonomy nodes - preserve exact function calls
-  const tags: TagNode[] = await createNodesForEachTag(args);
-  const categories: CategoryNode[] = await createNodesForEachCategory(args);
-  const locales: LocaleNode[] = await createNodesForEachLocale(args);
+  const tags: TagNode[] = await createNodesForEachTag(args as any);
+  const categories: CategoryNode[] = await createNodesForEachCategory(args as any);
+  const locales: LocaleNode[] = await createNodesForEachLocale(args as any);
 
   // Load site configuration - preserve exact GraphQL query
   const result: GraphQLResult<ConfigQueryResult> = await graphql(`
@@ -96,14 +104,7 @@ export default async function createPages(args: CreatePagesArgs): Promise<void> 
     defaultLicense,
   };
 
-  // Import all TypeScript functions
-  const createPageOfHome = require('./create-page-of-home').default;
-  const createPageOfCategories = require('./create-page-of-categories').default;
-  const createPageOfTags = require('./create-page-of-tags').default;
-  const createPagesForEachCategory = require('./create-pages-for-each-category').default;
-  const createPagesForEachTag = require('./create-pages-for-each-tag').default;
-  const createPagesForEachPage = require('./create-pages-for-each-page').default;
-  const createPagesForEachPost = require('./create-pages-for-each-post').default;
+  // All TypeScript functions imported at top of file
 
   // Preserve exact Promise.all parallel execution pattern - now with all TypeScript functions
   await Promise.all(
