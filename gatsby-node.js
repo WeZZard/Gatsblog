@@ -52,15 +52,12 @@ exports.createSchemaCustomization = ({ actions }) => {
   createTypes(typeDefs);
 };
 
-// Configure webpack polyfills for Node.js modules
+// Configure webpack polyfills for remaining Node.js modules
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
-      fallback: {
-        assert: require.resolve('assert/'),
-      },
       alias: {
-        'object.assign/polyfill': require.resolve('object.assign'),
+        'object.assign/polyfill': require.resolve('object-assign'),
       },
     },
   });
