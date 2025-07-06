@@ -53,16 +53,41 @@ exports.createSchemaCustomization = ({ actions }) => {
 };
 
 // Configure webpack to exclude Node.js modules from browser bundle
-exports.onCreateWebpackConfig = ({ actions }) => {
-  actions.setWebpackConfig({
-    resolve: {
-      fallback: {
-        assert: false,
-        util: false,
-        stream: false,
-        buffer: false,
-        'object.assign/polyfill': require.resolve('./object-assign-polyfill.js'),
+exports.onCreateWebpackConfig = ({ actions, stage, getConfig }) => {
+  // Only add Symbol polyfill for SSR builds
+  if (stage === 'build-html') {
+    const config = getConfig();
+    const webpack = require('webpack');
+    
+    actions.setWebpackConfig({
+      resolve: {
+        fallback: {
+          assert: false,
+          util: false,
+          stream: false,
+          buffer: false,
+          'object.assign/polyfill': require.resolve('./object-assign-polyfill.js'),
+        },
       },
-    },
-  });
+      plugins: [
+        // Add Symbol polyfill for SSR environment
+        new webpack.DefinePlugin({
+          'typeof Symbol': JSON.stringify('function'),
+          'Symbol.toStringTag': JSON.stringify('Symbol(Symbol.toStringTag)'),
+        }),
+      ],
+    });
+  } else {
+    actions.setWebpackConfig({
+      resolve: {
+        fallback: {
+          assert: false,
+          util: false,
+          stream: false,
+          buffer: false,
+          'object.assign/polyfill': require.resolve('./object-assign-polyfill.js'),
+        },
+      },
+    });
+  }
 };
