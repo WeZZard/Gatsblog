@@ -103,7 +103,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        extensions: ['.mdx', '.md'],
+        extensions: ['.mdx'],
         // Updated configuration format for gatsby-plugin-mdx v5 + MDX v2
         mdxOptions: {
           remarkPlugins: [remarkMath, mdxTagKaTex],
@@ -122,6 +122,7 @@ module.exports = {
         ],
       },
     },
+    `gatsby-transformer-remark`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-yaml`,
     {

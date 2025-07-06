@@ -5,22 +5,25 @@ import styles from './Link.module.scss';
 import { Link as _Link } from 'gatsby';
 
 // Simple functional component for SSR to avoid circular reference issues
-const Link = ({ to, kind, className, obfuscatedHref, onClick, children, ...others }) => {
+const Link = (props) => {
   // During SSR, render simple links without any complex processing
   if (typeof window === 'undefined') {
-    // Use minimal processing to avoid circular references
-    const basicClassName = className || '';
-    const href = to || '#';
-    
-    // Always render as simple <a> tag during SSR to avoid any complexity
-    return (
-      <a className={basicClassName} href={href} {...others}>
-        {children}
-      </a>
-    );
+    // Use absolutely minimal approach - avoid any prop access that could trigger circular refs
+    try {
+      const to = props && props.to ? props.to : '#';
+      const className = props && props.className ? props.className : '';
+      const children = props && props.children ? props.children : '';
+      
+      // Always render as simple <a> tag during SSR to avoid any complexity
+      return React.createElement('a', { className, href: to }, children);
+    } catch (e) {
+      // If even this fails, return minimal fallback
+      return React.createElement('a', { href: '#' }, '');
+    }
   }
 
   // For client-side rendering, use the full component with protection logic
+  const { to, kind, className, obfuscatedHref, onClick, children, ...others } = props;
   return <LinkClientSide to={to} kind={kind} className={className} obfuscatedHref={obfuscatedHref} onClick={onClick} {...others}>{children}</LinkClientSide>;
 };
 

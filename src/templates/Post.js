@@ -26,10 +26,12 @@ class Post extends React.Component {
       tags,
       keywords,
       license,
-      file: {
-        childMdx: { excerpt, body },
-      },
-    } = post;
+      file,
+          } = post;
+
+    // Handle Markdown files (using childMarkdownRemark)
+    const excerpt = file?.childMarkdownRemark?.excerpt || '';
+    const body = file?.childMarkdownRemark?.html || '';
 
     const article = (
       <article className={styles.post}>
@@ -45,7 +47,7 @@ class Post extends React.Component {
           </aside>
         </header>
         <main className={styles.main}>
-          <MDXBody textStyle={'serif'} body={body} />
+          <div dangerouslySetInnerHTML={{ __html: body }} />
         </main>
         <footer className={styles.footer}>
           <PostFooter tags={tags} license={license} />
@@ -98,9 +100,9 @@ export const pageQuery = graphql`
       tags
       category
       file {
-        childMdx {
+        childMarkdownRemark {
           excerpt(pruneLength: 100)
-          body
+          html
         }
       }
     }
@@ -112,7 +114,7 @@ export const pageQuery = graphql`
       tags
       category
       file {
-        childMdx {
+        childMarkdownRemark {
           excerpt(pruneLength: 300)
         }
       }
@@ -125,7 +127,7 @@ export const pageQuery = graphql`
       tags
       category
       file {
-        childMdx {
+        childMarkdownRemark {
           excerpt(pruneLength: 300)
         }
       }

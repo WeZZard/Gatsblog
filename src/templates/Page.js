@@ -21,10 +21,12 @@ class Page extends React.Component {
       createdTime,
       keywords,
       lang,
-      file: {
-        childMdx: { excerpt, body },
-      },
+      file,
     } = page;
+
+    // Handle Markdown files (using childMarkdownRemark)
+    const excerpt = file?.childMarkdownRemark?.excerpt || '';
+    const body = file?.childMarkdownRemark?.html || '';
 
     const article = (
       <article className={styles.page}>
@@ -35,7 +37,7 @@ class Page extends React.Component {
           </aside>
         </header>
         <section className={styles.main}>
-          <MDXBody textStyle={'sans'} body={body} />
+          <div dangerouslySetInnerHTML={{ __html: body }} />
         </section>
       </article>
     );
@@ -71,9 +73,9 @@ export const pageQuery = graphql`
       lastModifiedTime
       license
       file {
-        childMdx {
+        childMarkdownRemark {
           excerpt(pruneLength: 300)
-          body
+          html
         }
       }
     }

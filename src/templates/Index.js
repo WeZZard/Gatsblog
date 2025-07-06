@@ -85,7 +85,7 @@ export const pageQuery = graphql`
           tags
           category
           file {
-            childMdx {
+            childMarkdownRemark {
               excerpt(pruneLength: 300)
             }
           }
