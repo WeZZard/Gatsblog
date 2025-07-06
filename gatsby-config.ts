@@ -21,14 +21,14 @@ const config: GatsbyConfig = {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: path.resolve(`./content/_posts`),
-        name: `posts`,
+        name: `Post`,
       },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: path.resolve(`./content`),
-        name: `pages`,
+        name: `Page`,
         ignore: [`**/.*`, `**/_posts/**/*`],
       },
     },
