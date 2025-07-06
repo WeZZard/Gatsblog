@@ -1,0 +1,35 @@
+@import '../styles/colors';
+@import '../styles/responsive';
+
+.appBackground {
+  background: url('../../assets/images/background-cover.jpg') no-repeat
+    $color-ui-nav-background;
+  background-size: cover;
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-direction: column-reverse;
+
+  &.center {
+    background-position: center;
+  }
+
+  &.left {
+    background-position: left;
+  }
+
+  .overlay {
+    background-color: transparentize($color-theme, 0.8);
+    background-image: linear-gradient(
+      140deg,
+      $color-theme-gradient-end 20%,
+      $color-theme-gradient-end
+    );
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}

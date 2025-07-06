@@ -1,0 +1,45 @@
+@import '../styles/fonts';
+@import '../styles/colors';
+@import '../styles/responsive';
+
+.page {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5.5rem;
+
+  @media (max-width: $mobile-max) {
+    margin-top: 2.1rem;
+  }
+
+  .header {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5.5rem;
+
+    .metadata {
+      align-self: baseline;
+      display: flex;
+      flex-direction: row;
+      margin: 0;
+      margin-top: 2.1rem;
+    }
+  }
+
+  .main {
+    align-items: stretch;
+    color: $color-content-body;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5.5rem;
+
+    > :first-child {
+      margin-top: 0;
+    }
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+}

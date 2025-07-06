@@ -1,0 +1,121 @@
+@import '../styles/fonts';
+@import '../styles/colors';
+@import '../styles/animations';
+@import '../styles/responsive';
+
+@mixin container-column {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: $mobile-max) {
+    align-items: stretch;
+  }
+}
+
+.navigationBar {
+  @include container-column;
+
+  color: $color-ui-nav-headline-normal;
+  flex-grow: 0;
+  flex-shrink: 0;
+  text-transform: uppercase;
+
+  @media (max-width: $mobile-max) {
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-top: constant(safe-area-inset-top);
+    margin-top: env(safe-area-inset-top);
+    margin-right: constant(safe-area-inset-right);
+    margin-right: env(safe-area-inset-right);
+    margin-bottom: constant(safe-area-inset-bottom);
+    margin-bottom: env(safe-area-inset-bottom);
+    margin-left: constant(safe-area-inset-left);
+    margin-left: env(safe-area-inset-left);
+    padding-top: 44px;
+  }
+
+  .list {
+    @include container-column;
+
+    flex-grow: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    .item {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      margin-bottom: 3.4rem;
+
+      @media (max-width: $mobile-max) {
+        border-bottom: solid 0.5px $_gray-55;
+        justify-content: flex-start;
+        margin: 0;
+        opacity: 0;
+        padding: 2.1rem;
+        transform: scale(1.15) translateY(-30px);
+        transition: transform 0.5s $cubic, opacity 0.6s $cubic;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .navigationItemContents {
+        align-items: baseline;
+        display: flex;
+        flex-direction: row;
+        font-size: 3em;
+        font-weight: 400;
+        line-height: 1.13;
+        margin-bottom: -0.4rem;
+        margin-top: -0.8rem;
+        text-shadow: 0 2px 4px $color-ui-nav-headline-shadow;
+
+        @media (max-width: $mobile-max) {
+          flex-grow: 1;
+          font-family: $font-text-sans;
+          font-size: 1.5em;
+          font-weight: 200;
+          line-height: calc(29 / 15);
+          margin-bottom: -0.9rem;
+          margin-top: -1.2rem;
+          text-shadow: none;
+        }
+
+        a {
+          @media (max-width: $mobile-max) {
+            flex-grow: 1;
+          }
+        }
+
+        a::after {
+          display: inline-block;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+          content: '';
+          height: 2.1rem;
+          margin-left: 2.1rem;
+          width: 0.3rem;
+
+          @media (max-width: $mobile-max) {
+            content: none;
+          }
+        }
+      }
+    }
+  }
+
+  &.open {
+    .list {
+      .item {
+        @media (max-width: $mobile-max) {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+    }
+  }
+}

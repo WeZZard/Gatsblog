@@ -1,0 +1,71 @@
+@import '../styles/fonts';
+@import '../styles/colors';
+@import '../styles/responsive';
+
+.flexWrapper {
+  align-items: stretch;
+  color: $color-content-footer-text;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+
+  .footnoteList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    .footnoteItem {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      margin-bottom: calc(5.5rem - 3.4rem);
+      margin-top: -2.1rem;
+      padding: 0;
+      padding-bottom: 3.4rem;
+      padding-top: 2.1rem;
+
+      @media (max-width: $mobile-max) {
+        margin-top: calc(-44px);
+        padding-top: calc(2.1rem + 44px);
+      }
+
+      &:last-child {
+        margin-bottom: calc(-3.4rem);
+      }
+
+      > :first-child {
+        margin-top: 0;
+      }
+
+      > :last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.label {
+  font-family: $font-text-monospaced;
+  font-size: (15em / 15);
+  font-weight: 300;
+  margin-bottom: -1.1rem;
+  margin-right: 0.8rem;
+  margin-top: -1.2rem;
+
+  &::before {
+    content: '<';
+  }
+
+  &::after {
+    content: '>';
+  }
+}
+
+.backReference {
+  font-family: $font-text-monospaced;
+  font-size: (15em / 15);
+  margin-bottom: -1.1rem;
+  margin-left: 0.5rem;
+  margin-top: -1.2rem;
+}

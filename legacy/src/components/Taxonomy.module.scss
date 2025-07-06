@@ -1,0 +1,48 @@
+@import '../styles/colors';
+
+@mixin text {
+  color: $color-ui-caption-label;
+  font-size: 1.1em;
+  font-weight: 500;
+  line-height: calc(21 / 11);
+  margin-bottom: -0.7rem;
+  margin-top: -0.6rem;
+  text-transform: uppercase;
+}
+
+.taxonomy {
+  @include text;
+  display: inline;
+
+  .taxonomyName {
+    display: inline;
+
+    &::after {
+      display: inline-block;
+      background: $color-ui-caption-separator;
+      content: '';
+      height: 0.8rem;
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
+      width: 0.1rem;
+      vertical-align: baseline;
+    }
+  }
+
+  .taxonomyItemList {
+    display: inline;
+    margin: 0;
+    padding: 0;
+
+    .taxonomyItem {
+      display: inline-block;
+      margin: 0;
+      margin-right: 0.8rem;
+      padding: 0;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

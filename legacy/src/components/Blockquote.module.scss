@@ -1,0 +1,30 @@
+@import '../styles/fonts';
+@import '../styles/colors';
+@import '../styles/responsive';
+
+.blockquote {
+  border-left: 3px solid $color-content-quote-indicator;
+  color: $color-content-quote;
+  font-style: italic;
+  font-weight: 600;
+  margin-bottom: 3.4rem;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0;
+  padding: 0;
+  padding-bottom: 2.1rem;
+  padding-left: 3.4rem;
+  padding-top: 2.1rem;
+
+  @media (max-width: $mobile-max) {
+    padding-left: 2.1rem;
+  }
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
