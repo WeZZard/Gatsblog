@@ -11,18 +11,43 @@ class Link extends React.Component {
     super(props);
     this.handleClick = this.handleClick.bind(this);
 
+    // During SSR, completely skip all processing to avoid circular reference issues
+    // Use a more basic check that doesn't trigger lodash
+    try {
+      if (typeof window === 'undefined') {
+        this.state = { isProtected: false };
+        return;
+      }
+    } catch (e) {
+      // If even this fails, assume SSR
+      this.state = { isProtected: false };
+      return;
+    }
+
     const { to } = this.props;
+
+    // Safety check for undefined or null 'to' prop
+    if (!to || typeof to !== 'string') {
+      this.state = { isProtected: false };
+      return;
+    }
 
     const protectedPrefix = 'protected://';
 
     if (to.startsWith(protectedPrefix)) {
       const protectedUrl = to.slice(protectedPrefix.length);
 
-      const originalUrl = decrypt(protectedUrl);
+      try {
+        const originalUrl = decrypt(protectedUrl);
 
-      const components = originalUrl.split('').reverse();
+        const components = originalUrl.split('').reverse();
 
-      this.state = { isProtected: true, components };
+        this.state = { isProtected: true, components };
+      } catch (error) {
+        // If decryption fails, treat as non-protected link
+        console.warn('Failed to decrypt protected URL:', error);
+        this.state = { isProtected: false };
+      }
     } else if (to.startsWith('toprotect://')) {
       throw `Trying to created a link with to-protect contents (link starts with toprotect://), which is expected to be converted into protected contents by the framework.`;
     } else {

@@ -4,21 +4,17 @@
  * @return {[Any]}
  */
 export default children => {
-  // Handle undefined or null children
-  if (children === undefined || children === null) {
+  // Handle falsy values first
+  if (!children) {
     return [];
   }
   
-  // During SSR, avoid deep inspection of complex objects to prevent circular references
-  if (typeof children === 'object' && children !== null) {
-    // If it's already an array, return it as-is
-    if (Array.isArray(children)) {
-      return children;
-    }
-    // For any other object (including React elements), wrap in array without inspection
-    return [children];
+  // For arrays, return as-is
+  if (Array.isArray(children)) {
+    return children;
   }
   
-  // Handle primitives
+  // For everything else, wrap in array without any property access
+  // This avoids triggering circular reference issues during SSR
   return [children];
 };
