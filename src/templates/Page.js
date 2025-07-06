@@ -22,7 +22,7 @@ class Page extends React.Component {
       keywords,
       lang,
       file: {
-        childMdx: { excerpt, code },
+        childMdx: { excerpt, body },
       },
     } = page;
 
@@ -35,7 +35,7 @@ class Page extends React.Component {
           </aside>
         </header>
         <section className={styles.main}>
-          <MDXBody textStyle={'sans'} code={code} />
+          <MDXBody textStyle={'sans'} body={body} />
         </section>
       </article>
     );
@@ -73,10 +73,7 @@ export const pageQuery = graphql`
       file {
         childMdx {
           excerpt(pruneLength: 300)
-          code {
-            body
-            scope
-          }
+          body
         }
       }
     }

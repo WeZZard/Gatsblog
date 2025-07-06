@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import MDXRenderer from 'gatsby-mdx/mdx-renderer';
+import { MDXRenderer } from 'gatsby-plugin-mdx';
 import MDXContext from './MDXContext';
 import Heading from './Heading';
 import Table from './Table';
@@ -150,16 +150,16 @@ const components = {
   inlinemath: InlineMath,
 };
 
-const MDXBody = ({ textStyle, code }) => (
+const MDXBody = ({ textStyle, body }) => (
   <MDXContext.Provider value={textStyle}>
-    <MDXRenderer scope={scope} components={components}>
-      {code.body}
+    <MDXRenderer components={components}>
+      {body}
     </MDXRenderer>
   </MDXContext.Provider>
 );
 
 MDXBody.propTypes = {
-  code: PropTypes.object.isRequired,
+  body: PropTypes.string.isRequired,
   textStyle: PropTypes.string.isRequired,
 };
 

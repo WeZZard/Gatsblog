@@ -27,7 +27,7 @@ class Post extends React.Component {
       keywords,
       license,
       file: {
-        childMdx: { excerpt, code, headings },
+        childMdx: { excerpt, body },
       },
     } = post;
 
@@ -45,7 +45,7 @@ class Post extends React.Component {
           </aside>
         </header>
         <main className={styles.main}>
-          <MDXBody textStyle={'serif'} code={code} />
+          <MDXBody textStyle={'serif'} body={body} />
         </main>
         <footer className={styles.footer}>
           <PostFooter tags={tags} license={license} />
@@ -69,7 +69,6 @@ class Post extends React.Component {
         title={post.title}
         keywords={allKeywords}
         description={excerpt}
-        headings={headings}
         sections={[article, moreItems].filter(_ => _)}
       />
     );
@@ -101,14 +100,7 @@ export const pageQuery = graphql`
       file {
         childMdx {
           excerpt(pruneLength: 100)
-          code {
-            body
-            scope
-          }
-          headings {
-            value
-            depth
-          }
+          body
         }
       }
     }
