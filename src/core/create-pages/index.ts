@@ -96,20 +96,24 @@ export default async function createPages(args: CreatePagesArgs): Promise<void> 
     defaultLicense,
   };
 
-  // Import TypeScript functions
+  // Import all TypeScript functions
   const createPageOfHome = require('./create-page-of-home').default;
+  const createPageOfCategories = require('./create-page-of-categories').default;
+  const createPageOfTags = require('./create-page-of-tags').default;
   const createPagesForEachCategory = require('./create-pages-for-each-category').default;
+  const createPagesForEachTag = require('./create-pages-for-each-tag').default;
+  const createPagesForEachPage = require('./create-pages-for-each-page').default;
   const createPagesForEachPost = require('./create-pages-for-each-post').default;
 
-  // Preserve exact Promise.all parallel execution pattern
+  // Preserve exact Promise.all parallel execution pattern - now with all TypeScript functions
   await Promise.all(
     [
       createPageOfHome,
-      require('./create-page-of-categories'),
-      require('./create-page-of-tags'),
+      createPageOfCategories,
+      createPageOfTags,
       createPagesForEachCategory,
-      require('./create-pages-for-each-tag'),
-      require('./create-pages-for-each-page'),
+      createPagesForEachTag,
+      createPagesForEachPage,
       createPagesForEachPost,
     ].map(async createPages => await createPages(createPagesArgs)),
   );

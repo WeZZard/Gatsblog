@@ -268,6 +268,64 @@ export interface PaginationResult {
   pagesOccupied: number;
 }
 
+// Taxonomy index page types
+export interface TaxonomyIndexPageContext {
+  type: string;
+  slug: string;
+  locale: LocaleNode | null;
+  componentName: string;
+  title: string | null;
+  showsPageTitle: boolean;
+  keywords: string[];
+  description: string;
+  taxonomies: string[];
+  paginationInfo: {
+    basePath: string;
+    pageIndex: number;
+    pagesCount: number;
+    previousPageTitle: string;
+    nextPageTitle: string;
+  };
+}
+
+export interface CreateTaxonomyIndexPagesArgs {
+  type: string;
+  createPage: Function;
+  siteKeywords: string[];
+  siteDescription: string;
+  locale: LocaleNode | null;
+  componentName: string;
+  taxonomies: string[];
+  itemsPerPage: number;
+  createPageTitle: (locale: LocaleNode | null, pageIndex: number) => string | null;
+  createPagePath: (locale: LocaleNode | null, pageIndex: number) => string;
+  showsPageTitle: boolean;
+  previousPageTitle: string;
+  nextPageTitle: string;
+}
+
+export interface TaxonomyIndexPageMetadata {
+  name: string;
+  componentName: string;
+  getPageTitle: (locale: LocaleNode | null, pageIndex: number) => string | null;
+  getPagePath: (locale: LocaleNode | null, pageIndex: number) => string;
+  getPreviousPageTitle: () => string;
+  getNextPageTitle: () => string;
+}
+
+// Page creation context types
+export interface StaticPageContext {
+  pageId: string;
+}
+
+export interface AllPageQueryResult {
+  allPage: {
+    edges: Array<{
+      node: PageNode;
+    }>;
+  };
+}
+
 // Function type definitions
 export type CreatePagesFunction = (args: CreatePagesArgsExtended) => Promise<void>;
 export type CreatePostPagesFunction = (args: CreatePagesArgsExtended) => Promise<void>;
