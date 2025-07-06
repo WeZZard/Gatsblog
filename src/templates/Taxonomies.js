@@ -28,16 +28,46 @@ class Taxonomies extends React.Component {
 
     const posts = postNodes.map(postNode => postNode.node);
 
+    // Defensive check to avoid circular reference issues with CSS modules during SSR
+    const safeStyles = styles || {};
+    
     const header = showsPageTitle ? (
-      <header className={styles.header}>
+      <header className={safeStyles.header || 'header'}>
         <Title title={title} subtitle={subtitle} />
       </header>
     ) : null;
 
+    // Handle empty taxonomies array gracefully
+    if (!taxonomies || taxonomies.length === 0) {
+      const contents = (
+        <div className={safeStyles.index || 'index'}>
+          {header}
+          <main>
+            <div className={safeStyles.emptyState || 'empty-state'}>
+              <p>No {type}s found.</p>
+            </div>
+          </main>
+          <div className={safeStyles.paginator || 'paginator'}>
+            <Paginator paginationInfo={paginationInfo} />
+          </div>
+        </div>
+      );
+      
+      return (
+        <Main
+          slug={slug}
+          title={title}
+          description={description}
+          keywords={keywords}
+          sections={contents}
+        />
+      );
+    }
+
     taxonomies.sort((t1, t2) => t1 > t2);
 
     const components = taxonomies.map((taxonomy, index) => (
-      <div key={index} className={styles.taxonomySummary}>
+      <div key={index} className={safeStyles.taxonomySummary || 'taxonomy-summary'}>
         {React.createElement(TaxonomySummary, {
           type,
           taxonomy,
@@ -47,10 +77,10 @@ class Taxonomies extends React.Component {
     ));
 
     const contents = (
-      <div className={styles.index}>
+      <div className={safeStyles.index || 'index'}>
         {header}
         <main>{components}</main>
-        <div className={styles.paginator}>
+        <div className={safeStyles.paginator || 'paginator'}>
           <Paginator paginationInfo={paginationInfo} />
         </div>
       </div>

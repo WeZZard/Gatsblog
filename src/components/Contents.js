@@ -8,13 +8,16 @@ import ContentSeparator from './ContentSeparator';
 // Removed normalizeChildren import to avoid circular reference issues during SSR
 
 const Contents = ({ sections }) => {
+  // Defensive check to avoid circular reference issues with CSS modules during SSR
+  const safeStyles = styles || {};
+  
   // Always render sections directly to avoid circular reference issues
   // This is the safest approach for SSR with React elements
   return (
-    <div className={styles.contents}>
-      <div className={styles.section}>{sections}</div>
+    <div className={safeStyles.contents || 'contents'}>
+      <div className={safeStyles.section || 'section'}>{sections}</div>
       <ContentSeparator />
-      <footer className={styles.section}>
+      <footer className={safeStyles.section || 'section'}>
         <PageInfo />
       </footer>
     </div>

@@ -12,6 +12,9 @@ import { graphql } from 'gatsby';
 class Index extends React.Component {
   render() {
     const { data, pageContext } = this.props;
+    
+    // Defensive check to avoid circular reference issues with CSS modules during SSR
+    const safeStyles = styles || {};
     const {
       slug,
       paginationInfo,
@@ -30,22 +33,22 @@ class Index extends React.Component {
     posts.sort((p1, p2) => p1.createdTime < p2.createdTime);
 
     const header = showsPageTitle ? (
-      <header className={styles.header}>
+      <header className={safeStyles.header || 'header'}>
         <Title title={title} subtitle={subtitle} />
       </header>
     ) : null;
 
     const contents = (
-      <div className={styles.index}>
+      <div className={safeStyles.index || 'index'}>
         {header}
-        <main className={styles.main}>
+        <main className={safeStyles.main || 'main'}>
           {posts.map((post, index) => (
-            <div key={index} className={styles.postExcerpt}>
+            <div key={index} className={safeStyles.postExcerpt || 'post-excerpt'}>
               {React.createElement(PostExcerpt, { item: post })}
             </div>
           ))}
         </main>
-        <div className={styles.paginator}>
+        <div className={safeStyles.paginator || 'paginator'}>
           <Paginator paginationInfo={paginationInfo} />
         </div>
       </div>

@@ -57,18 +57,21 @@ class Navigation extends React.Component {
 
     const { isTocMenuOpen, isNavMenuOpen } = this.state;
 
-    let navigationClassNames = [styles.navigation];
+    // Defensive check to avoid circular reference issues with CSS modules during SSR
+    const safeStyles = styles || {};
+    
+    let navigationClassNames = [safeStyles.navigation || 'navigation'];
 
     if (isTocMenuOpen || isNavMenuOpen) {
-      navigationClassNames.push(styles.isButtonSelected);
+      navigationClassNames.push(safeStyles.isButtonSelected || 'is-button-selected');
     }
 
     if (isTocMenuOpen) {
-      navigationClassNames.push(styles.isTocButtonSelected);
+      navigationClassNames.push(safeStyles.isTocButtonSelected || 'is-toc-button-selected');
     }
 
     if (isNavMenuOpen) {
-      navigationClassNames.push(styles.isNavButtonSelected);
+      navigationClassNames.push(safeStyles.isNavButtonSelected || 'is-nav-button-selected');
     }
 
     const navigationClassName = navigationClassNames.join(' ');
@@ -76,7 +79,7 @@ class Navigation extends React.Component {
     const hasTableOfContents = (headings && headings.length > 0) || false;
 
     const tableOfContentsComponent = hasTableOfContents ? (
-      <div className={styles.tableOfContents}>
+      <div className={safeStyles.tableOfContents || 'table-of-contents'}>
         <TableOfContents
           headings={headings}
           menuItemDidTap={this.menuItemDidTap}
@@ -104,10 +107,10 @@ class Navigation extends React.Component {
 
     const showsSlogans = !(headings && headings.length > 0);
 
-    const siteFooterClassNames = [styles.siteFooter];
+    const siteFooterClassNames = [safeStyles.siteFooter || 'site-footer'];
 
     if (showsSlogans) {
-      siteFooterClassNames.push(styles.growEnabled);
+      siteFooterClassNames.push(safeStyles.growEnabled || 'grow-enabled');
     }
 
     const siteFooterClassName = siteFooterClassNames.join(' ');
@@ -134,14 +137,14 @@ class Navigation extends React.Component {
         }) => {
           return (
             <div className={navigationClassName}>
-              <div className={styles.header}>
-                <div className={styles.navButton}>{navButton}</div>
-                <div className={styles.siteTitle}>
+              <div className={safeStyles.header || 'header'}>
+                <div className={safeStyles.navButton || 'nav-button'}>{navButton}</div>
+                <div className={safeStyles.siteTitle || 'site-title'}>
                   <SiteTitle title={title} />
                 </div>
-                <div className={styles.tocButton}>{tocButton}</div>
+                <div className={safeStyles.tocButton || 'toc-button'}>{tocButton}</div>
               </div>
-              <div className={styles.navigationBar}>
+              <div className={safeStyles.navigationBar || 'navigation-bar'}>
                 <NavigationBar
                   isOpen={isNavMenuOpen}
                   menuItemDidTap={this.menuItemDidTap}
