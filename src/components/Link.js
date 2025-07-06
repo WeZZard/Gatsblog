@@ -4,25 +4,31 @@ import styles from './Link.module.scss';
 
 import { Link as _Link } from 'gatsby';
 
-const { decrypt } = require('../../core/utils');
+// Simple functional component for SSR to avoid circular reference issues
+const Link = ({ to, kind, className, obfuscatedHref, onClick, children, ...others }) => {
+  // During SSR, render simple links without any complex processing
+  if (typeof window === 'undefined') {
+    // Use minimal processing to avoid circular references
+    const basicClassName = className || '';
+    const href = to || '#';
+    
+    // Always render as simple <a> tag during SSR to avoid any complexity
+    return (
+      <a className={basicClassName} href={href} {...others}>
+        {children}
+      </a>
+    );
+  }
 
-class Link extends React.Component {
+  // For client-side rendering, use the full component with protection logic
+  return <LinkClientSide to={to} kind={kind} className={className} obfuscatedHref={obfuscatedHref} onClick={onClick} {...others}>{children}</LinkClientSide>;
+};
+
+// Client-side component with full functionality
+class LinkClientSide extends React.Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
-
-    // During SSR, completely skip all processing to avoid circular reference issues
-    // Use a more basic check that doesn't trigger lodash
-    try {
-      if (typeof window === 'undefined') {
-        this.state = { isProtected: false };
-        return;
-      }
-    } catch (e) {
-      // If even this fails, assume SSR
-      this.state = { isProtected: false };
-      return;
-    }
 
     const { to } = this.props;
 
@@ -38,6 +44,8 @@ class Link extends React.Component {
       const protectedUrl = to.slice(protectedPrefix.length);
 
       try {
+        // Import decrypt during client-side rendering
+        const { decrypt } = require('../../core/utils');
         const originalUrl = decrypt(protectedUrl);
 
         const components = originalUrl.split('').reverse();
@@ -62,6 +70,7 @@ class Link extends React.Component {
       className,
       obfuscatedHref,
       onClick,
+      children,
       ...others
     } = this.props;
 
@@ -73,10 +82,11 @@ class Link extends React.Component {
         className,
         props: others,
         obfuscatedHref,
+        children,
       });
     }
 
-    return Link.renderLink({ kind, className, to, onClick, props: others });
+    return this.renderLink({ kind, className, to, onClick, props: others, children });
   }
 
   getProtectedUrl() {
@@ -88,21 +98,25 @@ class Link extends React.Component {
     }
   }
 
-  static renderLink({ kind, className, to, onClick, props }) {
+  renderLink({ kind, className, to, onClick, props, children }) {
     const linkClassName = [styles[kind], className].filter(_ => _).join(' ');
 
     if (to.startsWith('/') && !to.endsWith('.xml')) {
       return (
-        <_Link className={linkClassName} to={to} onClick={onClick} {...props} />
+        <_Link className={linkClassName} to={to} onClick={onClick} {...props}>
+          {children}
+        </_Link>
       );
     } else {
       return (
-        <a className={linkClassName} href={to} onClick={onClick} {...props} />
+        <a className={linkClassName} href={to} onClick={onClick} {...props}>
+          {children}
+        </a>
       );
     }
   }
 
-  renderProtectedLink({ kind, className, props, obfuscatedHref }) {
+  renderProtectedLink({ kind, className, props, obfuscatedHref, children }) {
     const linkClassName = [styles[kind], className].filter(_ => _).join(' ');
 
     return (
@@ -111,7 +125,9 @@ class Link extends React.Component {
         onClick={this.handleClick}
         href={obfuscatedHref}
         {...props}
-      />
+      >
+        {children}
+      </a>
     );
   }
 
