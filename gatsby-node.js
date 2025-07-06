@@ -52,12 +52,16 @@ exports.createSchemaCustomization = ({ actions }) => {
   createTypes(typeDefs);
 };
 
-// Configure webpack polyfills for remaining Node.js modules
+// Configure webpack to exclude Node.js modules from browser bundle
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
-      alias: {
-        'object.assign/polyfill': require.resolve('object-assign'),
+      fallback: {
+        assert: false,
+        util: false,
+        stream: false,
+        buffer: false,
+        'object.assign/polyfill': require.resolve('./object-assign-polyfill.js'),
       },
     },
   });
