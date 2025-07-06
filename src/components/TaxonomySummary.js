@@ -1,14 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 import styles from './TaxonomySummary.module.scss';
 
 import Link from './Link';
 
+// Simple kebab-case implementation to avoid lodash circular reference issues
+const kebabCase = (str) => {
+  return str
+    .replace(/([a-z])([A-Z])/g, '$1-$2')
+    .replace(/\s+/g, '-')
+    .toLowerCase();
+};
+
 const TaxonomySummary = ({ type, taxonomy, posts }) => {
   const baseSlug = getBaseSlug(type);
 
-  const slug = `${baseSlug}/${_.kebabCase(taxonomy)}`;
+  const slug = `${baseSlug}/${kebabCase(taxonomy)}`;
 
   const relatedPosts = getRelatedPosts(type, posts, taxonomy);
 

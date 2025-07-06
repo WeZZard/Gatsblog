@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Main.module.scss';
 import Media from 'react-media';
-import styled from 'styled-components';
 
 import Viewport from './Viewport';
 import SEO from './SEO';

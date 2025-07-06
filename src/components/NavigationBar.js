@@ -4,15 +4,15 @@ import styles from './NavigationBar.module.scss';
 
 import { StaticQuery, graphql } from 'gatsby';
 import Link from './Link';
-import styled from 'styled-components';
 
-const Item = styled.li`
-  @media (max-width: 1280px) {
-    transition-delay: ${({ isOpen, index, count }) =>
-      isOpen ? 0.2 + 0.07 * index : 0.56 - index * (0.56 / (count - 1))}s;
-    }
-  }
-`;
+// Simple component to replace styled-component and avoid react-is circular reference
+const Item = ({ children, className, isOpen, ...props }) => {
+  return (
+    <li className={className} {...props}>
+      {children}
+    </li>
+  );
+};
 
 class NavigationBar extends React.Component {
   render() {
@@ -86,6 +86,11 @@ class NavigationBar extends React.Component {
           ];
 
           const components = navigationItems.map(navigationItem => {
+            // Safety check for undefined/null navigation items
+            if (!navigationItem || !navigationItem.slug || !navigationItem.name) {
+              return null;
+            }
+
             const slugPattern =
               navigationItem.slug === '/'
                 ? `^((${navigationItem.slug})|(/page-\\d+))$`
@@ -96,6 +101,11 @@ class NavigationBar extends React.Component {
             const isSelected = slug && slugRegex.exec(slug) !== null;
 
             const { name: itemName, slug: itemSlug } = navigationItem;
+
+            // Additional safety check for the extracted values
+            if (!itemName || !itemSlug) {
+              return null;
+            }
 
             const className = isSelected
               ? [styles.navigationItemContents, styles.selected].join(' ')
@@ -116,7 +126,7 @@ class NavigationBar extends React.Component {
                 </span>
               </Item>
             );
-          });
+          }).filter(component => component !== null);
 
           const navigationBarClassNames = [styles.navigationBar];
 
