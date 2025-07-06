@@ -44,8 +44,8 @@ interface NavigationState {
 }
 
 interface NavigationQueryData {
-  config: {
-    site: {
+  site: {
+    siteMetadata: {
       title: string;
     };
   };
@@ -166,8 +166,8 @@ class Navigation extends React.Component<NavigationProps, NavigationState> {
       <StaticQuery<NavigationQueryData>
         query={componentQuery}
         render={({
-          config: {
-            site: { title },
+          site: {
+            siteMetadata: { title },
           },
         }) => {
           return (
@@ -204,8 +204,8 @@ export default Navigation;
 
 const componentQuery = graphql`
   query NavigationQuery {
-    config {
-      site {
+    site {
+      siteMetadata {
         title
       }
     }

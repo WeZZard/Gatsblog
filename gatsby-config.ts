@@ -122,30 +122,31 @@ const config: GatsbyConfig = {
         `,
         feeds: [
           {
-            serialize: ({ query: { site, allMdx } }: any) => {
-              return allMdx.nodes.map((node: any) => {
-                return Object.assign({}, node.frontmatter, {
-                  description: node.excerpt,
-                  date: node.frontmatter.createdTime,
-                  url: site.siteMetadata.siteUrl + node.fields.slug,
-                  guid: site.siteMetadata.siteUrl + node.fields.slug,
+            serialize: ({ query: { site, allPost } }: any) => {
+              return allPost.nodes.map((node: any) => {
+                return Object.assign({}, {
+                  title: node.title,
+                  description: node.file.childMdx.excerpt,
+                  date: node.createdTime,
+                  url: site.siteMetadata.siteUrl + '/post/' + node.slug,
+                  guid: site.siteMetadata.siteUrl + '/post/' + node.slug,
                 });
               });
             },
             query: `
               {
-                allMdx(
-                  sort: { frontmatter: { createdTime: DESC } }
-                  filter: { frontmatter: { isPublished: { eq: true } } }
+                allPost(
+                  sort: { createdTime: DESC }
+                  filter: { isPublished: { eq: true } }
                 ) {
                   nodes {
-                    excerpt
-                    fields {
-                      slug
-                    }
-                    frontmatter {
-                      title
-                      createdTime
+                    title
+                    createdTime
+                    slug
+                    file {
+                      childMdx {
+                        excerpt
+                      }
                     }
                   }
                 }

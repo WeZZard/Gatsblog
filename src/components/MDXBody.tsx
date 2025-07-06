@@ -153,11 +153,27 @@ const components = {
 };
 
 const MDXBody: React.FC<MDXBodyProps> = ({ textStyle, code }) => {
+  // Handle empty code body
+  if (!code.body || code.body.trim() === '') {
+    return (
+      <MDXContext.Provider value={textStyle}>
+        <MDXProvider components={components}>
+          <div>Content loading...</div>
+        </MDXProvider>
+      </MDXContext.Provider>
+    );
+  }
+
   // In Gatsby v5, we need to use the MDX component directly
   const MDXContent = React.useMemo(() => {
-    // eslint-disable-next-line no-new-func
-    const func = new Function(code.body);
-    return func.call({ ...code.scope });
+    try {
+      // eslint-disable-next-line no-new-func
+      const func = new Function(code.body);
+      return func.call({ ...code.scope });
+    } catch (error) {
+      console.error('Error creating MDX function:', error);
+      return () => <div>Error rendering content</div>;
+    }
   }, [code.body, code.scope]);
 
   return (
