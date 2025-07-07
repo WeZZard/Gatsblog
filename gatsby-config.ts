@@ -67,6 +67,11 @@ const config: GatsbyConfig = {
           rehypePlugins: [
             require(`rehype-katex`),
           ],
+          development: process.env.NODE_ENV === 'development',
+          // More lenient parsing for legacy content compatibility
+          jsx: true,
+          format: 'mdx',
+          outputFormat: 'function-body',
         },
         gatsbyRemarkPlugins: [
           {
@@ -76,6 +81,9 @@ const config: GatsbyConfig = {
             },
           },
         ],
+        // Legacy content compatibility
+        lessBabel: true,
+        defaultLayouts: {},
       },
     },
 
