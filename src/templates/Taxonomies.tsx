@@ -34,31 +34,35 @@ const Taxonomies: React.FC<TaxonomiesProps> = ({ data, pageContext }) => {
 
   const { site } = data;
 
+  const header = showsPageTitle && title ? (
+    <header className={styles.header}>
+      <Title title={title} />
+    </header>
+  ) : null;
+
   const sections = (
-    <article className={styles.taxonomies}>
-      {showsPageTitle && title && (
-        <Title title={title} />
-      )}
-      
-      <div className={styles.taxonomiesList}>
+    <div className={styles.index}>
+      {header}
+      <main>
         {taxonomies.map((taxonomy, index) => (
-          <div key={index} className={styles.taxonomyItem}>
-            <h3 className={styles.taxonomyName}>{taxonomy}</h3>
+          <div key={index} className={styles.taxonomySummary}>
+            <h3>{taxonomy}</h3>
             {/* TODO: Add link to individual taxonomy page */}
           </div>
         ))}
+      </main>
+      <div className={styles.paginator}>
+        <Paginator 
+          paginationInfo={{
+            ...paginationInfo,
+            currentPage: paginationInfo.pageIndex + 1,
+            pageCount: paginationInfo.pagesCount,
+            hasNextPage: paginationInfo.pageIndex < paginationInfo.pagesCount - 1,
+            hasPreviousPage: paginationInfo.pageIndex > 0,
+          }} 
+        />
       </div>
-
-      <Paginator 
-        paginationInfo={{
-          ...paginationInfo,
-          currentPage: paginationInfo.pageIndex + 1,
-          pageCount: paginationInfo.pagesCount,
-          hasNextPage: paginationInfo.pageIndex < paginationInfo.pagesCount - 1,
-          hasPreviousPage: paginationInfo.pageIndex > 0,
-        }} 
-      />
-    </article>
+    </div>
   );
 
   return (

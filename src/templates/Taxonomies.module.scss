@@ -33,31 +33,3 @@
     margin-bottom: 5.5rem;
   }
 }
-
-.taxonomies {
-  @include index-item;
-  margin-top: 5.5rem;
-
-  @media (max-width: $mobile-max) {
-    margin-top: 2.1rem;
-  }
-}
-
-.taxonomiesList {
-  @include index-item;
-  margin-bottom: 2.1rem;
-}
-
-.taxonomyItem {
-  @include index-item;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border: 1px solid #eee;
-  border-radius: 4px;
-}
-
-.taxonomyName {
-  margin: 0;
-  font-size: 1.2em;
-  font-weight: 600;
-}

@@ -7,14 +7,20 @@ interface TitleProps {
   textStyle?: string;
 }
 
-const Title: React.FC<TitleProps> = ({ title, subtitle, textStyle }) => {
-  const titleClass = textStyle ? styles[textStyle] : styles.title;
-  
-  return (
-    <div className={styles.titleContainer}>
-      <h1 className={titleClass}>{title}</h1>
-      {subtitle && <h2 className={styles.subtitle}>{subtitle}</h2>}
+const Title: React.FC<TitleProps> = ({ title, subtitle, textStyle = 'sans' }) => {
+  const subtitleComponent = subtitle ? (
+    <div className={styles.subtitle}>
+      <h2 className={styles[textStyle]}>{subtitle}</h2>
     </div>
+  ) : null;
+
+  return (
+    <>
+      <div className={styles.title}>
+        <h1 className={styles[textStyle]}>{title}</h1>
+      </div>
+      {subtitleComponent}
+    </>
   );
 };
 

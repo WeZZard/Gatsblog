@@ -104,15 +104,6 @@
             content: none;
           }
         }
-
-        &.selected {
-          font-weight: 600;
-          color: $color-theme;
-          
-          a::after {
-            background-color: $color-theme;
-          }
-        }
       }
     }
   }
