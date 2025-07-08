@@ -26,6 +26,11 @@
   color: $color-content-headline-secondary;
 }
 
+.titleContainer {
+  @include container-column-baseline;
+  margin-bottom: 2rem;
+}
+
 .title {
   @include container-column-baseline;
   @include heading;

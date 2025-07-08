@@ -65,17 +65,19 @@ const Page: React.FC<PageProps_> = ({ data, pageContext }) => {
 
   const sections = (
     <article className={styles.page}>
-      <header className={styles.pageHeader}>
+      <header className={styles.header}>
         <Title title={title} subtitle={subtitle} />
-        <div className={styles.pageMetadata}>
+        <div className={styles.metadata}>
           <time dateTime={createdTime}>{createdTime}</time>
         </div>
       </header>
 
-      <MDXBody 
-        textStyle="page"
-        code={code}
-      />
+      <div className={styles.main}>
+        <MDXBody 
+          textStyle="page"
+          code={code}
+        />
+      </div>
     </article>
   );
 

@@ -8,7 +8,7 @@ interface SocialBarProps {
 
 // TODO: Implement full SocialBar functionality
 const SocialBar: React.FC<SocialBarProps> = ({ isOpen, menuItemDidTap }) => {
-  const socialBarClassNames = [styles.socialBar];
+  const socialBarClassNames = [styles.social];
 
   if (isOpen) {
     socialBarClassNames.push(styles.open);
