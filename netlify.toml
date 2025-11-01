@@ -18,6 +18,14 @@
   force = true
 
 [[redirects]]
+  # Flexible nested short links: any path ending with /l/:code
+  # Example: /post/slug/l/rdt.claudecode → /post/slug?utm_campaign=rdt.claudecode
+  from = "/*/l/:code"
+  to = "/:splat?utm_campaign=:code"
+  status = 301
+  force = true
+
+[[redirects]]
   # Shortcut to landing page with single-parameter campaign
   from = "/l/project"
   to = "https://project-m-wezzard.netlify.app/?utm_campaign=rdt.claudecode"
