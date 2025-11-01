@@ -10,6 +10,19 @@
 [[redirects]]
   from = "/l/:code"
   to = "/?utm_campaign=:code"
-  status = 302   # use 302 while testing; switch to 301 after verification
+  status = 301
   force = true
 
+[[redirects]]
+  # Shortcut to landing page with single-parameter campaign
+  from = "/l/project"
+  to = "https://project-m-wezzard.netlify.app/?utm_campaign=rdt.claudecode"
+  status = 301
+  force = true
+
+[[redirects]]
+  # Shortcut to the blog demo post with single-parameter campaign
+  from = "/l/blog-claudecode"
+  to = "/post/2025/09/build-your-first-agentic-loop-9d22/?utm_campaign=rdt.claudecode"
+  status = 301
+  force = true
