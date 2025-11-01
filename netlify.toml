@@ -1,0 +1,15 @@
+## Netlify configuration for blog (wezzard.com)
+
+[build]
+  publish = "public"
+
+## Branded short links on this domain → append single-parameter utm_campaign on same host
+## Examples:
+##   /l/rdt.claudecode       → /?utm_campaign=rdt.claudecode
+##   /l/tw.agenticai.s1.a    → /?utm_campaign=tw.agenticai.s1.a
+[[redirects]]
+  from = "/l/:code"
+  to = "/?utm_campaign=:code"
+  status = 302   # use 302 while testing; switch to 301 after verification
+  force = true
+
