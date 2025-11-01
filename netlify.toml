@@ -3,6 +3,10 @@
 [build]
   publish = "public"
 
+[[edge_functions]]
+  function = "flex_redirect"
+  path = "/*"
+
 ## Branded short links on this domain → append single-parameter utm_campaign on same host
 ## Examples:
 ##   /l/rdt.claudecode       → /?utm_campaign=rdt.claudecode
