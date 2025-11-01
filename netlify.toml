@@ -7,34 +7,5 @@
   function = "flex_redirect"
   path = "/*"
 
-## Branded short links on this domain → append single-parameter utm_campaign on same host
-## Examples:
-##   /l/rdt.claudecode       → /?utm_campaign=rdt.claudecode
-##   /l/tw.agenticai.s1.a    → /?utm_campaign=tw.agenticai.s1.a
-[[redirects]]
-  from = "/l/:code"
-  to = "/?utm_campaign=:code"
-  status = 301
-  force = true
-
-[[redirects]]
-  # Flexible nested short links: any path ending with /l/:code
-  # Example: /post/slug/l/rdt.claudecode → /post/slug?utm_campaign=rdt.claudecode
-  from = "/*/l/:code"
-  to = "/:splat?utm_campaign=:code"
-  status = 301
-  force = true
-
-[[redirects]]
-  # Shortcut to landing page with single-parameter campaign
-  from = "/l/project"
-  to = "https://project-m-wezzard.netlify.app/?utm_campaign=rdt.claudecode"
-  status = 301
-  force = true
-
-[[redirects]]
-  # Shortcut to the blog demo post with single-parameter campaign
-  from = "/l/blog-claudecode"
-  to = "/post/2025/09/build-your-first-agentic-loop-9d22/?utm_campaign=rdt.claudecode"
-  status = 301
-  force = true
+## Short-link logic is handled by Edge Function `flex_redirect` for both
+## root and nested forms: /l/:code and */l/:code
