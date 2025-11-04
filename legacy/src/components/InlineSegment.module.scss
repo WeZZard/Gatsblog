@@ -1,0 +1,16 @@
+.flexWrapper {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+}
+
+.inlineSegment {
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}

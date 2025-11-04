@@ -1,0 +1,12 @@
+@import '../styles/colors';
+
+.line {
+  align-items: baseline;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2.1rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

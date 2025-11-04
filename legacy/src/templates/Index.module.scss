@@ -1,0 +1,38 @@
+@import '../styles/responsive';
+
+@mixin container {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+}
+
+.index {
+  @include container;
+
+  flex-grow: 1;
+  margin-top: 5.5rem;
+
+  @media (max-width: $mobile-max) {
+    margin-top: 2.1rem;
+  }
+
+  .header {
+    @include container;
+  }
+
+  .main {
+    @include container;
+
+    .postExcerpt {
+      @include container;
+
+      margin-bottom: 5.5rem;
+    }
+  }
+
+  .paginator {
+    @include container;
+
+    margin-bottom: 5.5rem;
+  }
+}

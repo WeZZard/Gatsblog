@@ -1,0 +1,68 @@
+@import '../styles/colors';
+@import '../styles/responsive';
+
+@mixin container-column-stretch {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin text-site-info {
+  color: $color-ui-nav-footnote;
+  text-align: right;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+
+  @media (max-width: $mobile-max) {
+    text-align: center;
+  }
+}
+
+.siteFooter {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 1;
+
+  .siteInfo {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    flex-shrink: 1;
+    margin: 0;
+
+    .siteInfoItem {
+      @include container-column-stretch;
+
+      margin-bottom: 3.4rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .slogan {
+        @include text-site-info;
+
+        display: inline;
+        font-size: 3em;
+        font-weight: 500;
+        line-height: calc(42 / 30);
+        margin: 0;
+        margin-bottom: -1rem;
+        margin-top: -1.5rem;
+        padding: 0;
+      }
+
+      .copyright {
+        @include text-site-info;
+
+        display: inline;
+        font-size: 1.1em;
+        font-weight: 400;
+        line-height: 1.18;
+        margin-bottom: -0.3rem;
+        margin-top: -0.5rem;
+      }
+    }
+  }
+}

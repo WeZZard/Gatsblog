@@ -1,0 +1,67 @@
+@import '../styles/fonts';
+@import '../styles/colors';
+
+@mixin container-column-stretch {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+}
+
+.flexWrapper {
+  @include container-column-stretch;
+
+  margin: 0;
+
+  .header {
+    @include container-column-stretch;
+
+    margin-bottom: 2.1rem;
+
+    .title {
+      display: inline;
+      font-size: 2.4em;
+      font-weight: 500;
+      line-height: calc(34 / 24);
+    }
+
+    .subtitle {
+      display: inline;
+      font-size: 1.5em;
+      font-weight: 400;
+      line-height: calc(29 / 15);
+      margin-left: 0.8rem;
+      vertical-align: 0.05rem;
+    }
+  }
+
+  .content {
+    @include container-column-stretch;
+
+    margin-bottom: 3.4rem;
+
+    .paragraph {
+      color: $color-content-summary;
+      font-family: $font-text-serif;
+      font-size: 1.7em;
+      line-height: calc(29 / 17);
+      margin: 0;
+      margin-bottom: -1rem;
+      margin-top: -1.2rem;
+    }
+  }
+
+  .footer {
+    @include container-column-stretch;
+
+    .metadataLine {
+      align-items: baseline;
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 2.1rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

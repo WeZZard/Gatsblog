@@ -1,0 +1,79 @@
+@import '../styles/colors';
+@import '../styles/fonts';
+
+@mixin container-row-baseline {
+  align-items: baseline;
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin text {
+  font-size: 1.1em;
+  font-weight: 500;
+  line-height: 1.18;
+  margin-bottom: -0.3rem;
+  margin-top: -0.2rem;
+}
+
+.paginator {
+  @include container-row-baseline;
+
+  .previousPageTitle {
+    @include container-row-baseline;
+
+    margin-right: 1.3rem;
+    text-transform: uppercase;
+
+    a::before {
+      @include text;
+
+      content: '<';
+      margin-right: 0.5rem;
+      vertical-align: 0.05rem;
+    }
+  }
+
+  .pageIndicator {
+    @include container-row-baseline;
+
+    color: $color-ui-caption-secondary;
+    display: flex;
+  }
+
+  .nextPageTitle {
+    @include container-row-baseline;
+
+    margin-left: 1.3rem;
+    text-transform: uppercase;
+
+    a::after {
+      @include text;
+
+      content: '>';
+      margin-left: 0.5rem;
+      vertical-align: 0.05rem;
+    }
+  }
+
+  a {
+    color: $color-ui-caption-primary;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+
+    &:visited {
+      color: $color-ui-caption-primary;
+    }
+
+    &:hover,
+    &:visited:hover {
+      color: $color-hover;
+      transition: color 0.3s ease-in-out;
+    }
+  }
+
+  span {
+    @include text;
+    margin-bottom: -0.3rem;
+    margin-top: -0.2rem;
+  }
+}

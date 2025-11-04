@@ -1,0 +1,17 @@
+@import '../styles/colors';
+
+.link {
+  color: $color-tint;
+  text-decoration: underline;
+  transition: color 0.3s ease-in-out;
+
+  &:visited {
+    color: $color-tint;
+  }
+
+  &:hover,
+  &:visited:hover {
+    color: $color-hover;
+    transition: color 0.3s ease-in-out;
+  }
+}

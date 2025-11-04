@@ -1,0 +1,20 @@
+@import '../styles/fonts';
+@import '../styles/colors';
+
+.inlineCode {
+  background-color: $color-content-code-block-background;
+  border-left: solid 2px $color-content-code-block-indicator;
+  display: inline;
+  font-family: $font-text-monospaced;
+  font-size: calc(13em / 17);
+  font-weight: 400;
+  font-style: normal;
+  line-height: calc(29 / 13);
+  margin-bottom: -0.4rem;
+  margin-top: -0.6rem;
+  padding-bottom: 0;
+  padding-left: 0.3rem;
+  padding-right: calc(0.3rem + 2px);
+  padding-top: 0;
+  word-break: break-word;
+}

@@ -1,0 +1,87 @@
+@import '../styles/colors';
+@import '../styles/animations';
+@import '../styles/responsive';
+
+.button {
+  display: none;
+
+  .burger {
+    display: none;
+
+    .topBar {
+      display: none;
+    }
+
+    .bottomBar {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: $mobile-max) {
+  .button {
+    position: relative;
+    display: inline-block;
+    height: 44px;
+    width: 44px;
+    cursor: pointer;
+    transform: rotate(0deg);
+    transition: all 0.3s $cubic;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+
+    .burger {
+      width: 18px;
+      height: 8px;
+      position: relative;
+      display: block;
+      margin: -4px auto 0;
+      top: 50%;
+
+      @mixin bar {
+        width: 100%;
+        height: 1px;
+        display: block;
+        position: relative;
+        background: $_gray-89;
+        transition: all 0.3s $cubic;
+        transition-delay: 0s;
+      }
+
+      .topBar {
+        @include bar;
+
+        transform: translateY(0px) rotate(0deg);
+      }
+
+      .bottomBar {
+        @include bar;
+
+        transform: translateY(6px) rotate(0deg);
+      }
+    }
+
+    &.selected {
+      transform: rotate(90deg);
+
+      .burger {
+        @mixin bar-selected {
+          transition: all 0.4s $cubic;
+          transition-delay: 0.2s;
+        }
+
+        .topBar {
+          @include bar-selected;
+
+          transform: translateY(4px) rotate(45deg);
+        }
+
+        .bottomBar {
+          @include bar-selected;
+
+          transform: translateY(3px) rotate(-45deg);
+        }
+      }
+    }
+  }
+}
