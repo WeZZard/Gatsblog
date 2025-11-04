@@ -1,9 +1,11 @@
-const assert = require('assert');
+// Removed assert import to avoid webpack bundling issues
 const debug = require('debug');
 const locales = require('i18n-locales');
 
 const getDocumentType = sourceInstanceName => {
-  assert(typeof sourceInstanceName === 'string');
+  if (typeof sourceInstanceName !== 'string') {
+    throw new Error('sourceInstanceName must be a string');
+  }
 
   switch (sourceInstanceName) {
     case 'Post':
@@ -17,35 +19,27 @@ const getDocumentType = sourceInstanceName => {
 };
 
 const getTitle = (frontMatterTitle, documentName) => {
-  assert(
-    frontMatterTitle === null ||
-      frontMatterTitle === undefined ||
-      typeof frontMatterTitle === 'string',
-  );
-  assert(
-    documentName === null ||
-      documentName === undefined ||
-      typeof documentName === 'string',
-  );
+  if (!(frontMatterTitle === null || frontMatterTitle === undefined || typeof frontMatterTitle === 'string')) {
+    throw new Error('frontMatterTitle must be null, undefined, or string');
+  }
+  if (!(documentName === null || documentName === undefined || typeof documentName === 'string')) {
+    throw new Error('documentName must be null, undefined, or string');
+  }
 
   const titles = [frontMatterTitle, documentName].filter(_ => _);
   return titles.reverse().pop() || '';
 };
 
 const getCreatedTime = (frontMatterDate, documentNameDate, birthTime) => {
-  assert(
-    frontMatterDate === null ||
-      frontMatterDate === undefined ||
-      frontMatterDate instanceof Date,
-  );
-  assert(
-    documentNameDate === null ||
-      documentNameDate === undefined ||
-      documentNameDate instanceof Date,
-  );
-  assert(
-    birthTime === null || birthTime === undefined || birthTime instanceof Date,
-  );
+  if (!(frontMatterDate === null || frontMatterDate === undefined || frontMatterDate instanceof Date)) {
+    throw new Error('frontMatterDate must be null, undefined, or Date');
+  }
+  if (!(documentNameDate === null || documentNameDate === undefined || documentNameDate instanceof Date)) {
+    throw new Error('documentNameDate must be null, undefined, or Date');
+  }
+  if (!(birthTime === null || birthTime === undefined || birthTime instanceof Date)) {
+    throw new Error('birthTime must be null, undefined, or Date');
+  }
 
   const createdTimes = [frontMatterDate, documentNameDate, birthTime].filter(
     _ => _,
@@ -72,8 +66,12 @@ const localeIdentifierPattern = () => {
   if (!_isLocaleIdentifierPatternInitialized) {
     _localeIdentifierPattern_ = locales.join('|');
   }
-  assert(typeof _localeIdentifierPattern_ === 'string');
-  assert(_localeIdentifierPattern_ !== '');
+  if (typeof _localeIdentifierPattern_ !== 'string') {
+    throw new Error('localeIdentifierPattern must be a string');
+  }
+  if (_localeIdentifierPattern_ === '') {
+    throw new Error('localeIdentifierPattern cannot be empty');
+  }
   return _localeIdentifierPattern_;
 };
 

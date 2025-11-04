@@ -10,33 +10,32 @@ module.exports = {
       }
     }
   `,
-  setup: {},
+  setup: ({
+    query: {
+      config: { site },
+      ...rest
+    },
+  }) => {
+    let siteUrl = process.env.GATSBY_SITE_URL || '';
+
+    let safeSiteUrl;
+    if (siteUrl.endsWith('/')) {
+      safeSiteUrl = siteUrl.substring(0, siteUrl.length - 1);
+    } else {
+      safeSiteUrl = siteUrl;
+    }
+
+    return {
+      site_url: safeSiteUrl,
+      feed_url: safeSiteUrl + '/rss.xml',
+      copyright: site.owner,
+      title: site.title,
+      description: site.description,
+      ...rest,
+    };
+  },
   feeds: [
     {
-      setup: ({
-        query: {
-          config: { site },
-          ...rest
-        },
-      }) => {
-        let siteUrl = process.env.GATSBY_SITE_URL || '';
-
-        let safeSiteUrl;
-        if (siteUrl.endsWith('/')) {
-          safeSiteUrl = siteUrl.substring(0, siteUrl.length - 1);
-        } else {
-          safeSiteUrl = siteUrl;
-        }
-
-        return {
-          site_url: safeSiteUrl,
-          feed_url: safeSiteUrl + '/rss.xml',
-          copyright: site.owner,
-          title: site.title,
-          description: site.description,
-          ...rest,
-        };
-      },
       serialize: ({ query: { allPost } }) => {
         return allPost.edges.map(edge => {
           const post = edge.node;
@@ -96,7 +95,7 @@ module.exports = {
         }
       `,
       output: '/rss.xml',
-      title: ({ query: { config } }) => config.site.title,
+      title: 'RSS Feed',
     },
   ],
 };

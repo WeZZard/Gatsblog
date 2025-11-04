@@ -1,3 +1,6 @@
+// Load Node.js v11.10.0 compatibility polyfills
+// require('./polyfill');
+
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
@@ -48,9 +51,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-sitemap`,
       options: {
-        // Exclude specific pages or groups of pages using glob parameters
-        // See: https://github.com/isaacs/minimatch
-        exclude: ['/tag/*'],
+        // Updated configuration for gatsby-plugin-sitemap v5
+        excludes: ['/tag/*'],
         query: `
           {
             site: config {
@@ -99,16 +101,13 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-mdx`,
+      resolve: `gatsby-plugin-mdx`,
       options: {
-        extensions: ['.mdx', '.md'],
-        mdPlugins: [remarkMath, mdxTagKaTex],
-        globalScope: `
-        import { InlineMath } from 'react-katex';
-        import { BlockMath as MathBlock } from 'react-katex';
-        
-        export default { InlineMath, MathBlock };
-        `,
+        extensions: ['.mdx'],
+        // Updated configuration format for gatsby-plugin-mdx v5 + MDX v2
+        mdxOptions: {
+          remarkPlugins: [remarkMath, mdxTagKaTex],
+        },
         gatsbyRemarkPlugins: [
           {
             resolve: 'gatsby-remark-copy-linked-files',
@@ -123,6 +122,7 @@ module.exports = {
         ],
       },
     },
+    `gatsby-transformer-remark`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-yaml`,
     {
@@ -133,7 +133,6 @@ module.exports = {
         defaultQuality: 75,
       },
     },
-    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-plugin-sass`,
       options: {
@@ -157,6 +156,7 @@ module.exports = {
       resolve: `gatsby-plugin-feed`,
       options: gatsbyPluginFeedOptions,
     },
-    `gatsby-plugin-offline`,
+    // Temporarily disabled gatsby-plugin-offline for Node.js v11.10.0 compatibility
+    // `gatsby-plugin-offline`,
   ],
 };

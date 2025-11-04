@@ -21,35 +21,40 @@ const Icon = ({ icon }) => {
   throw `Unexpected icon resource: ${icon}`;
 };
 
-const SocialBar = ({ isOpen, menuItemDidTap }) => (
-  <StaticQuery
-    query={componentQuery}
-    render={({ config: { social: socialItems } }) => {
-      const wrapperClassNames = [styles.social];
+const SocialBar = ({ isOpen, menuItemDidTap }) => {
+  // Defensive check to avoid circular reference issues with CSS modules during SSR
+  const safeStyles = styles || {};
+  
+  return (
+    <StaticQuery
+      query={componentQuery}
+      render={({ config: { social: socialItems } }) => {
+        const wrapperClassNames = [safeStyles.social || 'social'];
 
-      if (isOpen) {
-        wrapperClassNames.push(styles.open);
-      }
+        if (isOpen) {
+          wrapperClassNames.push(safeStyles.open || 'open');
+        }
 
-      const wrapperClassName = wrapperClassNames.join(' ');
+        const wrapperClassName = wrapperClassNames.join(' ');
 
-      return (
-        <div className={wrapperClassName}>
-          {socialItems.map(item => (
-            <div key={item.name} className={styles.item}>
-              <Link kind={'social'} to={item.link} onClick={menuItemDidTap}>
-                <div className={styles.icon}>
-                  <Icon icon={item.icon} />
-                </div>
-                <span className={styles.title}>{item.name}</span>
-              </Link>
-            </div>
-          ))}
-        </div>
-      );
-    }}
-  />
-);
+        return (
+          <div className={wrapperClassName}>
+            {socialItems.map(item => (
+              <div key={item.name} className={safeStyles.item || 'item'}>
+                <Link kind={'social'} to={item.link} onClick={menuItemDidTap}>
+                  <div className={safeStyles.icon || 'icon'}>
+                    <Icon icon={item.icon} />
+                  </div>
+                  <span className={safeStyles.title || 'title'}>{item.name}</span>
+                </Link>
+              </div>
+            ))}
+          </div>
+        );
+      }}
+    />
+  );
+};
 
 SocialBar.displayName = 'SocialBar';
 

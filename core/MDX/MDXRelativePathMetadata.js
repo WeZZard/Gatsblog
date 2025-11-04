@@ -1,4 +1,4 @@
-const assert = require('assert');
+// Removed assert import to avoid webpack bundling issues
 const {
   localeIdentifierPattern,
   makeDisambiguateIdentifier: _,
@@ -144,8 +144,12 @@ const _parseMetadataForRelativePathOfPage = relativePath => {
 };
 
 module.exports = function(sourceInstanceName, relativePath) {
-  assert(typeof sourceInstanceName === 'string');
-  assert(typeof relativePath === 'string');
+  if (typeof sourceInstanceName !== 'string') {
+    throw new Error('sourceInstanceName must be a string');
+  }
+  if (typeof relativePath !== 'string') {
+    throw new Error('relativePath must be a string');
+  }
 
   switch (sourceInstanceName) {
     case 'Post':
@@ -153,6 +157,6 @@ module.exports = function(sourceInstanceName, relativePath) {
     case 'Page':
       return _parseMetadataForRelativePathOfPage(relativePath);
     default:
-      assert.fail(`Unexpected source instance name: ${sourceInstanceName}`);
+      throw new Error(`Unexpected source instance name: ${sourceInstanceName}`);
   }
 };

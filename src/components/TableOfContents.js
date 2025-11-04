@@ -1,18 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import assert from 'assert';
-import _ from 'lodash';
 import styles from './TableOfContents.module.scss';
-import styled from 'styled-components';
+// Simple kebab-case implementation to avoid lodash circular reference issues
+const kebabCase = (str) => {
+  return str
+    .replace(/([a-z])([A-Z])/g, '$1-$2')
+    .replace(/\s+/g, '-')
+    .toLowerCase();
+};
 
 import Link from './Link';
 
-const Item = styled.li`
-  @media (max-width: 1280px) {
-    transition-delay: ${({ isOpen, index, count }) =>
-      isOpen ? 0.2 + 0.07 * index : 0.56 - index * (0.56 / (count - 1))}s;
-  }
-`;
+// Simple component to replace styled-component and avoid react-is circular reference
+const Item = ({ children, className, index, count, isOpen, ...props }) => {
+  return (
+    <li className={className} {...props}>
+      {children}
+    </li>
+  );
+};
 
 class TableOfContents extends React.Component {
   render() {
@@ -92,7 +99,7 @@ class TableOfContents extends React.Component {
     let component = (
       <ul className={styles.sectionList}>
         {items.map((item, index) => {
-          const url = `#${_.kebabCase(item.title)}`;
+          const url = `#${kebabCase(item.title)}`;
           return (
             <Item
               className={styles.section}

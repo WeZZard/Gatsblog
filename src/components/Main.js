@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Main.module.scss';
 import Media from 'react-media';
-import styled from 'styled-components';
 
 import Viewport from './Viewport';
 import SEO from './SEO';
@@ -42,13 +41,16 @@ class Main extends React.Component {
 
     const { isMenuOpen } = this.state;
 
-    const navigationClassNames = [styles.navigation];
-    const appBackgroundClassNames = [styles.appBackground];
-    const contentsClassNames = [styles.contents];
-    const footerClassNames = [styles.footer];
+    // Defensive check to avoid circular reference issues with CSS modules during SSR
+    const safeStyles = styles || {};
+    
+    const navigationClassNames = [safeStyles.navigation || 'navigation'];
+    const appBackgroundClassNames = [safeStyles.appBackground || 'app-background'];
+    const contentsClassNames = [safeStyles.contents || 'contents'];
+    const footerClassNames = [safeStyles.footer || 'footer'];
 
     if (isMenuOpen) {
-      navigationClassNames.push(styles.menuOpen);
+      navigationClassNames.push(safeStyles.menuOpen || 'menu-open');
     }
 
     let contents;
@@ -61,10 +63,10 @@ class Main extends React.Component {
         break;
       case 'Error':
         contents = sections;
-        navigationClassNames.push(styles.error);
-        appBackgroundClassNames.push(styles.error);
-        contentsClassNames.push(styles.error);
-        footerClassNames.push(styles.error);
+        navigationClassNames.push(safeStyles.error || 'error');
+        appBackgroundClassNames.push(safeStyles.error || 'error');
+        contentsClassNames.push(safeStyles.error || 'error');
+        footerClassNames.push(safeStyles.error || 'error');
         backgroundPosition = 'Center';
         break;
       default:
@@ -86,7 +88,7 @@ class Main extends React.Component {
           description={description}
           keywords={keywords}
         />
-        <div className={styles.main}>
+        <div className={safeStyles.main || 'main'}>
           <div className={appBackgroundClassName}>
             <AppBackground backgroundPosition={backgroundPosition} />
           </div>
@@ -103,9 +105,9 @@ class Main extends React.Component {
           <div className={contentsClassName}>{contents}</div>
           <Media query={{ maxWidth: 960 }}>
             <div className={footerClassName}>
-              <div className={styles.footerContents}>
+              <div className={safeStyles.footerContents || 'footer-contents'}>
                 <SiteFooter />
-                <div className={styles.footerOverlay} />
+                <div className={safeStyles.footerOverlay || 'footer-overlay'} />
               </div>
             </div>
           </Media>

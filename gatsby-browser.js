@@ -1,7 +1,7 @@
 import './src/styles/normalize.css';
 import './src/styles/global.scss';
 import 'katex/dist/katex.min.css';
-import 'react-live/react-live.css';
+// react-live CSS not needed in modern version
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';

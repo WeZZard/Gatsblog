@@ -4,19 +4,22 @@ import styles from './NavigationBar.module.scss';
 
 import { StaticQuery, graphql } from 'gatsby';
 import Link from './Link';
-import styled from 'styled-components';
 
-const Item = styled.li`
-  @media (max-width: 1280px) {
-    transition-delay: ${({ isOpen, index, count }) =>
-      isOpen ? 0.2 + 0.07 * index : 0.56 - index * (0.56 / (count - 1))}s;
-    }
-  }
-`;
+// Simple component to replace styled-component and avoid react-is circular reference
+const Item = ({ children, className, isOpen, ...props }) => {
+  return (
+    <li className={className} {...props}>
+      {children}
+    </li>
+  );
+};
 
 class NavigationBar extends React.Component {
   render() {
     const { isOpen, slug, menuItemDidTap } = this.props;
+    
+    // Defensive check to avoid circular reference issues with CSS modules during SSR
+    const safeStyles = styles || {};
 
     return (
       <StaticQuery
@@ -67,9 +70,18 @@ class NavigationBar extends React.Component {
             categoryNavigationItems,
           ).map(([name, detail]) => ({ name, ...detail }));
 
-          overwrittenCategoryNavigationItems.sort((a, b) => a.index < b.index);
+          // Defensive sorting to handle undefined index properties
+          overwrittenCategoryNavigationItems.sort((a, b) => {
+            const aIndex = a.index ?? 0;
+            const bIndex = b.index ?? 0;
+            return aIndex < bIndex;
+          });
 
-          overwrittenCategoryNavigationItems.forEach(item => delete item.index);
+          overwrittenCategoryNavigationItems.forEach(item => {
+            if (item.hasOwnProperty('index')) {
+              delete item.index;
+            }
+          });
 
           const userNavigationItems = [
             ...overwrittenCategoryNavigationItems,
@@ -86,6 +98,11 @@ class NavigationBar extends React.Component {
           ];
 
           const components = navigationItems.map(navigationItem => {
+            // Safety check for undefined/null navigation items
+            if (!navigationItem || !navigationItem.slug || !navigationItem.name) {
+              return null;
+            }
+
             const slugPattern =
               navigationItem.slug === '/'
                 ? `^((${navigationItem.slug})|(/page-\\d+))$`
@@ -97,15 +114,20 @@ class NavigationBar extends React.Component {
 
             const { name: itemName, slug: itemSlug } = navigationItem;
 
+            // Additional safety check for the extracted values
+            if (!itemName || !itemSlug) {
+              return null;
+            }
+
             const className = isSelected
-              ? [styles.navigationItemContents, styles.selected].join(' ')
-              : styles.navigationItemContents;
+              ? [safeStyles.navigationItemContents || 'navigation-item-contents', safeStyles.selected || 'selected'].join(' ')
+              : safeStyles.navigationItemContents || 'navigation-item-contents';
 
             const kind = isSelected ? 'navigationSelected' : 'navigationNormal';
 
             return (
               <Item
-                className={styles.item}
+                className={safeStyles.item || 'item'}
                 key={navigationItem.slug}
                 isOpen={isOpen}
               >
@@ -116,19 +138,19 @@ class NavigationBar extends React.Component {
                 </span>
               </Item>
             );
-          });
+          }).filter(component => component !== null);
 
-          const navigationBarClassNames = [styles.navigationBar];
+          const navigationBarClassNames = [safeStyles.navigationBar || 'navigation-bar'];
 
           if (isOpen) {
-            navigationBarClassNames.push(styles.open);
+            navigationBarClassNames.push(safeStyles.open || 'open');
           }
 
           const navigationBarClassName = navigationBarClassNames.join(' ');
 
           return (
             <nav className={navigationBarClassName}>
-              <ol className={styles.list}>{components}</ol>
+              <ol className={safeStyles.list || 'list'}>{components}</ol>
             </nav>
           );
         }}

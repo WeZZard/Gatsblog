@@ -5,27 +5,19 @@ import styles from './Contents.module.scss';
 import PageInfo from './PageInfo';
 import ContentSeparator from './ContentSeparator';
 
-import { normalizeChildren } from '../utils';
+// Removed normalizeChildren import to avoid circular reference issues during SSR
 
 const Contents = ({ sections }) => {
-  const normalizedSections = normalizeChildren(sections);
-
-  const numberOfContents = normalizedSections.length;
-
-  const children = normalizedSections.map((content, index) => (
-    <React.Fragment key={index}>
-      <div className={styles.section}>{content}</div>
-      {index + 1 < numberOfContents ? (
-        <ContentSeparator key={`${index}-separator`} />
-      ) : null}
-    </React.Fragment>
-  ));
-
+  // Defensive check to avoid circular reference issues with CSS modules during SSR
+  const safeStyles = styles || {};
+  
+  // Always render sections directly to avoid circular reference issues
+  // This is the safest approach for SSR with React elements
   return (
-    <div className={styles.contents}>
-      {children}
+    <div className={safeStyles.contents || 'contents'}>
+      <div className={safeStyles.section || 'section'}>{sections}</div>
       <ContentSeparator />
-      <footer className={styles.section}>
+      <footer className={safeStyles.section || 'section'}>
         <PageInfo />
       </footer>
     </div>

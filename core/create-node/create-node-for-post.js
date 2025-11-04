@@ -20,8 +20,8 @@ module.exports = function(args) {
     children: [],
     internal: {
       type: `Post`,
-      content: nodeContent,
-      contentDigest: createContentDigest(nodeContent),
+      content: nodeContent || '',
+      contentDigest: createContentDigest(nodeContent || ''),
     },
   });
 
