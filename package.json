@@ -15,7 +15,6 @@
     "@fortawesome/react-fontawesome": "^0.1.19",
     "@mdx-js/react": "^2.3.0",
     "ajv": "^8.18.0",
-    "babel-plugin-styled-components": "^2.1.4",
     "debug": "^4.3.4",
     "gatsby": "^5.13.0",
     "gatsby-plugin-catch-links": "^5.13.0",
@@ -27,7 +26,6 @@
     "gatsby-plugin-react-helmet": "^6.13.0",
     "gatsby-plugin-sass": "^6.13.0",
     "gatsby-plugin-sharp": "^5.13.0",
-    "gatsby-plugin-styled-components": "^6.16.0",
     "gatsby-plugin-web-font-loader": "^1.0.4",
     "gatsby-remark-copy-linked-files": "^6.13.0",
     "gatsby-remark-mdx-images": "file:plugins/gatsby-remark-mdx-images",
@@ -41,10 +39,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^5.2.1",
-    "react-katex": "^2.0.2",
     "react-media": "^1.10.0",
     "remark-math": "^3.0.1",
-    "styled-components": "^5.3.11",
     "unist-util-visit": "^2.0.3"
   },
   "devDependencies": {
