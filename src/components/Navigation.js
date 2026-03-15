@@ -85,13 +85,15 @@ class Navigation extends React.Component {
       </div>
     ) : null;
 
-    const navButton = (
+    const isSSR = typeof window === 'undefined';
+
+    const navButton = isSSR ? null : (
       <Media query={{ maxWidth: 960 }}>
         <NavButton onClick={this.navButtonDidTap} isSelected={isNavMenuOpen} />
       </Media>
     );
 
-    const tocButton = (
+    const tocButton = isSSR ? null : (
       <Media query={{ maxWidth: 960 }}>
         {hasTableOfContents ? (
           <TocButton
@@ -112,7 +114,11 @@ class Navigation extends React.Component {
 
     const siteFooterClassName = siteFooterClassNames.join(' ');
 
-    const siteFooter = (
+    const siteFooter = isSSR ? (
+      <div className={siteFooterClassName}>
+        <SiteFooter showsSlogans={showsSlogans} />
+      </div>
+    ) : (
       <Media query={{ maxWidth: 960 }}>
         {matches =>
           matches ? null : (
@@ -127,11 +133,11 @@ class Navigation extends React.Component {
     return (
       <StaticQuery
         query={componentQuery}
-        render={({
-          config: {
-            site: { title },
-          },
-        }) => {
+        render={data => {
+          if (!data || !data.config || !data.config.site) {
+            return null;
+          }
+          const { config: { site: { title } } } = data;
           return (
             <div className={navigationClassName}>
               <div className={styles.header}>

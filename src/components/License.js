@@ -8,11 +8,11 @@ import { graphql, StaticQuery } from 'gatsby';
 const License = ({ license }) => (
   <StaticQuery
     query={componentQuery}
-    render={({
-      config: {
-        site: { license: defaultLicense },
-      },
-    }) => {
+    render={data => {
+      if (!data || !data.config || !data.config.site) {
+        return null;
+      }
+      const { config: { site: { license: defaultLicense } } } = data;
       const finalLicense = license || defaultLicense;
 
       const cc40Regex = /^cc4\.0-((by)|(by-nc)|(by-nc-nd)|(by-nc-sa)|(by-nd)|(by-sa))$/i;

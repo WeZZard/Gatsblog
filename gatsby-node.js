@@ -2,6 +2,31 @@ exports.onCreateNode = require(`./core/on-create-node`);
 
 exports.createPages = require(`./core/create-pages`);
 
+exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
+  const config = getConfig();
+  if (config.module && config.module.rules) {
+    config.module.rules.forEach(rule => {
+      if (rule.oneOf) {
+        rule.oneOf.forEach(oneOfRule => {
+          if (oneOfRule.use) {
+            oneOfRule.use.forEach(loader => {
+              if (
+                loader.loader &&
+                loader.loader.includes('css-loader') &&
+                loader.options &&
+                loader.options.modules
+              ) {
+                loader.options.modules.namedExport = false;
+              }
+            });
+          }
+        });
+      }
+    });
+  }
+  actions.replaceWebpackConfig(config);
+};
+
 exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions;
 
@@ -170,6 +195,77 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
             return [];
           },
         },
+      },
+    }),
+    schema.buildObjectType({
+      name: 'Category',
+      interfaces: ['Node'],
+      fields: {
+        name: 'String',
+        slug: 'String',
+      },
+    }),
+    schema.buildObjectType({
+      name: 'Tag',
+      interfaces: ['Node'],
+      fields: {
+        name: 'String',
+        slug: 'String',
+      },
+    }),
+    schema.buildObjectType({
+      name: 'Locale',
+      interfaces: ['Node'],
+      fields: {
+        identifier: 'String',
+        slug: 'String',
+      },
+    }),
+    `type ConfigSite {
+      title: String
+      owner: String
+      url: String
+      lang: String
+      description: String
+      keywords: [String]
+      license: String
+      indexing: [ConfigIndexing]
+      slogans: [String]
+      footerMessages: [String]
+    }`,
+    `type ConfigIndexing {
+      name: String
+      isEnabled: Boolean
+    }`,
+    `type ConfigNavigationItem {
+      name: String
+      slug: String
+      weight: Int
+      isVisible: Boolean
+    }`,
+    `type ConfigNavigation {
+      createsNavigationItemsForCategories: Boolean
+      overwritingCategoryNavigationItems: [ConfigNavigationItem]
+      customNavigationItems: [ConfigNavigationItem]
+    }`,
+    `type ConfigSocial {
+      name: String
+      icon: String
+      link: String
+    }`,
+    `type ConfigPagination {
+      indexName: String
+      itemsPerPage: Int
+    }`,
+    schema.buildObjectType({
+      name: 'Config',
+      interfaces: ['Node'],
+      fields: {
+        relativePath: 'String',
+        site: 'ConfigSite',
+        navigation: 'ConfigNavigation',
+        social: '[ConfigSocial]',
+        pagination: '[ConfigPagination]',
       },
     }),
   ];

@@ -4,15 +4,14 @@ import styles from './NavigationBar.module.scss';
 
 import { StaticQuery, graphql } from 'gatsby';
 import Link from './Link';
-import styled from 'styled-components';
-
-const Item = styled.li`
-  @media (max-width: 1280px) {
-    transition-delay: ${({ isOpen, index, count }) =>
-      isOpen ? 0.2 + 0.07 * index : 0.56 - index * (0.56 / (count - 1))}s;
-    }
-  }
-`;
+const Item = ({ className, children, isOpen, index, count, ...rest }) => {
+  const delay = isOpen ? 0.2 + 0.07 * index : 0.56 - index * (0.56 / (count - 1));
+  return (
+    <li className={className} style={{ transitionDelay: `${delay}s` }} {...rest}>
+      {children}
+    </li>
+  );
+};
 
 class NavigationBar extends React.Component {
   render() {
@@ -22,6 +21,10 @@ class NavigationBar extends React.Component {
       <StaticQuery
         query={componentQuery}
         render={data => {
+          if (!data || !data.config || !data.config.navigation) {
+            return null;
+          }
+
           const systemNavigationItems = [{ name: `Home`, slug: `/` }];
 
           const {
@@ -32,8 +35,9 @@ class NavigationBar extends React.Component {
                 customNavigationItems,
               },
             },
-            allCategory: { edges: categories },
           } = data;
+
+          const categories = data.allCategory ? data.allCategory.edges : [];
 
           const sortedCategories = categories.map(
             ({ node: { name, slug } }) => ({ name, slug }),

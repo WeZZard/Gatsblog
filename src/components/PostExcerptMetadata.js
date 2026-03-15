@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import assert from 'assert';
 import styles from './PostExcerptMetadata.module.scss';
 
 import MDXMetadata from './MDXMetadata';
@@ -17,7 +16,7 @@ const PostExcerptMetadata = ({ post }) => {
   const lines = [[createdTime, category], [tags]];
 
   const filteredLines = lines.filter(line => {
-    assert(Array.isArray(line));
+    if (!Array.isArray(line)) return false;
     const filteredLine = line.filter(item => item);
     return filteredLine.length;
   });

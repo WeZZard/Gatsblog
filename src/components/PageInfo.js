@@ -6,11 +6,11 @@ import { graphql, StaticQuery } from 'gatsby';
 const PageInfo = () => (
   <StaticQuery
     query={componentQuery}
-    render={({
-      config: {
-        site: { footerMessages },
-      },
-    }) => {
+    render={data => {
+      if (!data || !data.config || !data.config.site) {
+        return null;
+      }
+      const { config: { site: { footerMessages } } } = data;
       return (
         <div className={styles.pageInfo}>
           {footerMessages.map((message, index) => (

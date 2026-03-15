@@ -13,17 +13,21 @@ const SEO = ({
   return (
     <StaticQuery
       query={componentQuery}
-      render={({
-        config: {
-          site: {
-            lang: siteLang,
-            title: siteTitle,
-            description: siteDescription,
-            owner: siteOwner,
-            keywords: siteKeywords,
+      render={data => {
+        if (!data || !data.config || !data.config.site) {
+          return null;
+        }
+        const {
+          config: {
+            site: {
+              lang: siteLang,
+              title: siteTitle,
+              description: siteDescription,
+              owner: siteOwner,
+              keywords: siteKeywords,
+            },
           },
-        },
-      }) => {
+        } = data;
         const description = pageDescription || siteDescription;
 
         const keywords = pageKeywords.join(', ') || siteKeywords.join(', ');

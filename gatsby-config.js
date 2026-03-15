@@ -125,12 +125,7 @@ module.exports = {
       },
     },
     `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-plugin-sass`,
-      options: {
-        implementation: require('sass'),
-      },
-    },
+    `gatsby-plugin-sass`,
     `gatsby-plugin-catch-links`,
     {
       resolve: `gatsby-plugin-web-font-loader`,

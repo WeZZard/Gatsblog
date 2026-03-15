@@ -1,18 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import assert from 'assert';
-import _ from 'lodash';
 import styles from './TableOfContents.module.scss';
-import styled from 'styled-components';
-
 import Link from './Link';
 
-const Item = styled.li`
-  @media (max-width: 1280px) {
-    transition-delay: ${({ isOpen, index, count }) =>
-      isOpen ? 0.2 + 0.07 * index : 0.56 - index * (0.56 / (count - 1))}s;
-  }
-`;
+const kebabCase = (str) => {
+  if (typeof str !== 'string') return '';
+  return str.replace(/([a-z])([A-Z])/g, '$1-$2')
+    .replace(/[\s_]+/g, '-')
+    .toLowerCase();
+};
+
+const Item = ({ className, children, isOpen, index, count, ...rest }) => {
+  const delay = isOpen ? 0.2 + 0.07 * index : 0.56 - index * (0.56 / (count - 1));
+  return (
+    <li className={className} style={{ transitionDelay: `${delay}s` }} {...rest}>
+      {children}
+    </li>
+  );
+};
 
 class TableOfContents extends React.Component {
   render() {
@@ -35,13 +40,13 @@ class TableOfContents extends React.Component {
     }
 
     function increaseStackAtDepth(depth) {
-      assert(depth <= indicesStack.length, `stack: ${indicesStack}`);
-      indicesStack[depth - 1] = indicesStack[depth - 1] + 1;
+      if (depth <= indicesStack.length) {
+        indicesStack[depth - 1] = indicesStack[depth - 1] + 1;
+      }
     }
 
     function snapshotStack(depth) {
-      assert(depth <= indicesStack.length, `stack: ${indicesStack}`);
-      return indicesStack.slice(0, depth);
+      return indicesStack.slice(0, Math.min(depth, indicesStack.length));
     }
 
     headings.forEach(item => {
@@ -92,7 +97,7 @@ class TableOfContents extends React.Component {
     let component = (
       <ul className={styles.sectionList}>
         {items.map((item, index) => {
-          const url = `#${_.kebabCase(item.title)}`;
+          const url = `#${kebabCase(item.title)}`;
           return (
             <Item
               className={styles.section}

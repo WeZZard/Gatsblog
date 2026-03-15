@@ -10,7 +10,6 @@ module.exports = {
       }
     }
   `,
-  setup: {},
   feeds: [
     {
       setup: ({
@@ -96,7 +95,7 @@ module.exports = {
         }
       `,
       output: '/rss.xml',
-      title: ({ query: { config } }) => config.site.title,
+      title: 'Pieces of My Soul',
     },
   ],
 };
