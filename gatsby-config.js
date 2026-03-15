@@ -3,7 +3,6 @@ require('dotenv').config({
 });
 
 const remarkMath = require(`remark-math`);
-const mdxTagKaTex = require(`./core/remark/mdx-tag-katex`);
 const gatsbyPluginFeedOptions = require(`./gatsby-plugin-feed-options`);
 
 module.exports = {
@@ -48,9 +47,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-sitemap`,
       options: {
-        // Exclude specific pages or groups of pages using glob parameters
-        // See: https://github.com/isaacs/minimatch
-        exclude: ['/tag/*'],
+        excludes: ['/tag/*'],
         query: `
           {
             site: config {
@@ -59,10 +56,8 @@ module.exports = {
               }
             }
             allSitePage {
-              edges {
-                node {
-                  path
-                }
+              nodes {
+                path
               }
             }
         }`,
@@ -99,16 +94,12 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-mdx`,
+      resolve: `gatsby-plugin-mdx`,
       options: {
         extensions: ['.mdx', '.md'],
-        mdPlugins: [remarkMath, mdxTagKaTex],
-        globalScope: `
-        import { InlineMath } from 'react-katex';
-        import { BlockMath as MathBlock } from 'react-katex';
-        
-        export default { InlineMath, MathBlock };
-        `,
+        mdxOptions: {
+          remarkPlugins: [remarkMath],
+        },
         gatsbyRemarkPlugins: [
           {
             resolve: 'gatsby-remark-copy-linked-files',
@@ -128,18 +119,13 @@ module.exports = {
     {
       resolve: `gatsby-plugin-sharp`,
       options: {
-        useMozJpeg: false,
-        stripMetadata: true,
-        defaultQuality: 75,
+        defaults: {
+          quality: 75,
+        },
       },
     },
     `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-plugin-sass`,
-      options: {
-        implementation: require('sass'),
-      },
-    },
+    `gatsby-plugin-sass`,
     `gatsby-plugin-catch-links`,
     {
       resolve: `gatsby-plugin-web-font-loader`,
@@ -157,6 +143,7 @@ module.exports = {
       resolve: `gatsby-plugin-feed`,
       options: gatsbyPluginFeedOptions,
     },
+    `gatsby-plugin-image`,
     `gatsby-plugin-offline`,
   ],
 };

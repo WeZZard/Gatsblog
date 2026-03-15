@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import assert from 'assert';
 import styles from './MorePosts.module.scss';
 
 import MorePostItem from './MorePostItem';
@@ -8,8 +7,6 @@ import MorePostItem from './MorePostItem';
 class MorePosts extends React.Component {
   render() {
     const { earlierPostExcerpt, laterPostExcerpt } = this.props;
-
-    assert(earlierPostExcerpt || laterPostExcerpt);
 
     const morePostInfo = [
       { item: laterPostExcerpt, title: 'Later Post' },

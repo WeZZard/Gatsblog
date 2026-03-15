@@ -9,53 +9,50 @@ import Title from '../components/Title';
 import MDXMetadata from '../components/MDXMetadata';
 import MDXBody from '../components/MDXBody';
 
-class Page extends React.Component {
-  render() {
-    const { data } = this.props;
-    const { page } = data;
+const Page = ({ data, children }) => {
+  const { page } = data;
 
-    const {
-      slug,
-      title,
-      subtitle,
-      createdTime,
-      keywords,
-      lang,
-      file: {
-        childMdx: { excerpt, code },
-      },
-    } = page;
+  const {
+    slug,
+    title,
+    subtitle,
+    createdTime,
+    keywords,
+    lang,
+    file,
+  } = page;
 
-    const article = (
-      <article className={styles.page}>
-        <header className={styles.header}>
-          <Title textStyle={'sans'} title={title} subtitle={subtitle} />
-          <aside className={styles.metadata}>
-            <MDXMetadata items={[{ name: 'time', data: createdTime }]} />
-          </aside>
-        </header>
-        <section className={styles.main}>
-          <MDXBody textStyle={'sans'} code={code} />
-        </section>
-      </article>
-    );
+  const excerpt = file && file.childMdx ? file.childMdx.excerpt : '';
 
-    return (
-      <Main
-        slug={slug}
-        lang={lang}
-        title={page.title}
-        sections={article}
-        keywords={keywords}
-        description={excerpt}
-      />
-    );
-  }
-}
+  const article = (
+    <article className={styles.page}>
+      <header className={styles.header}>
+        <Title textStyle={'sans'} title={title} subtitle={subtitle} />
+        <aside className={styles.metadata}>
+          <MDXMetadata items={[{ name: 'time', data: createdTime }]} />
+        </aside>
+      </header>
+      <section className={styles.main}>
+        <MDXBody textStyle={'sans'}>{children}</MDXBody>
+      </section>
+    </article>
+  );
+
+  return (
+    <Main
+      slug={slug}
+      lang={lang}
+      title={page.title}
+      sections={article}
+      keywords={keywords}
+      description={excerpt}
+    />
+  );
+};
 
 Page.propTypes = {
   data: PropTypes.object.isRequired,
-  pageContext: PropTypes.object.isRequired,
+  children: PropTypes.node,
 };
 
 export default Page;
@@ -70,13 +67,11 @@ export const pageQuery = graphql`
       createdTime
       lastModifiedTime
       license
+      lang
+      keywords
       file {
         childMdx {
           excerpt(pruneLength: 300)
-          code {
-            body
-            scope
-          }
         }
       }
     }

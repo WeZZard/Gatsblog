@@ -10,13 +10,14 @@ module.exports = async args => {
 
   const result = await graphql(`
     {
-      allPost(sort: { fields: [createdTime], order: DESC }) {
+      allPost(sort: { createdTime: DESC }) {
         edges {
           node {
             id
             slug
             lang
             isLocalized
+            contentFilePath
           }
         }
       }
@@ -99,11 +100,14 @@ module.exports = async args => {
           laterPostId: (laterPost && laterPost.node.id) || null,
         };
 
-        console.log(`create page for path: ${path}; component: ${Template}; context: ${context}`);
+        const contentFilePath = postNode.node.contentFilePath;
+        const component = contentFilePath
+          ? `${Template}?__contentFilePath=${contentFilePath}`
+          : Template;
 
         createPage({
           path: path,
-          component: Template,
+          component: component,
           context: context,
         });
       });

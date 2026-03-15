@@ -2,7 +2,6 @@ const visitWithParents = require(`unist-util-visit-parents`);
 const getDefinitions = require(`mdast-util-definitions`);
 const path = require(`path`);
 const { fluid, resize, getImageSize } = require(`gatsby-plugin-sharp`);
-const Promise = require(`bluebird`);
 const slash = require(`slash`);
 
 module.exports = function(args, pluginOptions) {

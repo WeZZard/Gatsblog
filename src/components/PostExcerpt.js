@@ -11,7 +11,7 @@ const PostExcerpt = ({ item }) => {
       <h2 className={styles.subtitle}>{item.subtitle}</h2>
     ) : null;
 
-  const excerpt = item.file.childMdx.excerpt;
+  const excerpt = item.file && item.file.childMdx ? item.file.childMdx.excerpt : '';
 
   const content = excerpt ? (
     <section className={styles.content}>

@@ -34,9 +34,11 @@ class Taxonomies extends React.Component {
       </header>
     ) : null;
 
-    taxonomies.sort((t1, t2) => t1 > t2);
+    if (taxonomies) {
+      taxonomies.sort((t1, t2) => t1 > t2);
+    }
 
-    const components = taxonomies.map((taxonomy, index) => (
+    const components = (taxonomies || []).map((taxonomy, index) => (
       <div key={index} className={styles.taxonomySummary}>
         {React.createElement(TaxonomySummary, {
           type,
@@ -78,17 +80,17 @@ export default Taxonomies;
 const getPostNodes = (type, data) => {
   switch (type) {
     case 'category': {
-      const { category } = data;
+      const category = data ? data.category : null;
       const { edges: postNodesForCategory } = category || { edges: [] };
       return postNodesForCategory;
     }
     case 'tag': {
-      const { tags } = data;
+      const tags = data ? data.tags : null;
       const { edges: postNodesForTags } = tags || { edges: [] };
       return postNodesForTags;
     }
     default:
-      throw `Unexpected taxonomy type: ${type}`;
+      return [];
   }
 };
 

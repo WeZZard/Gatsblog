@@ -11,13 +11,14 @@ module.exports = async args => {
 
   const result = await graphql(`
     {
-      allPage(sort: { fields: [createdTime], order: DESC }) {
+      allPage(sort: { createdTime: DESC }) {
         edges {
           node {
             id
             slug
             lang
             isLocalized
+            contentFilePath
           }
         }
       }
@@ -54,9 +55,14 @@ module.exports = async args => {
       paths.forEach(path => {
         debug(`Create page for page: ${path}.`);
 
+        const contentFilePath = pageNode.node.contentFilePath;
+        const component = contentFilePath
+          ? `${Template}?__contentFilePath=${contentFilePath}`
+          : Template;
+
         createPage({
           path: path,
-          component: Template,
+          component: component,
           context: {
             pageId: pageNode.node.id,
           },

@@ -9,11 +9,11 @@ class SiteFooter extends React.Component {
     return (
       <StaticQuery
         query={componentQuery}
-        render={({
-          config: {
-            site: { owner: siteOwner, slogans },
-          },
-        }) => {
+        render={data => {
+          if (!data || !data.config || !data.config.site) {
+            return null;
+          }
+          const { config: { site: { owner: siteOwner, slogans } } } = data;
           const { showsSlogans } = this.props;
 
           const siteFooterClassNames = [styles.siteFooter];

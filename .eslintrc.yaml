@@ -1,6 +1,7 @@
 ---
 extends:
   - eslint:recommended
+  - plugin:react/recommended
   - plugin:prettier/recommended
 
 env:
@@ -8,7 +9,21 @@ env:
   es6: true
   jest: true
   commonjs: true
+  browser: true
 
 parserOptions:
   sourceType: module
-  ecmaVersion: 2018
+  ecmaVersion: 2020
+  ecmaFeatures:
+    jsx: true
+
+settings:
+  react:
+    version: detect
+
+rules:
+  react/prop-types: warn
+  react/display-name: off
+  no-unused-vars:
+    - warn
+    - argsIgnorePattern: ^_

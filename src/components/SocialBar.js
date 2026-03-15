@@ -16,15 +16,23 @@ const Icon = ({ icon }) => {
     const resources = icon
       .substring(iconProtocols.fontawesome.length)
       .split('/');
-    return <FontAwesomeIcon size={'2x'} icon={resources} />;
+    try {
+      return <FontAwesomeIcon size={'2x'} icon={resources} />;
+    } catch (e) {
+      return null;
+    }
   }
-  throw `Unexpected icon resource: ${icon}`;
+  return null;
 };
 
 const SocialBar = ({ isOpen, menuItemDidTap }) => (
   <StaticQuery
     query={componentQuery}
-    render={({ config: { social: socialItems } }) => {
+    render={data => {
+      if (!data || !data.config || !data.config.social) {
+        return null;
+      }
+      const { config: { social: socialItems } } = data;
       const wrapperClassNames = [styles.social];
 
       if (isOpen) {

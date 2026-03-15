@@ -1,13 +1,33 @@
 import React from 'react';
 import styles from './InlineMath.module.scss';
 
-import { InlineMath as KaTexInlineMath } from 'react-katex';
+let katex = null;
+try {
+  katex = require('katex');
+} catch (e) {
+  // katex may be null-loaded during SSR
+}
 
-const InlineMath = props => (
-  <span className={styles.inlineMath}>
-    <KaTexInlineMath {...props} />
-  </span>
-);
+const InlineMath = ({ math, children }) => {
+  const expression = math || (typeof children === 'string' ? children : '');
+  if (katex) {
+    try {
+      const html = katex.renderToString(expression, {
+        displayMode: false,
+        throwOnError: false,
+      });
+      return (
+        <span
+          className={styles.inlineMath}
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
+      );
+    } catch (e) {
+      return <span className={styles.inlineMath}>{expression}</span>;
+    }
+  }
+  return <span className={styles.inlineMath}>{expression}</span>;
+};
 
 InlineMath.displayName = 'InlineMath';
 

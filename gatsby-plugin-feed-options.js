@@ -10,7 +10,6 @@ module.exports = {
       }
     }
   `,
-  setup: {},
   feeds: [
     {
       setup: ({
@@ -40,7 +39,7 @@ module.exports = {
       serialize: ({ query: { allPost } }) => {
         return allPost.edges.map(edge => {
           const post = edge.node;
-          const mdx = edge.node.file.childMdx;
+          const mdx = edge.node.file ? edge.node.file.childMdx : null;
 
           let siteUrl = process.env.GATSBY_SITE_URL || '';
 
@@ -52,18 +51,19 @@ module.exports = {
           }
 
           const url = safeSiteUrl + post.slug;
+          const excerpt = mdx ? mdx.excerpt : '';
 
           return Object.assign(
             {},
             { title: post.title },
             {
-              description: mdx.excerpt,
+              description: excerpt,
               date: post.createdTime,
               url: url,
               guid: url,
               custom_elements: [
                 {
-                  'content:encoded': mdx.html,
+                  'content:encoded': excerpt,
                 },
               ],
             },
@@ -77,7 +77,7 @@ module.exports = {
               isPublished: { eq: true },
               isLocalized: { eq: false } 
             }
-            sort: { order: DESC, fields: [createdTime] }
+            sort: { createdTime: DESC }
           ) {
             edges {
               node {
@@ -87,7 +87,6 @@ module.exports = {
                 file {
                   childMdx {
                     excerpt
-                    html
                   }
                 }
               }
@@ -96,7 +95,7 @@ module.exports = {
         }
       `,
       output: '/rss.xml',
-      title: ({ query: { config } }) => config.site.title,
+      title: 'Pieces of My Soul',
     },
   ],
 };

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Main.module.scss';
 import Media from 'react-media';
-import styled from 'styled-components';
 
 import Viewport from './Viewport';
 import SEO from './SEO';
@@ -68,13 +67,16 @@ class Main extends React.Component {
         backgroundPosition = 'Center';
         break;
       default:
-        throw `Unexpected layout: ${layout}.`;
+        contents = sections;
+        backgroundPosition = 'Left';
     }
 
     const navigationClassName = navigationClassNames.join(' ');
     const appBackgroundClassName = appBackgroundClassNames.join(' ');
     const contentsClassName = contentsClassNames.join(' ');
     const footerClassName = footerClassNames.join(' ');
+
+    const isSSR = typeof window === 'undefined';
 
     return (
       <React.Fragment>
@@ -84,7 +86,7 @@ class Main extends React.Component {
           lang={lang}
           title={title}
           description={description}
-          keywords={keywords}
+          keywords={keywords || []}
         />
         <div className={styles.main}>
           <div className={appBackgroundClassName}>
@@ -101,14 +103,22 @@ class Main extends React.Component {
             />
           </div>
           <div className={contentsClassName}>{contents}</div>
-          <Media query={{ maxWidth: 960 }}>
+          {!isSSR ? (
+            <Media query={{ maxWidth: 960 }}>
+              <div className={footerClassName}>
+                <div className={styles.footerContents}>
+                  <SiteFooter />
+                  <div className={styles.footerOverlay} />
+                </div>
+              </div>
+            </Media>
+          ) : (
             <div className={footerClassName}>
               <div className={styles.footerContents}>
                 <SiteFooter />
-                <div className={styles.footerOverlay} />
               </div>
             </div>
-          </Media>
+          )}
         </div>
       </React.Fragment>
     );

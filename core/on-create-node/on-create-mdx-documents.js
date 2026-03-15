@@ -15,6 +15,7 @@ module.exports = args => {
     const parentNode = getNode(node.parent);
 
     const absolutePath = parentNode.absolutePath;
+    const fileNodeId = parentNode.id;
 
     if (isPreviewEnabled || (!isPreviewEnabled && metadata.isPublished)) {
       switch (metadata.documentType) {
@@ -28,9 +29,11 @@ module.exports = args => {
               lang: metadata.lang,
               slug: metadata.slug,
               file: metadata.relativePath,
+              fileNodeId: fileNodeId,
+              contentFilePath: absolutePath,
             },
             nodeIdBase: absolutePath,
-            nodeContent: node.rawBody,
+            nodeContent: node.rawBody || '',
             getNode,
             createNode,
             createNodeId,
@@ -48,9 +51,11 @@ module.exports = args => {
               lang: metadata.lang,
               slug: metadata.slug,
               file: metadata.relativePath,
+              fileNodeId: fileNodeId,
+              contentFilePath: absolutePath,
             },
             nodeIdBase: absolutePath,
-            nodeContent: node.rawBody,
+            nodeContent: node.rawBody || '',
             getNode,
             createNode,
             createNodeId,

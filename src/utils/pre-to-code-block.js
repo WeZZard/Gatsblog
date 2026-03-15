@@ -1,22 +1,33 @@
 export default args => {
-  if (
-    // children is MDXTag
-    args.children &&
-    // MDXTag props
-    args.children.props &&
-    // if MDXTag is going to render a <code>
-    args.children.props.name === 'code'
-  ) {
-    // we have a <pre><code> situation
-    const {
-      children: codeString,
-      props: { className, ...props },
-    } = args.children.props;
+  if (args.children && args.children.props) {
+    const childProps = args.children.props;
+    const className = childProps.className || '';
 
-    return {
-      codeString: codeString.trim(),
-      language: className && className.split('-')[1],
-      ...props,
-    };
+    if (
+      className.startsWith('language-') ||
+      childProps.name === 'code' ||
+      (args.children.type && (
+        args.children.type === 'code' ||
+        (typeof args.children.type === 'function' && args.children.type.displayName === 'code')
+      ))
+    ) {
+      const codeString = typeof childProps.children === 'string'
+        ? childProps.children.trim()
+        : '';
+      const language = className ? className.replace('language-', '') : '';
+      const metaProps = {};
+      if (childProps.metastring) {
+        childProps.metastring.split(' ').forEach(meta => {
+          const [key, value] = meta.split('=');
+          if (value) metaProps[key] = value.replace(/"/g, '');
+          else metaProps[key] = true;
+        });
+      }
+      return {
+        codeString,
+        language,
+        ...metaProps,
+      };
+    }
   }
 };
