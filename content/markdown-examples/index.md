@@ -1,6 +1,6 @@
 ---
 title: Markdown Example
-isPublished: false
+isPublished: true
 ---
 
 ## Headings
