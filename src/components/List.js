@@ -11,12 +11,12 @@ const List = props => {
   const normalizedChildren = normalizeChildren(children);
   const listClassName = [className, styles.list, styles[type]].join(' ');
   const listItems = normalizedChildren.map((child, index) => {
-    const { props, children } = child.props;
-    const { className } = props || {};
-    const listType = className === 'task-list-item' ? 'taskList' : type;
+    const childProps = child.props || {};
+    const childClassName = childProps.className || '';
+    const listType = childClassName === 'task-list-item' ? 'taskList' : type;
     return (
       <ListItem key={index} type={`${listType}Item`}>
-        {children}
+        {childProps.children}
       </ListItem>
     );
   });
@@ -26,7 +26,7 @@ const List = props => {
     case 'unorderedList':
       return <ul className={listClassName}>{listItems}</ul>;
     default:
-      throw `Unexpected list type: ${type}`;
+      return <ul className={listClassName}>{listItems}</ul>;
   }
 };
 

@@ -72,15 +72,43 @@ const p = props => {
 p.displayName = 'p';
 
 const pre = props => {
-  const codeBlock = preToCodeBlock(props);
-  const mathBlock = preToMathBlock(props);
-  if (codeBlock) {
-    return <CodeBlock {...codeBlock} />;
-  } else if (mathBlock) {
-    return <MathBlock {...mathBlock} />;
-  } else {
-    return <PreFormattedBlock {...props} />;
+  if (props && props.children) {
+    const child = props.children;
+    const childProps = child && child.props ? child.props : {};
+    const className = childProps.className || '';
+    const isMath = className.includes('language-math');
+    const isCode = className.startsWith('language-');
+
+    if (isMath) {
+      const mathBlock = preToMathBlock(props);
+      if (mathBlock) {
+        return <MathBlock {...mathBlock} />;
+      }
+    }
+
+    if (isCode) {
+      const codeString = typeof childProps.children === 'string'
+        ? childProps.children.trim()
+        : '';
+      const language = className.replace('language-', '');
+      const metaProps = {};
+      if (childProps.metastring) {
+        childProps.metastring.split(' ').forEach(meta => {
+          const [key, value] = meta.split('=');
+          if (value) metaProps[key] = value.replace(/"/g, '');
+          else metaProps[key] = true;
+        });
+      }
+      return (
+        <CodeBlock
+          codeString={codeString}
+          language={language}
+          {...metaProps}
+        />
+      );
+    }
   }
+  return <PreFormattedBlock {...props} />;
 };
 pre.displayName = 'pre';
 
