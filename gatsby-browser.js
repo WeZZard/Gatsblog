@@ -1,7 +1,6 @@
 import './src/styles/normalize.css';
 import './src/styles/global.scss';
 import 'katex/dist/katex.min.css';
-import 'react-live/react-live.css';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';

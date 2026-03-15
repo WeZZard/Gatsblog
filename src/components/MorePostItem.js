@@ -15,7 +15,7 @@ const MorePostItem = ({ info }) => {
       </div>
     ) : null;
 
-  const excerpt = item.file.childMdx.excerpt;
+  const excerpt = item.file && item.file.childMdx ? item.file.childMdx.excerpt : '';
 
   const content = excerpt ? (
     <section className={styles.content}>

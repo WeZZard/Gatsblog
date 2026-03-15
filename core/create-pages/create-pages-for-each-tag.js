@@ -60,7 +60,7 @@ const _createPageForTagsForLocale = async args => {
                             tags: { in: "${tag.name}" }
                             ${postFilter}
                         }
-                        sort: { fields: [createdTime], order: DESC }
+                        sort: { createdTime: DESC }
                     ) {
                         edges {
                             node {

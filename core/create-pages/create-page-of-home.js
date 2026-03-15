@@ -26,7 +26,7 @@ module.exports = async args => {
       const result = await graphql(`{
         allPost(
           ${postFilter}
-          sort: { fields: [createdTime], order: DESC }
+          sort: { createdTime: DESC }
         ) {
           edges {
             node {

@@ -60,7 +60,7 @@ const _createPageForCategoriesForLocale = async args => {
                             category: { eq: "${category.name}" }
                             ${postFilter} 
                         }
-                        sort: { fields: [createdTime], order: DESC }
+                        sort: { createdTime: DESC }
                     ) {
                         edges {
                             node {

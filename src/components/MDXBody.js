@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import MDXRenderer from 'gatsby-mdx/mdx-renderer';
+import { MDXProvider } from '@mdx-js/react';
 import MDXContext from './MDXContext';
 import Heading from './Heading';
 import Table from './Table';
@@ -35,11 +35,6 @@ import {
   preToCodeBlock,
   pToFigure,
 } from '../utils';
-
-const scope = {
-  InlineMath,
-  MathBlock,
-};
 
 const h1 = props => <Heading level={1} {...props} />;
 h1.displayName = 'h1';
@@ -79,10 +74,9 @@ p.displayName = 'p';
 const pre = props => {
   const codeBlock = preToCodeBlock(props);
   const mathBlock = preToMathBlock(props);
-  // if there's a codeString and some props, we passed the test
   if (codeBlock) {
     return <CodeBlock {...codeBlock} />;
-  } else if (preToMathBlock) {
+  } else if (mathBlock) {
     return <MathBlock {...mathBlock} />;
   } else {
     return <PreFormattedBlock {...props} />;
@@ -113,13 +107,12 @@ const div = props => {
   }
   return <div {...props} />;
 };
-input.displayName = 'div';
+div.displayName = 'div';
 div.propTypes = {
   className: PropTypes.string,
 };
 
 const components = {
-  wrapper: React.Fragment,
   h1,
   h2,
   h3,
@@ -127,7 +120,7 @@ const components = {
   h5,
   h6,
   p,
-  inlineCode: InlineCode,
+  code: InlineCode,
   pre,
   strong: Strong,
   hr: SegmentSeparator,
@@ -146,20 +139,20 @@ const components = {
   img: Image,
   figure: Figure,
   figcaption: FigureCaption,
-  mathblock: MathBlock,
-  inlinemath: InlineMath,
+  InlineMath,
+  MathBlock,
 };
 
-const MDXBody = ({ textStyle, code }) => (
+const MDXBody = ({ textStyle, children }) => (
   <MDXContext.Provider value={textStyle}>
-    <MDXRenderer scope={scope} components={components}>
-      {code.body}
-    </MDXRenderer>
+    <MDXProvider components={components}>
+      {children}
+    </MDXProvider>
   </MDXContext.Provider>
 );
 
 MDXBody.propTypes = {
-  code: PropTypes.object.isRequired,
+  children: PropTypes.node,
   textStyle: PropTypes.string.isRequired,
 };
 
