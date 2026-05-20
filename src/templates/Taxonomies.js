@@ -34,7 +34,7 @@ class Taxonomies extends React.Component {
       </header>
     ) : null;
 
-    taxonomies.sort((t1, t2) => t1 > t2);
+    taxonomies.sort((t1, t2) => t1 < t2 ? -1 : t1 > t2 ? 1 : 0);
 
     const components = taxonomies.map((taxonomy, index) => (
       <div key={index} className={styles.taxonomySummary}>

@@ -27,7 +27,7 @@ class Index extends React.Component {
     const { edges: postNodes } = allPost || { edges: [] };
 
     const posts = postNodes.map(postNode => postNode.node);
-    posts.sort((p1, p2) => p1.createdTime < p2.createdTime);
+    posts.sort((p1, p2) => new Date(p2.createdTime) - new Date(p1.createdTime));
 
     const header = showsPageTitle ? (
       <header className={styles.header}>
