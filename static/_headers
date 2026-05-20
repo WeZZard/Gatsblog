@@ -1,2 +1,11 @@
 /*
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+
+/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.css
+  Cache-Control: public, max-age=31536000, immutable

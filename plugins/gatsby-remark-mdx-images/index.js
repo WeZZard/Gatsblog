@@ -207,19 +207,26 @@ const createPictureTag = (tagPrototypes, imgInfo) => {
 
   const originalImages = tagPrototypes.map(({ originalImg }) => originalImg);
 
-  const originalImg = originalImages.sort((a, b) => a.weight > b.weight)[0].src;
+  const originalImg = originalImages.sort((a, b) => a.weight < b.weight ? -1 : a.weight > b.weight ? 1 : 0)[0].src;
 
   const { alt, title } = imgInfo;
+
+  const proto = tagPrototypes[0].prototype;
+  const width = proto.presentationWidth;
+  const height = proto.presentationHeight;
 
   return {
     originalImg,
     tag: `
 <picture>
   ${tags.join('\n')}
-  <img 
+  <img
     src="${originalImg}"
     alt="${alt}"
     title="${title}"
+    ${width ? `width="${width}"` : ''}
+    ${height ? `height="${height}"` : ''}
+    loading="lazy"
   />
 </picture>
 `.trim(),
@@ -238,6 +245,9 @@ const createImgTag = (tagPrototype, imgInfo) => {
   ${prototype.src ? `src="${prototype.src}"` : ''}
   ${prototype.srcSet ? `srcset="${prototype.srcSet}"` : ''}
   ${prototype.sizes ? `sizes="${prototype.sizes}"` : ''}
+  ${prototype.presentationWidth ? `width="${prototype.presentationWidth}"` : ''}
+  ${prototype.presentationHeight ? `height="${prototype.presentationHeight}"` : ''}
+  loading="lazy"
 />
 `.trim(),
   };
