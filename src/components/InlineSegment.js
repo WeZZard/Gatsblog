@@ -6,9 +6,21 @@ import MDXRenderer from 'gatsby-mdx';
 import InlineParagraph from './InlineParagraph';
 import { normalizeChildren } from '../utils';
 
-const inlineTags = ['label', 'span', 'code', 'input', 'a', 'sup', 'sub'];
+const inlineTags = ['label', 'span', 'code', 'input', 'a', 'sup', 'sub', 'em', 'del'];
 
-const inlinePropsNames = [...inlineTags, 'inlineCode'];
+// MDX passes each node's name as a `name` prop; these names render inline.
+const inlinePropsNames = [...inlineTags, 'inlineCode', 'strong', 'inlinemath'];
+
+// Custom components (mapped in MDXBody) that render inline elements, matched
+// by displayName so detection survives even when no `name` prop is present.
+const inlineDisplayNames = [
+  'Strong',
+  'Anchor',
+  'InlineCode',
+  'InlineMath',
+  'Span',
+  'Superscript',
+];
 
 const isInlineElement = child => {
   if (typeof child === 'string') {
@@ -21,7 +33,10 @@ const isInlineElement = child => {
     const isInlinableType = child && child.type
       && typeof child.type === 'string'
       && inlineTags.includes(child.type)
-    return isInlinablePropsName || isInlinableType;
+    const isInlinableComponent = child && child.type
+      && typeof child.type !== 'string'
+      && inlineDisplayNames.includes(child.type.displayName)
+    return isInlinablePropsName || isInlinableType || isInlinableComponent;
   }
 };
 
