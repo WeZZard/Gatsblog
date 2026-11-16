@@ -1,0 +1,113 @@
+---
+interface Props {
+  basePath: string;
+  pageIndex: number;
+  pagesCount: number;
+  previousPageTitle?: string;
+  nextPageTitle?: string;
+}
+
+const {
+  basePath,
+  pageIndex,
+  pagesCount,
+  previousPageTitle = 'Earlier Posts',
+  nextPageTitle = 'Later Posts',
+} = Astro.props;
+
+const pageNumber = pageIndex + 1;
+const cleanBase = basePath === '/' ? '' : basePath;
+const prevHref = pageIndex - 1 === 0 ? basePath || '/' : `${cleanBase}/page-${pageNumber - 1}`;
+const nextHref = `${cleanBase}/page-${pageNumber + 1}`;
+---
+
+<div class="paginator">
+  {
+    pageIndex - 1 >= 0 && (
+      <div class="previous-page-title">
+        <span><a href={prevHref}>{previousPageTitle}</a></span>
+      </div>
+    )
+  }
+  <div class="page-indicator">
+    <span>{pageNumber} / {pagesCount}</span>
+  </div>
+  {
+    pageIndex + 1 < pagesCount && (
+      <div class="next-page-title">
+        <span><a href={nextHref}>{nextPageTitle}</a></span>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .paginator {
+    align-items: baseline;
+    display: flex;
+    flex-direction: row;
+
+    & .previous-page-title {
+      align-items: baseline;
+      display: flex;
+      flex-direction: row;
+      margin-right: 1.3rem;
+      text-transform: uppercase;
+
+      & a::before {
+        content: '<';
+        font-size: 1.1em;
+        font-weight: 500;
+        line-height: 1.18;
+        margin: -0.2rem 0.5rem -0.3rem 0;
+        vertical-align: 0.05rem;
+      }
+    }
+
+    & .page-indicator {
+      align-items: baseline;
+      color: var(--color-ui-caption-secondary);
+      display: flex;
+      flex-direction: row;
+    }
+
+    & .next-page-title {
+      align-items: baseline;
+      display: flex;
+      flex-direction: row;
+      margin-left: 1.3rem;
+      text-transform: uppercase;
+
+      & a::after {
+        content: '>';
+        font-size: 1.1em;
+        font-weight: 500;
+        line-height: 1.18;
+        margin: -0.2rem 0 -0.3rem 0.5rem;
+        vertical-align: 0.05rem;
+      }
+    }
+
+    & a {
+      color: var(--color-ui-caption-primary);
+      text-decoration: none;
+      transition: color 0.3s ease-in-out;
+
+      &:visited {
+        color: var(--color-ui-caption-primary);
+      }
+
+      &:hover,
+      &:visited:hover {
+        color: var(--color-hover);
+      }
+    }
+
+    & span {
+      font-size: 1.1em;
+      font-weight: 500;
+      line-height: 1.18;
+      margin: -0.2rem 0 -0.3rem 0;
+    }
+  }
+</style>

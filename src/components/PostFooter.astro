@@ -1,0 +1,127 @@
+---
+import MDXMetadata from './MDXMetadata.astro';
+import { getSiteConfig } from '../lib/config';
+
+interface Props {
+  tags?: string[];
+  license?: string;
+}
+
+const { tags = [], license } = Astro.props;
+const { site } = getSiteConfig();
+const finalLicense = license || site.license;
+
+const cc40Regex = /^cc4\.0-((by)|(by-nc)|(by-nc-nd)|(by-nc-sa)|(by-nd)|(by-sa))$/i;
+const cc40Match = cc40Regex.exec(finalLicense);
+
+function cc40TextForOptions(options: string[]): string {
+  const items: string[] = [];
+  if (options.includes('by')) items.push('Attribution');
+  if (options.includes('nc')) items.push('Non-Commercial');
+  if (options.includes('nd')) items.push('Non-Derivatives');
+  if (options.includes('sa')) items.push('Share-Alike');
+  return `This work is licensed under a Creative Commons ${items.join('-')} 4.0 International License.`;
+}
+
+const optionString = cc40Match ? cc40Match[1].toLowerCase() : null;
+const licenseText = optionString
+  ? cc40TextForOptions(optionString.split('-'))
+  : finalLicense;
+---
+
+{
+  tags.length > 0 && (
+    <div class="post-tags">
+      <MDXMetadata items={[{ name: 'tags', data: tags }]} />
+    </div>
+  )
+}
+<div class="license-row">
+  {
+    optionString ? (
+      <div class="license-box">
+        <span class="license-image">
+          <span class="license-badge-wrapper">
+            <img
+              src={`/images/cc4.0-${optionString}.png`}
+              alt={finalLicense}
+              width="88"
+              height="32"
+            />
+          </span>
+        </span>
+        <span class="license-text">{licenseText}</span>
+      </div>
+    ) : (
+      <div>
+        <span class="license-text">{licenseText}</span>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .post-tags {
+    align-items: baseline;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5.5rem;
+  }
+
+  .license-row {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .license-box {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+
+    @media (max-width: 960px) {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    & .license-image {
+      margin-right: 1.3rem;
+
+      @media (max-width: 960px) {
+        order: 1;
+      }
+
+      & .license-badge-wrapper {
+        display: inline-block;
+        height: 32px;
+        overflow: hidden;
+        position: relative;
+        width: 88px;
+      }
+
+      & img {
+        height: 100%;
+        left: 0;
+        object-fit: cover;
+        object-position: center;
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
+    }
+
+    & .license-text {
+      color: var(--color-content-footer-text);
+      font-family: var(--font-text-monospaced);
+      font-size: 1.1em;
+      font-weight: 400;
+      line-height: 1.18;
+      text-transform: uppercase;
+
+      @media (max-width: 960px) {
+        margin-bottom: 2.1rem;
+        order: 0;
+      }
+    }
+  }
+</style>

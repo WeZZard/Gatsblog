@@ -1,0 +1,414 @@
+---
+import SiteTitle from './SiteTitle.astro';
+import NavigationBar from './NavigationBar.astro';
+import SocialBar from './SocialBar.astro';
+import TableOfContents from './TableOfContents.astro';
+import SiteFooter from './SiteFooter.astro';
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  currentPath: string;
+  headings?: Heading[];
+}
+
+const { currentPath, headings = [] } = Astro.props;
+const hasTableOfContents = headings.length > 0;
+const showsSlogans = !hasTableOfContents;
+---
+
+<div class="nav-root" data-nav-root>
+  <div class="nav-header">
+    <div class="nav-button-wrap">
+      <div
+        role="button"
+        tabindex="0"
+        class="nav-button"
+        aria-label="Toggle navigation"
+        data-nav-toggle
+      >
+        <span class="burger">
+          <span class="bar top-bar"></span>
+          <span class="bar bottom-bar"></span>
+        </span>
+      </div>
+    </div>
+
+    <div class="site-title-slot">
+      <SiteTitle />
+    </div>
+
+    <div class="toc-button-wrap">
+      {
+        hasTableOfContents && (
+          <div
+            role="button"
+            tabindex="0"
+            class="toc-button"
+            aria-label="Toggle table of contents"
+            data-toc-toggle
+          >
+            <span class="left-arrow">
+              <span class="arrow-line top-line" />
+              <span class="arrow-line bottom-line" />
+            </span>
+            <span class="right-arrow">
+              <span class="arrow-line top-line" />
+              <span class="arrow-line bottom-line" />
+            </span>
+          </div>
+        )
+      }
+    </div>
+  </div>
+
+  <div class="nav-bar-slot">
+    <NavigationBar currentPath={currentPath} />
+    <SocialBar />
+  </div>
+
+  {
+    hasTableOfContents && (
+      <div class="toc-slot">
+        <TableOfContents headings={headings} />
+      </div>
+    )
+  }
+
+  <div class:list={['site-footer-slot', { 'grow-enabled': showsSlogans }]}>
+    <SiteFooter showsSlogans={showsSlogans} />
+  </div>
+</div>
+
+<style>
+  .nav-root {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
+    padding: 3.4rem 3.4rem 3.4rem 5.5rem;
+
+    @media (max-width: 960px) {
+      background-color: rgba(0, 0, 0, 0.7);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      backdrop-filter: saturate(180%) blur(20px);
+      padding: 0;
+      transition: all 0.5s ease-out, background 1s ease-out;
+    }
+
+    & .nav-header {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 0;
+      flex-shrink: 0;
+      margin-bottom: 3.4rem;
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+
+      @media (max-width: 960px) {
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+        height: 44px;
+        max-width: 100%;
+        margin: 0;
+      }
+
+      & .nav-button-wrap {
+        display: none;
+        width: 44px;
+        height: 44px;
+
+        @media (max-width: 960px) {
+          display: flex;
+          margin-left: 1rem;
+          margin-right: 2.1rem;
+          transition: all 0.3s ease-in;
+          z-index: 999;
+        }
+
+        & .nav-button {
+          position: relative;
+          display: inline-block;
+          height: 44px;
+          width: 44px;
+          cursor: pointer;
+          transform: rotate(0deg);
+          transition: all 0.3s var(--ease-nav);
+          user-select: none;
+          -webkit-tap-highlight-color: transparent;
+
+          & .burger {
+            width: 18px;
+            height: 8px;
+            position: relative;
+            display: block;
+            margin: -4px auto 0;
+            top: 50%;
+
+            & .bar {
+              width: 100%;
+              height: 1px;
+              display: block;
+              position: relative;
+              background: var(--color-gray-89);
+              transition: all 0.3s var(--ease-nav);
+            }
+
+            & .top-bar {
+              transform: translateY(0px) rotate(0deg);
+            }
+
+            & .bottom-bar {
+              transform: translateY(6px) rotate(0deg);
+            }
+          }
+        }
+      }
+
+      & .site-title-slot {
+        display: flex;
+
+        @media (max-width: 960px) {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+          transition: transform 0.5s var(--ease-nav), opacity 0.6s var(--ease-nav);
+        }
+      }
+
+      & .toc-button-wrap {
+        display: none;
+        width: 44px;
+        height: 44px;
+
+        @media (max-width: 960px) {
+          display: flex;
+          margin-left: 2.1rem;
+          margin-right: 1rem;
+          transition: all 0.3s ease-in;
+          z-index: 999;
+        }
+
+        & .toc-button {
+          cursor: pointer;
+          display: inline-block;
+          height: 44px;
+          position: relative;
+          -webkit-tap-highlight-color: transparent;
+          user-select: none;
+          width: 44px;
+
+          & .left-arrow,
+          & .right-arrow {
+            display: block;
+            height: 44px;
+            margin: 0;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            transition: all 0.3s var(--ease-nav);
+            width: 17px;
+
+            & .arrow-line {
+              background: var(--color-gray-89);
+              display: block;
+              height: 1px;
+              position: relative;
+              transition: all 0.3s var(--ease-nav);
+              width: 100%;
+            }
+          }
+
+          & .left-arrow {
+            left: 12px;
+            & .top-line {
+              transform: translateX(-9.3px) translateY(22px) rotate(30deg);
+            }
+            & .bottom-line {
+              transform: translateX(-9.3px) translateY(22px) rotate(150deg);
+            }
+          }
+
+          & .right-arrow {
+            right: 12px;
+            & .top-line {
+              transform: translateX(9.3px) translateY(22px) rotate(-30deg);
+            }
+            & .bottom-line {
+              transform: translateX(9.3px) translateY(22px) rotate(-150deg);
+            }
+          }
+        }
+      }
+    }
+
+    & .nav-bar-slot {
+      align-items: flex-end;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 0;
+      flex-shrink: 0;
+      margin-bottom: 3.4rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      @media (max-width: 960px) {
+        align-items: stretch;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0;
+        opacity: 0;
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        transition: all 0.3s ease-in;
+      }
+    }
+
+    & .toc-slot {
+      align-items: stretch;
+      display: flex;
+      flex-direction: row;
+      flex-grow: 1;
+      flex-shrink: 1;
+      justify-content: flex-end;
+      margin-bottom: 3.4rem;
+      min-height: 0;
+
+      @media (max-width: 1440px) {
+        margin-left: -5.5rem;
+      }
+
+      @media (max-width: 960px) {
+        margin: 0;
+        opacity: 0;
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        transition: all 0.3s ease-in;
+      }
+    }
+
+    & .site-footer-slot {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 0;
+      flex-shrink: 1;
+      justify-content: flex-end;
+
+      &.grow-enabled {
+        flex-grow: 1;
+      }
+
+      @media (max-width: 960px) {
+        display: none;
+      }
+    }
+
+    &.is-nav-open,
+    &.is-toc-open {
+      @media (max-width: 960px) {
+        height: 100vh;
+        transition: all 0.3s ease-in, background 0.5s ease-in;
+      }
+
+      & .nav-header .site-title-slot {
+        @media (max-width: 960px) {
+          opacity: 0;
+          transform: scale(1.15) translateY(-30px);
+          transition: transform 0.5s var(--ease-nav), opacity 0.6s var(--ease-nav);
+        }
+      }
+    }
+
+    &.is-nav-open {
+      @media (max-width: 960px) {
+        & .nav-header .nav-button-wrap .nav-button {
+          transform: rotate(90deg);
+
+          & .burger .top-bar {
+            transform: translateY(4px) rotate(45deg);
+            transition: all 0.4s var(--ease-nav);
+            transition-delay: 0.2s;
+          }
+
+          & .burger .bottom-bar {
+            transform: translateY(3px) rotate(-45deg);
+            transition: all 0.4s var(--ease-nav);
+            transition-delay: 0.2s;
+          }
+        }
+
+        & .nav-header .toc-button-wrap {
+          opacity: 0;
+          transform: translateX(44px);
+          transition: all 0.3s ease-in;
+        }
+
+        & .toc-slot {
+          display: none;
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        & .nav-bar-slot {
+          display: flex;
+          opacity: 1;
+          pointer-events: auto;
+        }
+      }
+    }
+
+    &.is-toc-open {
+      @media (max-width: 960px) {
+        & .nav-header .nav-button-wrap {
+          opacity: 0;
+          transform: translateX(-44px);
+          transition: all 0.3s ease-in;
+        }
+
+        & .nav-header .toc-button-wrap .toc-button {
+          & .left-arrow {
+            left: 22px;
+            & .top-line {
+              transform: translateX(-9px) translateY(22px) rotate(45deg);
+            }
+            & .bottom-line {
+              transform: translateX(-9px) translateY(22px) rotate(135deg);
+            }
+          }
+          & .right-arrow {
+            right: 22px;
+            & .top-line {
+              transform: translateX(9px) translateY(22px) rotate(-45deg);
+            }
+            & .bottom-line {
+              transform: translateX(9px) translateY(22px) rotate(-135deg);
+            }
+          }
+        }
+
+        & .toc-slot {
+          display: flex;
+          opacity: 1;
+          pointer-events: auto;
+        }
+
+        & .nav-bar-slot {
+          display: none;
+          opacity: 0;
+          pointer-events: none;
+        }
+      }
+    }
+  }
+</style>

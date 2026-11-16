@@ -1,0 +1,15 @@
+{
+  "name": "Pieces of My Soul",
+  "short_name": "WeZZard",
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "theme_color": "#3d4260",
+  "display": "minimal-ui",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

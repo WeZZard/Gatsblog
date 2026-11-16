@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Title from '../../../components/Title.astro';
+import PostExcerpt from '../../../components/PostExcerpt.astro';
+import Paginator from '../../../components/Paginator.astro';
+import { getAllPosts, getAllTags, toKebabCase } from '../../../lib/content';
+import { getItemsPerPage } from '../../../lib/config';
+
+export async function getStaticPaths() {
+  const allPosts = (await getAllPosts()).filter(p => !p.isLocalized);
+  const allTags = getAllTags(allPosts);
+  const itemsPerPage = getItemsPerPage('Tag');
+
+  const paths = [];
+  for (const tag of allTags) {
+    const tagPosts = allPosts.filter(p => p.tags.includes(tag.name));
+    const pagesCount = Math.max(1, Math.ceil(tagPosts.length / itemsPerPage));
+    for (let pageIndex = 1; pageIndex < pagesCount; pageIndex++) {
+      const start = pageIndex * itemsPerPage;
+      paths.push({
+        params: { tag: toKebabCase(tag.name), page: String(pageIndex + 1) },
+        props: {
+          tag,
+          pageIndex,
+          pagesCount,
+          posts: tagPosts.slice(start, start + itemsPerPage),
+        },
+      });
+    }
+  }
+  return paths;
+}
+
+const { tag, pageIndex, pagesCount, posts } = Astro.props;
+const title = `Tags > ${tag.name} (Page ${pageIndex + 1})`;
+---
+
+<BaseLayout title={title} currentPath={`${tag.slug}/page-${pageIndex + 1}`}>
+  <div class="index-page">
+    <header class="index-header">
+      <Title title={title} />
+    </header>
+    <main class="index-main">
+      {
+        posts.map(post => (
+          <div class="post-excerpt-item">
+            <PostExcerpt post={post} />
+          </div>
+        ))
+      }
+    </main>
+    <div class="index-paginator">
+      <Paginator
+        basePath={tag.slug}
+        pageIndex={pageIndex}
+        pagesCount={pagesCount}
+        previousPageTitle="Earlier Posts"
+        nextPageTitle="Later Posts"
+      />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .index-page {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-top: 5.5rem;
+
+    @media (max-width: 960px) {
+      margin-top: 2.1rem;
+    }
+
+    & .index-header {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+    }
+
+    & .index-main {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+
+      & .post-excerpt-item {
+        align-items: stretch;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 5.5rem;
+      }
+    }
+
+    & .index-paginator {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 5.5rem;
+    }
+  }
+</style>

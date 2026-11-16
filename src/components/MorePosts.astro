@@ -1,0 +1,222 @@
+---
+import MDXMetadata from './MDXMetadata.astro';
+import type { PostItem } from '../lib/content';
+
+interface Props {
+  earlierPost?: PostItem | null;
+  laterPost?: PostItem | null;
+}
+
+const { earlierPost, laterPost } = Astro.props;
+
+const morePostInfo = [
+  { item: laterPost, title: 'Later Post' },
+  { item: earlierPost, title: 'Earlier Post' },
+].filter((entry): entry is { item: PostItem; title: string } => Boolean(entry.item));
+---
+
+{
+  morePostInfo.length > 0 && (
+    <div class="more-posts">
+      {morePostInfo.map(({ item, title }) => (
+        <div class="more-post-item">
+          <div class="more-item-flex">
+            <div class="more-caption">
+              <span class="more-caption-content">{title}</span>
+            </div>
+            <div class="more-post-excerpt">
+              <section class="more-header">
+                <a class="more-header-link" href={item.fullPath}>
+                  <div class="more-title">
+                    <h1>{item.title}</h1>
+                  </div>
+                  {item.subtitle && (
+                    <div class="more-subtitle">
+                      <h2>{item.subtitle}</h2>
+                    </div>
+                  )}
+                </a>
+              </section>
+              {item.excerpt && (
+                <section class="more-content">
+                  <p class="more-paragraph"><a class="more-summary-link" href={item.fullPath}>{item.excerpt}</a></p>
+                </section>
+              )}
+              <section class="more-footer">
+                <div class="metadata-line">
+                  <MDXMetadata
+                    items={[
+                      { name: 'time', data: item.createdTime },
+                      { name: 'category', data: item.category },
+                    ]}
+                  />
+                </div>
+                {item.tags.length > 0 && (
+                  <div class="metadata-line">
+                    <MDXMetadata items={[{ name: 'tags', data: item.tags }]} />
+                  </div>
+                )}
+              </section>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+<style>
+  .more-posts {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+
+    @media (max-width: 960px) {
+      flex-direction: column;
+    }
+
+    & .more-post-item {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      margin: 3.4rem 3.4rem 5.5rem 0;
+      min-width: calc(50% - 3.4rem);
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      @media (max-width: 960px) {
+        margin: 0 0 3.4rem 0;
+        min-width: auto;
+        width: 100%;
+
+        &:first-child {
+          margin-top: 3.4rem;
+        }
+
+        &:last-child {
+          margin-bottom: 5.5rem;
+        }
+      }
+    }
+  }
+
+  .more-item-flex {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+
+    & .more-caption {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 3.4rem;
+
+      & .more-caption-content {
+        color: var(--color-tint);
+        display: block;
+        font-family: var(--font-ui-sans);
+        font-size: 1.1em;
+        font-weight: 500;
+        line-height: 1.18182;
+        margin: -0.2rem 0 -0.3rem 0;
+        text-align: left;
+        text-transform: uppercase;
+      }
+    }
+
+    & .more-post-excerpt {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+
+      & .more-header {
+        margin: 0;
+
+        & .more-header-link {
+          text-decoration: none;
+
+          & h1 {
+            color: var(--color-ui-main-headline-primary);
+            display: block;
+            font-size: 2.4em;
+            font-weight: 500;
+            line-height: 1.20833;
+            margin: -0.6rem 0;
+            transition: color 0.3s ease-in-out;
+          }
+
+          & h2 {
+            color: var(--color-ui-main-headline-secondary);
+            display: block;
+            font-size: 1.5em;
+            font-weight: 400;
+            line-height: 1.2;
+            margin: -0.6rem 0 -0.4rem 0;
+            transition: color 0.3s ease-in-out;
+          }
+
+          &:hover h1,
+          &:hover h2 {
+            color: var(--color-hover);
+          }
+        }
+
+        & .more-title {
+          align-items: stretch;
+          display: flex;
+          flex-direction: column;
+        }
+
+        & .more-subtitle {
+          align-items: stretch;
+          display: flex;
+          flex-direction: column;
+          margin-top: 2.1rem;
+        }
+      }
+
+      & .more-content {
+        margin-top: 3.4rem;
+
+        & .more-paragraph {
+          color: var(--color-content-summary);
+          font-family: var(--font-text-serif);
+          font-size: 1.7em;
+          line-height: 1.70588;
+          margin: -1.2rem 0 -1rem 0;
+
+          & .more-summary-link {
+            color: var(--color-content-summary);
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+
+            &:hover {
+              color: var(--color-hover);
+            }
+          }
+        }
+      }
+
+      & .more-footer {
+        align-items: stretch;
+        display: flex;
+        flex-direction: column;
+        margin-top: 3.4rem;
+
+        & .metadata-line {
+          align-items: baseline;
+          display: flex;
+          flex-direction: row;
+          margin-bottom: 2.1rem;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+</style>

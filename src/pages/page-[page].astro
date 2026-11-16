@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostExcerpt from '../components/PostExcerpt.astro';
+import Paginator from '../components/Paginator.astro';
+import { getAllPosts } from '../lib/content';
+import { getItemsPerPage } from '../lib/config';
+
+export async function getStaticPaths() {
+  const allPosts = (await getAllPosts()).filter(p => !p.isLocalized);
+  const itemsPerPage = getItemsPerPage('Home');
+  const pagesCount = Math.max(1, Math.ceil(allPosts.length / itemsPerPage));
+
+  const paths = [];
+  for (let pageIndex = 1; pageIndex < pagesCount; pageIndex++) {
+    const start = pageIndex * itemsPerPage;
+    paths.push({
+      params: { page: String(pageIndex + 1) },
+      props: {
+        pageIndex,
+        pagesCount,
+        posts: allPosts.slice(start, start + itemsPerPage),
+      },
+    });
+  }
+  return paths;
+}
+
+const { pageIndex, pagesCount, posts } = Astro.props;
+const title = `All the Posts (Page ${pageIndex + 1})`;
+---
+
+<BaseLayout title={title} currentPath={`/page-${pageIndex + 1}`}>
+  <div class="index-page">
+    <main class="index-main">
+      {
+        posts.map(post => (
+          <div class="post-excerpt-item">
+            <PostExcerpt post={post} />
+          </div>
+        ))
+      }
+    </main>
+    <div class="index-paginator">
+      <Paginator
+        basePath="/"
+        pageIndex={pageIndex}
+        pagesCount={pagesCount}
+        previousPageTitle="Earlier Posts"
+        nextPageTitle="Later Posts"
+      />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .index-page {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-top: 5.5rem;
+
+    @media (max-width: 960px) {
+      margin-top: 2.1rem;
+    }
+
+    & .index-main {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+
+      & .post-excerpt-item {
+        align-items: stretch;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 5.5rem;
+      }
+    }
+
+    & .index-paginator {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 5.5rem;
+    }
+  }
+</style>

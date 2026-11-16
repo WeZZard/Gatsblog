@@ -1,0 +1,163 @@
+---
+import type { PostItem, TaxonomyNode } from '../lib/content';
+
+interface Props {
+  type: 'tag' | 'category';
+  taxonomy: TaxonomyNode;
+  posts: PostItem[];
+}
+
+const { type, taxonomy, posts } = Astro.props;
+const relatedPosts = posts
+  .filter(p =>
+    type === 'tag'
+      ? p.tags.includes(taxonomy.name)
+      : p.category === taxonomy.name,
+  )
+  .slice(0, 5);
+---
+
+<div class="taxonomy-summary">
+  <div class="taxonomy-name-flex">
+    <h1 class="taxonomy-name">{taxonomy.name}</h1>
+  </div>
+  <div class="post-list-flex">
+    <ul class="post-list">
+      {
+        relatedPosts.map(post => (
+          <li class="post-item">
+            <div class="post-title-flex">
+              <span class="post-title">
+                <a href={post.fullPath}>{post.title}</a>
+              </span>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  <div class="more-flex">
+    <span class="more-link-wrap">
+      <a class="more-link" href={taxonomy.slug}>More ...</a>
+    </span>
+  </div>
+</div>
+
+<style>
+  .taxonomy-summary {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5.5rem;
+  }
+
+  .taxonomy-name-flex {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+
+    & .taxonomy-name {
+      color: var(--color-content-heading);
+      font-family: var(--font-text-sans);
+      font-size: 1.7em;
+      font-weight: 300;
+      line-height: calc(20 / 17);
+      margin: -0.7rem 0 -0.4rem 0;
+
+      &::before {
+        color: var(--color-content-list-indicator-dark);
+        content: '[ ';
+      }
+
+      &::after {
+        color: var(--color-content-list-indicator-dark);
+        content: ' ]';
+      }
+    }
+  }
+
+  .post-list-flex {
+    & .post-list {
+      list-style: none;
+      margin: 3.4rem 0 0 0;
+      padding: 0;
+
+      & .post-item {
+        align-items: stretch;
+        display: flex;
+        flex-direction: row;
+        margin: 0 0 3.4rem 0;
+
+        &::before {
+          color: var(--color-content-list-indicator-dark);
+          content: '\2022';
+          font-family: var(--font-text-sans);
+          font-size: 1.5em;
+          font-weight: 200;
+          line-height: calc(28 / 15);
+          margin: -0.9rem 0;
+          padding-left: 0.5rem;
+          padding-right: 0.8rem;
+        }
+
+        & .post-title-flex {
+          align-items: baseline;
+          display: flex;
+          flex-direction: column;
+
+          & .post-title {
+            font-family: var(--font-text-sans);
+            font-size: 1.5em;
+            font-weight: 200;
+            line-height: calc(28 / 15);
+            margin: -0.9rem 0;
+
+            & a {
+              color: var(--color-content-summary);
+              margin: 0;
+              text-decoration: none;
+              transition: color 0.3s ease-in-out;
+
+              &:visited {
+                color: var(--color-content-summary);
+              }
+
+              &:hover,
+              &:visited:hover {
+                color: var(--color-hover);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .more-flex {
+    align-items: baseline;
+    display: flex;
+    flex-direction: column;
+
+    & .more-link-wrap {
+      font-size: 1.1em;
+      font-weight: 400;
+      margin: -0.2rem 0 -0.3rem 0;
+      text-transform: uppercase;
+
+      & .more-link {
+        color: var(--color-ui-caption-primary);
+        text-decoration: none;
+        transition: color 0.3s ease-in-out;
+
+        &:visited {
+          color: var(--color-ui-caption-primary);
+        }
+
+        &:hover,
+        &:visited:hover {
+          color: var(--color-hover);
+        }
+      }
+    }
+  }
+</style>

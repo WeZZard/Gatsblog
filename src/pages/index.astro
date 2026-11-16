@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostExcerpt from '../components/PostExcerpt.astro';
+import Paginator from '../components/Paginator.astro';
+import { getAllPosts } from '../lib/content';
+import { getItemsPerPage } from '../lib/config';
+
+const allPosts = (await getAllPosts()).filter(p => !p.isLocalized);
+const itemsPerPage = getItemsPerPage('Home');
+const pagesCount = Math.max(1, Math.ceil(allPosts.length / itemsPerPage));
+const posts = allPosts.slice(0, itemsPerPage);
+---
+
+<BaseLayout currentPath="/">
+  <div class="index-page">
+    <main class="index-main">
+      {
+        posts.map(post => (
+          <div class="post-excerpt-item">
+            <PostExcerpt post={post} />
+          </div>
+        ))
+      }
+    </main>
+    <div class="index-paginator">
+      <Paginator
+        basePath="/"
+        pageIndex={0}
+        pagesCount={pagesCount}
+        previousPageTitle="Earlier Posts"
+        nextPageTitle="Later Posts"
+      />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .index-page {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-top: 5.5rem;
+
+    @media (max-width: 960px) {
+      margin-top: 2.1rem;
+    }
+
+    & .index-main {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+
+      & .post-excerpt-item {
+        align-items: stretch;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 5.5rem;
+      }
+    }
+
+    & .index-paginator {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 5.5rem;
+    }
+  }
+</style>

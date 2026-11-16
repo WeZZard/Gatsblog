@@ -1,0 +1,84 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  textStyle?: 'serif' | 'sans';
+}
+
+const { title, subtitle, textStyle = 'sans' } = Astro.props;
+---
+
+<div class="title-wrap">
+  <h1 class={textStyle}>{title}</h1>
+</div>
+{
+  subtitle && (
+    <div class="subtitle-wrap">
+      <h2 class={textStyle}>{subtitle}</h2>
+    </div>
+  )
+}
+
+<style>
+  .title-wrap {
+    align-self: baseline;
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 3.4rem 0;
+
+    & .serif {
+      align-self: baseline;
+      color: var(--color-content-headline-primary);
+      display: flex;
+      flex-direction: column;
+      font-family: var(--font-text-serif);
+      font-size: 4.4em;
+      font-weight: 300;
+      line-height: 1.18182;
+      margin: -0.7rem 0 -1.4rem 0;
+    }
+
+    & .sans {
+      align-self: baseline;
+      color: var(--color-content-headline-primary);
+      display: flex;
+      flex-direction: column;
+      font-family: var(--font-text-sans);
+      font-size: 4.4em;
+      font-weight: 300;
+      line-height: 1.18182;
+      margin: -1.1rem 0 -1rem 0;
+    }
+  }
+
+  .subtitle-wrap {
+    align-self: baseline;
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 3.4rem 0;
+
+    & .serif {
+      align-self: baseline;
+      color: var(--color-content-headline-secondary);
+      display: flex;
+      flex-direction: column;
+      font-family: var(--font-text-serif);
+      font-size: 3.2em;
+      font-weight: 300;
+      line-height: calc(32 / 24);
+      margin: -1.5rem 0 -1.3rem 0;
+    }
+
+    & .sans {
+      align-self: baseline;
+      color: var(--color-content-headline-secondary);
+      display: flex;
+      flex-direction: column;
+      font-family: var(--font-text-sans);
+      font-size: 2.8em;
+      font-weight: 300;
+      line-height: calc(41 / 24);
+      margin: -1.3rem 0 -1.2rem 0;
+    }
+  }
+</style>

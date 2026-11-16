@@ -1,0 +1,143 @@
+---
+import MDXMetadata from './MDXMetadata.astro';
+import type { PostItem } from '../lib/content';
+
+interface Props {
+  post: PostItem;
+}
+
+const { post } = Astro.props;
+---
+
+<div class="post-excerpt">
+  <section class="excerpt-header">
+    <a class="excerpt-header-link" href={post.fullPath}>
+      <h1 class="excerpt-title">{post.title}</h1>
+      {post.subtitle && <h2 class="excerpt-subtitle">{post.subtitle}</h2>}
+    </a>
+  </section>
+  {
+    post.excerpt && (
+      <section class="excerpt-content">
+        <p class="excerpt-paragraph"><a class="excerpt-summary-link" href={post.fullPath}>{post.excerpt}</a></p>
+      </section>
+    )
+  }
+  <section class="excerpt-footer">
+    <div class="metadata-line">
+      <MDXMetadata
+        items={[
+          { name: 'time', data: post.createdTime },
+          { name: 'category', data: post.category },
+        ]}
+      />
+    </div>
+    {
+      post.tags.length > 0 && (
+        <div class="metadata-line">
+          <MDXMetadata items={[{ name: 'tags', data: post.tags }]} />
+        </div>
+      )
+    }
+  </section>
+</div>
+
+<style>
+  .post-excerpt {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+
+    & .excerpt-header {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 2.1rem;
+
+      & .excerpt-header-link {
+        text-decoration: none;
+
+        & h1 {
+          color: var(--color-ui-main-headline-primary);
+          margin: 0;
+          transition: color 0.3s ease-in-out;
+        }
+
+        & h2 {
+          color: var(--color-ui-main-headline-secondary);
+          margin: 0;
+          transition: color 0.3s ease-in-out;
+        }
+
+        &:hover h1,
+        &:hover h2 {
+          color: var(--color-hover);
+        }
+      }
+
+      & .excerpt-title {
+        display: inline;
+        font-size: 2.4em;
+        font-weight: 500;
+        line-height: 1.41667;
+      }
+
+      & .excerpt-subtitle {
+        display: inline;
+        font-size: 1.5em;
+        font-weight: 400;
+        line-height: 1.93333;
+        margin-left: 0.8rem;
+        vertical-align: 0.05rem;
+      }
+    }
+
+    & .excerpt-content {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 3.4rem;
+
+      & .excerpt-paragraph {
+        color: var(--color-content-summary);
+        font-family: var(--font-text-serif);
+        font-size: 1.7em;
+        line-height: 1.70588;
+        margin: -1.2rem 0 -1rem 0;
+
+        & .excerpt-summary-link {
+          color: var(--color-content-summary);
+          text-decoration: none;
+          transition: color 0.3s ease-in-out;
+
+          &:visited {
+            color: var(--color-content-summary);
+          }
+
+          &:hover,
+          &:visited:hover {
+            color: var(--color-hover);
+          }
+        }
+      }
+    }
+
+    & .excerpt-footer {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+
+      & .metadata-line {
+        align-items: baseline;
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 2.1rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+</style>

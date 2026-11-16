@@ -1,0 +1,65 @@
+:root {
+  /* Color Palette */
+  --color-black: #000;
+  --color-white: #fff;
+  --color-gray-8: #141414;
+  --color-gray-13: #212121;
+  --color-gray-21: #363636;
+  --color-gray-34: #575757;
+  --color-gray-55: #8c8c8c;
+  --color-gray-89: #e3e3e3;
+
+  /* Theme & Accent */
+  --color-theme: #3d4260;
+  --color-theme-overlay: rgba(61, 66, 96, 0.2);
+  --color-theme-gradient-begin: rgba(61, 66, 96, 0.6);
+  --color-theme-gradient-end: rgba(21, 23, 34, 0.8);
+  --color-tint: #d95059;
+  --color-hover: #b1262f;
+
+  /* UI Navigation */
+  --color-ui-nav-headline-normal: var(--color-white);
+  --color-ui-nav-headline-selected: var(--color-gray-55);
+  --color-ui-nav-headline-shadow: rgba(0, 0, 0, 0.5);
+  --color-ui-nav-footnote: var(--color-gray-55);
+  --color-ui-nav-background: var(--color-gray-8);
+
+  /* UI Main & Captions */
+  --color-ui-main-headline-primary: var(--color-gray-21);
+  --color-ui-main-headline-secondary: var(--color-gray-55);
+  --color-ui-caption-label: var(--color-gray-55);
+  --color-ui-caption-primary: var(--color-tint);
+  --color-ui-caption-secondary: var(--color-gray-34);
+  --color-ui-caption-separator: var(--color-gray-89);
+  --color-ui-footnote: var(--color-gray-55);
+
+  /* Content */
+  --color-content-headline-primary: var(--color-gray-21);
+  --color-content-headline-secondary: var(--color-gray-34);
+  --color-content-summary: var(--color-gray-55);
+  --color-content-heading: var(--color-gray-21);
+  --color-content-body: var(--color-gray-34);
+  --color-content-quote: var(--color-gray-8);
+  --color-content-code-block-background: #e8f2ff;
+  --color-content-code-block-indicator: #b6d2f2;
+  --color-content-code-block-language: var(--color-white);
+  --color-content-code-block-line-number: var(--color-gray-55);
+  --color-content-math-block-background: #faf9f7;
+  --color-content-math-block-indicator: #bab19f;
+  --color-content-math: var(--color-gray-21);
+  --color-content-table-separator: var(--color-gray-89);
+  --color-content-divider: var(--color-gray-55);
+  --color-content-list-indicator-light: var(--color-gray-89);
+  --color-content-list-indicator-dark: var(--color-gray-55);
+  --color-content-quote-indicator: var(--color-gray-8);
+  --color-content-footer-text: var(--color-gray-55);
+
+  /* Typography */
+  --font-ui-sans: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+  --font-text-sans: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+  --font-text-serif: Palatino, 'Gentium Book Basic', serif;
+  --font-text-monospaced: 'SF Mono', 'Roboto Mono', monospace;
+
+  /* Motion */
+  --ease-nav: cubic-bezier(0.4, 0.01, 0.165, 0.99);
+}

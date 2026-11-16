@@ -1,0 +1,92 @@
+---
+import { getSiteConfig } from '../lib/config';
+
+interface Props {
+  showsSlogans?: boolean;
+}
+
+const { showsSlogans = true } = Astro.props;
+const { site } = getSiteConfig();
+const year = new Date().getFullYear();
+---
+
+<div class="site-footer">
+  <div class="site-info">
+    {
+      showsSlogans &&
+        site.slogans.map(slogan => (
+          <div class="site-info-item">
+            <span class="slogan" set:html={slogan} />
+          </div>
+        ))
+    }
+    <div class="site-info-item">
+      <span class="copyright">
+        © {year} {site.owner} All Copyright Reserved.
+      </span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .site-footer {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 1;
+
+    & .site-info {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      flex-shrink: 1;
+      margin: 0;
+
+      & .site-info-item {
+        align-items: stretch;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 3.4rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        & .slogan {
+          color: var(--color-ui-nav-footnote);
+          text-align: right;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+          display: inline;
+          font-size: 3em;
+          font-weight: 500;
+          line-height: calc(42 / 30);
+          margin: 0;
+          margin-bottom: -1rem;
+          margin-top: -1.5rem;
+          padding: 0;
+
+          @media (max-width: 960px) {
+            text-align: center;
+          }
+        }
+
+        & .copyright {
+          color: var(--color-ui-nav-footnote);
+          text-align: right;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+          display: inline;
+          font-size: 1.1em;
+          font-weight: 400;
+          line-height: 1.18;
+          margin-bottom: -0.3rem;
+          margin-top: -0.5rem;
+
+          @media (max-width: 960px) {
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+</style>

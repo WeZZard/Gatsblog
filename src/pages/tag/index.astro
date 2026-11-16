@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Title from '../../components/Title.astro';
+import TaxonomySummary from '../../components/TaxonomySummary.astro';
+import Paginator from '../../components/Paginator.astro';
+import { getAllPosts, getAllTags } from '../../lib/content';
+import { getItemsPerPage } from '../../lib/config';
+
+const posts = await getAllPosts();
+const allTags = getAllTags(posts);
+const itemsPerPage = getItemsPerPage('Tags');
+const pagesCount = Math.max(1, Math.ceil(allTags.length / itemsPerPage));
+const tags = allTags.slice(0, itemsPerPage);
+---
+
+<BaseLayout title="Tags" currentPath="/tag">
+  <div class="taxonomies-page">
+    <header class="taxonomies-header">
+      <Title title="Tags" />
+    </header>
+    <main class="taxonomies-main">
+      {
+        tags.map(tag => (
+          <TaxonomySummary type="tag" taxonomy={tag} posts={posts} />
+        ))
+      }
+    </main>
+    <div class="taxonomies-paginator">
+      <Paginator
+        basePath="/tag"
+        pageIndex={0}
+        pagesCount={pagesCount}
+        previousPageTitle="Previous Page"
+        nextPageTitle="Next Page"
+      />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .taxonomies-page {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5.5rem;
+
+    @media (max-width: 960px) {
+      margin-top: 2.1rem;
+    }
+
+    & .taxonomies-header {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 2.1rem;
+    }
+
+    & .taxonomies-paginator {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 5.5rem;
+    }
+  }
+</style>

@@ -1,0 +1,128 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Title from '../../../components/Title.astro';
+import MDXMetadata from '../../../components/MDXMetadata.astro';
+import PostFooter from '../../../components/PostFooter.astro';
+import MorePosts from '../../../components/MorePosts.astro';
+import ContentSeparator from '../../../components/ContentSeparator.astro';
+import { getAllPosts, type PostItem } from '../../../lib/content';
+import '../../../styles/mdx-body.css';
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts();
+
+  return posts
+    .filter(post => post.isLocalized)
+    .map(post => {
+      const index = posts.indexOf(post);
+      const earlierPost =
+        posts.slice(index + 1).find(p => p.isLocalized === post.isLocalized && p.lang === post.lang) ?? null;
+      const laterPost =
+        posts
+          .slice(0, index)
+          .reverse()
+          .find(p => p.isLocalized === post.isLocalized && p.lang === post.lang) ?? null;
+
+      const slugParam = post.slug.replace(/^\/post\//, '').replace(/^\//, '');
+
+      return {
+        params: { lang: post.lang, slug: slugParam },
+        props: { post, earlierPost, laterPost },
+      };
+    });
+}
+
+interface Props {
+  post: PostItem;
+  earlierPost: PostItem | null;
+  laterPost: PostItem | null;
+}
+
+const { post, earlierPost, laterPost } = Astro.props;
+const { Content, headings } = await render(post.entry);
+const allKeywords = [post.category, ...post.tags, ...post.keywords].filter(Boolean);
+const hasMorePosts = Boolean(earlierPost || laterPost);
+---
+
+<BaseLayout
+  lang={post.lang}
+  title={post.title}
+  description={post.excerpt}
+  keywords={allKeywords}
+  headings={headings}
+  currentPath={post.fullPath}
+>
+  <article class="post-article">
+    <header class="post-header">
+      <Title textStyle="serif" title={post.title} subtitle={post.subtitle} />
+      <aside class="post-metadata">
+        <MDXMetadata
+          items={[
+            { name: 'time', data: post.createdTime },
+            { name: 'category', data: post.category },
+          ]}
+        />
+      </aside>
+    </header>
+    <main class="post-main mdx-body serif">
+      <Content />
+    </main>
+    <footer class="post-footer-wrap">
+      <PostFooter tags={post.tags} license={post.license} />
+    </footer>
+  </article>
+
+  {
+    hasMorePosts && (
+      <Fragment slot="after-primary">
+        <ContentSeparator />
+        <div class="more-posts-section">
+          <MorePosts earlierPost={earlierPost} laterPost={laterPost} />
+        </div>
+      </Fragment>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .post-article {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5.5rem;
+
+    @media (max-width: 960px) {
+      margin-top: 2.1rem;
+    }
+
+    & .post-header {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 5.5rem;
+
+      & .post-metadata {
+        align-self: baseline;
+        display: flex;
+        flex-direction: row;
+        margin: 2.1rem 0 0 0;
+      }
+    }
+
+    & .post-main {
+      margin-bottom: 5.5rem;
+    }
+
+    & .post-footer-wrap {
+      margin-bottom: 5.5rem;
+    }
+  }
+
+  .more-posts-section {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
+</style>

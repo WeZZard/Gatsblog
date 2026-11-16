@@ -1,0 +1,164 @@
+---
+import { toKebabCase } from '../lib/content';
+
+interface MetadataItem {
+  name: 'time' | 'category' | 'tags';
+  data?: Date | string | string[];
+}
+
+interface Props {
+  items: MetadataItem[];
+}
+
+const { items } = Astro.props;
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
+---
+
+<div class="mdx-metadata">
+  {
+    items.map(item => {
+      if (item.name === 'time' && item.data instanceof Date) {
+        return (
+          <div class="meta-item">
+            <time class="time-label" datetime={item.data.toISOString()}>{formatDate(item.data)}</time>
+          </div>
+        );
+      }
+      if (item.name === 'category' && typeof item.data === 'string' && item.data) {
+        return (
+          <div class="meta-item">
+            <div class="taxonomy"><div class="taxonomy-name"><label>Category</label></div><ul class="taxonomy-item-list"><li class="taxonomy-item"><span><a class="link-primary" href={`/category/${toKebabCase(item.data)}`}>{item.data}</a></span></li></ul></div>
+          </div>
+        );
+      }
+      if (item.name === 'tags' && Array.isArray(item.data) && item.data.length > 0) {
+        return (
+          <div class="meta-item">
+            <div class="taxonomy"><div class="taxonomy-name"><label>Tags</label></div><ul class="taxonomy-item-list">{item.data.map(tag => (<li class="taxonomy-item"><span><a class="link-secondary" href={`/tag/${toKebabCase(tag)}`}>{tag}</a></span></li>))}</ul></div>
+          </div>
+        );
+      }
+      return null;
+    })
+  }
+</div>
+
+<style>
+  .mdx-metadata {
+    align-items: baseline;
+    display: flex;
+    flex-direction: row;
+
+    & .meta-item {
+      align-items: baseline;
+      display: flex;
+      flex-direction: row;
+
+      &::after {
+        color: var(--color-ui-caption-separator);
+        content: '•';
+        font-family: var(--font-text-monospaced);
+        font-size: 1.1em;
+        font-weight: 500;
+        line-height: 1;
+        margin: -0.2rem 0.8rem -0.3rem;
+      }
+
+      &:only-child::after,
+      &:last-child::after {
+        content: none;
+        margin: 0;
+      }
+
+      & .time-label {
+        align-items: baseline;
+        color: var(--color-ui-caption-label);
+        display: flex;
+        flex-direction: row;
+        font-size: 1.1em;
+        font-weight: 500;
+        line-height: 1.18182;
+        margin: -0.2rem 0 -0.3rem 0;
+        padding: 0;
+        text-transform: uppercase;
+      }
+
+      & .taxonomy {
+        color: var(--color-ui-caption-label);
+        display: inline;
+        font-size: 1.1em;
+        font-weight: 500;
+        line-height: 1.90909;
+        margin: -0.6rem 0 -0.7rem 0;
+        text-transform: uppercase;
+
+        & .taxonomy-name {
+          display: inline;
+
+          &::after {
+            background: var(--color-ui-caption-separator);
+            content: '';
+            display: inline-block;
+            height: 0.8rem;
+            margin: 0 0.5rem;
+            vertical-align: baseline;
+            width: 0.1rem;
+          }
+        }
+
+        & .taxonomy-item-list {
+          display: inline;
+          margin: 0;
+          padding: 0;
+
+          & .taxonomy-item {
+            display: inline-block;
+            margin: 0 0.8rem 0 0;
+            padding: 0;
+
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+        }
+
+        & .link-primary {
+          color: var(--color-ui-caption-primary);
+          text-decoration: none;
+          transition: color 0.3s ease-in-out;
+
+          &:visited {
+            color: var(--color-ui-caption-primary);
+          }
+
+          &:hover,
+          &:visited:hover {
+            color: var(--color-hover);
+          }
+        }
+
+        & .link-secondary {
+          color: var(--color-ui-caption-secondary);
+          text-decoration: none;
+          transition: color 0.3s ease-in-out;
+
+          &:visited {
+            color: var(--color-ui-caption-secondary);
+          }
+
+          &:hover,
+          &:visited:hover {
+            color: var(--color-hover);
+          }
+        }
+      }
+    }
+  }
+</style>

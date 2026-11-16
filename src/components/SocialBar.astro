@@ -1,0 +1,147 @@
+---
+import { library, icon, type IconPrefix, type IconName } from '@fortawesome/fontawesome-svg-core';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { getSiteConfig } from '../lib/config';
+import { encryptProtectedLink } from '../lib/crypto';
+
+library.add(fab, fas, far);
+
+const { social } = getSiteConfig();
+
+function renderFaIcon(iconSpec: string): string {
+  const prefix = 'fontawesome://';
+  if (!iconSpec.startsWith(prefix)) return '';
+  const [pack, name] = iconSpec.slice(prefix.length).split('/') as [IconPrefix, IconName];
+  const rendered = icon({ prefix: pack, iconName: name });
+  return rendered ? rendered.html.join('') : '';
+}
+
+function resolveSocialHref(link: string): { href: string; protectedData?: string; isExternal: boolean } {
+  if (link.startsWith('toprotect://')) {
+    const raw = link.slice('toprotect://'.length);
+    return { href: '#protected', protectedData: encryptProtectedLink(raw), isExternal: false };
+  }
+  if (link.startsWith('feed://')) {
+    return { href: 'https://' + link.slice('feed://'.length), isExternal: true };
+  }
+  return { href: link, isExternal: link.startsWith('http') };
+}
+---
+
+<div class="social-bar" data-social-bar>
+  {
+    social.map(item => {
+      const svgHtml = renderFaIcon(item.icon);
+      const resolved = resolveSocialHref(item.link);
+      return (
+        <div class="social-item">
+          <a
+            href={resolved.href}
+            data-protected-link={resolved.protectedData}
+            target={resolved.isExternal ? '_blank' : undefined}
+            rel={resolved.isExternal ? 'noopener noreferrer' : undefined}
+            class="social-link"
+          >
+            <div class="social-icon" set:html={svgHtml} />
+            <span class="social-title">{item.name}</span>
+          </a>
+        </div>
+      );
+    })
+  }
+</div>
+
+<style>
+  .social-bar {
+    align-items: flex-start;
+    display: flex;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    margin-top: 3.4rem;
+
+    @media (max-width: 960px) {
+      flex-direction: row;
+      margin: 3.4rem 2.1rem 0 2.1rem;
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+      opacity: 0;
+      transform: scale(1.15) translateY(-30px);
+      transition: transform 0.5s var(--ease-nav), opacity 0.6s var(--ease-nav);
+    }
+
+    & .social-item {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      margin-left: 2.1rem;
+      max-width: 6.4rem;
+
+      &:last-child {
+        margin-left: 0;
+      }
+
+      @media (max-width: 960px) {
+        margin-left: 0;
+        min-width: 4.4rem;
+        min-height: 4.4rem;
+      }
+
+      & a {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        color: var(--color-ui-nav-headline-normal);
+        text-decoration: none;
+        transition: color 0.3s ease-in-out;
+
+        &:visited {
+          color: var(--color-ui-nav-headline-normal);
+        }
+
+        &:hover,
+        &:visited:hover {
+          color: var(--color-tint);
+        }
+
+        & .social-icon {
+          align-items: center;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          margin-bottom: 1.3rem;
+          font-size: 2em;
+
+          & :global(svg) {
+            height: 1em;
+            width: auto;
+            overflow: visible;
+          }
+        }
+
+        & .social-title {
+          font-size: 1.1em;
+          font-weight: 400;
+          line-height: calc(13 / 11);
+          margin-bottom: -0.3rem;
+          margin-top: -0.5rem;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  :global([data-nav-root].is-nav-open) .social-bar {
+    @media (max-width: 960px) {
+      opacity: 1;
+      transform: scale(1) translateY(0px);
+      transition: transform 0.3s var(--ease-nav), opacity 0.3s var(--ease-nav);
+      transition-delay: 0.2s;
+    }
+  }
+</style>

@@ -1,0 +1,410 @@
+---
+import '../styles/tokens.css';
+import '../styles/reset.css';
+import '../styles/global.css';
+import 'katex/dist/katex.min.css';
+
+import Navigation from '../components/Navigation.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import ContentSeparator from '../components/ContentSeparator.astro';
+import PageInfo from '../components/PageInfo.astro';
+import { getSiteConfig } from '../lib/config';
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  lang?: string;
+  title?: string | null;
+  description?: string;
+  keywords?: string[];
+  headings?: Heading[];
+  layout?: 'Content' | 'Error';
+  currentPath?: string;
+}
+
+const {
+  lang: pageLang,
+  title: pageTitle,
+  description: pageDescription,
+  keywords: pageKeywords = [],
+  headings = [],
+  layout = 'Content',
+  currentPath = Astro.url.pathname,
+} = Astro.props;
+
+const { site } = getSiteConfig();
+const lang = pageLang || site.lang || 'en-US';
+const description = pageDescription || site.description || '';
+const keywords = (pageKeywords.length ? pageKeywords : site.keywords).join(', ');
+const fullTitle = pageTitle ? `${pageTitle} | ${site.title}` : site.title;
+const isError = layout === 'Error';
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"
+    />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {keywords && <meta name="keywords" content={keywords} />}
+    <meta property="og:title" content={pageTitle || site.title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content={site.owner} />
+    <meta name="twitter:title" content={pageTitle || site.title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="theme-color" content="#3d4260" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={site.title}
+      href="/rss.xml"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Gentium+Book+Basic:ital,wght@0,400;0,700;1,400;1,700&family=Roboto+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Roboto:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
+    />
+  </head>
+  <body>
+    <div class="main-shell">
+      <div class:list={['app-background', { error: isError }]}>
+        <div
+          class:list={[
+            'app-background-image',
+            isError ? 'center' : 'left',
+          ]}
+        >
+          <div class="app-background-overlay"></div>
+        </div>
+      </div>
+
+      <div class:list={['navigation-pane', { error: isError }]} data-nav-pane>
+        <Navigation currentPath={currentPath} headings={headings} />
+      </div>
+
+      <div class:list={['contents-pane', { error: isError }]}>
+        {
+          isError ? (
+            <slot />
+          ) : (
+            <div class="contents-inner">
+              <div class="contents-section primary-section">
+                <slot />
+              </div>
+              <slot name="after-primary" />
+              <ContentSeparator />
+              <footer class="contents-section">
+                <PageInfo />
+              </footer>
+            </div>
+          )
+        }
+      </div>
+
+      <div class:list={['mobile-footer-pane', { error: isError }]}>
+        <div class="mobile-footer-contents">
+          <SiteFooter />
+          <div class="mobile-footer-overlay"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const navPane = document.querySelector('[data-nav-pane]');
+      const navRoot = document.querySelector('[data-nav-root]');
+      const navToggle = document.querySelector('[data-nav-toggle]');
+      const tocToggle = document.querySelector('[data-toc-toggle]');
+
+      function closeMenus() {
+        navPane?.classList.remove('menu-open');
+        navRoot?.classList.remove('is-nav-open', 'is-toc-open');
+      }
+
+      navToggle?.addEventListener('click', () => {
+        const opening = !navRoot?.classList.contains('is-nav-open');
+        closeMenus();
+        if (opening) {
+          navPane?.classList.add('menu-open');
+          navRoot?.classList.add('is-nav-open');
+        }
+      });
+
+      tocToggle?.addEventListener('click', () => {
+        const opening = !navRoot?.classList.contains('is-toc-open');
+        closeMenus();
+        if (opening) {
+          navPane?.classList.add('menu-open');
+          navRoot?.classList.add('is-toc-open');
+        }
+      });
+
+      document.querySelectorAll('[data-toc-link]').forEach(link => {
+        link.addEventListener('click', closeMenus);
+      });
+
+      function fromUTF8Array(data: number[]): string {
+        let str = '';
+        for (let i = 0; i < data.length; i++) {
+          const value = data[i];
+          if (value < 0x80) {
+            str += String.fromCharCode(value);
+          } else if (value > 0xbf && value < 0xe0) {
+            str += String.fromCharCode(((value & 0x1f) << 6) | (data[i + 1] & 0x3f));
+            i += 1;
+          } else if (value > 0xdf && value < 0xf0) {
+            str += String.fromCharCode(
+              ((value & 0x0f) << 12) | ((data[i + 1] & 0x3f) << 6) | (data[i + 2] & 0x3f),
+            );
+            i += 2;
+          } else {
+            const charCode =
+              (((value & 0x07) << 18) |
+                ((data[i + 1] & 0x3f) << 12) |
+                ((data[i + 2] & 0x3f) << 6) |
+                (data[i + 3] & 0x3f)) -
+              0x010000;
+            str += String.fromCharCode(
+              (charCode >> 10) | 0xd800,
+              (charCode & 0x03ff) | 0xdc00,
+            );
+            i += 3;
+          }
+        }
+        return str;
+      }
+
+      function decryptLink(cipher: string): string {
+        const chunks: string[] = [];
+        for (let i = 0; i < cipher.length; i += 3) {
+          chunks.push(cipher.slice(i, i + 3));
+        }
+        const [leadStr, ...units] = chunks;
+        const lead = parseInt(leadStr, 16);
+        const bytes = units
+          .map(u => parseInt(u, 16))
+          .map(c => (c - lead < 0 ? c - lead + 255 : c - lead));
+        return fromUTF8Array(bytes);
+      }
+
+      document.querySelectorAll<HTMLAnchorElement>('[data-protected-link]').forEach(el => {
+        const cipher = el.dataset.protectedLink;
+        if (cipher) {
+          el.href = decryptLink(cipher);
+        }
+      });
+    </script>
+  </body>
+</html>
+
+<style>
+  .main-shell {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+
+    & .app-background {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      position: fixed;
+      width: 30%;
+      z-index: -999;
+
+      @media (max-width: 960px) {
+        display: none;
+      }
+
+      &.error {
+        width: 100%;
+      }
+
+      & .app-background-image {
+        background: url('/images/background-cover.jpg') no-repeat var(--color-ui-nav-background);
+        background-size: cover;
+        display: flex;
+        flex-grow: 1;
+        flex-shrink: 0;
+        flex-direction: column-reverse;
+        position: relative;
+
+        &.center {
+          background-position: center;
+        }
+
+        &.left {
+          background-position: left;
+        }
+
+        & .app-background-overlay {
+          background-color: var(--color-theme-overlay);
+          background-image: linear-gradient(
+            140deg,
+            var(--color-theme-gradient-end) 20%,
+            var(--color-theme-gradient-end)
+          );
+          inset: 0;
+          position: absolute;
+        }
+      }
+    }
+
+    & .navigation-pane {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      position: fixed;
+      width: 30%;
+
+      @media (max-width: 960px) {
+        overflow: visible;
+        height: 44px;
+        padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0;
+        transition: height 0.5s ease-out, background 1s ease-out;
+        width: 100%;
+        z-index: 999;
+      }
+
+      &.menu-open {
+        @media (max-width: 960px) {
+          height: 100vh;
+          transition: height 0.3s ease-in, background 0.5s ease-in;
+        }
+      }
+
+      &.error {
+        width: 100%;
+        z-index: 999;
+      }
+    }
+
+    & .contents-pane {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      margin: 0 env(safe-area-inset-right) 0 env(safe-area-inset-left);
+      max-width: 780px;
+      padding-left: 30%;
+      width: calc(61.8% - env(safe-area-inset-left) - env(safe-area-inset-right));
+
+      @media (max-width: 1440px) {
+        max-width: none;
+        width: calc(70% - env(safe-area-inset-left) - env(safe-area-inset-right));
+      }
+
+      @media (max-width: 960px) {
+        max-width: none;
+        padding: 44px 0 0 0;
+        width: calc(100% - env(safe-area-inset-left) - env(safe-area-inset-right));
+      }
+
+      &.error {
+        align-items: flex-start;
+        flex-direction: row;
+        margin: 0 auto;
+        padding: 0;
+        height: 100vh;
+
+        @media (max-width: 960px) {
+          flex-grow: 0;
+        }
+      }
+
+      & .contents-inner {
+        align-items: stretch;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        padding: 0 5.5rem;
+
+        @media (max-width: 960px) {
+          padding: 0 2.1rem;
+        }
+
+        & .contents-section {
+          align-items: stretch;
+          display: flex;
+          flex-direction: column;
+          flex-shrink: 0;
+          margin: 0;
+
+          &.primary-section {
+            flex-grow: 1;
+          }
+        }
+      }
+    }
+
+    & .mobile-footer-pane {
+      display: none;
+
+      @media (max-width: 960px) {
+        background: url('/images/background-cover.jpg') no-repeat var(--color-ui-nav-background);
+        background-position: center;
+        background-size: cover;
+        display: flex;
+        flex-grow: 0;
+        flex-shrink: 0;
+        flex-direction: column-reverse;
+        padding: 0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        position: relative;
+        z-index: -1;
+
+        & .mobile-footer-contents {
+          margin: 5.5rem 2.1rem;
+          padding: 0;
+
+          & .mobile-footer-overlay {
+            background-color: var(--color-theme-overlay);
+            background-image: linear-gradient(
+              140deg,
+              var(--color-theme-gradient-end) 20%,
+              var(--color-theme-gradient-end)
+            );
+            inset: 0;
+            position: absolute;
+            z-index: -1;
+          }
+        }
+
+        &.error {
+          width: calc(
+            100% - 2.1rem * 2 - env(safe-area-inset-left) -
+              env(safe-area-inset-right)
+          );
+          height: calc(
+            100% - 5.5rem * 2 - 44px - env(safe-area-inset-top) -
+              env(safe-area-inset-bottom)
+          );
+          bottom: 0;
+          left: 0;
+          position: absolute;
+          right: 0;
+
+          & .mobile-footer-contents {
+            margin-top: calc(44px + 5.5rem);
+          }
+        }
+      }
+    }
+  }
+</style>

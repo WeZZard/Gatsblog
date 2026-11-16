@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout layout="Error">
+  <div class="error-info-wrapper">
+    <div class="error-info">
+      <div class="error-title">404 Not Found</div>
+      <div class="error-description">
+        What you are looking for is not in this universe.
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .error-info-wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 61.8%;
+    width: 100%;
+
+    & .error-info {
+      align-items: center;
+      background-color: black;
+      color: white;
+      display: flex;
+      font-family: var(--font-text-monospaced);
+      font-size: 1.5rem;
+      flex-direction: column;
+      margin: 5.5rem 2.1rem;
+      padding: 5.5rem;
+      text-align: center;
+      text-transform: uppercase;
+      z-index: 500;
+
+      @media (max-width: 960px) {
+        margin-top: 2.1rem;
+        padding: 2.1rem;
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        backdrop-filter: saturate(180%) blur(20px);
+      }
+
+      & .error-title {
+        margin-bottom: 2.1rem;
+      }
+    }
+  }
+</style>

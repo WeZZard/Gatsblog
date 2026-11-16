@@ -1,0 +1,283 @@
+---
+import { toKebabCase } from '../lib/content';
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings = [] } = Astro.props;
+
+interface TocItem {
+  title: string;
+  slug: string;
+  indices: number[];
+}
+
+function buildTocItems(rawHeadings: Heading[]): TocItem[] {
+  const items: TocItem[] = [];
+  const indicesStack: number[] = [];
+
+  for (const item of rawHeadings) {
+    const { text, depth, slug } = item;
+    if (indicesStack.length < depth) {
+      while (indicesStack.length < depth) {
+        indicesStack.push(1);
+      }
+    } else {
+      for (let i = depth; i < indicesStack.length; i++) {
+        indicesStack[i] = 0;
+      }
+      indicesStack[depth - 1] = indicesStack[depth - 1] + 1;
+    }
+    items.push({
+      title: text,
+      slug: toKebabCase(text),
+      indices: indicesStack.slice(0, depth),
+    });
+  }
+
+  while (
+    items.length > 0 &&
+    items.reduce<{ shouldShift: boolean; index: number | null }>(
+      (previous, current) => {
+        if (previous.index !== null) {
+          const canShift = current.indices.length > 1;
+          const isSameIndex = previous.index === current.indices[0];
+          return {
+            shouldShift: previous.shouldShift && isSameIndex && canShift,
+            index: current.indices[0],
+          };
+        }
+        return {
+          shouldShift: current.indices.length > 1,
+          index: current.indices[0],
+        };
+      },
+      { shouldShift: false, index: null },
+    ).shouldShift
+  ) {
+    items.forEach(each => each.indices.shift());
+  }
+
+  return items;
+}
+
+const tocItems = buildTocItems(headings);
+---
+
+{
+  tocItems.length > 0 && (
+    <div class="toc" data-toc>
+      <div class="toc-header">
+        <label class="toc-title">Table of Contents</label>
+      </div>
+      <nav class="toc-body">
+        <ul class="toc-list">
+          {tocItems.map((item, index) => {
+            const count = tocItems.length;
+            const openDelay = (0.2 + 0.07 * index).toFixed(2);
+            const closeDelay = (count > 1 ? 0.56 - index * (0.56 / (count - 1)) : 0).toFixed(2);
+            return (
+              <li
+                class="toc-section"
+                style={`--open-delay: ${openDelay}s; --close-delay: ${closeDelay}s;`}
+              >
+                <a class="toc-anchor" href={`#${item.slug}`} data-toc-link>
+                  <span class="toc-section-name">{item.title}</span>
+                  <span class="toc-section-index">{item.indices.join('.')}</span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    </div>
+  )
+}
+
+<style>
+  .toc {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    flex-grow: 1;
+    flex-shrink: 1;
+    max-width: 396px;
+    min-height: 0;
+    width: calc(100% - 4.2rem);
+    padding-top: 2.1rem;
+
+    @media (max-width: 1440px) {
+      max-width: none;
+    }
+
+    @media (max-width: 960px) {
+      background-color: transparent;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      margin: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+      max-width: none;
+      padding: 0;
+      width: auto;
+    }
+
+    & .toc-header {
+      align-items: flex-end;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 0;
+      flex-shrink: 0;
+      margin-bottom: 2.1rem;
+      padding-left: 2.1rem;
+      padding-right: 2.1rem;
+
+      @media (max-width: 960px) {
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-around;
+        height: 44px;
+        margin-bottom: 0;
+        padding: 0 2.1rem;
+      }
+
+      & .toc-title {
+        color: var(--color-ui-nav-headline-normal);
+        flex-shrink: 0;
+        font-size: 1.8em;
+        font-weight: 400;
+        line-height: 1.16667;
+        margin: -0.4rem 0;
+        padding: 0;
+        text-transform: uppercase;
+
+        @media (max-width: 960px) {
+          color: var(--color-gray-89);
+          font-size: 1.5em;
+          font-weight: 300;
+          margin: 0;
+          opacity: 0;
+          transform: scale(1.15) translateY(-30px);
+          transition: transform 0.5s var(--ease-nav), opacity 0.6s var(--ease-nav);
+        }
+      }
+    }
+
+    & .toc-body {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      flex-shrink: 1;
+      overflow-y: scroll;
+      padding: 0 2.1rem 1.8rem;
+      margin-bottom: env(safe-area-inset-bottom);
+      min-height: 0;
+
+      @media (max-width: 960px) {
+        margin: 0;
+        padding: 1.6rem 0 1.8rem;
+      }
+
+      & .toc-list {
+        align-items: stretch;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 0;
+        flex-shrink: 1;
+        list-style: none;
+        margin: 0;
+        min-height: 0;
+        padding: 0;
+
+        & .toc-section {
+          align-items: stretch;
+          display: flex;
+          flex-direction: column;
+          flex-grow: 0;
+          flex-shrink: 0;
+          margin: 0;
+          padding-bottom: 1.2988rem;
+          padding-top: 2.1012rem;
+
+          @media (max-width: 960px) {
+            opacity: 0;
+            transform: scale(1.15) translateY(-30px);
+            transition: transform 0.5s var(--ease-nav), opacity 0.6s var(--ease-nav);
+          }
+
+          &:first-child {
+            padding-top: 0.5rem;
+          }
+
+          &:last-child {
+            padding-bottom: 0.3rem;
+          }
+
+          & .toc-anchor {
+            align-items: baseline;
+            display: flex;
+            flex-direction: row;
+            font-size: 1.1em;
+            justify-content: space-between;
+            line-height: 1.72727;
+            margin-bottom: -0.3rem;
+            margin-top: -0.5rem;
+            text-decoration: none;
+
+            & span {
+              color: var(--color-ui-nav-headline-normal);
+              transition: color 0.3s ease-in-out;
+            }
+
+            &:hover span {
+              color: var(--color-tint);
+            }
+
+            @media (max-width: 960px) {
+              font-size: 1.5em;
+              line-height: 1.93333;
+              margin-bottom: -0.9rem;
+              margin-top: -1.2rem;
+              padding-left: 2.1rem;
+              padding-right: 2.1rem;
+            }
+
+            & .toc-section-name {
+              font-family: var(--font-text-sans);
+            }
+
+            & .toc-section-index {
+              font-family: var(--font-text-monospaced);
+              margin-left: 0.5rem;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  :global([data-nav-root].is-toc-open) .toc {
+    & .toc-header .toc-title {
+      @media (max-width: 960px) {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    & .toc-body .toc-list .toc-section {
+      @media (max-width: 960px) {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+  }
+</style>

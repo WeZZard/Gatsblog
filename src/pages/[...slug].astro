@@ -1,0 +1,75 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Title from '../components/Title.astro';
+import MDXMetadata from '../components/MDXMetadata.astro';
+import { getAllPages, type PageItem } from '../lib/content';
+import '../styles/mdx-body.css';
+
+export async function getStaticPaths() {
+  const pages = await getAllPages();
+  return pages.map(page => ({
+    params: { slug: page.fullPath.replace(/^\//, '') },
+    props: { page },
+  }));
+}
+
+interface Props {
+  page: PageItem;
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page.entry);
+const displayTime = page.createdTime ?? new Date();
+---
+
+<BaseLayout
+  lang={page.lang}
+  title={page.title}
+  description={page.excerpt}
+  keywords={page.keywords}
+  currentPath={page.fullPath}
+>
+  <article class="page-article">
+    <header class="page-header">
+      <Title textStyle="sans" title={page.title} subtitle={page.subtitle} />
+      <aside class="page-metadata">
+        <MDXMetadata items={[{ name: 'time', data: displayTime }]} />
+      </aside>
+    </header>
+    <main class="page-main mdx-body sans">
+      <Content />
+    </main>
+  </article>
+</BaseLayout>
+
+<style>
+  .page-article {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5.5rem;
+
+    @media (max-width: 960px) {
+      margin-top: 2.1rem;
+    }
+
+    & .page-header {
+      align-items: stretch;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 5.5rem;
+
+      & .page-metadata {
+        align-self: baseline;
+        display: flex;
+        flex-direction: row;
+        margin: 2.1rem 0 0 0;
+      }
+    }
+
+    & .page-main {
+      margin-bottom: 5.5rem;
+    }
+  }
+</style>
