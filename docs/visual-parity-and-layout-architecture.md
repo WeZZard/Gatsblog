@@ -4,7 +4,8 @@ This document specifies the layout invariants, responsive breakpoints, typograph
 
 ```mermaid
 flowchart TD
-    MD["Markdown / MDX Source"] --> RM["Remark Pipeline: remarkResolveImages + remarkMath"]
+    MD["MyWorks Markdown / MDX Source"] --> WPW["@wezzard/wpw Content Layer + Hierarchy"]
+    WPW --> RM["Remark Pipeline: @wezzard/wpw/remark + remarkMath"]
     RM --> RH["Rehype Pipeline: rehypeKatex + rehypeGatsblogMdx"]
     RH --> BOX["Normalized Layout Boxes + Prism Syntax Tokens"]
     CFG["config/config.yml"] --> SHELL["BaseLayout + Navigation + Contents + PageInfo"]
